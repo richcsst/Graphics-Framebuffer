@@ -1,0 +1,26 @@
+---
+abstract: 'A Simple Framebuffer Graphics Library'
+author:
+  - 'Richard Kelsch <rich@rk-internet.com>'
+build_requires:
+  Test::More: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 1
+generated_by: 'ExtUtils::MakeMaker version 7.04, CPAN::Meta::Converter version 2.150001'
+license: unknown
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Graphics-Framebuffer
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Imager: '0'
+  Math::Trig: '0'
+  Switch: '0'
+  Sys::Mmap: '0'
+  perl: '5.014'
+version: 4.1
