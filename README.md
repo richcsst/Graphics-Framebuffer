@@ -1,8 +1,6 @@
 # Graphics-Framebuffer
 
-*********************************************************************
-** Note, this module does NOT work (natively) in Microsoft Windows **
-*********************************************************************
+### Note, this module does NOT work (natively) in Microsoft Windows
 
 ## PREREQUISITES
 
@@ -13,8 +11,7 @@ However, most open-sourced drivers, seem to work fine.  VirtualBox drivers
 work too.  You must also have the appropriate permissions to write to this
 device (usually membership with group "video").
 
-**** ATTENTION CPAN TESTERS!  Please make sure the above is noted before ****
-**** testing (and marking a fail)                                        ****
+### ATTENTION CPAN TESTERS!  Please make sure the above is noted before testing (and marking a fail)
 
 I highly recommend you install the system (or package) version of the "Imager"
 library, as it is already pre-compiled with all the needed C libraries for it
@@ -42,15 +39,13 @@ To make your system ready for this module, then please install the following:
 
 ### DEBIAN BASED SYSTEMS (Ubuntu, Mint, Raspian, etc):
 
-  sudo apt-get update
-  sudo apt-get install build-essential linux-headers-generic libimager-perl \
-   libinline-c-perl libmath-gradient-perl libmath-bezier-perl libsys-mmap-perl
+  `sudo apt-get update`
+  `sudo apt-get install build-essential linux-headers-generic libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libsys-mmap-perl`
 
 ### REDHAT BASED SYSTEMS (Fedora, CentOS, etc):
 
-  sudo yum update
-  sudo yum upgrade kernel-headers build-essential perl-math-gradient \
-    perl-math-bezier perl-sys-mmap perl-imager perl-inline-c
+  `sudo yum update`
+  `sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-sys-mmap perl-imager perl-inline-c`
 
 ### Continuing...
 
@@ -58,15 +53,10 @@ With that out of the way, you can now install this module.
 
 To install this module, run the following commands:
 
-`
-perl Makefile.PL
-
-make
-
-make test
-
-make install
-`
+  `perl Makefile.PL`
+  `make`
+  `make test`
+  `make install`
 
 NOTE:  _The install step may require sudo (root access)._
 
