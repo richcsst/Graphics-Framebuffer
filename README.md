@@ -101,7 +101,8 @@ Here's what I have tested this module on (all 1920x1080x32):
 
 * **2.6 GHz MacBook with VirtualBox** - Blazingly fast. Most primitives draw nearly instantly.
 
-* **Windows 10 PC with VirtualBox, 4GHz 6 core CPU, 2 NVidia GeForce 970 Ti** - Holy cow!  No, seriously, this sucker is fast!  I wonder how much faster if it were running Linux natively?  Especially since I noticed that VirtualBox is very inefficient with threads (What's up with that?).  UPDATE: VirtualBox appears to have fixed the threading issue.
+* **Windows 10 PC with VirtualBox, 4GHz 6 core CPU, 2 NVidia GeForce 970 Ti** - Holy cow!  No, seriously, this sucker is fast!  I wonder how much faster if it were running Linux natively?
+
   In addition, 3840x2160x32 (4K) is surprisingly fast.  Who'd have thought?  Full screen animations were choppy, but everything else was plenty fast enough.
 
 ## SUPPORT AND DOCUMENTATION
