@@ -57,12 +57,14 @@ To make your system ready for this module, then please install the following:
 With that out of the way, you can now install this module.
 
 To install this module, run the following commands:
+
 `
     perl Makefile.PL
     make
     make test
     make install
 `
+
 NOTE:  _The install step may require sudo (root access)._
 
 ## FURTHER TEST SCRIPTS
@@ -108,13 +110,17 @@ Here's what I have tested this module on (all 1920x1080x32):
 
 After installing, you can find documentation for this module with the
 perldoc command.
+
 `
     perldoc Graphics::Framebuffer
 `
+
     or
+
 `
     man Graphics::Framebuffer
 `
+
 You can also look for information at:
 
 * **RT, CPAN's request tracker (report bugs here)** - http://rt.cpan.org/NoAuth/Bugs.html?Dist=Graphics-Framebuffer
