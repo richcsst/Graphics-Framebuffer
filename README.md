@@ -39,13 +39,15 @@ To make your system ready for this module, then please install the following:
 
 ### DEBIAN BASED SYSTEMS (Ubuntu, Mint, Raspian, etc):
 
-  `sudo apt-get update`
-  `sudo apt-get install build-essential linux-headers-generic libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libsys-mmap-perl`
+`sudo apt-get update`
+  
+`sudo apt-get install build-essential linux-headers-generic libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libsys-mmap-perl`
 
 ### REDHAT BASED SYSTEMS (Fedora, CentOS, etc):
 
-  `sudo yum update`
-  `sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-sys-mmap perl-imager perl-inline-c`
+`sudo yum update`
+
+`sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-sys-mmap perl-imager perl-inline-c`
 
 ### Continuing...
 
@@ -53,10 +55,13 @@ With that out of the way, you can now install this module.
 
 To install this module, run the following commands:
 
-  `perl Makefile.PL`
-  `make`
-  `make test`
-  `make install`
+`perl Makefile.PL`
+
+`make`
+
+`make test`
+
+`make install`
 
 NOTE:  _The install step may require sudo (root access)._
 
