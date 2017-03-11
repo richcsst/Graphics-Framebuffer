@@ -59,10 +59,10 @@ With that out of the way, you can now install this module.
 To install this module, run the following commands:
 
 `
-    perl Makefile.PL
-    make
-    make test
-    make install
+perl Makefile.PL
+make
+make test
+make install
 `
 
 NOTE:  _The install step may require sudo (root access)._
@@ -111,15 +111,11 @@ Here's what I have tested this module on (all 1920x1080x32):
 After installing, you can find documentation for this module with the
 perldoc command.
 
-`
-    perldoc Graphics::Framebuffer
-`
+`perldoc Graphics::Framebuffer`
 
-    or
+or
 
-`
-    man Graphics::Framebuffer
-`
+`man Graphics::Framebuffer`
 
 You can also look for information at:
 
