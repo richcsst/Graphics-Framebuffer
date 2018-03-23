@@ -1206,3 +1206,12 @@ Revision history for Graphics-Framebuffer
 
        Runtime diagnostics ALWAYS are shown if there are catastrophic
        failures.
+
+6.04   March 10, 2018
+
+       Cleaned up some documentation
+
+       Removed code to check for current active console.  That's up to you
+       now.
+
+       Modified some of the examples scripts to work with switches.
