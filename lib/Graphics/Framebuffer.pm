@@ -401,7 +401,7 @@ BEGIN {
     require Exporter;
 
     # set the version for version checking
-    our $VERSION   = '6.04';
+    our $VERSION   = '6.05';
     our @ISA       = qw(Exporter Graphics::Framebuffer::Splash);
     our @EXPORT_OK = qw(
       FBIOGET_VSCREENINFO
@@ -1899,12 +1899,12 @@ sub new {
             }
         }
 
-        ## For debugging only
-        #       print Dumper($self,\%Config),"\n"; exit;
-
         $self->{'PIXELS'} = (($self->{'XOFFSET'} + $self->{'VXRES'}) * ($self->{'YOFFSET'} + $self->{'VYRES'}));
         $self->{'SIZE'} = $self->{'PIXELS'} * $self->{'BYTES'};
-        $self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES'} * ($self->{'VXRES'} * $self->{'VYRES'}) if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
+        $self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES_PER_LINE'} * $self->{'VYRES'} if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
+
+        ## For debugging only
+        # print Dumper($self,\%Config),"\n"; exit;
 
         # Only useful for debugging and for troubleshooting the module for specific display resolutions
         if (defined($self->{'SIMULATED_X'})) {
@@ -7698,11 +7698,11 @@ The module can NOT have separate threads calling the same object.  You WILL cras
 
 See the "examples" directory for "threadstest.pl" as an example of a threading script that uses this module.  Just add the number of threads you want it to use to the command line when you run it.
 
-If you are running a threaded Perl, this module opens its own thread to monitor and update the status of the active console.
+If you are running a threaded Perl, this module opens its own thread to monitor and update the status of the active console (DEPRECIATED).
 
 =head2 FORKS
 
-I have never tested with forks.  Do at your own risk, but follow the same rules as in threads, and it should work.
+I have never tested with forks.  Do at your own risk, but follow the same rules as in threads, and it should work.  Instantiate an object per fork AFTER forking.
 
 =head2 BLITTING
 
@@ -7710,7 +7710,7 @@ Use "blit_read" and "blit_write" to save portions of the screen instead of redra
 
 =head2 SPRITES
 
-Someone asked me about sprites.  Well, that's what blitting is for.  You'll have to do your own collision detection.
+Someone asked me about sprites.  Well, that's what blitting is for.  You'll have to do your own collision detection.  Using the "XOR" drawing mode, you can "erase" a sprite by rewriting it to the screen via xor.
 
 =head2 HORIZONTAL "MAGIC"
 
@@ -7724,7 +7724,7 @@ Pixel sizes over 1 utilize a filled "box" or "circle" (negative numbers for circ
 
 So, you want to be able to manage some sort of windows...
 
-You just instantiate a new instance of the module per "Window" and give it its own clipping region.  This region is your drawing space for your window.
+You just instantiate a new instance of the module per "Window" and give it its own clipping region.  This region is your drawing space for your window.  The threading example does this.
 
 It is up to you to actually decorate (draw) the windows.
 
@@ -7760,15 +7760,31 @@ You HAVE to have a framebuffer based video driver for this to work.  The device 
 
 If it does exist, but is not "/dev/fb0", then you can define it in the 'new' method with the "FB_DEVICE" parameter.
 
+=item B< It's Crashing >
+
+This is almost always caused by the module incorrectly calculating the framebuffer memory size, and it's guessing too small.
+
+Try running the "primitives.pl" in the "examples" directory in the following way (assuming your screen is larger than 640x480):
+
+   perl examples/primitives.pl --x=640 --y=480
+
+This forces the module to pretend it is rendering for a smaller resolution (by placing this screen in the middle of the actual one).  If it works fine, then try changing the "x" value back to your screen's actual width, but still make the "y" value slightly smaller.  Keep decreasing this value until it works.
+
+If you get this behavior, then it is a bug, and the author needs to be notified.
+
+So how does that help you right now?  Try installing the program "fbset" via your package manager, then rerun the "primitives.pl" script without the "x" or "y" options.  If it works, then that is your immediate solution.
+
+How does that suddenly fix things?  Calculating the screen size involves complex data structures returned by an ioget call, and Perl handles these very poorly as it is not very good with type size, and the data can end up being in the wrong place.  The "fbset" utility can just tell us what these values are correctly, and the module uses it as a last resort.  Thus now the module can set up the screen corrwectly, and not cause a crash.  This crash happens because it is trying to access memory that has not been allocated to it.
+
 =item B< It Just Plain Isn't Working >
 
-Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize.
+Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous item).
 
 First, make sure your system has a framebuffer by seeing if "/dev/fb0" (actually "fb" then any number).  If you don't see any "fb0" - "fb31" files inside "/dev", then you don't have a framebuffer driver running.  You need to fix that first.
 
 Second, ok, you have a framebuffer driver, but nothing is showing, or it's all funky looking.  Now make sure you have the program "fbset" installed.  It's used as a last resort by this module to figure out how to draw on the screen when all else fails.  To see if you have "fbset" installed, just type "fbset -i" and it should show you information about the framebuffer.  If you get an error, then you need to install "fbset".
 
-Third, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "B<video>" group.  Let's say the account is called "sparky", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint) environment you would use this to add "sparky" to the "video" group:
+Third, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "B<video>" group.  Let's say the account is called "sparky", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint/RedHat/Fedora) environment you would use this to add "sparky" to the "video" group:
 
  sudo usermod -a -G video sparky
 
@@ -7836,7 +7852,7 @@ This program is free software; you can redistribute it and/or modify it under th
 
 =head1 VERSION
 
-Version 6.04 (March 11, 2018)
+Version 6.05 (March 30, 2018)
 
 =head1 THANKS
 

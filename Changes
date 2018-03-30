@@ -1215,3 +1215,9 @@ Revision history for Graphics-Framebuffer
        now.
 
        Modified some of the examples scripts to work with switches.
+
+6.05   March 30, 2018
+
+       Fixed crashes for Intel GPUs (and perhaps others)
+       
+       Updated documentation to help with troubleshooting.
