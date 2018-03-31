@@ -1230,3 +1230,6 @@ Revision history for Graphics-Framebuffer
        utility should no longer be needed as a backup.  Now C makes this call
        instead of Perl.  However, for those not able to compile the C routines,
        the older Perl logic is still there for compatibility.
+
+       Moved text around a bit for Makefile.PL for easier following on small
+       screens.
