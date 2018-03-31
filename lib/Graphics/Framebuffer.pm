@@ -401,7 +401,7 @@ BEGIN {
     require Exporter;
 
     # set the version for version checking
-    our $VERSION   = '6.05';
+    our $VERSION   = '6.06';
     our @ISA       = qw(Exporter Graphics::Framebuffer::Splash);
     our @EXPORT_OK = qw(
       FBIOGET_VSCREENINFO
@@ -474,938 +474,7 @@ DESTROY {
 
 # use Inline 'info', 'noclean', 'noisy'; # Only needed for debugging
 
-use Inline C => <<CC, 'name' => 'Graphics::Framebuffer', 'VERSION' => $VERSION;
-
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
-#include <math.h>
-
-#define NORMAL_MODE   0
-#define XOR_MODE      1
-#define OR_MODE       2
-#define AND_MODE      3
-#define MASK_MODE     4
-#define UNMASK_MODE   5
-#define ALPHA_MODE    6
-#define ADD_MODE      7
-#define SUBTRACT_MODE 8
-#define MULTIPLY_MODE 9
-#define DIVIDE_MODE   10
-
-#define RGB           0
-#define RBG           1
-#define BGR           2
-#define BRG           3
-#define GBR           4
-#define GRB           5
-
-#define ipart_(X) ((int)(X))
-#define round_(X) ((int)(((double)(X))+0.5))
-#define fpart_(X) (((double)(X))-(double)ipart_(X))
-#define rfpart_(X) (1.0-fpart_(X))
-#define swap_(a, b) do { __typeof__(a) tmp;  tmp = a; a = b; b = tmp; } while(0)
-
-
-struct fb_var_screeninfo vinfo;
-struct fb_fix_screeninfo finfo;
-
-unsigned int c_get_screen_info(char *fb_file) {
-    int fbfd = 0;
-
-    fbfd = open(fb_file,O_RDWR);
-    ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo);
-    ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo);
-    close(fbfd);
-
-    return(finfo.line_length);
-}
-
-void c_filled_circle(
-    char *framebuffer,
-    short x, short y, short r,
-    unsigned char draw_mode,
-    unsigned int color,
-    unsigned int bcolor,
-    unsigned char bytes_per_pixel,
-    unsigned int bytes_per_line,
-    unsigned short x_clip,  unsigned short y_clip,
-    unsigned short xx_clip, unsigned short yy_clip,
-    unsigned short xoffset, unsigned short yoffset,
-    unsigned char alpha)
-{
-    int r2   = r * r;
-    int area = r2 << 2;
-    int rr   = r  << 1;
-    int i;
-
-    for (i = 0; i < area; i++) {
-        int tx = (i % rr) - r;
-        int ty = (i / rr) - r;
-
-        if (tx * tx + ty * ty <= r2)
-          c_plot(framebuffer,x + tx, y + ty, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
-    }
-}
-
-void c_plot(
-    char *framebuffer,
-    short x, short y,
-    unsigned char draw_mode,
-    unsigned int color,
-    unsigned int bcolor,
-    unsigned char bytes_per_pixel,
-    unsigned int bytes_per_line,
-    unsigned short x_clip, unsigned short y_clip,
-    unsigned short xx_clip, unsigned short yy_clip,
-    unsigned short xoffset, unsigned short yoffset,
-    unsigned char alpha)
-{
-    if (x >= x_clip && x <= xx_clip && y >= y_clip && y <= yy_clip) {
-        x += xoffset;
-        y += yoffset;
-        unsigned int index = (x * bytes_per_pixel) + (y * bytes_per_line);
-        switch(draw_mode) {
-            case NORMAL_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) = color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     = color         & 255;
-                  *(framebuffer + index + 1) = (color >> 8)  & 255;
-                  *(framebuffer + index + 2) = (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) = (short) color;
-              }
-            break;
-            case XOR_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) ^= color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     ^= color         & 255;
-                  *(framebuffer + index + 1) ^= (color >> 8)  & 255;
-                  *(framebuffer + index + 2) ^= (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) ^= (short) color;
-              }
-            break;
-            case OR_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) |= color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     |= color         & 255;
-                  *(framebuffer + index + 1) |= (color >> 8)  & 255;
-                  *(framebuffer + index + 2) |= (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) |= (short) color;
-              }
-            break;
-            case AND_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) &= color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     &= color         & 255;
-                  *(framebuffer + index + 1) &= (color >> 8)  & 255;
-                  *(framebuffer + index + 2) &= (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) &= (short) color;
-              }
-            break;
-            case MASK_MODE :
-              if (bytes_per_pixel == 4) {
-                  unsigned int rgb = *((unsigned int*)(framebuffer + index ));
-                  if ((rgb & 0xFFFFFF00) != (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                        *((unsigned int*)(framebuffer + index )) = color;
-                  }
-              } else if (bytes_per_pixel == 3) {
-                  unsigned int rgb = *((unsigned int*)(framebuffer + index )) & 0xFFFFFF00;
-                  if (rgb != (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                        *(framebuffer + index )     = color         & 255;
-                      *(framebuffer + index  + 1) = (color >> 8)  & 255;
-                      *(framebuffer + index  + 2) = (color >> 16) & 255;
-                  }
-              } else {
-                  unsigned short rgb = *((unsigned short*)(framebuffer + index));
-                  if (rgb != (bcolor & 0xFFFF)) {
-                      *((unsigned short*)(framebuffer + index )) = color;
-                  }
-              }
-            break;
-            case UNMASK_MODE :
-              if (bytes_per_pixel == 4) {
-                  unsigned int rgb = *((unsigned int*)(framebuffer + index ));
-                  if ((rgb & 0xFFFFFF00) == (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                        *((unsigned int*)(framebuffer + index )) = color;
-                  }
-              } else if (bytes_per_pixel == 3) {
-                  unsigned int rgb = *((unsigned int*)(framebuffer + index )) & 0xFFFFFF00;
-                  if (rgb == (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                      *(framebuffer + index )     = color         & 255;
-                      *(framebuffer + index  + 1) = (color >> 8)  & 255;
-                      *(framebuffer + index  + 2) = (color >> 16) & 255;
-                  }
-              } else {
-                  unsigned short rgb = *((unsigned short*)(framebuffer + index));
-                  if (rgb == (bcolor & 0xFFFF)) {
-                      *((unsigned short*)(framebuffer + index )) = color;
-                  }
-              }
-            break;
-            case ALPHA_MODE :
-              if (bytes_per_pixel == 4) {
-                  unsigned char fb_r = *(framebuffer + index);
-                  unsigned char fb_g = *(framebuffer + index + 1);
-                  unsigned char fb_b = *(framebuffer + index + 2);
-                  unsigned char R     = color         & 255;
-                  unsigned char G     = (color >> 8)  & 255;
-                  unsigned char B     = (color >> 16) & 255;
-                  unsigned char A     = (color >> 24) & 255;
-                  unsigned char invA  = (255 - A);
-
-                  fb_r = ((R * A) + (fb_r * invA)) >> 8;
-                  fb_g = ((G * A) + (fb_g * invA)) >> 8;
-                  fb_b = ((B * A) + (fb_b * invA)) >> 8;
-
-                  *(framebuffer + index)     = fb_r;
-                  *(framebuffer + index + 1) = fb_g;
-                  *(framebuffer + index + 2) = fb_b;
-                  *(framebuffer + index + 3) = A;
-              } else if (bytes_per_pixel == 3) {
-                  unsigned char fb_r = *(framebuffer + index);
-                  unsigned char fb_g = *(framebuffer + index + 1);
-                  unsigned char fb_b = *(framebuffer + index + 2);
-                  unsigned char invA  = (255 - alpha);
-                  unsigned char R     = color         & 255;
-                  unsigned char G     = (color >> 8)  & 255;
-                  unsigned char B     = (color >> 16) & 255;
-
-                  fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
-                  fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
-                  fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
-
-                  *(framebuffer + index)     = fb_r;
-                  *(framebuffer + index + 1) = fb_g;
-                  *(framebuffer + index + 2) = fb_b;
-              } else {
-                  unsigned short rgb565 = *((unsigned short*)(framebuffer + index));
-                  unsigned short fb_r   = rgb565;
-                  unsigned short fb_g   = rgb565;
-                  unsigned short fb_b   = rgb565;
-                  fb_b >>= 11;
-                  fb_g >>= 5;
-                  fb_r  &= 31;
-                  fb_g  &= 63;
-                  fb_b  &= 31;
-                  unsigned short R = color;
-                  unsigned short G = color;
-                  unsigned short B = color;
-                  B >>= 11;
-                  G >>= 5;
-                  R  &= 31;
-                  G  &= 63;
-                  B  &= 31;
-                  unsigned char invA = (255 - alpha);
-                  fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
-                  fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
-                  fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
-                  rgb565 = 0;
-                  rgb565 = (fb_b << 11) | (fb_g << 5) | fb_r;
-                  *((unsigned short*)(framebuffer + index)) = rgb565;
-              }
-            break;
-            case ADD_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) += color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     += color         & 255;
-                  *(framebuffer + index + 1) += (color >> 8)  & 255;
-                  *(framebuffer + index + 2) += (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) += (short) color;
-              }
-            break;
-            case SUBTRACT_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) -= color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     -= color         & 255;
-                  *(framebuffer + index + 1) -= (color >> 8)  & 255;
-                  *(framebuffer + index + 2) -= (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) -= (short) color;
-              }
-            break;
-            case MULTIPLY_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) *= color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     *= color         & 255;
-                  *(framebuffer + index + 1) *= (color >> 8)  & 255;
-                  *(framebuffer + index + 2) *= (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) *= (short) color;
-              }
-            break;
-            case DIVIDE_MODE :
-              if (bytes_per_pixel == 4) {
-                  *((unsigned int*)(framebuffer + index)) /= color;
-              } else if (bytes_per_pixel == 3) {
-                  *(framebuffer + index)     /= color         & 255;
-                  *(framebuffer + index + 1) /= (color >> 8)  & 255;
-                  *(framebuffer + index + 2) /= (color >> 16) & 255;
-              } else {
-                  *((unsigned short*)(framebuffer + index)) /= (short) color;
-              }
-            break;
-        }
-    }
-}
-
-void c_line(
-    char *framebuffer,
-    short x1, short y1,
-    short x2, short y2,
-    unsigned char draw_mode,
-    unsigned int color,
-    unsigned int bcolor,
-    unsigned char bytes_per_pixel,
-    unsigned int bytes_per_line,
-    unsigned short x_clip, unsigned short y_clip,
-    unsigned short xx_clip, unsigned short yy_clip,
-    unsigned short xoffset, unsigned short yoffset,
-    unsigned char alpha)
-{
-    int shortLen = y2 - y1;
-    int longLen  = x2 - x1;
-    int yLonger  = false;
-
-    if (abs(shortLen) > abs(longLen)) {
-        int swap = shortLen;
-        shortLen   = longLen;
-        longLen    = swap;
-        yLonger    = true;
-    }
-    int decInc;
-    if (longLen == 0) {
-        decInc = 0;
-    } else {
-        decInc = (shortLen << 16) / longLen;
-    }
-    int count;
-    if (yLonger) {
-        if (longLen > 0) {
-            longLen += y1;
-            for (count = 0x8000 + (x1 << 16); y1 <= longLen; ++y1) {
-                c_plot(framebuffer, count >> 16, y1, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
-                count += decInc;
-            }
-            return;
-        }
-        longLen += y1;
-        for (count = 0x8000 + (x1 << 16); y1 >= longLen; --y1) {
-            c_plot(framebuffer, count >> 16, y1, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
-            count -= decInc;
-        }
-        return;
-    }
-    if (longLen > 0) {
-        longLen += x1;
-        for (count = 0x8000 + (y1 << 16); x1 <= longLen; ++x1) {
-            c_plot(framebuffer, x1, count >> 16, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
-            count += decInc;
-        }
-        return;
-    }
-    longLen += x1;
-    for (count = 0x8000 + (y1 << 16); x1 >= longLen; --x1) {
-        c_plot(framebuffer, x1, count >> 16, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
-        count -= decInc;
-    }
-}
-
-void c_blit_read(
-    char *framebuffer,
-    unsigned short screen_width,
-    unsigned short screen_height,
-    unsigned int bytes_per_line,
-    unsigned short xoffset,
-    unsigned short yoffset,
-    char *blit_data,
-    short x, short y,
-    unsigned short w, unsigned short h,
-    unsigned char bytes_per_pixel,
-    unsigned char draw_mode,
-    unsigned char alpha,
-    unsigned int bcolor,
-    unsigned short x_clip, unsigned short y_clip,
-    unsigned short xx_clip, unsigned short yy_clip)
-{
-    short fb_x = xoffset + x;
-    short fb_y = yoffset + y;
-    short xx   = x + w;
-    short yy   = y + h;
-    unsigned short horizontal;
-    unsigned short vertical;
-    unsigned int bline = w * bytes_per_pixel;
-
-    for (vertical = 0; vertical < h; vertical++) {
-        unsigned int vbl  = vertical * bline;
-        unsigned short yv = fb_y + vertical;
-        unsigned int yvbl = yv * bytes_per_line;
-        if (yv >= (yoffset + y_clip) && yv <= (yoffset + yy_clip)) {
-            for (horizontal = 0; horizontal < w; horizontal++) {
-                unsigned short xh = fb_x + horizontal;
-                unsigned int xhbp = xh * bytes_per_pixel;
-                if (xh >= (xoffset + x_clip) && xh <= (xoffset + xx_clip)) {
-                    unsigned int hzpixel   = horizontal * bytes_per_pixel;
-                    unsigned int vhz       = vbl + hzpixel;
-                    unsigned int yvhz      = yvbl + hzpixel;
-                    unsigned int xhbp_yvbl = xhbp + yvbl;
-                    if (bytes_per_pixel == 4) {
-                        *((unsigned int*)(blit_data + vhz)) = *((unsigned int*)(framebuffer + xhbp_yvbl));
-                    } else if (bytes_per_pixel == 3) {
-                        *(blit_data + vhz ) = *(framebuffer + xhbp_yvbl );
-                        *(blit_data + vhz  + 1) = *(framebuffer + xhbp_yvbl  + 1);
-                        *(blit_data + vhz  + 2) = *(framebuffer + xhbp_yvbl  + 2);
-                    } else {
-                        *((unsigned short*)(blit_data + vhz )) = *((unsigned short*)(framebuffer + xhbp_yvbl ));
-                    }
-                }
-            }
-        }
-    }
-}
-
-void c_blit_write(
-    char *framebuffer,
-    unsigned short screen_width,
-    unsigned short screen_height,
-    unsigned int bytes_per_line,
-    unsigned short xoffset,
-    unsigned short yoffset,
-    char *blit_data,
-    short x, short y,
-    unsigned short w, unsigned short h,
-    unsigned char bytes_per_pixel,
-    unsigned char draw_mode,
-    unsigned char alpha,
-    unsigned int bcolor,
-    unsigned short x_clip, unsigned short y_clip,
-    unsigned short xx_clip, unsigned short yy_clip)
-{
-    short fb_x = xoffset + x;
-    short fb_y = yoffset + y;
-    short xx   = x + w;
-    short yy   = y + h;
-    unsigned short horizontal;
-    unsigned short vertical;
-    unsigned int bline = w * bytes_per_pixel;
-
-    if (draw_mode == NORMAL_MODE && x >= x_clip && xx <= xx_clip && y >= y_clip && yy <= yy_clip) {
-        unsigned char *source = blit_data;
-        unsigned char *dest   = &framebuffer[(fb_y * bytes_per_line) + (fb_x * bytes_per_pixel)];
-        for (vertical = 0; vertical < h; vertical++) {
-            memcpy(dest, source, bline);
-            source += bline;
-            dest += bytes_per_line;
-        }
-    } else {
-        for (vertical = 0; vertical < h; vertical++) {
-            unsigned int vbl  = vertical * bline;
-            unsigned short yv = fb_y + vertical;
-            unsigned int yvbl = yv * bytes_per_line;
-            if (yv >= (yoffset + y_clip) && yv <= (yoffset + yy_clip)) {
-                for (horizontal = 0; horizontal < w; horizontal++) {
-                    unsigned short xh = fb_x + horizontal;
-                    unsigned int xhbp = xh * bytes_per_pixel;
-                    if (xh >= (xoffset + x_clip) && xh <= (xoffset + xx_clip)) {
-                        unsigned int hzpixel   = horizontal * bytes_per_pixel;
-                        unsigned int vhz       = vbl + hzpixel;
-                        unsigned int yvhz      = yvbl + hzpixel;
-                        unsigned int xhbp_yvbl = xhbp + yvbl;
-                        switch(draw_mode) {
-                            case NORMAL_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl)) = *((unsigned int*)(blit_data + vhz));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     = *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) = *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) = *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) = *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case XOR_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) ^= *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     ^= *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) ^= *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) ^= *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) ^= *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case OR_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) |= *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     |= *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) |= *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) |= *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) |= *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case AND_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) &= *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     &= *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) &= *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) &= *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) &= *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case MASK_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  unsigned int rgb = *((unsigned int*)(blit_data + vhz ));
-                                  if ((rgb & 0xFFFFFF00) != (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                        *((unsigned int*)(framebuffer + xhbp_yvbl )) = rgb;
-                                  }
-                              } else if (bytes_per_pixel == 3) {
-                                  unsigned int rgb = *((unsigned int*)(blit_data + vhz )) & 0xFFFFFF00;
-                                  if (rgb != (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                        *(framebuffer + xhbp_yvbl )     = *(blit_data + vhz );
-                                      *(framebuffer + xhbp_yvbl  + 1) = *(blit_data + vhz  + 1);
-                                      *(framebuffer + xhbp_yvbl  + 2) = *(blit_data + vhz  + 2);
-                                  }
-                              } else {
-                                  unsigned short rgb = *((unsigned short*)(blit_data + vhz ));
-                                  if (rgb != (bcolor & 0xFFFF)) {
-                                      *((unsigned short*)(framebuffer + xhbp_yvbl )) = rgb;
-                                  }
-                              }
-                            break;
-                            case UNMASK_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  unsigned int rgb = *((unsigned int*)(framebuffer + xhbp_yvbl ));
-                                  if ((rgb & 0xFFFFFF00) == (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                        *((unsigned int*)(framebuffer + xhbp_yvbl )) = *((unsigned int*)(blit_data + vhz ));
-                                  }
-                              } else if (bytes_per_pixel == 3) {
-                                  unsigned int rgb = *((unsigned int*)(framebuffer + xhbp + yvhz ));
-                                  if (rgb == (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                        *(framebuffer + xhbp_yvbl )     = *(blit_data + vhz );
-                                      *(framebuffer + xhbp_yvbl  + 1) = *(blit_data + vhz  + 1);
-                                      *(framebuffer + xhbp_yvbl  + 2) = *(blit_data + vhz  + 2);
-                                  }
-                              } else {
-                                  unsigned short rgb = *((unsigned short*)(framebuffer + xhbp + yvhz ));
-                                  if (rgb == (bcolor & 0xFFFF)) {
-                                      *((unsigned short*)(framebuffer + xhbp_yvbl )) = *((unsigned short*)(blit_data + vhz ));
-                                  }
-                              }
-                            break;
-                            case ALPHA_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  unsigned char fb_r = *(framebuffer + xhbp_yvbl );
-                                  unsigned char fb_g = *(framebuffer + xhbp_yvbl + 1);
-                                  unsigned char fb_b = *(framebuffer + xhbp_yvbl + 2);
-                                  unsigned char R    = *(blit_data + vhz );
-                                  unsigned char G    = *(blit_data + vhz  + 1);
-                                  unsigned char B    = *(blit_data + vhz  + 2);
-                                  unsigned char A    = *(blit_data + vhz  + 3);
-                                  unsigned char invA = (255 - A);
-
-                                  fb_r = ((R * A) + (fb_r * invA)) >> 8;
-                                  fb_g = ((G * A) + (fb_g * invA)) >> 8;
-                                  fb_b = ((B * A) + (fb_b * invA)) >> 8;
-
-                                  *(framebuffer + xhbp_yvbl )     = fb_r;
-                                  *(framebuffer + xhbp_yvbl  + 1) = fb_g;
-                                  *(framebuffer + xhbp_yvbl  + 2) = fb_b;
-                                  *(framebuffer + xhbp_yvbl  + 3) = A;
-                              } else if (bytes_per_pixel == 3) {
-                                  unsigned char fb_r = *(framebuffer + xhbp_yvbl );
-                                  unsigned char fb_g = *(framebuffer + xhbp_yvbl  + 1);
-                                  unsigned char fb_b = *(framebuffer + xhbp_yvbl  + 2);
-                                  unsigned char R    = *(blit_data + vhz );
-                                  unsigned char G    = *(blit_data + vhz + 1);
-                                  unsigned char B    = *(blit_data + vhz + 2);
-                                  unsigned char invA = (255 - alpha);
-
-                                  fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
-                                  fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
-                                  fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
-
-                                  *(framebuffer + xhbp_yvbl )     = fb_r;
-                                  *(framebuffer + xhbp_yvbl  + 1) = fb_g;
-                                  *(framebuffer + xhbp_yvbl  + 2) = fb_b;
-                              } else {
-                                  unsigned short rgb565 = *((unsigned short*)(framebuffer + xhbp_yvbl ));
-
-                                  unsigned short fb_r = rgb565;
-                                  unsigned short fb_g = rgb565;
-                                  unsigned short fb_b = rgb565;
-                                  fb_b >>= 11;
-                                  fb_g >>= 5;
-                                  fb_r &= 31;
-                                  fb_g &= 63;
-                                  fb_b &= 31;
-                                  rgb565 = *((unsigned short*)(blit_data + vhz ));
-                                  unsigned short R = rgb565;
-                                  unsigned short G = rgb565;
-                                  unsigned short B = rgb565;
-                                  B >>= 11;
-                                  G >>= 5;
-                                  R &= 31;
-                                  G &= 63;
-                                  B &= 31;
-                                  unsigned char invA = (255 - alpha);
-                                  fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
-                                  fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
-                                  fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
-                                  rgb565 = 0;
-                                  rgb565 = (fb_b << 11) | (fb_g << 5) | fb_r;
-
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) = rgb565;
-                              }
-                            break;
-                            case ADD_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) += *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     += *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) += *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) += *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) += *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case SUBTRACT_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) -= *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     -= *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) -= *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) -= *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) -= *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case MULTIPLY_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) *= *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     *= *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) *= *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) *= *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) *= *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                            case DIVIDE_MODE :
-                              if (bytes_per_pixel == 4) {
-                                  *((unsigned int*)(framebuffer + xhbp_yvbl )) /= *((unsigned int*)(blit_data + vhz ));
-                              } else if (bytes_per_pixel == 3) {
-                                  *(framebuffer + xhbp_yvbl )     /= *(blit_data + vhz );
-                                  *(framebuffer + xhbp_yvbl  + 1) /= *(blit_data + vhz  + 1);
-                                  *(framebuffer + xhbp_yvbl  + 2) /= *(blit_data + vhz  + 2);
-                              } else {
-                                  *((unsigned short*)(framebuffer + xhbp_yvbl )) /= *((unsigned short*)(blit_data + vhz ));
-                              }
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-void c_rotate(
-    char *image,
-    char *new_img,
-    unsigned short width,
-    unsigned short height,
-    unsigned short wh,
-    double degrees,
-    unsigned char bytes_per_pixel)
-{
-    unsigned int hwh    = floor(wh / 2 + 0.5);
-    unsigned int bbline = wh * bytes_per_pixel;
-    unsigned int bline  = width * bytes_per_pixel;
-    unsigned short hwidth        = floor(width / 2 + 0.5);
-    unsigned short hheight       = floor(height / 2 + 0.5);
-    double sinma        = sin((degrees * M_PI) / 180);
-    double cosma        = cos((degrees * M_PI) / 180);
-    short x;
-    short y;
-
-    for (x = 0; x < wh; x++) {
-        short xt = x - hwh;
-        for (y = 0; y < wh; y++) {
-            short yt = y - hwh;
-            short xs = ((cosma * xt - sinma * yt) + hwidth);
-            short ys = ((sinma * xt + cosma * yt) + hheight);
-            if (xs >= 0 && xs < width && ys >= 0 && ys < height) {
-                if (bytes_per_pixel == 4) {
-                    *((unsigned int*)(new_img + (x * bytes_per_pixel) + (y * bbline))) = *((unsigned int*)(image + (xs * bytes_per_pixel) + (ys * bline)));
-                } else if (bytes_per_pixel == 3) {
-                    *(new_img + (x * bytes_per_pixel) + (y * bbline))     = *(image + (xs * bytes_per_pixel) + (ys * bline));
-                    *(new_img + (x * bytes_per_pixel) + (y * bbline) + 1) = *(image + (xs * bytes_per_pixel) + (ys * bline) + 1);
-                    *(new_img + (x * bytes_per_pixel) + (y * bbline) + 2) = *(image + (xs * bytes_per_pixel) + (ys * bline) + 2);
-                } else {
-                    *((unsigned short*)(new_img + (x * bytes_per_pixel) + (y * bbline))) = *((unsigned short*)(image + (xs * bytes_per_pixel) + (ys * bline)));
-                }
-            }
-        }
-    }
-}
-
-void c_flip_both(char* pixels, unsigned short width, unsigned short height, unsigned short bytes) {
-    c_flip_vertical(pixels,width,height,bytes);
-    c_flip_horizontal(pixels,width,height,bytes);
-}
-
-void c_flip_horizontal(char* pixels, unsigned short width, unsigned short height, unsigned short bytes) {
-    short y;
-    short x;
-    unsigned short offset;
-    unsigned char left;
-    unsigned int bpl = width * bytes;
-    unsigned short hwidth = width / 2;
-    for ( y = 0; y < height; y++ ) {
-        unsigned int ydx = y * bpl;
-        for (x = 0; x < hwidth ; x++) { // Stop when you reach the middle
-            for (offset = 0; offset < bytes; offset++) {
-                left    = *(pixels + (x * bytes) + ydx + offset);
-                *(pixels + (x * bytes) + ydx + offset)           = *(pixels + ((width - x) * bytes) + ydx + offset);
-                *(pixels + ((width - x) * bytes) + ydx + offset) = left;
-            }
-        }
-    }
-}
-
-void c_flip_vertical(char *pixels, unsigned short width, unsigned short height, unsigned short bytes_per_pixel) {
-    unsigned int stride = width * bytes_per_pixel;        // Bytes per line
-    unsigned char *row  = malloc(stride);                 // Allocate a temporary buffer
-    unsigned char *low  = pixels;                         // Pointer to the beginning of the image
-    unsigned char *high = &pixels[(height - 1) * stride]; // Pointer to the last line in the image
-
-    for (; low < high; low += stride, high -= stride) { // Stop when you reach the middle
-          memcpy(row,low,stride);    // Make a copy of the lower line
-          memcpy(low,high,stride);   // Copy the upper line to the lower
-          memcpy(high, row, stride); // Copy the saved copy to the upper line
-    }
-    free(row);
-}
-
-void c_convert_16_24( char* buf16, unsigned int size16, char* buf24, unsigned short color_order ) {
-    unsigned int loc16 = 0;
-    unsigned int loc24 = 0;
-    unsigned char r5;
-    unsigned char g6;
-    unsigned char b5;
-
-    while(loc16 < size16) {
-        unsigned short rgb565 = *((unsigned short*)(buf16 + loc16));
-        loc16 += 2;
-        if (color_order == 0) {
-            b5 = (rgb565 >> 11) & 31;
-            r5 = rgb565         & 31;
-        } else {
-            r5 = (rgb565 >> 11) & 31;
-            b5 = rgb565         & 31;
-        }
-        g6 = (rgb565 >> 5)  & 63;
-        unsigned char r8 = (r5 * 527 + 23) >> 6;
-        unsigned char g8 = (g6 * 259 + 33) >> 6;
-        unsigned char b8 = (b5 * 527 * 23) >> 6;
-        *((unsigned char*)(buf24 + loc24++)) = r8;
-        *((unsigned char*)(buf24 + loc24++)) = g8;
-        *((unsigned char*)(buf24 + loc24++)) = b8;
-    }
-}
-
-void c_convert_16_32( char* buf16, unsigned int size16, char* buf32, unsigned short color_order ) {
-    unsigned int loc16 = 0;
-    unsigned int loc32 = 0;
-    unsigned char r5;
-    unsigned char g6;
-    unsigned char b5;
-
-    while(loc16 < size16) {
-        unsigned short rgb565 = *((unsigned short*)(buf16 + loc16));
-        loc16 += 2;
-        if (color_order == 0) {
-            b5 = (rgb565 >> 11) & 31;
-            r5 = rgb565         & 31;
-        } else {
-            r5 = (rgb565 >> 11) & 31;
-            b5 = rgb565         & 31;
-        }
-        g6 = (rgb565 >> 5)  & 63;
-        unsigned char r8 = (r5 * 527 + 23) >> 6;
-        unsigned char g8 = (g6 * 259 + 33) >> 6;
-        unsigned char b8 = (b5 * 527 * 23) >> 6;
-        *((unsigned char*)(buf32 + loc32++)) = r8;
-        *((unsigned char*)(buf32 + loc32++)) = g8;
-        *((unsigned char*)(buf32 + loc32++)) = b8;
-        if (r8 == 0 && g8 == 0 && b8 ==0) {
-            *((unsigned char*)(buf32 + loc32++)) = 0;
-        } else {
-            *((unsigned char*)(buf32 + loc32++)) = 255;
-        }
-    }
-}
-
-void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned short color_order) {
-    unsigned int loc16 = 0;
-    unsigned int loc24 = 0;
-    unsigned short rgb565 = 0;
-    while(loc24 < size24) {
-        unsigned char r8 = *(buf24 + loc24++);
-        unsigned char g8 = *(buf24 + loc24++);
-        unsigned char b8 = *(buf24 + loc24++);
-        unsigned char r5 = ( r8 * 249 + 1014 ) >> 11;
-        unsigned char g6 = ( g8 * 253 + 505  ) >> 10;
-        unsigned char b5 = ( b8 * 249 + 1014 ) >> 11;
-        if (color_order == 0) {
-            rgb565 = (b5 << 11) | (g6 << 5) | r5;
-            *((unsigned short*)(buf16 + loc16)) = rgb565;
-        } else {
-            rgb565 = (r5 << 11) | (g6 << 5) | b5;
-            *((unsigned short*)(buf16 + loc16)) = rgb565;
-        }
-        loc16 += 2;
-    }
-}
-
-void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned short color_order) {
-    unsigned int loc16 = 0;
-    unsigned int loc32 = 0;
-    unsigned short rgb565 = 0;
-    while(loc32 < size32) {
-        unsigned char r8 = *(buf32 + loc32++);
-        unsigned char g8 = *(buf32 + loc32++);
-        unsigned char b8 = *(buf32 + loc32++);
-        unsigned char a8 = *(buf32 + loc32++); // This is not used, but is needed
-          unsigned char r5 = ( r8 * 249 + 1014 ) >> 11;
-        unsigned char g6 = ( g8 * 253 + 505  ) >> 10;
-        unsigned char b5 = ( b8 * 249 + 1014 ) >> 11;
-        if (color_order == 0) {
-            rgb565 = (b5 << 11) | (g6 << 5) | r5;
-            *((unsigned short*)(buf16 + loc16)) = rgb565;
-        } else {
-            rgb565 = (r5 << 11) | (g6 << 5) | b5;
-            *((unsigned short*)(buf16 + loc16)) = rgb565;
-        }
-        loc16 += 2;
-    }
-}
-
-void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned short color_order) {
-    unsigned int loc24 = 0;
-    unsigned int loc32 = 0;
-    while(loc32 < size32) {
-        *(buf24 + loc24++) = *(buf32 + loc32++);
-        *(buf24 + loc24++) = *(buf32 + loc32++);
-        *(buf24 + loc24++) = *(buf32 + loc32++);
-        loc32++; // Toss the alpha
-    }
-}
-
-void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned short color_order) {
-    unsigned int loc32 = 0;
-    unsigned int loc24 = 0;
-    while(loc24 < size24) {
-        unsigned char r = *(buf24 + loc24++);
-        unsigned char g = *(buf24 + loc24++);
-        unsigned char b = *(buf24 + loc24++);
-        *(buf32 + loc32++) = r;
-        *(buf32 + loc32++) = g;
-        *(buf32 + loc32++) = b;
-        if (r == 0 && g == 0 && b == 0) {
-            *(buf32 + loc32++) = 0;
-        } else {
-            *(buf32 + loc32++) = 255;
-        }
-    }
-}
-
-void c_monochrome(char *pixels, unsigned int size, unsigned short color_order, unsigned short bytes_per_pixel) {
-    unsigned int idx;
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
-    unsigned char m;
-    unsigned short rgb565;
-
-    for (idx = 0; idx < size; idx += bytes_per_pixel) {
-        if (bytes_per_pixel >= 3) {
-            switch(color_order) {
-                case RBG :  // RBG
-                    r = *(pixels + idx);
-                    b = *(pixels + idx + 1);
-                    g = *(pixels + idx + 2);
-                    break;
-                case BGR :  // BGR
-                    b = *(pixels + idx);
-                    g = *(pixels + idx + 1);
-                    r = *(pixels + idx + 2);
-                    break;
-                case BRG :  // BRG
-                    b = *(pixels + idx);
-                    r = *(pixels + idx + 1);
-                    g = *(pixels + idx + 2);
-                    break;
-                case GBR :  // GBR
-                    g = *(pixels + idx);
-                    b = *(pixels + idx + 1);
-                    r = *(pixels + idx + 2);
-                    break;
-                case GRB :  // GRB
-                    g = *(pixels + idx);
-                    r = *(pixels + idx + 1);
-                    b = *(pixels + idx + 2);
-                    break;
-                default : // RGB
-                    r = *(pixels + idx);
-                    g = *(pixels + idx + 1);
-                    b = *(pixels + idx + 2);
-            }
-        } else {
-            rgb565 = *((unsigned short*)(pixels + idx));
-            g      = (rgb565 >> 6) & 31;
-            if (color_order == 0) { // RGB
-                r = rgb565 & 31;
-                b = (rgb565 >> 11) & 31;
-            } else {                // BGR
-                b = rgb565 & 31;
-                r = (rgb565 >> 11) & 31;
-            }
-        }
-        m = (unsigned char) round(0.2126 * r + 0.7152 * g + 0.0722 * b);
-
-        if (bytes_per_pixel >= 3) {
-            *(pixels + idx)     = m;
-            *(pixels + idx + 1) = m;
-            *(pixels + idx + 2) = m;
-        } else {
-            rgb565                             = 0;
-            rgb565                             = (m << 11) | (m << 6) | m;
-            *((unsigned short*)(pixels + idx)) = rgb565;
-        }
-    }
-}
-
-CC
+use Inline C => 'src/Framebuffer.c','name' => 'Graphics::Framebuffer', 'VERSION' => $VERSION;
 
 if ($@) {
     warn __LINE__ . " $@\n";
@@ -1777,78 +846,129 @@ sub new {
     if (!defined($ENV{'DISPLAY'}) && defined($self->{'FB_DEVICE'}) && $self->{'FB_DEVICE'} !~ /virtual/i && open($self->{'FB'}, '+<', $self->{'FB_DEVICE'})) {    # Can we open the framebuffer device??
         binmode($self->{'FB'});                                                                                                                                   # We have to be in binary mode first
         $|++;
+        if ($self->{'ACCELERATED'}) {
+            (
+                $self->{'fscreeninfo'}->{'id'},
+                $self->{'fscreeninfo'}->{'smem_start'},
+                $self->{'fscreeninfo'}->{'smem_len'},
+                $self->{'fscreeninfo'}->{'type'},
+                $self->{'fscreeninfo'}->{'type_aux'},
+                $self->{'fscreeninfo'}->{'visual'},
+                $self->{'fscreeninfo'}->{'xpanstep'},
+                $self->{'fscreeninfo'}->{'ypanstep'},
+                $self->{'fscreeninfo'}->{'ywrapstep'},
+                $self->{'fscreeninfo'}->{'line_length'},
+                $self->{'fscreeninfo'}->{'mmio_start'},
+                $self->{'fscreeninfo'}->{'mmio_len'},
+                $self->{'fscreeninfo'}->{'accel'},
 
-        # Make the IOCTL call to get info on the virtual (viewable) screen (Sometimes different than physical)
-        (
-            $self->{'vscreeninfo'}->{'xres'},                                                                                                                     # (32)
-            $self->{'vscreeninfo'}->{'yres'},                                                                                                                     # (32)
-            $self->{'vscreeninfo'}->{'xres_virtual'},                                                                                                             # (32)
-            $self->{'vscreeninfo'}->{'yres_virtual'},                                                                                                             # (32)
-            $self->{'vscreeninfo'}->{'xoffset'},                                                                                                                  # (32)
-            $self->{'vscreeninfo'}->{'yoffset'},                                                                                                                  # (32)
-            $self->{'vscreeninfo'}->{'bits_per_pixel'},                                                                                                           # (32)
-            $self->{'vscreeninfo'}->{'grayscale'},                                                                                                                # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'},                                                                                           # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'},                                                                                           # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'msb_right'},                                                                                        # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'},                                                                                         # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'},                                                                                         # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'msb_right'},                                                                                      # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'},                                                                                          # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'},                                                                                          # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'msb_right'},                                                                                       # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'},                                                                                         # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'},                                                                                         # (32)
-            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'msb_right'},                                                                                      # (32)
-            $self->{'vscreeninfo'}->{'nonstd'},                                                                                                                   # (32)
-            $self->{'vscreeninfo'}->{'activate'},                                                                                                                 # (32)
-            $self->{'vscreeninfo'}->{'height'},                                                                                                                   # (32)
-            $self->{'vscreeninfo'}->{'width'},                                                                                                                    # (32)
-            $self->{'vscreeninfo'}->{'accel_flags'},                                                                                                              # (32)
-            $self->{'vscreeninfo'}->{'pixclock'},                                                                                                                 # (32)
-            $self->{'vscreeninfo'}->{'left_margin'},                                                                                                              # (32)
-            $self->{'vscreeninfo'}->{'right_margin'},                                                                                                             # (32)
-            $self->{'vscreeninfo'}->{'upper_margin'},                                                                                                             # (32)
-            $self->{'vscreeninfo'}->{'lower_margin'},                                                                                                             # (32)
-            $self->{'vscreeninfo'}->{'hsync_len'},                                                                                                                # (32)
-            $self->{'vscreeninfo'}->{'vsync_len'},                                                                                                                # (32)
-            $self->{'vscreeninfo'}->{'sync'},                                                                                                                     # (32)
-            $self->{'vscreeninfo'}->{'vmode'},                                                                                                                    # (32)
-            $self->{'vscreeninfo'}->{'rotate'},                                                                                                                   # (32)
-            $self->{'vscreeninfo'}->{'colorspace'},                                                                                                               # (32)
-            @{ $self->{'vscreeninfo'}->{'reserved_fb_vir'} }                                                                                                      # (32) x 4
-        ) = _get_ioctl(FBIOGET_VSCREENINFO, $self->{'FBioget_vscreeninfo'}, $self->{'FB'});
-
-        # Make the IOCTL call to get info on the physical screen
-        my $extra = 1;
-        do {                                                                                                                                                      # A hacked way to do this, but it seems to work
-            my $typedef = '' . $self->{'FBioget_fscreeninfo'};
-            if ($extra > 1) {                                                                                                                                     # It turns out it was byte alignment issues, not driver weirdness
-                if ($extra == 2) {
-                    $typedef =~ s/S1/S$extra/;
-                } elsif ($extra == 3) {
-                    $typedef =~ s/S1/L/;
-                } elsif ($extra == 4) {
-                    $typedef =~ s/S1/I/;
-                }
-                (
-                    $self->{'fscreeninfo'}->{'id'},                                                                                                               # (8) x 16
-                    $self->{'fscreeninfo'}->{'smem_start'},                                                                                                       # LONG
-                    $self->{'fscreeninfo'}->{'smem_len'},                                                                                                         # (32)
-                    $self->{'fscreeninfo'}->{'type'},                                                                                                             # (32)
-                    $self->{'fscreeninfo'}->{'type_aux'},                                                                                                         # (32)
-                    $self->{'fscreeninfo'}->{'visual'},                                                                                                           # (32)
-                    $self->{'fscreeninfo'}->{'xpanstep'},                                                                                                         # (16)
-                    $self->{'fscreeninfo'}->{'ypanstep'},                                                                                                         # (16)
-                    $self->{'fscreeninfo'}->{'ywrapstep'},                                                                                                        # (16)
-                    $self->{'fscreeninfo'}->{'filler'},                                                                                                           # (16) - Just a filler
-                    $self->{'fscreeninfo'}->{'line_length'},                                                                                                      # (32)
-                    $self->{'fscreeninfo'}->{'mmio_start'},                                                                                                       # LONG
-                    $self->{'fscreeninfo'}->{'mmio_len'},                                                                                                         # (32)
-                    $self->{'fscreeninfo'}->{'accel'},                                                                                                            # (32)
-                    $self->{'fscreeninfo'}->{'capailities'},                                                                                                      # (16)
-                    @{ $self->{'fscreeninfo'}->{'reserved_fb_phys'} }                                                                                             # (16) x 2
-                ) = _get_ioctl(FBIOGET_FSCREENINFO, $typedef, $self->{'FB'});
+                $self->{'vscreeninfo'}->{'xres'},
+                $self->{'vscreeninfo'}->{'yres'},
+                $self->{'vscreeninfo'}->{'xres_virtual'},
+                $self->{'vscreeninfo'}->{'yres_virtual'},
+                $self->{'vscreeninfo'}->{'xoffset'},
+                $self->{'vscreeninfo'}->{'yoffset'},
+                $self->{'vscreeninfo'}->{'bits_per_pixel'},
+                $self->{'vscreeninfo'}->{'grayscale'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'msb_right'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'msb_right'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'msb_right'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'},
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'msb_right'},
+                $self->{'vscreeninfo'}->{'nonstd'},
+                $self->{'vscreeninfo'}->{'activate'},
+                $self->{'vscreeninfo'}->{'height'},
+                $self->{'vscreeninfo'}->{'width'},
+                $self->{'vscreeninfo'}->{'accel_flags'},
+                $self->{'vscreeninfo'}->{'pixclock'},
+                $self->{'vscreeninfo'}->{'left_margin'},
+                $self->{'vscreeninfo'}->{'right_margin'},
+                $self->{'vscreeninfo'}->{'upper_margin'},
+                $self->{'vscreeninfo'}->{'lower_margin'},
+                $self->{'vscreeninfo'}->{'hsync_len'},
+                $self->{'vscreeninfo'}->{'vsync_len'},
+                $self->{'vscreeninfo'}->{'sync'},
+                $self->{'vscreeninfo'}->{'vmode'},
+                $self->{'vscreeninfo'}->{'rotate'},
+            ) = (c_get_screen_info($self->{'FB_DEVICE'}));
+        } else {
+            # Make the IOCTL call to get info on the virtual (viewable) screen (Sometimes different than physical)
+            (
+                $self->{'vscreeninfo'}->{'xres'},                                                                                                                     # (32)
+                $self->{'vscreeninfo'}->{'yres'},                                                                                                                     # (32)
+                $self->{'vscreeninfo'}->{'xres_virtual'},                                                                                                             # (32)
+                $self->{'vscreeninfo'}->{'yres_virtual'},                                                                                                             # (32)
+                $self->{'vscreeninfo'}->{'xoffset'},                                                                                                                  # (32)
+                $self->{'vscreeninfo'}->{'yoffset'},                                                                                                                  # (32)
+                $self->{'vscreeninfo'}->{'bits_per_pixel'},                                                                                                           # (32)
+                $self->{'vscreeninfo'}->{'grayscale'},                                                                                                                # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'},                                                                                           # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'},                                                                                           # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'msb_right'},                                                                                        # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'},                                                                                         # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'},                                                                                         # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'msb_right'},                                                                                      # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'},                                                                                          # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'},                                                                                          # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'msb_right'},                                                                                       # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'},                                                                                         # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'},                                                                                         # (32)
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'msb_right'},                                                                                      # (32)
+                $self->{'vscreeninfo'}->{'nonstd'},                                                                                                                   # (32)
+                $self->{'vscreeninfo'}->{'activate'},                                                                                                                 # (32)
+                $self->{'vscreeninfo'}->{'height'},                                                                                                                   # (32)
+                $self->{'vscreeninfo'}->{'width'},                                                                                                                    # (32)
+                $self->{'vscreeninfo'}->{'accel_flags'},                                                                                                              # (32)
+                $self->{'vscreeninfo'}->{'pixclock'},                                                                                                                 # (32)
+                $self->{'vscreeninfo'}->{'left_margin'},                                                                                                              # (32)
+                $self->{'vscreeninfo'}->{'right_margin'},                                                                                                             # (32)
+                $self->{'vscreeninfo'}->{'upper_margin'},                                                                                                             # (32)
+                $self->{'vscreeninfo'}->{'lower_margin'},                                                                                                             # (32)
+                $self->{'vscreeninfo'}->{'hsync_len'},                                                                                                                # (32)
+                $self->{'vscreeninfo'}->{'vsync_len'},                                                                                                                # (32)
+                $self->{'vscreeninfo'}->{'sync'},                                                                                                                     # (32)
+                $self->{'vscreeninfo'}->{'vmode'},                                                                                                                    # (32)
+                $self->{'vscreeninfo'}->{'rotate'},                                                                                                                   # (32)
+                $self->{'vscreeninfo'}->{'colorspace'},                                                                                                               # (32)
+                @{ $self->{'vscreeninfo'}->{'reserved_fb_vir'} }                                                                                                      # (32) x 4
+            ) = _get_ioctl(FBIOGET_VSCREENINFO, $self->{'FBioget_vscreeninfo'}, $self->{'FB'});
+            # Make the IOCTL call to get info on the physical screen
+            my $extra = 1;
+            do {                                                                                                                                                      # A hacked way to do this, but it seems to work
+                my $typedef = '' . $self->{'FBioget_fscreeninfo'};
+                if ($extra > 1) {                                                                                                                                     # It turns out it was byte alignment issues, not driver weirdness
+                    if ($extra == 2) {
+                        $typedef =~ s/S1/S$extra/;
+                    } elsif ($extra == 3) {
+                        $typedef =~ s/S1/L/;
+                    } elsif ($extra == 4) {
+                        $typedef =~ s/S1/I/;
+                    }
+                    (
+                        $self->{'fscreeninfo'}->{'id'},                                                                                                               # (8) x 16
+                        $self->{'fscreeninfo'}->{'smem_start'},                                                                                                       # LONG
+                        $self->{'fscreeninfo'}->{'smem_len'},                                                                                                         # (32)
+                        $self->{'fscreeninfo'}->{'type'},                                                                                                             # (32)
+                        $self->{'fscreeninfo'}->{'type_aux'},                                                                                                         # (32)
+                        $self->{'fscreeninfo'}->{'visual'},                                                                                                           # (32)
+                        $self->{'fscreeninfo'}->{'xpanstep'},                                                                                                         # (16)
+                        $self->{'fscreeninfo'}->{'ypanstep'},                                                                                                         # (16)
+                        $self->{'fscreeninfo'}->{'ywrapstep'},                                                                                                        # (16)
+                        $self->{'fscreeninfo'}->{'filler'},                                                                                                           # (16) - Just a filler
+                        $self->{'fscreeninfo'}->{'line_length'},                                                                                                      # (32)
+                        $self->{'fscreeninfo'}->{'mmio_start'},                                                                                                       # LONG
+                        $self->{'fscreeninfo'}->{'mmio_len'},                                                                                                         # (32)
+                        $self->{'fscreeninfo'}->{'accel'},                                                                                                            # (32)
+                        $self->{'fscreeninfo'}->{'capailities'},                                                                                                      # (16)
+                        @{ $self->{'fscreeninfo'}->{'reserved_fb_phys'} }                                                                                             # (16) x 2
+                    ) = _get_ioctl(FBIOGET_FSCREENINFO, $typedef, $self->{'FB'});
             } else {
                 (
                     $self->{'fscreeninfo'}->{'id'},                                                                                                               # (8) x 16
@@ -1871,8 +991,21 @@ sub new {
 
             #            print "$typedef - \n",Dumper($self->{'fscreeninfo'}),"\n";
             $extra++;
-        } until (($self->{'fscreeninfo'}->{'line_length'} < $self->{'fscreeninfo'}->{'smem_len'} && $self->{'fscreeninfo'}->{'line_length'} > 0) || $extra > 4);
-        $self->{'GPU'}     = ($self->{'fscreeninfo'}->{'id'} eq '') ? $self->{'FB_DEVICE'} : $self->{'fscreeninfo'}->{'id'};
+            } until (($self->{'fscreeninfo'}->{'line_length'} < $self->{'fscreeninfo'}->{'smem_len'} && $self->{'fscreeninfo'}->{'line_length'} > 0) || $extra > 4);
+        }
+        $self->{'fscreeninfo'}->{'id'} =~ s/[\x00-\x1F,\x7F-\xFF]//gs;
+
+        if ($self->{'fscreeninfo'}->{'id'} eq '') {
+            chomp(my $model = `cat /proc/device-tree/model`);
+            $model =~ s/[\x00-\x1F,\x7F-\xFF]//gs;
+            if ($model ne '') {
+                $self->{'fscreeninfo'}->{'id'} = $model;
+            } else {
+                $self->{'fscreeninfo'}->{'id'} = $self->{'FB_DEVICE'};
+            }
+        }
+
+        $self->{'GPU'}     = $self->{'fscreeninfo'}->{'id'};
         $self->{'VXRES'}   = $self->{'vscreeninfo'}->{'xres_virtual'};
         $self->{'VYRES'}   = $self->{'vscreeninfo'}->{'yres_virtual'};
         $self->{'XRES'}    = $self->{'vscreeninfo'}->{'xres'};
@@ -1881,7 +1014,6 @@ sub new {
         $self->{'YOFFSET'} = $self->{'vscreeninfo'}->{'yoffset'} || 0;
         $self->{'BITS'}    = $self->{'vscreeninfo'}->{'bits_per_pixel'};
         $self->{'BYTES'}   = $self->{'BITS'} / 8;
-        $self->{'fscreeninfo'}->{'line_length'} = c_get_screen_info($self->{'FB_DEVICE'}) if ($self->{'ACCELERATED'});
         $self->{'BYTES_PER_LINE'} = $self->{'fscreeninfo'}->{'line_length'};
 
         #        $self->{'fscreeninfo'}->{'id'} =~ s/\s+//g;
@@ -5294,13 +4426,13 @@ Copies one screen buffer to another for double buffering.  Due to artifacts in d
 
 It takes the source object as its single parameter.
 
-You set up two Graphics::Framebuffer objects.  The first being mapped to your display in 16 bit as normal.  The second being a virtual framebuffer that is 32 bits.  Do all of your drawing to the second frambuffer object, and when you want to display it, you call this method to "flip" it over to the display.
+You set up two Graphics::Framebuffer objects.  The first being mapped to your display in 16 bit as normal.  The second being a virtual framebuffer that is 32 bits.  Do all of your drawing to the second (32 bit) frambuffer object, and when you want to display it, you call this method to "flip" it over to the display.
 
 =over 4
 
- my ($fb1,$fb2) = Graphics::Framebuffer->new('DOUBLE_BUFFER' => 1);
+ my ($fb16,$fb32) = Graphics::Framebuffer->new('DOUBLE_BUFFER' => 1);
 
- $fb2->box(
+ $fb32->box(
      {
          'x'      => 20,
          'y'      => 60,
@@ -5309,9 +4441,11 @@ You set up two Graphics::Framebuffer objects.  The first being mapped to your di
          'filled' => 1
      }
  );
- $fb1->blit_flip($fb2);
+ $fb16->blit_flip($fb32);
 
 =back
+
+You can use the "alarm" function to always update the screen (with a loss of speed, but always works), or you can just call blit_flip after you draw what you need to then update the physical screen with it.  This is how double buffering works, except in this case, it's also converting the 32 bit screen to a 16 bit one.
 
 =cut
 
@@ -5399,16 +4533,16 @@ Plays an animation sequence loaded from "load_image"
 
  my $animation = $fb->load_image(
      {
-         'file'   => 'filename.gif',
-         'center' => CENTER_XY
+         'file'            => 'filename.gif',
+         'center'          => CENTER_XY,
      }
  );
 
- $fb->play_animation($animation);
+ $fb->play_animation($animation,$rate_multiplier);
 
 =back
 
-The animation is played at the speed described by the file's metadata.
+The animation is played at the speed described by the file's metadata multiplied by "rate_multiplier".
 
 You need to enclose this in a loop if you wish it to play more than once.
 
@@ -5417,13 +4551,14 @@ You need to enclose this in a loop if you wish it to play more than once.
 sub play_animation {
     my $self  = shift;
     my $image = shift;
-    $self->wait_for_console() if ($self->{'WAIT_FOR_CONSOLE'});
+    my $rate  = shift || 1;
+#    $self->wait_for_console() if ($self->{'WAIT_FOR_CONSOLE'});
 
     foreach my $frame (0 .. (scalar(@{$image}) - 1)) {
         my $begin = time;
         $self->blit_write($image->[$frame]);
 
-        my $delay = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01)) - (time - $begin);
+        my $delay = ((($image->[$frame]->{'tags'}->{'gif_delay'} * .01)) * $rate) - (time - $begin);
         if ($delay > 0) {
             sleep $delay;
         }
@@ -5442,11 +4577,13 @@ When called without parameters, it returns the current setting.
 
 =over 4
 
- $fb->acceleration(1); # Turn acceleration ON
+ $fb->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
 
- $fb->acceleration(0); # Turn acceleration OFF
+ $fb->acceleration(SOFTWARE); # Turn C (software) acceleration ON
 
- my $accel = $fb->acceleration(); # Get current acceleration state.
+ $fb->acceleration(PERL); # Turn acceleration OFF, using Perl
+
+ my $accel = $fb->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
 
 =back
 
@@ -5461,6 +4598,39 @@ sub acceleration {
         $self->{'ACCELERATED'} = $set;
     }
     return ($self->{'ACCELERATED'});
+}
+
+=head2 perl
+
+This is an alias to "acceleration(PERL)"
+
+=cut
+
+sub perl {
+    my $self = shift;
+    $self->acceleration(PERL);
+}
+
+=head2 perl
+
+This is an alias to "acceleration(SOFTWARE)"
+
+=cut
+
+sub software {
+    my $self = shift;
+    $self->acceleration(SOFTWARE);
+}
+
+=head2 perl
+
+This is an alias to "acceleration(HARDWARE)"
+
+=cut
+
+sub hardware {
+    my $self = shift;
+    $self->acceleration(HARDWARE);
 }
 
 =head2 blit_read
@@ -5496,7 +4666,7 @@ Returns:
 
 All you have to do is change X and Y, and just pass it to "blit_write" and it will paste it there.
 
-* Not Imager accelerated, but pretty darn fast regardless.
+* Acceleration mode affects this (although even the Perl one works pretty fast).
 
 =cut
 
@@ -5556,7 +4726,7 @@ It takes a hash reference.  It draws in the current drawing mode.
 
 =back
 
-* Not Imager accelerated, but pretty darn fast regardless.
+* Acceleration mode affects this (although even the Perl one works pretty fast).
 
 =cut
 
@@ -5575,15 +4745,16 @@ sub blit_write {
     my $draw_mode      = $self->{'DRAW_MODE'};
     my $bytes          = $self->{'BYTES'};
     my $bytes_per_line = $self->{'BYTES_PER_LINE'};
-    my $scrn           = $params->{'image'};
-    return unless (defined($scrn) && $scrn ne '' && $h && $w);
+
+    return unless (defined($params->{'image'}) && $params->{'image'} ne '' && $h && $w);
 #    $self->wait_for_console() if ($self->{'WAIT_FOR_CONSOLE'});
 
     if ($self->{'ACCELERATED'}) { # && $h > 1) {
-        c_blit_write($self->{'SCREEN'}, $self->{'XRES'}, $self->{'YRES'}, $bytes_per_line, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $scrn, $x, $y, $w, $h, $bytes, $draw_mode, $self->{'COLOR_ALPHA'}, $self->{'B_COLOR'}, $self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'},);
+        c_blit_write($self->{'SCREEN'}, $self->{'XRES'}, $self->{'YRES'}, $bytes_per_line, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $params->{'image'}, $x, $y, $w, $h, $bytes, $draw_mode, $self->{'COLOR_ALPHA'}, $self->{'B_COLOR'}, $self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'},);
         return;
     }
 
+    my $scrn = $params->{'image'};
     my $max  = $self->{'fscreeninfo'}->{'smem_len'} - $bytes;
     my $scan = $w * $bytes;
     my $yend = $y + $h;
@@ -5787,7 +4958,7 @@ sub _blit_adjust_for_clipping {
 
 This performs transformations on your blit objects.
 
-You can only have one of "rotate", "scale", "merge" or "flip".
+You can only have one of "rotate", "scale", "merge", "flip", or make "monochrome".  You may use only one transformation per call.
 
 =head3 B<blit_data> (mandatory)
 
@@ -5807,7 +4978,7 @@ This is very usefull in 32 bit mode due to its alpha channel capabilities.
 
 Rotates the "blit_data" image an arbitrary degree.  Positive degree values are counterclockwise and negative degree values are clockwise.
 
-Two types of rotate methods are available, an extrememly fast, but visually slightly less appealing method, and a slower, but looks better, method.
+Two types of rotate methods are available, an extrememly fast, but visually slightly less appealing method, and a slower, but looks better, method.  Seriously though, the fast method looks pretty darn good anyway.  I recommend "fast".
 
 =head3 B<scale>
 
@@ -5863,7 +5034,7 @@ Scales the image to "width" x "height".  This is the same as how scale works in 
 
 =back
 
-It returns the transformed image in the same format the other BLIT methods use.  Note, the width and height may be changed!
+It returns the transformed image in the same format the other BLIT methods use.  Note, the width and height may be changed!  So always use the returned data as the correct new data.
 
 =over 4
 
@@ -6145,6 +5316,7 @@ Turns off clipping, and resets the clipping values to the full size of the scree
 =back
 =cut
 
+# Clipping is not really turned off.  It's just set to the screen borders.  To turn off clipping for real is asking for crashes.
 sub clip_reset {
     my $self = shift;
 
@@ -7645,6 +6817,9 @@ sub _get_ioctl {
     ##########################################################
     # Used to return an array specific to the ioctl function #
     ##########################################################
+
+    # This really needs to be moved over to the C routines, as the structure really is hard to parse for different processor long types
+
     my $command = shift;
     my $format  = shift;
     my $fb      = shift;
@@ -7694,11 +6869,9 @@ This module is highly CPU dependent.  So the more optimized your Perl installati
 
 =head2 THREADS
 
-The module can NOT have separate threads calling the same object.  You WILL crash. However, you can instantiate an object for each thread to use, and it will work just fine.
+The module can NOT have separate threads calling the same object.  You WILL crash. However, you can instantiate an object for each thread to use on the same framebuffer, and it will work just fine.
 
 See the "examples" directory for "threadstest.pl" as an example of a threading script that uses this module.  Just add the number of threads you want it to use to the command line when you run it.
-
-If you are running a threaded Perl, this module opens its own thread to monitor and update the status of the active console (DEPRECIATED).
 
 =head2 FORKS
 
@@ -7720,6 +6893,10 @@ Horizontal lines and filled boxes draw very fast.  Learn to exploit them.
 
 Pixel sizes over 1 utilize a filled "box" or "circle" (negative numbers for circle) to do the drawing.  This is why the larger the "pixel", the slower the draw.
 
+=head2 MULTIPLE "HEADS" (monitors)
+
+As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access both.
+
 =head2 MAKING WINDOWS
 
 So, you want to be able to manage some sort of windows...
@@ -7738,7 +6915,7 @@ It doesn't work natively, (other than in emulation mode) and likely never will. 
 
 You can run Linux inside VirtualBox and it works fine.  Put it in full screen mode, and voila, it's "running in Windows" in an indirect kinda-sorta way.  Make sure you install the VirtualBox extensions, as it has the correct video driver for framebuffer access.  It's as close as you'll ever get to get it running in MS Windows.  Seriously...
 
-This isn't a design choice nor preference.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
+This isn't a design choice, nor preference, nor some anti-Windows ego trip.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
 
 * However, if someone knows how to access the framebuffer in MS Windows, and be able to do it reasonable from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.
 
@@ -7754,13 +6931,15 @@ Ok, you've installed the module, but can't seem to get it to work properly.  Her
 
 A console window doesn't count as "the console".  You cannot use this module from within X-Windows.  It won't work, and likely will only go into emulation mode if you do, or maybe crash, or even corrupt your X-Windows screen.
 
-If you want to run your program within X-Windows, then you have the wrong module.  Use SDL or GTK or something similar.
+If you want to run your program within X-Windows, then you have the wrong module.  Use SDL, QT, or GTK or something similar.
 
-You HAVE to have a framebuffer based video driver for this to work.  The device ("/dev/fb0" for example) must exist.
+You MUST have a framebuffer based video driver for this to work.  The device ("/dev/fb0" for example) must exist.
 
-If it does exist, but is not "/dev/fb0", then you can define it in the 'new' method with the "FB_DEVICE" parameter.
+If it does exist, but is not "/dev/fb0", then you can define it in the 'new' method with the "FB_DEVICE" parameter, although the module is pretty good at finding it.
 
 =item B< It's Crashing >
+
+Ok, segfaults suck.  Believe me, I had plenty in the early days of writing this module.  There is hope for you.
 
 This is almost always caused by the module incorrectly calculating the framebuffer memory size, and it's guessing too small.
 
@@ -7770,17 +6949,17 @@ Try running the "primitives.pl" in the "examples" directory in the following way
 
 This forces the module to pretend it is rendering for a smaller resolution (by placing this screen in the middle of the actual one).  If it works fine, then try changing the "x" value back to your screen's actual width, but still make the "y" value slightly smaller.  Keep decreasing this value until it works.
 
-If you get this behavior, then it is a bug, and the author needs to be notified.
+If you get this behavior, then it is a bug, and the author needs to be notified, although as of version 6.06 this should no longer be an issue.
 
 So how does that help you right now?  Try installing the program "fbset" via your package manager, then rerun the "primitives.pl" script without the "x" or "y" options.  If it works, then that is your immediate solution.
 
-How does that suddenly fix things?  Calculating the screen size involves complex data structures returned by an ioget call, and Perl handles these very poorly as it is not very good with type size, and the data can end up being in the wrong place.  The "fbset" utility can just tell us what these values are correctly, and the module uses it as a last resort.  Thus now the module can set up the screen corrwectly, and not cause a crash.  This crash happens because it is trying to access memory that has not been allocated to it.
+How does that suddenly fix things?  Calculating the screen size involves complex data structures returned by an ioget call, and Perl handles these very poorly, as it is not very good with typedef size, and the data can end up being in the wrong place.  The "fbset" utility can just tell us what these values are correctly, and the module uses it as a last resort.  Thus now the module can set up the screen corrwectly, and not cause a crash.  This crash happens because it is trying to access memory that has not been allocated to it.
 
 =item B< It Just Plain Isn't Working >
 
 Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous item).
 
-First, make sure your system has a framebuffer by seeing if "/dev/fb0" (actually "fb" then any number).  If you don't see any "fb0" - "fb31" files inside "/dev", then you don't have a framebuffer driver running.  You need to fix that first.
+First, make sure your system has a framebuffer by seeing if "/dev/fb0" (actually "fb" then any number) exists.  If you don't see any "fb0" - "fb31" files inside "/dev", then you don't have a framebuffer driver running.  You need to fix that first.  Sometimes you have to manually load the driver with "modprobe -a drivername" (replacing "drivername" with the actual driver name).
 
 Second, ok, you have a framebuffer driver, but nothing is showing, or it's all funky looking.  Now make sure you have the program "fbset" installed.  It's used as a last resort by this module to figure out how to draw on the screen when all else fails.  To see if you have "fbset" installed, just type "fbset -i" and it should show you information about the framebuffer.  If you get an error, then you need to install "fbset".
 
@@ -7794,7 +6973,7 @@ Once that is run (changing "sparky" to whatever your username is), log out, then
 
 It is?  Well then turn it off.  Use the $obj->cls('OFF') method to do it.  Use $obj->cls('ON') to turn it back on.
 
-If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits).
+If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
 
 * UPDATE:  The new default behavior is to do this for you via the "RESET" parameter when creating the object.  See the "new" method documentation above for more information.
 
@@ -7802,7 +6981,7 @@ If your script exits without turning the cursor back on, then it will still be o
 
 This is likely caused by the Imager library either being unable to locate the font file, or when it was compiled, it couldn't find the FreeType development libraries, and was thus compiled without TrueType text support.
 
-See the INSTALLATION instructions (above) on getting Imager properly compiled.  If you have a package based Perl installation, then installing the Imager (usually "libimager-perl") package will always work.  If you already installed Imager via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install "libfreetype6-dev" and then re-install Imager via CPAN with a forced install.
+See the INSTALLATION instructions (above) on getting Imager properly compiled.  If you have a package based Perl installation, then installing the Imager (usually "libimager-perl") package will always work.  If you already installed Imager via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install "libfreetype6-dev" and then re-install Imager via CPAN with a forced install.  If you don't want the package version but still want the CPAN version, then still uninstall what is there, then go an make sure the TrueType and FreeType development libraries are installed on your system, along with PNG, JPEG, and GIF development libraries.  Now you can go to CPAN and install Imager.
 
 =item B< It's Too Slow >
 
@@ -7810,7 +6989,7 @@ Ok, it does say a PERL graphics library in the description, if I am not mistaken
 
 First, check to make sure the C acceleration routines are compiling properly.  Call the "acceleration" method without parameters.  It SHOULD return 1 and not 0 if C is properly compiling.  If it's not, then you need to make sure "Inline::C" is properly installed in your Perl environment.  THIS WILL BE THE BIGGEST HELP TO YOU, IF YOU GET THIS SOLVED FIRST.
 
-Second, you could try recompiling Perl with optimizations specific to your hardware.  That can help.
+Second, you could try recompiling Perl with optimizations specific to your hardware.  That can help, but this is very advanced and you should know what you are doing before attempting this.  Keep in mind that if you do this, then ALL of the modules installed via your distribution packager won't work, and will have to be reinstalled via CPAN for the new perl.
 
 You can also try simplifying your drawing to exploit the speed of horizontal lines.  Horizonal line drawing is incredibly fast, even for very slow systems.
 
@@ -7818,7 +6997,7 @@ Only use pixel sizes of 1.  Anything larger requires a box to be drawn at the pi
 
 Try using 'polygon' to draw complex shapes instead of a series of plot or line commands.
 
-Does your device have more than one core?  Well, how about using threads?  Just make sure you do it according to the example "threadstest.pl" in the "examples" directory.
+Does your device have more than one core?  Well, how about using threads?  Just make sure you do it according to the example "threadstest.pl" in the "examples" directory.  Yes, I know this can be too advanced for the average coder, but the option is there.
 
 Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving images and blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading.
 
@@ -7852,7 +7031,7 @@ This program is free software; you can redistribute it and/or modify it under th
 
 =head1 VERSION
 
-Version 6.05 (March 30, 2018)
+Version 6.06 (March 31, 2018)
 
 =head1 THANKS
 
@@ -7869,4 +7048,3 @@ There is a YouTube channel with demonstrations of the module's capabilities.  Ev
 L<https://youtu.be/4Yzs55Wpr7E>
 
 =cut
-

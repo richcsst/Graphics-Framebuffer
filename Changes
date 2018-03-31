@@ -1221,3 +1221,12 @@ Revision history for Graphics-Framebuffer
        Fixed crashes for Intel GPUs (and perhaps others)
        
        Updated documentation to help with troubleshooting.
+
+6.06   March 31, 2018
+
+       Moved C routines out of the Perl code and into its own file
+
+       Further improved compatibility with all framebuffer GPUs.  The  "fbset"
+       utility should no longer be needed as a backup.  Now C makes this call
+       instead of Perl.  However, for those not able to compile the C routines,
+       the older Perl logic is still there for compatibility.
