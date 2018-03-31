@@ -1,8 +1,7 @@
+
 /* Copyright 2018 Richard Kelsch, All Rights Reserved
  * See the Perl documentation for Graphics::Framebuffer for licensing information.
 */
-
-
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -109,7 +108,7 @@ void c_get_screen_info(char *fb_file) {
 /* Draws a filled circle fast */
 void c_filled_circle(
     char *framebuffer,
-    short x, short y, short r,
+    short x, short y, unsigned short r,
     unsigned char draw_mode,
     unsigned int color,
     unsigned int bcolor,
@@ -120,14 +119,14 @@ void c_filled_circle(
     unsigned short xoffset, unsigned short yoffset,
     unsigned char alpha)
 {
-    int r2   = r * r;
-    int area = r2 << 2;
-    int rr   = r  << 1;
-    int i;
+    short r2   = r * r;
+    short area = r2 << 2;
+    short rr   = r  << 1;
+    short i;
 
     for (i = 0; i < area; i++) {
-        int tx = (i % rr) - r;
-        int ty = (i / rr) - r;
+        short tx = (i % rr) - r;
+        short ty = (i / rr) - r;
 
         if (tx * tx + ty * ty <= r2)
           c_plot(framebuffer,x + tx, y + ty, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
@@ -361,12 +360,12 @@ void c_line(
     unsigned short xoffset, unsigned short yoffset,
     unsigned char alpha)
 {
-    int shortLen = y2 - y1;
-    int longLen  = x2 - x1;
+    short shortLen = y2 - y1;
+    short longLen  = x2 - x1;
     int yLonger  = false;
 
     if (abs(shortLen) > abs(longLen)) {
-        int swap = shortLen;
+        short swap = shortLen;
         shortLen   = longLen;
         longLen    = swap;
         yLonger    = true;
@@ -759,26 +758,26 @@ void c_flip_both(char* pixels, unsigned short width, unsigned short height, unsi
     c_flip_horizontal(pixels,width,height,bytes);
 }
 
-void c_flip_horizontal(char* pixels, unsigned short width, unsigned short height, unsigned short bytes) {
+void c_flip_horizontal(char* pixels, unsigned short width, unsigned short height, unsigned char bytes_per_pixel) {
     short y;
     short x;
     unsigned short offset;
     unsigned char left;
-    unsigned int bpl = width * bytes;
+    unsigned int bpl = width * bytes_per_pixel;
     unsigned short hwidth = width / 2;
     for ( y = 0; y < height; y++ ) {
         unsigned int ydx = y * bpl;
         for (x = 0; x < hwidth ; x++) { // Stop when you reach the middle
-            for (offset = 0; offset < bytes; offset++) {
-                left    = *(pixels + (x * bytes) + ydx + offset);
-                *(pixels + (x * bytes) + ydx + offset)           = *(pixels + ((width - x) * bytes) + ydx + offset);
-                *(pixels + ((width - x) * bytes) + ydx + offset) = left;
+            for (offset = 0; offset < bytes_per_pixel; offset++) {
+                left    = *(pixels + (x * bytes_per_pixel) + ydx + offset);
+                *(pixels + (x * bytes_per_pixel) + ydx + offset)           = *(pixels + ((width - x) * bytes_per_pixel) + ydx + offset);
+                *(pixels + ((width - x) * bytes_per_pixel) + ydx + offset) = left;
             }
         }
     }
 }
 
-void c_flip_vertical(char *pixels, unsigned short width, unsigned short height, unsigned short bytes_per_pixel) {
+void c_flip_vertical(char *pixels, unsigned short width, unsigned short height, unsigned char bytes_per_pixel) {
     unsigned int stride = width * bytes_per_pixel;        // Bytes per line
     unsigned char *row  = malloc(stride);                 // Allocate a temporary buffer
     unsigned char *low  = pixels;                         // Pointer to the beginning of the image
@@ -793,7 +792,7 @@ void c_flip_vertical(char *pixels, unsigned short width, unsigned short height, 
 }
 
 /* bitmap conversions */
-void c_convert_16_24( char* buf16, unsigned int size16, char* buf24, unsigned short color_order ) {
+void c_convert_16_24( char* buf16, unsigned int size16, char* buf24, unsigned char color_order ) {
     unsigned int loc16 = 0;
     unsigned int loc24 = 0;
     unsigned char r5;
@@ -820,7 +819,7 @@ void c_convert_16_24( char* buf16, unsigned int size16, char* buf24, unsigned sh
     }
 }
 
-void c_convert_16_32( char* buf16, unsigned int size16, char* buf32, unsigned short color_order ) {
+void c_convert_16_32( char* buf16, unsigned int size16, char* buf32, unsigned char color_order ) {
     unsigned int loc16 = 0;
     unsigned int loc32 = 0;
     unsigned char r5;
@@ -852,7 +851,7 @@ void c_convert_16_32( char* buf16, unsigned int size16, char* buf32, unsigned sh
     }
 }
 
-void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned short color_order) {
+void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned char color_order) {
     unsigned int loc16 = 0;
     unsigned int loc24 = 0;
     unsigned short rgb565 = 0;
@@ -874,7 +873,7 @@ void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned sho
     }
 }
 
-void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned short color_order) {
+void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned char color_order) {
     unsigned int loc16 = 0;
     unsigned int loc32 = 0;
     unsigned short rgb565 = 0;
@@ -883,7 +882,7 @@ void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned sho
         unsigned char g8 = *(buf32 + loc32++);
         unsigned char b8 = *(buf32 + loc32++);
         unsigned char a8 = *(buf32 + loc32++); // This is not used, but is needed
-          unsigned char r5 = ( r8 * 249 + 1014 ) >> 11;
+        unsigned char r5 = ( r8 * 249 + 1014 ) >> 11;
         unsigned char g6 = ( g8 * 253 + 505  ) >> 10;
         unsigned char b5 = ( b8 * 249 + 1014 ) >> 11;
         if (color_order == 0) {
@@ -897,7 +896,7 @@ void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned sho
     }
 }
 
-void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned short color_order) {
+void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned char color_order) {
     unsigned int loc24 = 0;
     unsigned int loc32 = 0;
     while(loc32 < size32) {
@@ -908,7 +907,7 @@ void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned sho
     }
 }
 
-void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned short color_order) {
+void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned char color_order) {
     unsigned int loc32 = 0;
     unsigned int loc24 = 0;
     while(loc24 < size24) {
@@ -926,7 +925,7 @@ void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned sho
     }
 }
 
-void c_monochrome(char *pixels, unsigned int size, unsigned short color_order, unsigned short bytes_per_pixel) {
+void c_monochrome(char *pixels, unsigned int size, unsigned short color_order, unsigned char bytes_per_pixel) {
     unsigned int idx;
     unsigned char r;
     unsigned char g;
@@ -991,3 +990,5 @@ void c_monochrome(char *pixels, unsigned int size, unsigned short color_order, u
         }
     }
 }
+
+C_CODE

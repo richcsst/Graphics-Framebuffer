@@ -1233,3 +1233,17 @@ Revision history for Graphics-Framebuffer
 
        Moved text around a bit for Makefile.PL for easier following on small
        screens.
+
+6.07   March 31, 2018
+
+       Whoops, 6.06 was broken outside of the install environment.
+       
+       Had to add some clever code to the Makefile.PL script to still be able
+       to have the C code separate.  For me it is easier to have it as a separate
+       file while developing, instead of part of Framebuffer.pm as before.  What
+       happens now is it joins the two files back into one when Makefile.PL is
+       called.  I'm happy, because I can develop easier; and you're happy,
+       because it works again.
+
+       Also fixed "slideshow.pl" as that seemed to be broken.  It no longer uses
+       threads.  It didn't need them.
