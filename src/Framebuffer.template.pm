@@ -1,4 +1,4 @@
-6.07 March 31, 2018
+6.08 March 31, 2018
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -662,6 +662,132 @@ sub new {
         'DRAW_MODE'   => NORMAL_MODE,     # Drawing mode (Normal default)
         'DIAGNOSTICS' => FALSE,
 
+        'PIXEL_TYPES'  => [
+            'Packed Pixels',
+            'Planes',
+            'Interleaved Planes',
+            'Text',
+            'VGA Planes',
+        ],
+        'PIXEL_TYPES_AUX' => {
+            'Packed Pixels' => [
+                '',
+            ],
+            'Planes' => [
+                '',
+            ],
+            'Interleaved Planes' => [
+                '',
+            ],
+            'Text' => [
+                'MDA',
+                'CGA',
+                'S3 MMIO',
+                'MGA Step 16',
+                'MGA Step 8',
+                'SVGA Group',
+                'SVGA Mask',
+                'SVGA Step 2',
+                'SVGA Step 4',
+                'SVGA Step 8',
+                'SVGA Step 16',
+                'SVGA Last',
+            ],
+            'VGA Planes' => [
+                'VGA 4',
+                'CFB 4',
+                'CFB 8',
+            ],
+        },
+        'VISUAL_TYPES' => [
+            'Mono 01',
+            'Mono 10',
+            'True Color',
+            'Pseudo Color',
+            'Direct Color',
+            'Static Pseudo Color',
+        ],
+        'ACCEL_TYPES' => [
+            'NONE',
+            'Atari Blitter',
+            'Amiga Blitter',
+            'S3 Trio64',
+            'NCR 77C32BLT',
+            'S3 Virge',
+            'ATI Mach 64 GX',
+            'ATI DEC TGA',
+            'ATI Mach 64 CT',
+            'ATI Mach 64 VT',
+            'ATI Mach 64 GT',
+            'Sun Creator',
+            'Sun CG Six',
+            'Sun Leo',
+            'IWS Twin Turbo',
+            '3D Labs Permedia2',
+            'Matrox MGA 2064W',
+            'Matrox MGA 1064SG',
+            'Matrox MGA 2164W',
+            'Matrox MGA 2164W AGP',
+            'Matrox MGA G100',
+            'Matrox MGA G200',
+            'Sun CG14',
+            'Sun BW Two',
+            'Sun CG Three',
+            'Sun TCX',
+            'Matrox MGA G400',
+            'NV3',
+            'NV4',
+            'NV5',
+            'CT 6555x',
+            '3DFx Banshee',
+            'ATI Rage 128',
+            'IGS Cyber 2000',
+            'IGS Cyber 2010',
+            'IGS Cyber 5000',
+            'SIS Glamour',
+            '3D Labs Permedia',
+            'ATI Radeon',
+            'i810',
+            'NV 10',
+            'NV 20',
+            'NV 30',
+            'NV 40',
+            'XGI Volari V',
+            'XGI Volari Z',
+            'OMAP i610',
+            'Trident TGUI',
+            'Trident 3D Image',
+            'Trident Blade 3D',
+            'Trident Blade XP',
+            'Cirrus Alpine',
+            'Neomagic NM2070',
+            'Neomagic NM2090',
+            'Neomagic NM2093',
+            'Neomagic NM2097',
+            'Neomagic NM2160',
+            'Neomagic NM2200',
+            'Neomagic NM2230',
+            'Neomagic NM2360',
+            'Neomagic NM2380',
+            'PXA3XX', # 99
+            '','','','','','','','','','','','','','','','','','','','','','','','','','','','',
+            'Savage 4',
+            'Savage 3D',
+            'Savage 3D MV',
+            'Savage 2000',
+            'Savage MX MV',
+            'Savage MX',
+            'Savage IX MV',
+            'Savage IX',
+            'Pro Savage PM',
+            'Pro Savage KM',
+            'S3 Twister P',
+            'S3 Twister K',
+            'Super Savage',
+            'Pro Savage DDR',
+            'Pro Savage DDRX',
+        ],
+
         'NORMAL_MODE'   => NORMAL_MODE,     #   Constants for DRAW_MODE
         'XOR_MODE'      => XOR_MODE,
         'OR_MODE'       => OR_MODE,
@@ -1034,6 +1160,11 @@ sub new {
         $self->{'SIZE'} = $self->{'PIXELS'} * $self->{'BYTES'};
         $self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES_PER_LINE'} * $self->{'VYRES'} if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
 
+        $self->{'fscreeninfo'}->{'type'}     = $self->{'PIXEL_TYPES'}->[$self->{'fscreeninfo'}->{'type'}];
+        $self->{'fscreeninfo'}->{'type_aux'} = $self->{'PIXEL_TYPES_AUX'}->{$self->{'fscreeninfo'}->{'type'}}->[$self->{'fscreeninfo'}->{'type_aux'}];
+        $self->{'fscreeninfo'}->{'visual'}   = $self->{'VISUAL_TYPES'}->[$self->{'fscreeninfo'}->{'visual'}];
+        $self->{'fscreeninfo'}->{'accel'}    = $self->{'ACCEL_TYPES'}->[$self->{'fscreeninfo'}->{'accel'}];
+
         ## For debugging only
         # print Dumper($self,\%Config),"\n"; exit;
 
@@ -1062,7 +1193,7 @@ sub new {
             $self->{'SCREEN_ADDRESS'} = mmap($self->{'SCREEN'}, $self->{'fscreeninfo'}->{'smem_len'}, PROT_READ | PROT_WRITE, MAP_SHARED, $self->{'FB'});
         };
         if ($@) {
-        print STDERR qq{
+            print STDERR qq{
 OUCH!  Graphics::Framebuffer cannot memory map the framebuffer!
 
 This is usually caused by one or more of the following:

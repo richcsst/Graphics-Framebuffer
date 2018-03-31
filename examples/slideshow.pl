@@ -9,7 +9,7 @@ use Getopt::Long;
 
 # use Data::Dumper::Simple;
 
-my $path;
+my $path       = $ARGV[-1];
 my $errors     = 0;
 my $auto       = 0;
 my $fullscreen = 0;
@@ -19,16 +19,14 @@ GetOptions(
     'auto'   => \$auto,
     'errors' => \$errors,
     'full'   => \$fullscreen,
-    'path=s' => \$path,
     'showall|all' => \$showall,
 );
-
-my $p = gather($path);
 
 my $FB = Graphics::Framebuffer->new(
     'SHOW_ERRORS' => $errors,
     'RESET'       => 1,
 );
+my $p = gather($FB,$path);
 
 system('clear');
 $FB->cls('OFF');
@@ -38,9 +36,12 @@ show($FB, $p);
 exit(0);
 
 sub gather {
-    my @pics;
+    my $FB = shift;
     my $path = shift;
+    my @pics;
     chop($path) if ($path =~ /\/$/);
+    $FB->rbox({'x' => 0, 'y' => 0, 'width' => $FB->{'XRES'}, 'height' => 32, 'filled' => 1, 'gradient' => {'direction' => 'vertical', 'colors' => {'red' => [0,0], 'green' => [0,0], 'blue' => [64,128]}}});
+    print_it($FB,"Scanning - $path");
     opendir(my $DIR, "$path") || die "Problem reading $path directory";
     chomp(my @dir = readdir($DIR));
     closedir($DIR);
@@ -49,7 +50,7 @@ sub gather {
     foreach my $file (@dir) {
         next if ($file =~ /^\.+/);
         if (-d "$path/$file") {
-            my $r = gather("$path/$file");
+            my $r = gather($FB,"$path/$file");
             if (defined($r)) {
                 @pics = (@pics,@{$r});
             }
@@ -120,7 +121,7 @@ sub print_it {
         my $b = $fb->ttf_print(
             {
                 'x'            => 5,
-                'y'            => 20,
+                'y'            => 32,
                 'height'       => 20,
                 'color'        => 'FFFFFFFF',
                 'text'         => $message,
@@ -148,7 +149,7 @@ This automatically detects all of the framebuffer devices in your system, and sh
 
 =head1 SYNOPSIS
 
- perl slideshow [options]
+ perl slideshow [options] "/path/to/scan"
 
 =head2 OPTIONS
 
@@ -161,10 +162,6 @@ Turns on auto color level mode.  Sometimes this yields great results... and some
 =item C<--errors>
 
 Allows the module to print errors to STDERR
-
-=item C<--path>="/path/to/files"
-
-Makes the module render in file handle mode instead of memory mapped string mode.
 
 =item C<full>
 

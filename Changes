@@ -1247,3 +1247,9 @@ Revision history for Graphics-Framebuffer
 
        Also fixed "slideshow.pl" as that seemed to be broken.  It no longer uses
        threads.  It didn't need them.
+
+6.08   March 31, 2018
+
+       Added some code to gather more information about the framebuffer and GPU.
+
+       Fixes to the example scripts.
