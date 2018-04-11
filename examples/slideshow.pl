@@ -6,21 +6,34 @@ use Graphics::Framebuffer;
 use Time::HiRes qw(sleep time);
 use List::Util qw(shuffle);
 use Getopt::Long;
+use Pod::Usage;
 
 # use Data::Dumper::Simple;
 
-my $path       = $ARGV[-1];
+my $path;
 my $errors     = 0;
 my $auto       = 0;
 my $fullscreen = 0;
 my $showall    = 0;
+my $help       = 0;
 
 GetOptions(
-    'auto'   => \$auto,
-    'errors' => \$errors,
-    'full'   => \$fullscreen,
+    'auto'        => \$auto,
+    'errors'      => \$errors,
+    'full'        => \$fullscreen,
     'showall|all' => \$showall,
+    'help'        => \$help,
 );
+
+if (scalar(@ARGV) && ! $help) {
+    $path = $ARGV[-1];
+} else {
+    $help = 2;
+}
+
+if ($help) {
+    pod2usage('-exitstatus' => 0,'-verbose' => $help);
+}
 
 my $FB = Graphics::Framebuffer->new(
     'SHOW_ERRORS' => $errors,
@@ -143,9 +156,9 @@ Slide Show
 
 =head1 DESCRIPTION
 
-Multi-threaded, multi-framebuffer Slide Show
+Framebuffer Slide Show
 
-This automatically detects all of the framebuffer devices in your system, and shows the images in the images path, in a random order, on all devices.
+This automatically detects all of the framebuffer devices in your system, and shows the images in the images path, in a random order, on the primary framebuffer device (the first it finds).
 
 =head1 SYNOPSIS
 
@@ -163,9 +176,9 @@ Turns on auto color level mode.  Sometimes this yields great results... and some
 
 Allows the module to print errors to STDERR
 
-=item C<full>
+=item C<--full>
 
-Scales all images (and animations) to full screen (proportionally).
+Scales all images (and animations) to full screen (proportionally).  Images are always scaled down, if they are too big for the screen, regardless of this option.
 
 =back
 

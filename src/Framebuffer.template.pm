@@ -1,4 +1,4 @@
-6.08 March 31, 2018
+6.09 April 6, 2018
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -73,9 +73,9 @@ If you are using a Debian based system (Ubuntu, Weezy, Mint, etc.) then run the 
 
 =over 6
 
- sudo apt-get update
- sudo apt-get upgrade
- sudo apt-get install build-essential linux-headers-generic libjpeg-dev libgif-dev libtiff5-dev libfreetype6-dev fbset libimager-perl libinline-c-perl libmath-bezier-perl libmath-gradient-perl libsys-mmap-perl
+ sudo apt update
+ sudo apt upgrade
+ sudo apt install build-essential linux-headers-generic fbset libimager-perl libinline-c-perl libmath-bezier-perl libmath-gradient-perl libsys-mmap-perl libtest-most-perl
 
 =back
 
@@ -85,7 +85,7 @@ If you are using a RedHat based system (Fedora, CentOS, etc):
 
  sudo yum update
  sudo yum upgrade
- sudo yum upgrade kernel-headers build-essential perl-math-bezier perl-math-gradient perl-sys-mmap perl-imager perl-inline-c
+ sudo yum upgrade kernel-headers build-essential perl-math-bezier perl-math-gradient perl-sys-mmap perl-imager perl-inline-c perl-test-most
 
 =back
 
