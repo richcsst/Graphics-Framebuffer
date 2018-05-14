@@ -130,7 +130,7 @@ foreach my $file (@files) {
                 'x'            => 0,
                 'y'            => 0,
                 'width'        => $XX * .5,
-*                'height'       => $F->{'H_CLIP'} * .5,
+                'height'       => $F->{'H_CLIP'} * .5,
                 'file'         => "$images_path/$file",
                 'convertalpha' => ($file =~ /wolf|Crescent|dork/i) ? 1 : 0,
                 'center'       => CENTER_XY,
