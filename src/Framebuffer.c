@@ -31,10 +31,10 @@
 #define GBR           4
 #define GRB           5
 
-#define ipart_(X) ((int)(X))
+#define integer_(X) ((int)(X))
 #define round_(X) ((int)(((double)(X))+0.5))
-#define fpart_(X) (((double)(X))-(double)ipart_(X))
-#define rfpart_(X) (1.0-fpart_(X))
+#define decimal_(X) (((double)(X))-(double)integer_(X))
+#define rdecimal_(X) (1.0-decimal_(X))
 #define swap_(a, b) do { __typeof__(a) tmp;  tmp = a; a = b; b = tmp; } while(0)
 
 /* Global Structures */
@@ -50,6 +50,9 @@ void c_get_screen_info(char *fb_file) {
     ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo);
     close(fbfd);
 
+   /*
+    * This monstrosity pushes the needed values on Perl's stack, like "return" does.
+    */
     Inline_Stack_Vars;
     Inline_Stack_Reset;
 
@@ -103,34 +106,6 @@ void c_get_screen_info(char *fb_file) {
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.rotate)));
 
     Inline_Stack_Done;
-}
-
-/* Draws a filled circle fast */
-void c_filled_circle(
-    char *framebuffer,
-    short x, short y, unsigned short r,
-    unsigned char draw_mode,
-    unsigned int color,
-    unsigned int bcolor,
-    unsigned char bytes_per_pixel,
-    unsigned int bytes_per_line,
-    unsigned short x_clip,  unsigned short y_clip,
-    unsigned short xx_clip, unsigned short yy_clip,
-    unsigned short xoffset, unsigned short yoffset,
-    unsigned char alpha)
-{
-    short r2   = r * r;
-    short area = r2 << 2;
-    short rr   = r  << 1;
-    short i;
-
-    for (i = 0; i < area; i++) {
-        short tx = (i % rr) - r;
-        short ty = (i / rr) - r;
-
-        if (tx * tx + ty * ty <= r2)
-          c_plot(framebuffer,x + tx, y + ty, draw_mode, color, bcolor, bytes_per_pixel, bytes_per_line, x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, alpha);
-    }
 }
 
 /* The other routines call this.  It handles all draw modes */
