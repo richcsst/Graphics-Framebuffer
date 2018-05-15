@@ -6,4 +6,3 @@ mode.  Use double-buffering and "blit_flip" to overcome this.
 blit_transform - flip_horizontal - has known issues.  Try instead rotating
 180 degrees and then flip_vertical.
 
-Some alpha mode slowness on boxes.  That will be fixed soon.

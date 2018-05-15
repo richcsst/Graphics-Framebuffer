@@ -1264,3 +1264,5 @@ Revision history for Graphics-Framebuffer
        Perl version was just as quick.  Go figure.
        
        Improvements made to the examples scripts.
+
+       The 32 bit alpha routines have been optimized.

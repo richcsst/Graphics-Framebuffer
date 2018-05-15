@@ -211,6 +211,7 @@ blit_move();
 rotate();
 # flipping();
 monochrome();
+
 foreach my $m (1 .. 9) {    # We skip divide mode because it's stupid and I should never have added it
     if ($m == MASK_MODE) {
         mask_drawing();
