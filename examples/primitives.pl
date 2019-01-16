@@ -119,11 +119,11 @@ foreach my $file (@files) {
             'width'        => $XX,
             'height'       => $F->{'H_CLIP'},
             'file'         => "$images_path/$file",
-            'convertalpha' => ($file =~ /wolf|Crescent|dork/i) ? 1 : 0,
+            'convertalpha' => ($file =~ /wolf|Crescent/i) ? 1 : 0,
             'center'       => CENTER_XY,
         }
     );
-    unless ($file =~ /dorksmile/i) {
+    unless ($file =~ /Solid/i) {
         push(@IMAGES, $image) if (defined($image));
         $image = $F->load_image(
             {
@@ -132,7 +132,7 @@ foreach my $file (@files) {
                 'width'        => $XX * .5,
                 'height'       => $F->{'H_CLIP'} * .5,
                 'file'         => "$images_path/$file",
-                'convertalpha' => ($file =~ /wolf|Crescent|dork/i) ? 1 : 0,
+                'convertalpha' => ($file =~ /wolf|Crescent/i) ? 1 : 0,
                 'center'       => CENTER_XY,
             }
         );
@@ -207,6 +207,7 @@ foreach my $flag (0..1) {
 blitting();
 blit_move();
 rotate();
+
 # flipping();
 monochrome();
 
@@ -1156,10 +1157,10 @@ sub color_replace {
     my $y = $F->{'YRES'} / 4;
 
     $F->blit_write($DORKSMILE);
-    $F->clip_set({ 'x' => $x * 1.5, 'y' => $y, 'xx' => $x * 3, 'yy' => $y * 3 }) if ($clipped);
-    my $r = 255;
-    my $g = 223;
-    my $b = 88;
+    $F->clip_set({ 'x' => $x, 'y' => $y, 'xx' => $x * 3, 'yy' => $y * 3 }) if ($clipped);
+    my $r = 193;
+    my $g = 177;
+    my $b = 164;
     my $s = time + $factor;
     while (time < $s) {
         my $R = int(rand(256));

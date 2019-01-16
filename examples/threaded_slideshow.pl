@@ -103,7 +103,7 @@ $SIG{'KILL'} = \&finish;
 for (my $t=0;$t<$threads;$t++) {
     $thrd[$t] = threads->create(\&show,$FB, $p, $threads, $t);
 }
-while ($RUNNING) {
+while ($RUNNING && scalar(threads::list(threads::running))) {
     sleep 1;
 }
 
@@ -368,7 +368,7 @@ This automatically detects all of the framebuffer devices in your system, and sh
 
 =head1 SYNOPSIS
 
- perl slideshow [options] "/path/to/scan"
+ perl threaded_slideshow.pl [options] "/path/to/scan"
 
 More than one path can be used.  Just separate each path by a space.
 
@@ -383,10 +383,6 @@ Turns on auto color level mode.  Sometimes this yields great results... and some
 =item B<--errors>
 
 Allows the module to print errors to STDERR
-
-=item B<--full>
-
-Scales all images (and animations) to full screen (proportionally).  Images are always scaled down, if they are too big for the screen, regardless of this option.
 
 =item B<--delay>=seconds
 
