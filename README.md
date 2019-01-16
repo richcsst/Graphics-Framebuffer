@@ -41,13 +41,13 @@ To make your system ready for this module, then please install the following:
 
 `sudo apt-get update`
   
-`sudo apt-get install build-essential linux-headers-generic libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libsys-mmap-perl`
+`sudo apt-get install build-essential linux-headers-generic libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libfile-map-perl`
 
 ### REDHAT BASED SYSTEMS (Fedora, CentOS, etc):
 
 `sudo yum update`
 
-`sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-sys-mmap perl-imager perl-inline-c`
+`sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-file-map perl-imager perl-inline-c`
 
 ### Continuing...
 

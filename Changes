@@ -1270,6 +1270,8 @@ Revision history for Graphics-Framebuffer
 
 6.11   Dec 23, 2018
 
+       *** DO NOT USE THIS VERSION.  IT'S BROKEN ***
+
        I consolidated a lot of Perl and C code to make things for efficient and
        to make more sense (in the source code).  Blitting and converting for
        example.
@@ -1278,3 +1280,42 @@ Revision history for Graphics-Framebuffer
        did this to make ready for adding single bit pixel sizes (for monochrome
        screens).  Someone asked if the module was capable of working in
        single bit monochrome, and currently it does not, but will be soon!
+
+6.12  Jan 08, 2019
+
+      Ok, the last version was a fiasco.  Far too many changes, and they broke
+      everything.  I'll proceed a bit more carefully from now on.  The codebase
+      is restored back to the 6.10 state.
+
+      Actual changes are the example scripts.  While finding the issues with
+      6.11, I noticed that the example scripts did not support double-buffering.
+      They do now, and should better run on Raspberry Pi machines if still in
+      16 bit color mode.
+
+6.13  Jan 10, 2019
+
+      Changes to the splash screen.
+
+      Changes to the C plotting routines to make way for 1 bit graphics (not
+      yet implemented).
+
+6.14  Jan 15, 2019
+
+      Stopped using "Sys::Mmap" and switched to the more stable "File::Map"
+      which is very thread friendly.  No need to allocate a separate object for
+      each thread now.  One will do it for all just fine as the
+      "threaded_slideshow.pl" example script shows.
+
+      Which brings us to a new example script "threaded_slideshow.pl".  It is
+      similar in how you run it as the single threaded "slideshow.pl", but it
+      has the unique ability to divide the screen up by how many threads you
+      request and dedicate a thread to that region and have a slide show
+      managed by as many threads as requested.  Quite interesting to watch.
+      It doesn't have the "--full" switch as it doesn't apply for how it works.
+
+      "Makefile.PL" has undergone an overhaul.  It has a friendlier output and
+      no longer throws a weird licensing error.
+
+      The test scripts have been culled of all but the necessary, and the main
+      test script given double buffering for 16 bit displays.  This doesn't
+      affect 32 bit displays.
