@@ -12,10 +12,10 @@ unless (defined($ENV{'DISPLAY'})) {
     eval {
         use Graphics::Framebuffer;
 
-        my ($PF,$F) = Graphics::Framebuffer->new('DOUBLE_BUFFER' => 1, 'RESET' => 0);
+        my ($PF,$F) = Graphics::Framebuffer->new('DOUBLE_BUFFER' => 16, 'RESET' => 0);
         my $DB = 1;
-        isa_ok($F,'Graphics::Framebuffer');
-        if (defined($F)) {
+        isa_ok($PF,'Graphics::Framebuffer');
+        if (defined($PF)) {
             my $scr = $PF->screen_dimensions();
             if ($scr->{'bits_per_pixel'} != 16) {
                 $DB = 0;

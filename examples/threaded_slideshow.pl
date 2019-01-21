@@ -19,6 +19,7 @@ my $showall    = 0;
 my $help       = 0;
 my $delay      = 3;
 my $nosplash   = 0;
+my $DB         = 1;
 my $threads    = Sys::CPU::cpu_count();
 my $RUNNING : shared = 1;
 
@@ -63,16 +64,16 @@ my ($F,$FB) = Graphics::Framebuffer->new(
     'SHOW_ERRORS'   => $errors,
     'RESET'         => 1,
     'SPLASH'        => $splash,
-    'DOUBLE_BUFFER' => 1,
+    'DOUBLE_BUFFER' => 16,
 );
 
 my $info  = $F->screen_dimensions();
-my $DB    = 0;
 my $DIRTY : shared = 1;
 
 if ($info->{'bits_per_pixel'} == 16 && $F->{'ACCELERATED'}) {
     $DB = 1;
 } else {
+    $DB = 0;
     $FB = $F;
 }
 
@@ -115,7 +116,7 @@ sub finish {
     $RUNNING = 0;
     alarm 0;
     $SIG{'ALRM'} = sub {
-        exit(1);
+        exec('reset');
     };
     alarm 20;
     while(my @thr = threads->list(threads::running)) {
@@ -382,7 +383,7 @@ Turns on auto color level mode.  Sometimes this yields great results... and some
 
 =item B<--errors>
 
-Allows the module to print errors to STDERR
+Allows the module to print errors to STDERR, as well as some minimal initial debugging data.
 
 =item B<--delay>=seconds
 
@@ -393,6 +394,10 @@ Default is 3 seconds.
 =item B<--showall>
 
 Ignores any ".nomedia" files in subdirectories, and shows the images in them anyway.
+
+=item B<--threads>=1-16
+
+The program automatically determines the number of threads, and assigns one to each core.  However, you can override this number with this switch, up to 16.
 
 =back
 
