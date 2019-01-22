@@ -105,6 +105,8 @@ Here's what I have tested this module on (all 1920x1080x32):
 
   In addition, 3840x2160x32 (4K) is surprisingly fast.  Who'd have thought?  Full screen animations were choppy, but everything else was plenty fast enough.
 
+* **Windows 10 PC Native with 4GHz 6 core i7 CPU and two NVidia 1080 Ti's ** - This is how I found out that the Nouveau driver is very poor when handling a framebuffer.  It's actually disgraceful at how bad and how slow it really is.  It doesn't appear to be using any DMA for the memory copy of the framebuffer, but CPU itself for transfers.
+
 ## SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the

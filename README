@@ -136,6 +136,11 @@ NVidia 970 Ti   - threads (What's up with that?).  UPDATE: VirtualBox appears
                 - have thought?  Full screen animations were choppy, but
                 - everything else was plenty fast enough.
 
+Windows 10 PC   - This is how I found out that the Nouveau driver is very poor
+Native with     - when handling a framebuffer.  It's actually disgraceful at
+4GHx 6 core i7  - how bad and how slow it really is.  It doesn't appear to be
+CPU and two     - using any DMA for the memory copy of the framebuffer, but
+Nvidia 1080Ti's - CPU itself for transfers.
 
 SUPPORT AND DOCUMENTATION
 
