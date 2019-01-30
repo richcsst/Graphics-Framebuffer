@@ -1,10 +1,5 @@
 KNOWN ISSUES
 
-Some color mapping errors are happening with textured shapes in 16 bit
-mode.  Use double-buffering and "blit_flip" to overcome this.  In fact,
-there really is not a good reason to not use double-buffering for 16
-bit mode anyway.
-
 blit_transform - flip_horizontal - has known issues.  Try instead rotating
 180 degrees and then flip_vertical.
 
@@ -18,9 +13,9 @@ ways to overcome this issue.  Maybe turning off the mirroring would help.
 After more testing, it seems non-bulk read or write access is simply very
 slow.  Odd really.  Operations in normal mode, like blit_write are very
 fast, but any other mode like OR or Alpha, are molasses slow.  Normal mode
-only writes as a large block of data, and takes no care about what it replaced.
-However, other modes require bytes, words, or long words to be read in,
-processed, then written back out.  That is what is not optimized in the
+only writes as a large block of data, and takes no care about what it
+replaced.  However, other modes require bytes, words, or long words to be read
+in, processed, then written back out.  That is what is not optimized in the
 Nouveau driver.  Other drivers do this quickly, even the Intel driver.  I am
 assuming the other drivers use a DMA routine to transfer the memory address
 framebuffer to the real framebuffer, or map the actual framebuffer to real
