@@ -59,8 +59,9 @@ PATH(s)  = }, join('; ',@paths),"\n";
 
     sleep 3;
 }
+
 # Double buffering now supported
-my ($F,$FB) = Graphics::Framebuffer->new(
+our ($F,$FB) = Graphics::Framebuffer->new(
     'SHOW_ERRORS'   => $errors,
     'RESET'         => 1,
     'SPLASH'        => $splash,
@@ -74,6 +75,7 @@ if ($info->{'bits_per_pixel'} == 16 && $F->{'ACCELERATED'}) {
     $DB = 1;
 } else {
     $DB = 0;
+    undef($FB);
     $FB = $F;
 }
 
@@ -81,6 +83,7 @@ if ($DB) {
     $SIG{'ALRM'} = sub {
         alarm(0);
         if ($DIRTY) {
+            lock($DIRTY);
             $DIRTY = 0;
             $F->blit_flip($FB);
         }
@@ -101,11 +104,24 @@ $SIG{'QUIT'} = \&finish;
 $SIG{'INT'}  = \&finish;
 $SIG{'KILL'} = \&finish;
 
+# Run the slides in threads and have the main thread do housekeeping.
 for (my $t=0;$t<$threads;$t++) {
     $thrd[$t] = threads->create(\&show,$FB, $p, $threads, $t);
 }
-while ($RUNNING && scalar(threads::list(threads::running))) {
-    sleep 1;
+while ($RUNNING) { # Monitors the running threads and restores them if one dies
+    my $num = scalar(threads::list(threads::running));
+    if ($RUNNING && $num < $threads) {
+        for (my $t=0;$t<$threads;$t++) {
+            if ($RUNNING) {
+                unless($thrd[$t]->is_running()) {
+                    eval { $thrd[$t]->detach()->kill(); };
+                    $thrd[$t] = threads->create(\&show, $p, $threads, $t);
+                }
+            }
+        }
+    } else {
+        sleep 1;
+    }
 }
 
 $FB->cls('ON');
@@ -306,12 +322,28 @@ sub show {
             $FB->rbox({'x'=>$X,'y'=>$Y,'width'=>$W,'height'=>$H,'filled'=>1});
             if (ref($image) eq 'ARRAY') {
                 my $s = time + ($delay * 2);
-                while ($RUNNING && time <= $s) {
-                    $FB->play_animation($image,1);
+                while ($RUNNING && time <= $s) { # We play it as many times as the delay allows, but at least once.
+                    # We don't use "play_animation" for double buffering and threads.
+                    # It's hard to say the buffer is dirty without access to each frame.
+                    # So we use our own code to play the animation
+                    for (my $frame = 0;$frame < scalar(@{$image});$frame++) {
+                        my $begin = time; # Mark the start time
+                        $FB->blit_write($image->[$frame]); # Write the frame to the display
+                        if ($DB) { # If double buffering, then set the dirty flag
+                            lock($DIRTY);
+                            $DIRTY = 1;
+                        }
+                        # Multiply the 'gif_delay' by 0.01 and then subtract from that the amount of time
+                        # it took to actually display the fram.  This givs the true delay, which should
+                        # show an accurate animation.
+                        my $d = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) - (time - $begin));
+                        sleep $d if ($d > 0);
+                        last unless($RUNNING);
+                    }
                 } ## end while (time <= $s)
             } else {
                 $FB->blit_write($image);
-                {
+                if ($DB) {
                     lock($DIRTY);
                     $DIRTY = 1;
                 }
@@ -319,7 +351,7 @@ sub show {
             }
         } ## end if (defined($image))
         $idx++;
-#        $idx = 0 if ($idx >= $p);
+        $idx = 0 if ($idx >= $p);
     } ## end while ($RUNNING)
     $FB->rbox({'x'=>$X,'y'=>$Y,'width'=>$W,'height'=>$H,'filled'=>1});
 } ## end sub show
@@ -346,7 +378,7 @@ sub print_it {
     } else {
         print "$message\n";
     }
-    {
+    if ($DB) {
         lock($DIRTY);
         $DIRTY = 1;
     }

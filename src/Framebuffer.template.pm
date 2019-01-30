@@ -1,4 +1,4 @@
-6.15 Jan 20, 2019
+6.16 Jan 30, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -20,7 +20,7 @@ Or for double buffering (usually for 16 bit framebuffers)
 
  our ($pfb,$fb) = Graphics::Framebuffer->new(
      'FB_DEVICE' => '/dev/fb0',
-     'DOUBLE_BUFFER' => 1
+     'DOUBLE_BUFFER' => 1 # Use the value 16 for conditional on only 16 bit
  );
 
  my $delay = 1/20; # Make it smaller for slower machines
@@ -1321,7 +1321,8 @@ To get back into X-Windows, you just hit ALT-F7 (or ALT-F8 on some systems).
         $SIG{'QUIT'} = $SIG{'INT'} = \&_reset;
     }
     $self->_gather_fonts('/usr/share/fonts');
-    foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma)) {
+    # Loop and find the default font.  One of these should work for Debian and Redhat variants.
+    foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma Helvetica)) {
         if (exists($self->{'FONTS'}->{$font})) {
             $self->{'FONT_PATH'} = $self->{'FONTS'}->{$font}->{'path'};
             $self->{'FONT_FACE'} = $self->{'FONTS'}->{$font}->{'font'};
@@ -3300,7 +3301,6 @@ sub circle {
             $lypy = $ypy;
             $lypx = $ypx;
         } else {
-
             # Top left
             ($params->{'x'}, $params->{'y'}) = ($xmx, $ymy);
             $self->plot($params);
@@ -4705,7 +4705,7 @@ sub play_animation {
         my $begin = time;
         $self->blit_write($image->[$frame]);
 
-        my $delay = ((($image->[$frame]->{'tags'}->{'gif_delay'} * .01)) * $rate) - (time - $begin);
+        my $delay = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) * $rate) - (time - $begin);
         if ($delay > 0) {
             sleep $delay;
         }
@@ -4880,6 +4880,7 @@ It takes a hash reference.  It draws in the current drawing mode.
 sub blit_write {
     my $self    = shift;
     my $pparams = shift;
+    return unless(defined($pparams));
 
     my $fb     = $self->{'FB'};
     my $params = $self->_blit_adjust_for_clipping($pparams);
@@ -4889,6 +4890,7 @@ sub blit_write {
     my $y = int($params->{'y'}      || 0);
     my $w = int($params->{'width'}  || 1);
     my $h = int($params->{'height'} || 1);
+
     my $draw_mode      = $self->{'DRAW_MODE'};
     my $bytes          = $self->{'BYTES'};
     my $bytes_per_line = $self->{'BYTES_PER_LINE'};
@@ -5049,6 +5051,10 @@ sub _blit_adjust_for_clipping {
 
     # Make a copy so the original isn't modified.
     %{$params} = %{$pparams};
+#    if (exists($params->{'tags'})) {
+#        $params->{'x'} += $params->{'tags'}->{'gif_left'} if (exists($params->{'tags'}->{'gif_left'}));
+#        $params->{'y'} += $params->{'tags'}->{'git_top'} if (exists($params->{'tags'}->{'gif_top'}));
+#    }
 
     # First fix the vertical errors
     my $XX = $params->{'x'} + $params->{'width'};
@@ -6079,8 +6085,9 @@ sub load_image {
         foreach my $img (@Img) {
             next unless (defined($img));
             my %tags = map(@$_, $img->tags());
-            unless (exists($params->{'preserve_transparency'}) && $params->{'preserve_transparency'}) {
-                if (exists($tags{'gif_trans_color'}) && defined($last_img)) {
+            # Must loop and layer the frames on top of each other to get full frames.
+            unless (exists($params->{'gif_left'})) {
+                if (defined($last_img)) {
                     $last_img->compose(
                         'src' => $img,
                         'tx'  => $tags{'gif_left'},
@@ -6211,30 +6218,24 @@ sub load_image {
                     $y = 0;
                 }
             }
-            if (exists($tags->{'gif_left'})) {
-                $x += $tags->{'gif_left'};
-                $y += $tags->{'gif_top'};
-            }
             $bench_convert = sprintf('%.03f', time - $bench_convert);
             $bench_total   = sprintf('%.03f', time - $bench_start);
-            push(
-                @odata,
-                {
-                    'x'         => $x,
-                    'y'         => $y,
-                    'width'     => $w,
-                    'height'    => $h,
-                    'image'     => $data,
-                    'tags'      => \%tags,
-                    'benchmark' => {
-                        'load'    => $bench_load,
-                        'rotate'  => $bench_rotate,
-                        'scale'   => $bench_scale,
-                        'convert' => $bench_convert,
-                        'total'   => $bench_total
-                    }
+            my $temp_image = {
+                'x'         => $x,
+                'y'         => $y,
+                'width'     => $w,
+                'height'    => $h,
+                'image'     => $data,
+                'tags'      => \%tags,
+                'benchmark' => {
+                    'load'    => $bench_load,
+                    'rotate'  => $bench_rotate,
+                    'scale'   => $bench_scale,
+                    'convert' => $bench_convert,
+                    'total'   => $bench_total
                 }
-            );
+            };
+            push(@odata,$temp_image);
             if ($self->{'DIAGNOSTICS'}) {
                 my $saved = $self->{'DRAW_MODE'};
                 $self->mask_mode() if ($self->{'ACCELERATED'});

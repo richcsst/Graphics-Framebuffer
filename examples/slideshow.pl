@@ -8,7 +8,7 @@ use List::Util qw(shuffle);
 use Getopt::Long;
 use Pod::Usage;
 
-# use Data::Dumper::Simple;
+# use Data::Dumper::Simple;$Data::Dumper::Sortkeys = 1;$Data::Dumper::Purity = 1;
 
 my $errors     = 0;
 my $auto       = 0;
