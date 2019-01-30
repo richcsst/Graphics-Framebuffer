@@ -72,7 +72,7 @@ if (WriteMakefile(
         'Math::Trig'     => '1.10',
         'Math::Gradient' => '0.03',
         'List::Util'     => '1.20',
-        'File::Map'      => '0.65',
+        'File::Map'      => '0.64',
         'Imager'         => '0.91',
         'Inline'         => '0.53',
         'Inline::C'      => '0.53',

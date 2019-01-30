@@ -12,7 +12,7 @@ use List::Util qw(min max shuffle);
 use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
 
-# use Data::Dumper::Simple; $Data::Dumper::Sortkeys=1;
+ use Data::Dumper::Simple; $Data::Dumper::Sortkeys=1;
 
 system('clear');
 $|++;
@@ -65,7 +65,11 @@ my $sinfo = $FR->screen_dimensions;
 
 # If 16 bit mode and acceleration is supported, then do double-buffering
 
-if ($sinfo->{'bits_per_pixel'} == 16 && $FR->{'ACCELERATED'}) {
+if ($sinfo->{'bits_per_pixel'} == 16) {
+    if ($dev) {
+        print STDERR "Using double buffering\n";
+        sleep 5;
+    }
     $F->{'fscreeninfo'}->{'id'} = $FR->{'fscreeninfo'}->{'id'};
     $DB = 1;
 } else { # Don't need double buffering for 32 bit or unaccelerated 16 bit
