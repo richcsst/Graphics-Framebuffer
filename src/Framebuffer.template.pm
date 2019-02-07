@@ -1,4 +1,4 @@
-6.17 Jan 30, 2019
+6.18 Jan 30, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME

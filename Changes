@@ -1350,3 +1350,8 @@ Revision history for Graphics-Framebuffer
 
       All sample scripts have been modified to accommodate the new changes,
       including the template script.
+
+6.18  Jan 30, 2019
+
+      Holy smokes!  The META files weren't updating.  No wonder some people
+      were having prerequisite issues.
