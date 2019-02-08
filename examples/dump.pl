@@ -8,12 +8,12 @@ use Data::Dumper;
 use Graphics::Framebuffer;
 $Data::Dumper::Sortkeys = 1;
 my $dev = 0;
-$dev    = $ARGV[0] if (scalar(@ARGV));
+$dev = $ARGV[0] if (scalar(@ARGV));
 print "Using /dev/fb$dev\n";
 sleep 1;
-if (open(my $FILE,'>','dump.log')) {
+if (open(my $FILE, '>', 'dump.log')) {
     eval {
-        my ($fb,$f) = Graphics::Framebuffer->new('SHOW_ERRORS' => 1, 'FB_DEVICE' => "/dev/fb$dev");
+        my ($fb, $f) = Graphics::Framebuffer->new('SHOW_ERRORS' => 1, 'FB_DEVICE' => "/dev/fb$dev");
         $fb->cls();
 
         my $copy = $fb;
@@ -32,7 +32,7 @@ if (open(my $FILE,'>','dump.log')) {
         print $FILE "\nCRASH\n\n$@\n";
     }
     close($FILE);
-}
+} ## end if (open(my $FILE, '>'...))
 
 =head1 NAME
 
