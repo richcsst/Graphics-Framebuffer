@@ -1,4 +1,4 @@
-6.19 Feb 06, 2019
+6.19 Feb 09, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -57,7 +57,7 @@ If you are using a Debian based system (Ubuntu, Weezy, Mint, Raspian, etc.) then
 
  sudo apt update
  sudo apt upgrade
- sudo apt install build-essential linux-headers-generic fbset libimager-perl libinline-c-perl libmath-bezier-perl libmath-gradient-perl libfile-map-perl libtest-most-perl
+ sudo apt install build-essential linux-headers-generic fbset libimager-perl libinline-c-perl libmath-bezier-perl libmath-gradient-perl libfile-map-perl libtest-more-perl
 
 =back
 
@@ -67,7 +67,7 @@ If you are using a RedHat based system (Fedora, CentOS, etc):
 
  sudo yum update
  sudo yum upgrade
- sudo yum upgrade kernel-headers build-essential perl-math-bezier perl-math-gradient perl-file-map perl-imager perl-inline-c perl-test-most
+ sudo yum upgrade kernel-headers build-essential perl-math-bezier perl-math-gradient perl-file-map perl-imager perl-inline-c perl-test-more
 
 =back
 
@@ -91,6 +91,18 @@ Please note, that the install step may require root permissions (run it with sud
 If testing fails, it will usually be ok to install it anyway, as it will likely work.  The testing is flakey (thank Perl's test mode for that).
 
 I recommend running the scripts inside of the "examples" directory for real testing instead.
+
+=head1 OPERATIONAL THEORY
+
+How many Perl modules actually tell you how they work?  Well, I will tell you how this one works.
+
+The framebuffer is simply a special file that is mapped to the screen.  How the driver does this can be different.  Some may actually directly map the display memory to this file, and some install a second copy of the display to normal memory and copy it to the display on every vertical blank, usually with a fast DMA transfer.
+
+This module maps that file to a string, and that ends up making the string exactly the same size as the physical display.  Plotting is simply a matter of calculating where in the string that pixel is and modifying it, via "substr" (never using "=" directly).  It's that simple.
+
+Drawing lines etc. requires some algorithmic magic though, but they all call the plot routine to do their eventual magic.
+
+Originally everything was done in Perl, and the module's speed was mostly acceptable, unless you had a really slow system.  It still can run in pure Perl, if you turn off the acceleration feature, although I do not recommend it, if you want speed.
 
 =head1 SPECIAL VARIABLES
 
@@ -448,7 +460,7 @@ BEGIN {
     );
 }
 
-DESTROY {
+DESTROY { # Always clean up after yourself before exiting
     my $self = shift;
     $self->_screen_close();
     _reset() if ($self->{'RESET'});    # Exit by calling 'reset' first
@@ -1292,7 +1304,7 @@ To get back into X-Windows, you just hit ALT-F7 (or ALT-F8 on some systems).
 }
 
 sub _reset {
-    exec('reset'); # This exits Perl and runs "reset"
+    system('reset');
 }
 
 # Fixes the mapping if Perl garbage collects (naughty Perl)
@@ -1768,9 +1780,9 @@ sub clear_screen {
 
 #    $self->wait_for_console() if ($self->{'WAIT_FOR_CONSOLE'});
     if ($cursor =~ /off/i) {
-        system('clear && tput civis -- invisible');
+        system('tput civis -- invisible');
     } elsif ($cursor =~ /on/i) {
-        system('tput cnorm -- normal && reset');
+        system('tput cnorm -- normal');
     }
     select(STDOUT);
     $|++;
