@@ -613,6 +613,9 @@ Defines the colorspace for the graphics routines to draw in.  The possible (and 
 sub new {
     my $class = shift;
 
+    # I would have liked to make this a lot more organized, but over the years it
+    # kind of became this mess.  I could change it, but it likely would break any
+    # code that directly uses values.
     my $this;
     my $self = {
         'SCREEN'        => '',            # The all mighty framebuffer
@@ -6966,7 +6969,7 @@ You can run Linux inside VirtualBox and it works fine.  Put it in full screen mo
 
 This isn't a design choice, nor preference, nor some anti-Windows ego trip.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
 
-* However, if someone knows how to access the framebuffer in MS Windows, and be able to do it reasonable from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.
+* However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.
 
 =head1 TROUBLESHOOTING
 
@@ -6984,7 +6987,7 @@ If you want to run your program within X-Windows, then you have the wrong module
 
 You MUST have a framebuffer based video driver for this to work.  The device ("/dev/fb0" for example) must exist.
 
-If it does exist, but is not "/dev/fb0", then you can define it in the 'new' method with the "FB_DEVICE" parameter, although the module is pretty good at finding it.
+If it does exist, but is not "/dev/fb0", then you can define it in the 'new' method with the "FB_DEVICE" parameter, although the module is pretty good at finding it automatically.
 
 =item B< It's Crashing >
 
@@ -7002,11 +7005,19 @@ If you get this behavior, then it is a bug, and the author needs to be notified,
 
 So how does that help you right now?  Try installing the program F<fbset> via your package manager, then rerun the F<primitives.pl> script without the "x" or "y" options.  If it works, then that is your immediate solution.
 
-How does that suddenly fix things?  Calculating the screen size involves complex data structures returned by an ioget call, and Perl handles these very poorly, as it is not very good with typedef size, and the data can end up being in the wrong place.  The "fbset" utility can just tell us what these values are correctly, and the module uses it as a last resort.  Thus now the module can set up the screen corrwectly, and not cause a crash.  This crash happens because it is trying to access memory that has not been allocated to it.
+How does that suddenly fix things?  Calculating the screen size involves complex data structures returned by an ioget call, and Perl handles these very poorly, as it is not very good with typedef size, and the data can end up being in the wrong place.  The "fbset" utility can just tell us what these values are correctly, and the module uses it as a last resort.  Thus now the module can set up the screen correctly, and not cause a crash.  This crash happens because it is trying to access memory that has not been allocated to it.
+
+=item B< It Only Partially Renders >
+
+Yeah this can look weird.  This is likely because there's some buffering going on.  The module attempts to turn it off, but if, for some reason, it is buffering anyway, try adding the following to points in your code where displaying a full render is necessary:
+
+ $fb->_flush_screen();
+
+This should force a full screen flush.
 
 =item B< It Just Plain Isn't Working >
 
-Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous item).
+Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous items).
 
 First, make sure your system has a framebuffer by seeing if F</dev/fb0> (actually "fb" then any number) exists.  If you don't see any "fb0" - "fb31" files inside "/dev", then you don't have a framebuffer driver running.  You need to fix that first.  Sometimes you have to manually load the driver with "modprobe -a drivername" (replacing "drivername" with the actual driver name).
 
@@ -7020,7 +7031,7 @@ Once that is run (changing "sparky" to whatever your username is), log out, then
 
 =item B< The Text Cursor Is Messing Things Up >
 
-It is?  Well then turn it off.  Use the $obj->cls('OFF') method to do it.  Use $obj->cls('ON') to turn it back on.
+It is?  Well then turn it off.  Use the $fb->cls('OFF') method to do it.  Use $fb->cls('ON') to turn it back on.
 
 If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
 
@@ -7054,17 +7065,19 @@ Plain and simple, your device just may be too slow for some CPU intensive operat
 
 If none of these ideas work, then send me an email, and I may be able to get it functioning for you.  Please run the F<dump.pl> script inside the "examples" directory inside this module's package:
 
-   perl dump.pl 2> dump.txt
+   perl dump.pl
 
-Please include this dump file as an attachment to your email.  Please do not include it inline as part of the message text.
+Please include this dump file (dump.log) as an attachment to your email.  Please do not include it inline as part of the message text.
 
 Also, please include a copy of your code (or at least the portion of it where you initialize this module), AND explain to me your hardware and OS it is running under.
 
-Screen shots are also helpful.
+Screen shots and photos are also helpful.
 
 KNOW THIS:  I want to get it working on your system, and I will do everything I can to help you get it working, but there may be some conditions where that may not be possible.  It's very rare (and I haven't seen it yet), but possible.
 
 I am not one of those arrogant ogres that spout "RTFM" every time someone asks for help.  I actually will help you.  Please be patient, as I do have other responsibilities that may delay a response, but a response will come.
+
+** Making the subject of your email "PERL GFB HELP" is most helpful for me, and likely will get your email seen sooner.
 
 =back
 
@@ -7076,7 +7089,7 @@ Richard Kelsch <rich@rk-internet.com>
 
 Copyright 2003-## YEAR ## Richard Kelsch, All Rights Reserved.
 
-This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+This program is free software; you can redistribute it and/or modify it under the GNU software license.
 
 =head1 VERSION
 
