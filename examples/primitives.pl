@@ -35,6 +35,7 @@ GetOptions(
     'pixel=i'  => \$psize,
     'noaccel'  => \$noaccel,
     'nosplash' => \$nosplash,
+    'delay=i'  => \$delay,
 );
 
 $noaccel = ($noaccel) ? 1 : 0;    # Only 1 or 0 please
