@@ -26,6 +26,7 @@ my $dev      = 0;
 my $psize    = 1;
 my $noaccel  = 0;
 my $nosplash = 0;
+my $delay    = 5;
 
 GetOptions(
     'x=i'      => \$new_x,
@@ -71,8 +72,7 @@ my $XX       = $screen_width;
 my $YY       = $screen_height;
 my $center_x = $F->{'X_CLIP'} + ($F->{'W_CLIP'} / 2);
 my $center_y = $F->{'Y_CLIP'} + ($F->{'H_CLIP'} / 2);
-my $delay    = 5;
-my $rpi      = ($FR->{'fscreeninfo'}->{'id'} =~ /BCM270(8|9)/i) ? 1 : 0;
+my $rpi      = ($FR->{'fscreeninfo'}->{'id'} =~ /BCM270(8|9)/i) ? TRUE : FALSE;
 
 $delay *= 3 if ($rpi);    # Raspberry PI is sloooooow.  Let's give extra time for each test
 my $BW = 0;

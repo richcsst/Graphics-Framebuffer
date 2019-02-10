@@ -1,4 +1,4 @@
-6.19 Feb 09, 2019
+6.20 Feb 10, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -3586,7 +3586,7 @@ sub _fill_polygon {
     };
     warn __LINE__ . " $@\n", Imager->errstr(), "\n" if ($@ && $self->{'SHOW_ERRORS'});
     $self->blit_write($saved);
-    $self->{'DRAM_MODE'} = $saved_mode;
+    $self->{'DRAW_MODE'} = $saved_mode;
 }
 
 sub _generate_fill {
