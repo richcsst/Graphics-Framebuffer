@@ -1367,3 +1367,7 @@ Revision history for Graphics-Framebuffer
       This release is mostly an optimizing and clean up release.
 
       Downgraded the testing requirements a bit.
+
+6.20  Feb 10, 2019
+
+      Fixed a code typo and updated the module's POD.

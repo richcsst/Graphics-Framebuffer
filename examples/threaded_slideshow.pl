@@ -19,7 +19,6 @@ my $showall          = 0;
 my $help             = 0;
 my $delay            = 3;
 my $nosplash         = 0;
-my $dev              = 0;
 my $noaccel          = 0;
 my $threads          = Sys::CPU::cpu_count();
 my $RUNNING : shared = 1;
@@ -33,7 +32,6 @@ GetOptions(
     'nosplash'     => \$nosplash,
     'noaccel'      => \$noaccel,
     'threads=i'    => \$threads,
-    'dev=i'        => \$dev,
 );
 my @paths = @ARGV;
 
@@ -47,18 +45,22 @@ if ($help) {
 
 my $splash = ($nosplash) ? 0 : 2;
 
-our $FB = Graphics::Framebuffer->new(
-    'SHOW_ERRORS' => $errors,
-    'RESET'       => 1,
-    'SPLASH'      => $splash,
-    'ACCELERATED' => !$noaccel,
-    'FB_DEVICE'   => "/dev/fb$dev",
-);
+my @devs;
+
+our @fb;
+
+foreach my $dev (0 .. 31) {
+    foreach my $path ('fb','graphics/fb') {
+        if (-e "/dev/$path$dev") {
+            push(@devs,"/dev/$path$dev");
+        }
+    }
+}
 
 $SIG{'QUIT'} = \&finish;
 $SIG{'INT'}  = \&finish;
 $SIG{'KILL'} = \&finish;
-my $p = gather($FB, @paths);
+my $p = gather(@paths);
 
 if ($errors) {
     print STDERR qq{
@@ -70,20 +72,24 @@ DELAY           = $delay
 NOSPLASH        = $nosplash
 CPU             = }, Sys::CPU::cpu_type(), qq{
 THREADS         = $threads
-DEVICE          = /dev/fb$dev
+DEVICES         = }, join(', ',@devs), qq{
 PATH(s)         = }, join('; ', @paths), "\n";
 
     sleep 5;
 } ## end if ($errors)
 
-system('clear');
-$FB->cls();
-$FB->set_color({ 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 255 });
 my @thrd;
 
+$threads /= scalar(@devs);
+
 # Run the slides in threads and have the main thread do housekeeping.
+my $showit = 3;
 for (my $t = 0; $t < $threads; $t++) {
-    $thrd[$t] = threads->create(\&show, $p, $threads, $t);
+    foreach my $f (@devs) {
+        $thrd[$t] = threads->create(\&show, $f, $p, $threads, $t, $showit);
+    }
+    sleep $showit if ($showit);
+    $showit = FALSE;
 }
 
 while ($RUNNING) {    # Monitors the running threads and restores them if one dies
@@ -102,29 +108,26 @@ while ($RUNNING) {    # Monitors the running threads and restores them if one di
     }
 } ## end while ($RUNNING)
 
-$FB->cls('ON');
 exit(0);
 
 sub finish {
-    print_it('SHUTTING DOWN...', 1);
     $RUNNING = 0;
     alarm 0;
     $SIG{'ALRM'} = sub {
         exec('reset');
     };
     alarm 20;
+    print "\n\nSHUTTING DOWN...\n\n";
     while (my @thr = threads->list(threads::running)) {
         while (my @j = threads->list(threads::joinable)) {
             foreach my $jo (@j) {
                 $jo->join();
-                print_it('SHUTTING DOWN...', 1);
             }
         } ## end while (my @j = threads->list...)
     } ## end while (my @thr = threads->...)
     while (my @j = threads->list(threads::joinable)) {
         foreach my $jo (@j) {
             $jo->join();
-            print_it('SHUTTING DOWN...', 1);
         }
     } ## end while (my @j = threads->list...)
     foreach my $thr (threads->list()) {
@@ -134,7 +137,6 @@ sub finish {
 } ## end sub finish
 
 sub gather {
-    my $FB    = shift;
     my @paths = @_;
     my @pics;
     foreach my $path (@paths) {
@@ -148,7 +150,7 @@ sub gather {
         foreach my $file (@dir) {
             next if ($file =~ /^\.+/);
             if (-d "$path/$file") {
-                my $r = gather($FB, "$path/$file");
+                my $r = gather("$path/$file");
                 if (defined($r)) {
                     @pics = (@pics, @{$r});
                 }
@@ -268,85 +270,76 @@ sub calculate_window {
 } ## end sub calculate_window
 
 sub show {
-    my $ps   = shift;
-    my $jobs = shift;
-    my $job  = shift;
+    my $dev     = shift;
+    my $ps      = shift;
+    my $jobs    = shift;
+    my $job     = shift;
+    my $display = shift;
+
     local $SIG{'ALRM'} = undef;
     local $SIG{'INT'}  = undef;
     local $SIG{'QUIT'} = undef;
     local $SIG{'KILL'} = undef;
+
+    my $FB = Graphics::Framebuffer->new(
+        'SHOW_ERRORS' => $errors,
+        'RESET'       => 1,
+        'SPLASH'      => $splash,
+        'ACCELERATED' => !$noaccel,
+        'FB_DEVICE'   => $dev,
+        'SPLASH'      => $display,
+    );
+    system('clear');
+    $FB->cls();
+    $FB->set_color({ 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 255 });
     my @pics = shuffle(@{$ps});
     my $p    = scalar(@pics);
     my $idx  = 0;
     my ($X, $Y, $W, $H) = calculate_window($jobs, $job, $FB->{'XRES'}, $FB->{'YRES'});
 
     while ($RUNNING && $idx < $p) {
-        my $name = $pics[$idx];
+        eval {
+            my $name = $pics[$idx];
+            my $image = $FB->load_image(
+                {
+                    'x'          => $X,
+                    'y'          => $Y,
+                    'width'      => $W,
+                    'height'     => $H,
+                    'file'       => $name,
+                    'autolevels' => $auto
+                }
+            );
 
-        #        print_it($FB, "Loading image $name");
-
-        my $image = $FB->load_image(
-            {
-                'x'          => $X,
-                'y'          => $Y,
-                'width'      => $W,
-                'height'     => $H,
-                'file'       => $name,
-                'autolevels' => $auto
-            }
-        );
-
-        if (defined($image)) {
-            $FB->rbox({ 'x' => $X, 'y' => $Y, 'width' => $W, 'height' => $H, 'filled' => 1 });
-            if (ref($image) eq 'ARRAY') {
-                my $s = time + ($delay * 2);
-                while ($RUNNING && time <= $s) {    # We play it as many times as the delay allows, but at least once.
-                                                    # We don't use "play_animation" for threads.  This is so we can stop the playback quickly.
-                    for (my $frame = 0; $frame < scalar(@{$image}); $frame++) {
-                        my $begin = time;                     # Mark the start time
-                        $FB->blit_write($image->[$frame]);    # Write the frame to the display
-                                                              # Multiply the 'gif_delay' by 0.01 and then subtract from that the amount of time
-                                                              # it took to actually display the fram.  This givs the true delay, which should
-                                                              # show an accurate animation.
-                        my $d = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) - (time - $begin));
-                        sleep $d if ($d > 0);
-                        last unless ($RUNNING);
-                    } ## end for (my $frame = 0; $frame...)
-                } ## end while ($RUNNING && time <=...)
-            } else {
-                $FB->blit_write($image);
-                sleep $delay * $RUNNING;
-            }
-        } ## end if (defined($image))
+            if (defined($image)) {
+                $FB->rbox({ 'x' => $X, 'y' => $Y, 'width' => $W, 'height' => $H, 'filled' => 1 });
+                if (ref($image) eq 'ARRAY') {
+                    my $s = time + ($delay * 2);
+                    while ($RUNNING && time <= $s) {    # We play it as many times as the delay allows, but at least once.
+                                                        # We don't use "play_animation" for threads.  This is so we can stop the playback quickly.
+                        for (my $frame = 0; $frame < scalar(@{$image}); $frame++) {
+                            my $begin = time;                     # Mark the start time
+                            $FB->blit_write($image->[$frame]);    # Write the frame to the display
+                                                                  # Multiply the 'gif_delay' by 0.01 and then subtract from that the amount of time
+                                                                  # it took to actually display the frame.  This givs the true delay, which should
+                                                                  # show an accurate animation.
+                            my $d = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) - (time - $begin));
+                            sleep $d if ($d > 0);
+                            last unless ($RUNNING);
+                        } ## end for (my $frame = 0; $frame...)
+                    } ## end while ($RUNNING && time <=...)
+                } else {
+                    $FB->blit_write($image);
+                    sleep $delay * $RUNNING;
+                }
+            } ## end if (defined($image))
+        };
         $idx++;
         $idx = 0 if ($idx >= $p);
     } ## end while ($RUNNING && $idx <...)
     $FB->rbox({ 'x' => $X, 'y' => $Y, 'width' => $W, 'height' => $H, 'filled' => 1 });
 } ## end sub show
 
-sub print_it {
-    my $message = shift;
-    my $big = shift || 0;
-
-    unless ($FB->{'XRES'} < 256) {
-        my $b = $FB->ttf_print(
-            {
-                'x'            => 5,
-                'y'            => 32,
-                'height'       => ($big) ? 64 : 20,
-                'color'        => 'FFFFFFFF',
-                'text'         => $message,
-                'bounding_box' => 1,
-                'center'       => ($big) ? CENTER_XY : CENTER_X,
-                'antialias'    => 1
-            }
-        );
-        $FB->ttf_print($b);
-    } else {
-        print "$message\n";
-    }
-    $FB->normal_mode();
-} ## end sub print_it
 
 __END__
 

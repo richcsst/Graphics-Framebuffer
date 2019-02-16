@@ -1781,11 +1781,10 @@ sub clear_screen {
     my $self   = shift;
     my $cursor = shift || '';
 
-#    $self->wait_for_console() if ($self->{'WAIT_FOR_CONSOLE'});
     if ($cursor =~ /off/i) {
-        system('tput civis -- invisible');
+        system('tput civis -- invisible && clear');
     } elsif ($cursor =~ /on/i) {
-        system('tput cnorm -- normal');
+        system('tput cnorm -- normal && reset');
     }
     select(STDOUT);
     $|++;
@@ -1795,7 +1794,6 @@ sub clear_screen {
         $self->blit_write({ 'x' => $self->{'X_CLIP'}, 'y' => $self->{'Y_CLIP'}, 'width' => $w, 'height' => $h, 'image' => $self->{'B_COLOR'} x ($w * $h) }, 0);
     } else {
         substr($self->{'SCREEN'}, 0)                   = $self->{'B_COLOR'} x ($self->{'fscreeninfo'}->{'smem_len'} / $self->{'BYTES'});
-        substr($self->{'SCREEN'}, 0, $self->{'BYTES'}) = $self->{'B_COLOR'};
     }
     $self->_flush_screen();
 }

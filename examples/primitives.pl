@@ -53,6 +53,8 @@ our @IMAGES;
 our @SMALL_IMAGES;
 our $STAMP = sprintf('%.1', time);
 
+$ENV{'QUIT'} = $ENV{'INT'} = $ENV{'KILL'} = sub { exec('reset'); };
+
 if (defined($new_x)) {
     $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0);
 } else {
