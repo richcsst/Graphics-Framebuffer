@@ -14,9 +14,6 @@ use Getopt::Long;
 
 # use Data::Dumper::Simple; $Data::Dumper::Sortkeys=1;
 
-system('clear');
-$|++;
-
 our $F;
 our $FR;
 
@@ -43,8 +40,9 @@ $noaccel = ($noaccel) ? 1 : 0;    # Only 1 or 0 please
 my $images_path = (-e 'images/RWBY_White.jpg') ? 'images' : 'examples/images';
 
 my $splash = ($nosplash) ? 0 : 2;
-
+$ENV{'QUIT'} = $ENV{'INT'} = $ENV{'KILL'} = sub { exec('reset'); };
 print "\n\nGathering images...\n";
+$|=1;
 opendir(my $DIR, $images_path);
 chomp(my @files = readdir($DIR));
 closedir($DIR);
@@ -1605,7 +1603,7 @@ sub print_it {
     } else {
         print STDERR "$message\n";
     }
-
+    $fb->_flush_screen();
 } ## end sub print_it
 
 __END__
