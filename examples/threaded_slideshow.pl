@@ -19,18 +19,20 @@ use Pod::Usage;
 use Sys::CPU;
 use File::HomeDir;
 
+## I only use this for debugging
 # use Data::Dumper::Simple; $Data::Dumper::Sortkeys = 1; $Data::Dumper::Purity = 1;
 
-my $errors           = 0;
-my $auto             = 0;
-my $showall          = 0;
-my $help             = 0;
+my $errors           = FALSE;
+my $auto             = FALSE;
+my $showall          = FALSE;
+my $help             = FALSE;
 my $delay            = 3;
-my $nosplash         = 0;
-my $noaccel          = 0;
+my $nosplash         = FALSE;
+my $noaccel          = FALSE;
 my $threads          = Sys::CPU::cpu_count() * 2;
-my $RUNNING : shared = 1;
+my $RUNNING : shared = TRUE;
 my $default_path     = File::HomeDir->my_home() . '/Pictures/';
+our $GO : shared     = FALSE;
 
 GetOptions(
     'auto'         => \$auto,
@@ -382,13 +384,11 @@ sub show {
         'FB_DEVICE'   => $dev,
         'SPLASH'      => $display,
     );
-    $FB->cls('OFF') if ($display);
     $FB->set_color({ 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 255 });
     my @pics = shuffle(@{$ps});
     my $p    = scalar(@pics);
     my $idx  = 0;
     my ($X, $Y, $W, $H) = calculate_window($jobs, $job, $FB->{'XRES'}, $FB->{'YRES'});
-    sleep $delay if ($display);
     while ($RUNNING && $idx < $p) {
         my $name = $pics[$idx];
         my $image = $FB->load_image( # Uninterruptible at the moment
@@ -401,8 +401,27 @@ sub show {
                 'autolevels' => $auto
             }
         );
-
+        my $tdelay;
+        if (ref($image) eq 'ARRAY') {
+            $tdelay = $delay - $image->[-1]->{'benchmark'}->{'total'};
+        } else {
+            $tdelay = $delay - $image->{'benchmark'}->{'total'};
+        }
+        $tdelay = 0 if ($tdelay < 0);
         if (defined($image)) {
+            if ($display) {
+                $display = FALSE;
+                $FB->cls('OFF');
+                $GO = TRUE;
+            } else {
+                if ($GO) {
+                    sleep $tdelay * $RUNNING;
+                } else {
+                    while (! $GO && $RUNNING) {
+                        threads->yield();
+                    }
+                }
+            }
             $FB->rbox({ 'x' => $X, 'y' => $Y, 'width' => $W, 'height' => $H, 'filled' => 1 });
             if (ref($image) eq 'ARRAY') {
                 my $s = time + ($delay * 2);
@@ -427,7 +446,6 @@ sub show {
                 }
                 $FB->blit_write($image);
                 threads->yield();
-                sleep $delay * $RUNNING;
             }
         } ## end if (defined($image))
         $idx++;

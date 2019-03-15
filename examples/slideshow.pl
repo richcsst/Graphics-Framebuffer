@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 use strict;
 
@@ -7,18 +7,22 @@ use Time::HiRes qw(sleep time alarm);
 use List::Util qw(shuffle);
 use Getopt::Long;
 use Pod::Usage;
+use File::HomeDir;
 
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys = 1;$Data::Dumper::Purity = 1;
 
-my $errors     = 0;
-my $auto       = 0;
-my $fullscreen = 0;
-my $showall    = 0;
-my $help       = 0;
-my $delay      = 3;
-my $nosplash   = 0;
-my $dev        = 0;
-my $noaccel    = 0;
+my $default_dir = File::HomeDir->my_home() . '/Pictures';
+my $errors      = FALSE;
+my $auto        = FALSE;
+my $fullscreen  = FALSE;
+my $showall     = FALSE;
+my $help        = FALSE;
+my $nosplash    = FALSE;
+my $dev         = FALSE;
+my $noaccel     = FALSE;
+my $diagnostics = FALSE;
+my $showname    = FALSE;
+my $delay       = 3;
 
 GetOptions(
     'auto'         => \$auto,
@@ -30,8 +34,10 @@ GetOptions(
     'nosplash'     => \$nosplash,
     'dev=i'        => \$dev,
     'noaccel'      => \$noaccel,
+    'diagnostics'  => \$diagnostics,
+    'showname'     => \$showname,
 );
-my @paths = @ARGV;
+my @paths = (scalar(@ARGV)) ? @ARGV : ($default_dir);
 
 unless (scalar(@paths) && !$help) {
     $help = 2;
@@ -49,7 +55,10 @@ our $FB = Graphics::Framebuffer->new(
     'SPLASH'      => $splash,
     'ACCELERATED' => !$noaccel,
     'FB_DEVICE'   => "/dev/fb$dev",
+    'DIAGNOSTICS' => $diagnostics,
 );
+
+$SIG{'QUIT'} = $SIG{'HUP'} = $SIG{'INT'} = $SIG{'KILL'} = sub { exec('reset'); };
 
 if ($errors) {
     system('clear');
@@ -84,7 +93,7 @@ sub gather {
     foreach my $path (@paths) {
         chop($path) if ($path =~ /\/$/);
         $FB->rbox({ 'x' => 0, 'y' => 0, 'width' => $FB->{'XRES'}, 'height' => 32, 'filled' => 1, 'gradient' => { 'direction' => 'vertical', 'colors' => { 'red' => [0, 0], 'green' => [0, 0], 'blue' => [64, 128] } } });
-        print_it("Scanning - $path");
+        print_it("Scanning - $path",TRUE);
         opendir(my $DIR, "$path") || die "Problem reading $path directory";
         chomp(my @dir = readdir($DIR));
         closedir($DIR);
@@ -106,16 +115,17 @@ sub gather {
 } ## end sub gather
 
 sub show {
-    my $ps    = shift;
-    my @pics  = shuffle(@{$ps});
-    my $p     = scalar(@pics);
-    my $idx   = 0;
-    my $halfw = int($FB->{'XRES'} / 2);
-    my $halfh = int($FB->{'YRES'} / 2);
+    my $ps      = shift;
+    my @pics    = shuffle(@{$ps});
+    my $p       = scalar(@pics);
+    my $idx     = 0;
+    my $halfw   = int($FB->{'XRES'} / 2);
+    my $halfh   = int($FB->{'YRES'} / 2);
+    my $display = FALSE;
 
     while ($idx < $p) {
         my $name = $pics[$idx];
-        print_it("Loading image $name");
+        print_it("Loading image $name",$showname);
         my $image;
         unless ($fullscreen) {
             $image = $FB->load_image(
@@ -136,6 +146,14 @@ sub show {
                 }
             );
         } ## end else
+        my $tdelay;
+        if (ref($image) eq 'ARRAY') {
+            $tdelay = $delay - $image->[-1]->{'benchmark'}->{'total'};
+        } else {
+            $tdelay = $delay - $image->{'benchmark'}->{'total'};
+        }
+        $tdelay = 0 if ($tdelay < 0);
+        sleep $tdelay if ($tdelay && $display);
 
         #        warn Dumper($image);exit;
         if (defined($image)) {
@@ -164,19 +182,20 @@ sub show {
                 } else {
                     $FB->blit_write($image);
                 }
-                sleep $delay;
             } ## end else [ if (ref($image) eq 'ARRAY')]
+            $display = TRUE;
         } ## end if (defined($image))
         $idx++;
-
         #        $idx = 0 if ($idx >= $p);
     } ## end while ($idx < $p)
 } ## end sub show
 
 sub print_it {
     my $message = shift;
+    my $showit  = shift;
+    return() unless ($showit);
 
-    unless ($FB->{'XRES'} < 256) {
+    if ($FB->{'XRES'} >= 256) {
         $FB->xor_mode();
 
         my $b = $FB->ttf_print(
@@ -186,9 +205,9 @@ sub print_it {
                 'height'       => 20,
                 'color'        => 'FFFFFFFF',
                 'text'         => $message,
-                'bounding_box' => 1,
+                'bounding_box' => TRUE,
                 'center'       => CENTER_X,
-                'antialias'    => 1
+                'antialias'    => TRUE
             }
         );
         $FB->ttf_print($b);
