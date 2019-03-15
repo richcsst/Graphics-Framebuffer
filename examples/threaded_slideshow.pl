@@ -17,7 +17,6 @@ use List::Util qw(shuffle);
 use Getopt::Long;
 use Pod::Usage;
 use Sys::CPU;
-use File::HomeDir;
 
 ## I only use this for debugging
 # use Data::Dumper::Simple; $Data::Dumper::Sortkeys = 1; $Data::Dumper::Purity = 1;
@@ -31,7 +30,7 @@ my $nosplash         = FALSE;
 my $noaccel          = FALSE;
 my $threads          = Sys::CPU::cpu_count() * 2;
 my $RUNNING : shared = TRUE;
-my $default_path     = File::HomeDir->my_home() . '/Pictures/';
+my $default_path     = '.';
 our $GO : shared     = FALSE;
 
 GetOptions(
@@ -96,10 +95,11 @@ $threads /= scalar(@devs);
 
 # Run the slides in threads and have the main thread do housekeeping.
 my $showit = $splash;
+my @params;
 for (my $t = 0; $t < $threads; $t++) {
     foreach my $f (@devs) {
-        $thrd[$t] = threads->create({'context' => 'scalar'}, \&show, $f, $p, $threads, $t, $showit, $delay);
-        sleep (1 / $threads); # Skew
+        $params[$t] = [$f, $p, $threads, $t, $showit, $delay];
+        $thrd[$t] = threads->create({'context' => 'scalar'}, \&show, @{ $params[$t] });
     }
     sleep $showit if ($showit);
     $showit = FALSE;
@@ -112,14 +112,14 @@ while ($RUNNING) {    # Monitors the running threads and restores them if one di
             if ($RUNNING) {
                 unless ($thrd[$t]->is_running()) {
                     eval { $thrd[$t]->kill('KILL')->detach(); };
-                    $thrd[$t] = threads->create({'context' => 'scalar'}, \&show, $p, $threads, $t, $delay);
+                    $thrd[$t] = threads->create({'context' => 'scalar'}, \&show, @{ $params[$t] });
                 }
-            } ## end if ($RUNNING)
-        } ## end for (my $t = 0; $t < $threads...)
+            }
+        }
     } else {
         sleep 1;
     }
-} ## end while ($RUNNING)
+}
 
 exit(0);
 
@@ -384,6 +384,7 @@ sub show {
         'FB_DEVICE'   => $dev,
         'SPLASH'      => $display,
     );
+    $FB->wait_for_console(1);
     $FB->set_color({ 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 255 });
     my @pics = shuffle(@{$ps});
     my $p    = scalar(@pics);
@@ -401,10 +402,8 @@ sub show {
                 'autolevels' => $auto
             }
         );
-        my $tdelay;
-        if (ref($image) eq 'ARRAY') {
-            $tdelay = $delay - $image->[-1]->{'benchmark'}->{'total'};
-        } else {
+        my $tdelay = 0;
+        if (ref($image) ne 'ARRAY') {
             $tdelay = $delay - $image->{'benchmark'}->{'total'};
         }
         $tdelay = 0 if ($tdelay < 0);
@@ -423,6 +422,7 @@ sub show {
                 }
             }
             $FB->rbox({ 'x' => $X, 'y' => $Y, 'width' => $W, 'height' => $H, 'filled' => 1 });
+            $FB->wait_for_console(); # Results will vary
             if (ref($image) eq 'ARRAY') {
                 my $s = time + ($delay * 2);
                 while ($RUNNING && time <= $s) {    # We play it as many times as the delay allows, but at least once.
@@ -477,7 +477,7 @@ This automatically detects all of the framebuffer devices in your system, and sh
 
 More than one path can be used.  Just separate each path by a space.
 
-If no path is given, then the current user's "Pictures" directory will be used.
+If no path is given, then the current directory is used.
 
 =head2 OPTIONS
 

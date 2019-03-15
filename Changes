@@ -1451,3 +1451,11 @@ Revision history for Graphics-Framebuffer
 
       Added a new "examples/mouse.pl" script to demonstrate the mouse.  Like I
       said, it is rudimentary.
+
+6.26  Mar 15, 2019
+
+      Made some improvements to the slideshow example scripts.  These scripts
+      now use the current path as the default, if none is passed to them.
+
+      Also made attempts at making the "_console" methods workable... they're
+      flakey still.

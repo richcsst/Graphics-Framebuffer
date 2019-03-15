@@ -1,4 +1,4 @@
-6.25 Mar 14, 2019
+6.26 Mar 15, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -836,7 +836,6 @@ sub new {
         'CENTRE_XY'   => CENTRE_XY,                             #   Constants for centering
 
         'WAIT_FOR_CONSOLE' => FALSE,
-        'NO_FGCONSOLE'     => TRUE,
         'THIS_CONSOLE'     => 1,
         'CONSOLE'          => 1,
         ####################################################################
@@ -956,7 +955,7 @@ sub new {
 
     unless (defined($self->{'FB_DEVICE'})) {     # We scan for all 32 possible devices at both possible locations
         foreach my $dev (0 .. 31) {
-            foreach my $prefix (qw(/dev/fb /dev/graphics/fb)) {
+            foreach my $prefix (qw(/dev/fb /dev/graphics/fb /dev/fb/)) {
                 if (-e "$prefix$dev") {
                     $self->{'FB_DEVICE'} = "$prefix$dev";
                     last;
@@ -965,10 +964,10 @@ sub new {
             last if (defined($self->{'FB_DEVICE'}));
         }
     }
-    $self->{'CONSOLE'} = `cat /sys/class/tty/tty0/active`;
+    $self->{'CONSOLE'} = _slurp('/sys/class/tty/tty0/active');
     $self->{'CONSOLE'} =~ s/\D+//gs;
     $self->{'CONSOLE'} += 0;
-    $self->{'THIS_CONSOLE'} = $self->{'THIS_CONSOLE'};
+    $self->{'THIS_CONSOLE'} = $self->{'CONSOLE'};
     if ( ! defined($ENV{'DISPLAY'}) && defined($self->{'FB_DEVICE'}) && $self->{'FB_DEVICE'} !~ /virtual/i && open($self->{'FB'}, '+<', $self->{'FB_DEVICE'})) {    # Can we open the framebuffer device??
         binmode($self->{'FB'});                                                                                                                                   # We have to be in binary mode first
         $|++;
@@ -6898,7 +6897,7 @@ Returns the active console and the expected console
 
 sub which_console {
     my $self = shift;
-    $self->{'THIS_CONSOLE'} = `cat /sys/class/tty/tty0/active`;
+    $self->{'THIS_CONSOLE'} = _slurp('/sys/class/tty/tty0/active');
     $self->{'THIS_CONSOLE'} =~ s/\D+//gs;
     $self->{'THIS_CONSOLE'} += 0; # Force numeric
     return ($self->{'THIS_CONSOLE'}, $self->{'CONSOLE'});
@@ -6938,7 +6937,7 @@ sub wait_for_console {
     if (scalar(@_)) {
         $self->{'WAIT_FOR_CONSOLE'} = (shift =~ /^(true|on|1|enable)$/i) ? TRUE : FALSE;
     } else {
-        while (!$self->active_console()) {
+        while ($self->{'WAIT_FOR_CONSOLE'} && !$self->active_console()) {
             sleep .1;
         }
     }
@@ -7075,6 +7074,18 @@ sub _set_ioctl {
 
     my $data = pack($format, @array);
     eval { return (ioctl($fb, $command, $data)); };
+}
+
+sub _slurp {
+    my $file = shift;
+    my $buffer = '';
+    eval {
+        open(my $sl,'<',$file);
+        read($sl,$buffer,10);
+        close($sl);
+        $buffer = chomp($buffer);
+    };
+    return($buffer);
 }
 
 1;

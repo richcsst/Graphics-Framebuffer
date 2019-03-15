@@ -7,11 +7,10 @@ use Time::HiRes qw(sleep time alarm);
 use List::Util qw(shuffle);
 use Getopt::Long;
 use Pod::Usage;
-use File::HomeDir;
 
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys = 1;$Data::Dumper::Purity = 1;
 
-my $default_dir = File::HomeDir->my_home() . '/Pictures';
+my $default_dir = '.';
 my $errors      = FALSE;
 my $auto        = FALSE;
 my $fullscreen  = FALSE;
@@ -123,6 +122,7 @@ sub show {
     my $halfh   = int($FB->{'YRES'} / 2);
     my $display = FALSE;
 
+    $FB->wait_for_console(1);
     while ($idx < $p) {
         my $name = $pics[$idx];
         print_it("Loading image $name",$showname);
@@ -146,10 +146,8 @@ sub show {
                 }
             );
         } ## end else
-        my $tdelay;
-        if (ref($image) eq 'ARRAY') {
-            $tdelay = $delay - $image->[-1]->{'benchmark'}->{'total'};
-        } else {
+        my $tdelay = 0;
+        if (ref($image) ne 'ARRAY') {
             $tdelay = $delay - $image->{'benchmark'}->{'total'};
         }
         $tdelay = 0 if ($tdelay < 0);
@@ -158,13 +156,13 @@ sub show {
         #        warn Dumper($image);exit;
         if (defined($image)) {
             $FB->cls();
+            $FB->wait_for_console(); # Results will vary (I don't know why)
             if (ref($image) eq 'ARRAY') {
                 my $s = time + ($delay * 2);
                 while (time <= $s) {
                     $FB->play_animation($image, 1);
                 }
             } else {
-                $FB->cls();
                 if ($fullscreen) {
                     if ($image->{'width'} <= $halfw) {
                         $image->{'x'} = int(($halfw - $image->{'width'}) / 2);
