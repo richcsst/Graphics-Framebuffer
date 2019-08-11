@@ -21,6 +21,7 @@ examples/primitives.pl
 examples/slideshow.pl
 examples/template.pl
 examples/threaded_slideshow.pl
+examples/threaded_primitives.pl
 examples/viewpic.pl
 ignore.txt
 KNOWN_ISSUES
