@@ -1473,3 +1473,7 @@ Revision history for Graphics-Framebuffer
 
       Fixed the threaded slideshow example script, as well as enabled the
       ability to show the filename.
+
+6.30  Aug 11, 2019
+
+      Many changes to the example scripts and documentation.
