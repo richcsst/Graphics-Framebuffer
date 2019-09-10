@@ -406,7 +406,7 @@ BEGIN {
     require Exporter;
 
     # set the version for version checking
-    our $VERSION   = '6.31';
+    our $VERSION   = '6.32';
     our @ISA       = qw(Exporter Graphics::Framebuffer::Splash Graphics::Framebuffer::Mouse);
     our @EXPORT_OK = qw(
       FBIOGET_VSCREENINFO
@@ -8980,7 +8980,7 @@ A copy of this license is included in the 'LICENSE' file in this distribution.
 
 =head1 VERSION
 
-Version 6.31 (Aug 24, 2019)
+Version 6.32 (Aug 25, 2019)
 
 =head1 THANKS
 

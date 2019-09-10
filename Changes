@@ -1490,3 +1490,7 @@ Revision history for Graphics-Framebuffer
 
       The Makefile.PL script has been improved, and now exits where there are
       missing prerequisites.
+
+6.32  Aug 25, 2019
+
+      Adjusted the version numbers of the modules.
