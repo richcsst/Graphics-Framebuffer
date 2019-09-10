@@ -1,4 +1,4 @@
-6.33 Sept 9, 2019
+6.34 Sept 9, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -388,7 +388,7 @@ use Math::Trig ':pi';                                            # Usually only 
 use Math::Bezier;                                                # Bezier curve calculations done here.
 use Math::Gradient qw( gradient array_gradient multi_gradient ); # Awesome gradient calculation module
 use List::Util qw(min max);                                      # min and max are very handy!
-use File::Map 'map_handle unmap';                                # Absolutely necessary to map the screen to a string.
+use File::Map 'map_handle';                                      # Absolutely necessary to map the screen to a string.
 use Imager;                                                      # This is used for TrueType font printing, image loading.
 use Imager::Matrix2d;
 use Imager::Fill;                                                # For hatch fills
@@ -1340,7 +1340,7 @@ sub _reset {
 # Fixes the mapping if Perl garbage collects (naughty Perl)
 sub _fix_mapping { # File::Map SHOULD make this obsolete
     my $self = shift;
-    unmap($self->{'SCREEN'});
+    undef($self->{'SCREEN'}); # Unmap missing on some File::Maps
     unless (defined($self->{'FB'})) {
         eval { close($self->{'FB'}); };
         open($self->{'FB'}, '+<', $self->{'FB_DEVICE'});
@@ -1381,7 +1381,7 @@ sub _color_order {
 sub _screen_close {
     my $self = shift;
     unless (defined($self->{'ERROR'})) {    # Only do it if not in emulation mode
-        unmap($self->{'SCREEN'}) if (defined($self->{'SCREEN'}));
+        undef($self->{'SCREEN'}) if (defined($self->{'SCREEN'})); # unmap had issues with File::Map.
         close($self->{'FB'})     if (defined($self->{'FB'}));
         delete($self->{'FB'});              # We leave no remnants
     }
