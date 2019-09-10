@@ -1508,3 +1508,7 @@ Revision history for Graphics-Framebuffer
 
       Issues with different versions of File::Map and exporting unmap.  The
       above changes incorporated, but an alternate method of unmap used.
+
+6.35  Sept 9, 2019
+
+      Yet another adventure in File::Map.  Now using the ":map" tag to import.

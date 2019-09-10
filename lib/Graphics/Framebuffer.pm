@@ -387,7 +387,7 @@ use Math::Trig ':pi';                                            # Usually only 
 use Math::Bezier;                                                # Bezier curve calculations done here.
 use Math::Gradient qw( gradient array_gradient multi_gradient ); # Awesome gradient calculation module
 use List::Util qw(min max);                                      # min and max are very handy!
-use File::Map 'map_handle';                                      # Absolutely necessary to map the screen to a string.
+use File::Map ':map';                                            # Absolutely necessary to map the screen to a string.
 use Imager;                                                      # This is used for TrueType font printing, image loading.
 use Imager::Matrix2d;
 use Imager::Fill;                                                # For hatch fills
@@ -406,7 +406,7 @@ BEGIN {
     require Exporter;
 
     # set the version for version checking
-    our $VERSION   = '6.34';
+    our $VERSION   = '6.35';
     our @ISA       = qw(Exporter Graphics::Framebuffer::Splash Graphics::Framebuffer::Mouse);
     our @EXPORT_OK = qw(
       FBIOGET_VSCREENINFO
@@ -475,7 +475,7 @@ BEGIN {
     );
 }
 
-DESTROY { # Always clean up after yourself before exiting
+sub DESTROY { # Always clean up after yourself before exiting
     my $self = shift;
     $self->text_mode();
     $self->_screen_close();
@@ -3009,7 +3009,7 @@ sub _reset {
 # Fixes the mapping if Perl garbage collects (naughty Perl)
 sub _fix_mapping { # File::Map SHOULD make this obsolete
     my $self = shift;
-    undef($self->{'SCREEN'}); # Unmap missing on some File::Maps
+    unmap($self->{'SCREEN'}); # Unmap missing on some File::Maps
     unless (defined($self->{'FB'})) {
         eval { close($self->{'FB'}); };
         open($self->{'FB'}, '+<', $self->{'FB_DEVICE'});
@@ -3050,7 +3050,7 @@ sub _color_order {
 sub _screen_close {
     my $self = shift;
     unless (defined($self->{'ERROR'})) {    # Only do it if not in emulation mode
-        undef($self->{'SCREEN'}) if (defined($self->{'SCREEN'})); # unmap had issues with File::Map.
+        unmap($self->{'SCREEN'}) if (defined($self->{'SCREEN'})); # unmap had issues with File::Map.
         close($self->{'FB'})     if (defined($self->{'FB'}));
         delete($self->{'FB'});              # We leave no remnants
     }
@@ -8977,7 +8977,7 @@ A copy of this license is included in the 'LICENSE' file in this distribution.
 
 =head1 VERSION
 
-Version 6.34 (Sept 9, 2019)
+Version 6.35 (Sept 9, 2019)
 
 =head1 THANKS
 
