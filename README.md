@@ -24,13 +24,17 @@ To make your system ready for this module, then please install the following:
 
 ### DEBIAN BASED SYSTEMS (Ubuntu, Mint, Raspian, etc):
 
-`sudo apt update`
-`sudo apt install build-essential linux-headers libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libfile-map-perl libtest-more-perl libsys-cpu-perl fonts-wine`
+```bash
+sudo apt update`
+sudo apt install build-essential linux-headers libimager-perl libinline-c-perl libmath-gradient-perl libmath-bezier-perl libfile-map-perl libtest-more-perl libsys-cpu-perl fonts-wine
+```
 
 ### REDHAT BASED SYSTEMS (Fedora, CentOS, etc):
 
-`sudo yum update`
-`sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-file-map perl-imager perl-inline-c perl-sys-cpu perl-test-more`
+```bash
+sudo yum update
+sudo yum upgrade kernel-headers build-essential perl-math-gradient perl-math-bezier perl-file-map perl-imager perl-inline-c perl-sys-cpu perl-test-more
+```
 
 ## Continuing...
 
@@ -38,10 +42,12 @@ With that out of the way, you can now install this module.
 
 To install this module, run the following commands:
 
-`perl Makefile.PL`
-`make`
-`make test`
-`make install`
+```bash
+perl Makefile.PL
+make
+make test
+make install
+```
 
 NOTE:  _The install step may require sudo (root access)._
 
@@ -89,15 +95,15 @@ or
 
 You can also look for information at:
 
-# ##RT## - CPAN's request tracker (report bugs here) - http://rt.cpan.org/NoAuth/Bugs.html?Dist=Graphics-Framebuffer
+* **RT** - CPAN's request tracker (report bugs here) - http://rt.cpan.org/NoAuth/Bugs.html?Dist=Graphics-Framebuffer
 
-# ##AnnoCPAN## - Annotated CPAN documentation - http://annocpan.org/dist/Graphics-Framebuffer
+* **AnnoCPAN** - Annotated CPAN documentation - http://annocpan.org/dist/Graphics-Framebuffer
 
-# ##CPAN Ratings## - http://cpanratings.perl.org/d/Graphics-Framebuffer
+* **CPAN Ratings** - http://cpanratings.perl.org/d/Graphics-Framebuffer
 
-# ##Search CPAN## - http://search.cpan.org/dist/Graphics-Framebuffer/
+* **Search CPAN** - http://search.cpan.org/dist/Graphics-Framebuffer/
 
-# ##YouTube## - https://youtu.be/4Yzs55Wpr7E
+* **YouTube** - https://youtu.be/4Yzs55Wpr7E
 
 ## LICENSE AND COPYRIGHT
 
