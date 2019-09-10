@@ -51,7 +51,7 @@ make install
 
 NOTE:  _The install step may require sudo (root access)._
 
-       _Build.PL is not supported by Inline::C, and thus not by this module as well._
+*Build.PL is not supported by Inline::C, and thus not by this module as well.*
 
 ## FURTHER TEST SCRIPTS
 
@@ -59,9 +59,11 @@ To test the installation properly.  Log into the text console (not X).  Go to th
 
 The scripts beginning with 'thread' requires 'Sys::CPU'.  It is not listed as a prerequisite for this module (as it isn't), but if you want to run the threaded scripts, then this is a required module.  It demonstrates how to use this module in a threaded environment.
 
+Mario Roy's MCE test scripts have been added (well, a script to go get them) to demonstrate alternate multiprocessing methods of using Graphics::Framebuffer, even with Perls built without threads support.
+
 ## GETTING STARTED
 
-There is a script template in the 'examples' directory in this package.  You can use it as a starting point for your script.  It is conveniently called 'template.pl'.  I recommend copying it, renaming it, and leaving the original template intact for use on another project.
+There is a script template in the 'examples' directory in this package.  You can use it as a starting point for your script.  It is conveniently called 'template.pl' or "threaded_template.pl".  I recommend copying it, renaming it, and leaving the original template intact for use on another project.
 
 ## COMPATIBILITY vs. SPEED
 
@@ -79,19 +81,21 @@ Here's what I have tested this module on (all 1920x1080x32):
 
 * **2.6 GHz MacBook with VirtualBox** - Blazingly fast. Most primitives draw nearly instantly.
 
-* **Windows 10 PC with VirtualBox, 4 HJz 6 core i7 CPU and 2 NVidia 970 Ti's** - Holy cow!  No, seriously, this sucker is fast!  I wonder how much faster if it were running Linux natively?  In addition, 3840x2160x32 (4K) is surprisingly fast.  Who'd have thought?  Full screen animations were choppy, but everything else was plenty fast enough.
+* **Windows 10 PC with VirtualBox, 4 GHz 6 core i7 CPU and 2 NVidia 970 Ti's** - Holy cow!  No, seriously, this sucker is fast!  I wonder how much faster if it were running Linux natively?  In addition, 3840x2160x32 (4K) is surprisingly fast.  Who'd have thought?  Full screen animations were choppy, but everything else was plenty fast enough.
 
-* **Native Linux Mint with 4 GHz 6 core i7 CPU and 2 NVidia 1080 Ti's** - This is how I found out that the Nouveau driver is very poor when handling a framebuffer.  It's actually disgraceful at how bad and how slow it really is.  It doesn't appear to be using any DMA for the memory copy of the framebuffer, but CPU itself for transfers.  Running Virtual Box on Windows is much faster than running Linux natively with the  Nouveau framebuffer drivers.  Sad, really sad.
+* **Native Linux Mint with 4.2 GHz 6 core i7 CPU and 2 NVidia 1080 Ti's** - This is how I found out that the Nouveau driver is very poor when handling a framebuffer.  It's actually disgraceful at how bad and how slow it really is.  It doesn't appear to be using any DMA for the memory copy of the framebuffer, but CPU itself for transfers.  Running Virtual Box on Windows is much faster than running Linux natively with the  Nouveau framebuffer drivers.  Sad, really sad.
+
+* **NVidia Jetson Nano with 4GB of RAM** - Plenty zippy.  I am quite pleased with this offering by NVidia.
 
 ## SUPPORT AND DOCUMENTATION
 
 After installing, you can find documentation for this module with the 'perldoc' command.
 
-`perldoc Graphics::Framebuffer` (You may have to install 'perldoc', but this usually works.)
+`perldoc Graphics::Framebuffer` *(You may have to install 'perldoc', but this usually works.)*
 
 or
 
-`man Graphics::Framebuffer` (Installing 'perldoc' usually enables Perl module man pages)
+`man Graphics::Framebuffer` *(Installing 'perldoc' usually enables Perl module man pages)*
 
 You can also look for information at:
 
