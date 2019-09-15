@@ -469,8 +469,8 @@ sub show {
                         # Multiply the 'gif_delay' by 0.01 and then subtract from that the amount of time
                         # it took to actually display the frame.  This givs the true delay, which should
                         # show an accurate animation.
+                        threads->yield(); # Yielding takes time, and the delay calculation should be after.
                         my $d = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) - (time - $begin));
-                        threads->yield();
                         sleep $d if ($d > 0);
                         last unless ($RUNNING);
                     } ## end for (my $frame = 0; $frame...)
