@@ -117,16 +117,18 @@ __END__
 
 =head1 NAME
 
-Template file for writing scripts that use Graphics::Framebuffer
+Threaded template file for writing scripts that use Graphics::Framebuffer and
+threads.
 
 =head1 SYNOPIS
 
 First, copy this file, and name the copy whatever you want (using "yourscript"
 for this example):
 
- cp template.pl yourscript.pl
+ cp threaded_template.pl yourscript.pl
 
-Now edit "yourscript.pl" from now on.  Please do not directly edit "template.pl".
+Now edit "yourscript.pl" from now on.  Please do not directly edit
+"threaded_template.pl".
 
 =head1 DESCRIPTION
 
