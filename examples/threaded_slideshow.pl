@@ -30,6 +30,7 @@ my $delay            = 3;
 my $nosplash         = FALSE;
 my $show_names       = FALSE;
 my $noaccel          = FALSE;
+my $heads            = 1;
 my $threads          = Sys::CPU::cpu_count() * 2;
 my $RUNNING : shared = TRUE;
 my $default_path     = '.';
@@ -45,6 +46,7 @@ GetOptions(
     'showall|all'  => \$showall,
     'help'         => \$help,
     'delay|wait=i' => \$delay,
+    'heads=i'      => \$heads,
     'nosplash'     => \$nosplash,
     'noaccel'      => \$noaccel,
     'threads=i'    => \$threads,
@@ -72,7 +74,9 @@ foreach my $dev (0 .. 31) {
         if (-e "/dev/$path$dev") {
             push(@devs,"/dev/$path$dev");
         }
+        last if (scalar(@devs) >= $heads);
     }
+    last if (scalar(@devs) >= $heads);
 }
 
 $SIG{'QUIT'} = $SIG{'INT'}  = $SIG{'KILL'} = $SIG{'TERM'} = $SIG{'HUP'} = \&finish;
