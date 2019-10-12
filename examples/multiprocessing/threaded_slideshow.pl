@@ -33,7 +33,7 @@ my $noaccel          = FALSE;
 my $heads            = 1;
 my $threads          = Sys::CPU::cpu_count() * 2;
 my $RUNNING : shared = TRUE;
-my $default_path     = '.';
+my $default_path     = '../';
 my $new_x;
 my $new_y;
 our $GO : shared     = FALSE;

@@ -22,8 +22,6 @@ use Sys::CPU;
 
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
-our $VERSION = '6.31';
-
 my $dev      = 0;
 my $psize    = 1;
 my $noaccel  = 0;
@@ -42,7 +40,15 @@ GetOptions(
 
 $noaccel = ($noaccel) ? TRUE : FALSE;    # Only 1 or 0 please
 
-my $images_path = (-e 'images/RWBY_White.jpg') ? 'images' : 'examples/images';
+my $images_path;
+{
+    foreach my $p ('images', '../images', 'examples/images') {
+        if (-e "$p/RWBY_White.jpg") {
+            $images_path = $p;
+            last;
+        }
+    }
+}
 
 my $splash = ($nosplash) ? 0 : 2;
 print "\n\nGathering images...\n";
