@@ -1,4 +1,4 @@
-6.38 Nov 2, 2019
+6.39 Nov 3, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -2444,7 +2444,7 @@ sub _draw_line_antialiased {
     my $x1   = shift;
     my $y1   = shift;
 
-    my $saved = { %{ $self->{'SET_COLOR'} } };
+    my $saved = { %{ $self->{'SET_RAW_FOREGROUND_COLOR'} } };
 
     my $plot  = \&_adj_plot;
 
@@ -4550,7 +4550,10 @@ sub blit_move {
     $self->{'DRAW_MODE'} = $old_mode;
     $image->{'x'}        = int($params->{'x_dest'});
     $image->{'y'}        = int($params->{'y_dest'});
+    $self->vsync();
     $self->blit_write($image);
+    delete($image->{'x_dest'});
+    delete($image->{'y_dest'});
     return($image);
 }
 
