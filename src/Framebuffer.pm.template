@@ -1,4 +1,4 @@
-6.39 Nov 3, 2019
+6.40 Nov 4, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -59,7 +59,7 @@ If you are using a Debian based system (Ubuntu, Weezy, Mint, Raspian, etc.) then
 
  sudo apt update
  sudo apt upgrade
- sudo apt install build-essential linux-headers-generic fbset libimager-perl libinline-c-perl libmath-bezier-perl libmath-gradient-perl libfile-map-perl libtest-more-perl
+ sudo apt install build-essential fbset libimager-perl libinline-c-perl libmath-bezier-perl libmath-gradient-perl libfile-map-perl libtest-most-perl
 
 =back
 
@@ -69,7 +69,7 @@ If you are using a RedHat based system (Fedora, CentOS, etc):
 
  sudo yum update
  sudo yum upgrade
- sudo yum upgrade kernel-headers build-essential perl-math-bezier perl-math-gradient perl-file-map perl-imager perl-inline-c perl-test-more
+ sudo yum upgrade build-essential perl-math-bezier perl-math-gradient perl-file-map perl-imager perl-inline-c perl-test-most
 
 =back
 

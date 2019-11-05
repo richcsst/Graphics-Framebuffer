@@ -1545,3 +1545,7 @@ Revision history for Graphics-Framebuffer
 6.39  Nov 3, 2019
 
       Fixed a bug in anti-aliased lines introduced in 6.38
+
+6.40  Nov 4, 2019
+
+      Fixed some installation documentation related to installing.
