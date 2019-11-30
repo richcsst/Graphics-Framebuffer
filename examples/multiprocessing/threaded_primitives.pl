@@ -267,6 +267,7 @@ if ($RUNNING) {
     }
     while($RUNNING) {
         threads->yield();
+        sleep .1;
     }
     foreach my $t (@th) {
         $t->join();
