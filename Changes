@@ -1558,3 +1558,8 @@ Revision history for Graphics-Framebuffer
       it's now fixed.
 
       Thank you Mario Roy for the heads-up on these issues.
+
+6.42  Dec 1, 2019
+
+      Apparently the CentOS/Redhat issue was not quite fixed.  This update
+      addresses that.

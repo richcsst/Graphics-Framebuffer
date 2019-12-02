@@ -1,4 +1,4 @@
-6.41 Nov 30, 2019
+6.42 Dec 1, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -5946,12 +5946,14 @@ sub _gather_fonts {
         next if ($file =~ /^\./);
         if (-d "$path/$file") {
             $self->_gather_fonts("$path/$file");
-        } elsif (-f "$path/$file" && $file =~ /\.ttf$/i && ($self->{'Imager-Has-TrueType'} || $self->{'Imager-Has-Freetype2'})) {
-            my $face = $self->get_face_name({ 'font_path' => $path, 'face' => $file });
-            $self->{'FONTS'}->{$face} = { 'path' => $path, 'font' => $file };
-        } elsif (-f "$path/$file" && $file =~ /\.afb$/i && $self->{'Imager-Has-Type1'}) {
-            my $face = $self->get_face_name({ 'font_path' => $path, 'face' => $file });
-            $self->{'FONTS'}->{$face} = { 'path' => $path, 'font' => $file };
+        } elsif (-f "$path/$file" && -s "$path/$file") { # Makes sure font is non-zero length
+            if ($file =~ /\.ttf$/i && ($self->{'Imager-Has-TrueType'} || $self->{'Imager-Has-Freetype2'})) {
+                my $face = $self->get_face_name({ 'font_path' => $path, 'face' => $file });
+                $self->{'FONTS'}->{$face} = { 'path' => $path, 'font' => $file };
+            } elsif ($file =~ /\.afb$/i && $self->{'Imager-Has-Type1'}) {
+                my $face = $self->get_face_name({ 'font_path' => $path, 'face' => $file });
+                $self->{'FONTS'}->{$face} = { 'path' => $path, 'font' => $file };
+            }
         }
     }
 }
