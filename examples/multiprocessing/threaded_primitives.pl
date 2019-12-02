@@ -261,7 +261,7 @@ my @order : shared = (
     'Blitting',
 #    'Blit Move',
     'Rotate',
-#    'Flipping',
+    'Flipping',
     'Monochrome',
 #    'XOR Mode Drawing',
 #    'OR Mode Drawing',
@@ -1452,9 +1452,6 @@ sub flipping {
                         'blit_data' => $image
                     }
                 );
-                $rot->{'image'} = "$rot->{'image'}";
-                $rot->{'x'}     = abs(($XX - $rot->{'width'}) / 2);
-                $rot->{'y'}     = abs((($YY - $F->{'Y_CLIP'}) - $rot->{'height'}) / 2);
                 $F->blit_write($rot);
             } else {
                 $r                = rand(scalar(@IMAGES));
