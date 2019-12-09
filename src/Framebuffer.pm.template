@@ -1,4 +1,4 @@
-6.43 Dec 2, 2019
+6.45 Dec 8, 2019
 package Graphics::Framebuffer;
 
 =head1 NAME
@@ -203,6 +203,7 @@ no strict 'vars';    # We have to map a variable as the screen.  So strict is go
 
 no warnings;         # We have to be as quiet as possible
 
+
 =head1 CONSTANTS
 
 The following constants can be used in the various methods.  Each method example will have the possible constants to use for that method.
@@ -381,6 +382,9 @@ use constant {
     FBINFO_HWACCEL_YWRAP     => 0x4000,
 };
 
+use if ($Config{'useithreads'}), 'threads', 'yield', 'stringify', 'stack_size' => 131076, 'exit' => 'threads_only';
+use if ($Config{'useithreads'}), 'threads::shared';
+### THREADS ###
 use POSIX ();
 use POSIX qw(modf);
 use Time::HiRes qw(sleep time);                                  # The time accuracy has to be milliseconds on many routines
@@ -396,7 +400,6 @@ use Imager::Fountain;                                            #
 use Imager::Font::Wrap;
 use Graphics::Framebuffer::Mouse;                                # The mouse handler
 use Graphics::Framebuffer::Splash;                               # The splash code is here
-### THREADS ###
 
 Imager->preload; # The Imager documentation says to do this, but doesn't give much of an explanation why.  However, I assume it is to initialize global variables ahead of time.
 
