@@ -36,3 +36,6 @@ src/Framebuffer.c
 src/Framebuffer.pm.template
 t/01-splash.t
 TODO
+install-prerequisites-debian.sh
+install-prerequisites-redhat.sh
+detect.sh
