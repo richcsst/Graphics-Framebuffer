@@ -21,7 +21,6 @@ examples/multiprocessing/threaded_slideshow.pl
 examples/multiprocessing/threaded_primitives.pl
 examples/viewpic.pl
 ignore.txt
-KNOWN_ISSUES
 lib/Graphics/Framebuffer.pm
 lib/Graphics/Framebuffer/Splash.pm
 lib/Graphics/Framebuffer/Mouse.pm
@@ -35,7 +34,9 @@ README.md
 src/Framebuffer.c
 src/Framebuffer.pm.template
 t/01-splash.t
-TODO
-install-prerequisites-debian.sh
-install-prerequisites-redhat.sh
-detect.sh
+installing/TODO
+installing/install-prerequisites-debian.sh
+installing/install-prerequisites-redhat.sh
+installing/detect.sh
+installing/TROUBLESHOOTING
+installing/KNOWN_ISSUES

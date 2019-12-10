@@ -11,7 +11,6 @@ use Graphics::Framebuffer;
 use List::Util qw(min max shuffle);
 use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
-use Term::ANSIColor;
 use Data::Dumper;
 
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
@@ -260,7 +259,7 @@ my @order = (
     'Animated',
 );
 
-@order = ('Animated');
+# @order = ('Color Replace None-Clipped');
 foreach my $name (@order) {
     $func{$name}->($name);
 }
@@ -271,50 +270,23 @@ $F->clip_reset();
 $F->attribute_reset();
 $F->text_mode();
 $F->cls('ON');
-my $size  = 0;
-my $fsize = 0;
-foreach my $count (0 .. 1) {
-    if ($count) {
-        $size++;
-        print STDOUT colored(['bold yellow on_red'],sprintf('%' . $size . 's = %-' . (79 - ($size + 3)) . 's','BENCHMARK NAME', 'BENCHMARK TOTAL')),"\n";
-    }
-    foreach my $name (@order) {
-        next if ($name =~ /Mode/);
-        if ($count) {
-            my $title = colored(['white on_blue'], sprintf('%' . $size . 's', $name));
-            if ($name =~ /Image Load|Flood/i) {
-                print STDOUT $title, ' = ', colored(['bold green'], sprintf('%' . $fsize . 's', sprintf('%.02f', $benchmark->{$name}))), " seconds\n";
-            } elsif ($name eq 'Animated') {
-                $title = colored(['white on_blue'], sprintf('%' . $size . 's', "$name Image Native"));
-                print STDOUT $title, ' = ', colored(['bold green'], sprintf('%' . $fsize . 's', sprintf('%.02f', ($benchmark->{"$name Native"} / $delay)))), " frames per second\n";
-                $title = colored(['white on_blue'], sprintf('%' . $size . 's', "$name Image Fullscreen"));
-                print STDOUT $title, ' = ', colored(['bold green'], sprintf('%' . $fsize . 's', sprintf('%.02f', ($benchmark->{"$name Fullscreen"} / $delay)))), " frames per second\n";
-            } elsif ($name eq 'Rotate') {
-                $title = colored(['white on_blue'], sprintf('%' . $size . 's', "Clockwise $name"));
-                print STDOUT $title, ' = ', colored(['bold green'], sprintf('%' . $fsize . 's', sprintf('%.02f', ($benchmark->{"Clockwise $name"} / $delay)))), " per second\n";
-                $title = colored(['white on_blue'], sprintf('%' . $size . 's', "Counter Clockwise $name"));
-                print STDOUT $title, ' = ', colored(['bold green'], sprintf('%' . $fsize . 's', sprintf('%.02f', ($benchmark->{"Counter Clockwise $name"} / $delay)))), " per second\n";
-            } else {
-                print STDOUT $title, ' = ', colored(['bold green'], sprintf('%' . $fsize . 's', sprintf('%.02f', ($benchmark->{$name} / $delay)))), " per second\n";
-            }
-        } else {
-            if ($name eq 'Animated') {
-                $size  = max($size, length("$name Image Fullscreen"));
-                $fsize = max($fsize, length(sprintf('%.02f',$benchmark->{"$name Native"})), length(sprintf('%.02f',$benchmark->{"$name Fullscreen"})));
-            } elsif ($name eq 'Rotate') {
-                $size  = max($size, length("Clockwise $name"));
-                $fsize = max($fsize, length(sprintf('%.02f',$benchmark->{"Clockwise $name"})), length(sprintf('%.02f',$benchmark->{"Clockwise $name"})));
-                $size  = max($size, length("Counter Clockwise $name"));
-                $fsize = max($fsize, length(sprintf('%.02f',$benchmark->{"Counter Clockwise $name"})), length(sprintf('%.02f',$benchmark->{"Counter Clockwise $name"})));
-            } else {
-                $size  = max($size,length($name));
-                $fsize = max($fsize, sprintf('%.02f',$benchmark->{$name}));
-            }
-        }
-    } ## end foreach my $name (keys %{$benchmark...})
-} ## end foreach my $count (1 .. 2)
 
-print STDOUT colored(['bold yellow on_red'],"                           Press [ENTER] to exit...                            "),"\n";
+foreach my $name (@order) {
+    next if ($name =~ /Mode/);
+    if ($name =~ /Image Load|Flood/i) {
+        print STDOUT "$name = $benchmark->{$name} seconds\n";
+    } elsif ($name eq 'Animated') {
+        print STDOUT "$name Native = " . ($benchmark->{"$name Native"} / $delay) . " frames per second\n";
+        print STDOUT "$name Fullscreen = " . ($benchmark->{"$name Native"} / $delay) . " frames per second\n";
+    } elsif ($name eq 'Rotate') {
+        print STDOUT "Clockwise $name" . ($benchmark->{"Clockwise $name"} / $delay) . " per second\n";
+        print STDOUT "Counter Clockwise $name" . ($benchmark->{"Counter Clockwise $name"} / $delay) . " per second\n";
+    } else {
+        print STDOUT "$name = " .  ($benchmark->{$name} / $delay) . " per second\n";
+    }
+}
+
+print STDOUT "Press [ENTER] to exit...\n";
 <>;
 exit(0);
 

@@ -58,11 +58,11 @@ DETERMINE YOUR DISTRIBUTION
 
   For Debian based systems:
 
-    *  install-prerequisites-debian.sh
+    *  installing/install-prerequisites-debian.sh
 
   For RedHat based systems:
 
-    *  install-prerequesites-redhat.sh
+    *  installing/install-prerequesites-redhat.sh
 
   I have also included a script to detect the type of distribution you have:
 
