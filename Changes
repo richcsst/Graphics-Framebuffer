@@ -1580,3 +1580,8 @@ Revision history for Graphics-Framebuffer
 
       Slight change to the example scripts.  Added a new "screensaver.pl"
       example script.
+
+6.48  Apr 14, 2020
+
+      Pause was whining about the Makefile.PL script.  So it has been fixed
+      to accommodate the whining.
