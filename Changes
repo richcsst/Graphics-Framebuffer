@@ -1575,3 +1575,8 @@ Revision history for Graphics-Framebuffer
 6.46  Dec 10, 2019
 
       Fixed the prerequisite installation scripts.
+
+6.47  Apr 13, 2020
+
+      Slight change to the example scripts.  Added a new "screensaver.pl"
+      example script.
