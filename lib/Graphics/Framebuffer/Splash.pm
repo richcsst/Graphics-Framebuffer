@@ -14,7 +14,7 @@ use List::Util qw(min max);
 BEGIN {
     require Exporter;
     our @ISA = qw( Exporter );
-    our $VERSION = '1.21';
+    our $VERSION = '1.22';
     our @EXPORT = qw( _perl_logo splash );
     our @EXPORT_OK = qw();
 }
@@ -397,7 +397,13 @@ sub splash {
         }
     );
 
-    if ($self->{'ACCELERATED'}) {
+    {
+        my $t = 'Perl Drawing Mode';
+        if ($self->{'ACCELERATED'} == 1) {
+            $t = 'C Assisted Mode';
+        } elsif ($self->{'ACCELERATED'} == 2) {
+            $t = 'GPU Assisted Mode';
+        }
         $self->ttf_print(
             $self->ttf_print(
                 {
@@ -407,14 +413,14 @@ sub splash {
                     'height'       => 110 * $vf,
                     'wscale'       => .9,
                     'color'        => '0101FFFF',
-                    'text'         => ($self->{'ACCELERATED'} == 2) ? 'GPU Zippy-Zoom Mode' : 'C Zippy-Zoom Mode',
+                    'text'         => $t,
                     'bounding_box' => TRUE,
                     'center'       => 0,
                     'antialias'    => ($self->{'BITS'} >= 24) ? TRUE : FALSE
                 }
             )
         );
-    } ## end if ($self->{'ACCELERATED'...})
+    }
     if ($self->{'BITS'} >= 24) {
         my $shadow = $self->ttf_print(
             {
