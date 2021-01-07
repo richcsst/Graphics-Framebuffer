@@ -106,7 +106,7 @@ INSTALLING WITH PERLBREW (and installing Perlbrew)
 
     *  source ~/perl5/perlbrew/etc/bashrc
 
-  Now install Perlbrew:
+  Now to install Perlbrew (you can use higher version numbers where applicable):
   
     *  perlbrew install -n perl-5.30.1 -Dusethreads
     *  perlbrew clean

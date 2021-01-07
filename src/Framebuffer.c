@@ -1,7 +1,7 @@
-/* Copyright 2018-2019 Richard Kelsch, All Rights Reserved
+/* Copyright 2018-2021 Richard Kelsch, All Rights Reserved
    See the Perl documentation for Graphics::Framebuffer for licensing information.
 
-   Version:  6.31
+   Version:  6.48
 */
 
 #include <stdlib.h>
@@ -43,7 +43,7 @@
 struct fb_var_screeninfo vinfo;
 struct fb_fix_screeninfo finfo;
 
-// This gets the framebuffer info and populates the above structures, then runs them to Perl
+// This gets the framebuffer info and populates the above structures, then sends them to Perl
 void c_get_screen_info(char *fb_file) {
     int fbfd = open(fb_file,O_RDWR);
     ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo);
@@ -107,6 +107,7 @@ void c_get_screen_info(char *fb_file) {
     Inline_Stack_Done;
 }
 
+// Sets the framebuffer to text mode, which enables the cursor
 void c_text_mode(char *tty_file) 
 {
    int tty_fd = open(tty_file,O_RDWR);
@@ -114,6 +115,7 @@ void c_text_mode(char *tty_file)
    close(tty_fd);
 }
 
+// Sets the framebuffer to graphics mode, which disables the cursor
 void c_graphics_mode(char *tty_file) 
 {
    int tty_fd = open(tty_file,O_RDWR);
@@ -432,6 +434,7 @@ void c_plot(
     }
 }
 
+// Draws a line
 void c_line(
     char *framebuffer,
     short x1, short y1, short x2, short y2,
@@ -493,7 +496,7 @@ void c_line(
     }
 }
 
-/* Reads in rectangular screen data as a string to a previously allocated buffer */
+// Reads in rectangular screen data as a string to a previously allocated buffer
 void c_blit_read(
     char *framebuffer,
     short screen_width, short screen_height,
@@ -543,7 +546,7 @@ void c_blit_read(
     }
 }
 
-/* Blits a rectangle of graphics to the screen using the specified draw mode */
+// Blits a rectangle of graphics to the screen using the specified draw mode
 void c_blit_write(
     char *framebuffer,
     short screen_width, short screen_height,
@@ -565,7 +568,7 @@ void c_blit_write(
     short vertical;
     unsigned int bline = w * bytes_per_pixel;
 
-    /* Fastest is unclipped normal mode */
+    // Fastest is unclipped normal mode
     if (draw_mode == NORMAL_MODE && x >= x_clip && xx <= xx_clip && y >= y_clip && yy <= yy_clip) {
         unsigned char *source = blit_data;
         unsigned char *dest   = &framebuffer[(fb_y * bytes_per_line) + (fb_x * bytes_per_pixel)];
@@ -1365,7 +1368,7 @@ void c_blit_write(
     }
 }
 
-/* Fast rotate blit graphics data */
+// Fast rotate blit graphics data
 void c_rotate(
     char *image,
     char *new_img,
@@ -1415,6 +1418,7 @@ void c_rotate(
     }
 }
 
+// Horizontally mirror blit graphics data
 void c_flip_horizontal(char* pixels, short width, short height, unsigned char bytes_per_pixel) {
     short y;
     short x;
@@ -1434,6 +1438,7 @@ void c_flip_horizontal(char* pixels, short width, short height, unsigned char by
     }
 }
 
+// Vertically flip blit graphics data
 void c_flip_vertical(char *pixels, short width, short height, unsigned char bytes_per_pixel) {
     unsigned int bufsize = width * bytes_per_pixel;        // Bytes per line
     unsigned char *row  = malloc(bufsize);                 // Allocate a temporary buffer
@@ -1448,6 +1453,7 @@ void c_flip_vertical(char *pixels, short width, short height, unsigned char byte
     free(row); // Release the temporary buffer
 }
 
+// Horizontally and vertically flip blit graphics data
 void c_flip_both(char* pixels, short width, short height, unsigned char bytes_per_pixel) {
     c_flip_vertical(
         pixels,
@@ -1463,7 +1469,7 @@ void c_flip_both(char* pixels, short width, short height, unsigned char bytes_pe
 
 /* bitmap conversions */
 
-/* Convert an RGB565 bitmap to an RGB888 bitmap */
+// Convert an RGB565 bitmap to an RGB888 bitmap
 void c_convert_16_24( char* buf16, unsigned int size16, char* buf24, unsigned char color_order ) {
     unsigned int loc16 = 0;
     unsigned int loc24 = 0;
@@ -1491,6 +1497,7 @@ void c_convert_16_24( char* buf16, unsigned int size16, char* buf24, unsigned ch
     }
 }
 
+// Convert an RGB565 bitmap to a RGB8888 bitmap
 void c_convert_16_32( char* buf16, unsigned int size16, char* buf32, unsigned char color_order ) {
     unsigned int loc16 = 0;
     unsigned int loc32 = 0;
@@ -1522,6 +1529,7 @@ void c_convert_16_32( char* buf16, unsigned int size16, char* buf32, unsigned ch
     }
 }
 
+// Convert a RGB888 bitmap to a RGB565 bitmap
 void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned char color_order) {
     unsigned int loc16 = 0;
     unsigned int loc24 = 0;
@@ -1543,6 +1551,7 @@ void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned cha
     }
 }
 
+// Convert a RGB8888 bitmap to a RGB565 bitmap
 void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned char color_order) {
     unsigned int loc16    = 0;
     unsigned int loc32    = 0;
@@ -1565,6 +1574,7 @@ void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned cha
     }
 }
 
+// Convert a RGB8888 bitmap to a RGB888 bitmap
 void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned char color_order) {
     unsigned int loc24 = 0;
     unsigned int loc32 = 0;
@@ -1576,6 +1586,7 @@ void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned cha
     }
 }
 
+// Convert a RGB888 bitmap to a RGB8888 bitmap
 void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned char color_order) {
     unsigned int loc32 = 0;
     unsigned int loc24 = 0;
@@ -1593,6 +1604,7 @@ void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned cha
     }
 }
 
+// Convert any type RGB bitmap to a monochrome bitmap of the same type
 void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, unsigned char bytes_per_pixel) {
     unsigned int idx;
     unsigned char r;
