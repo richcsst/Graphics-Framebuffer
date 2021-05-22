@@ -2,6 +2,11 @@
    See the Perl documentation for Graphics::Framebuffer for licensing information.
 
    Version:  6.48
+
+   You may wonder why the stack is so heavily used when the global structures
+   have the needed values.  Well, the module can emulate another graphics mode
+   that may not be the one being displayed.  This means using the two structures
+   would break functionality.  Therefore, the data from Perl is passed along.
 */
 
 #include <stdlib.h>
