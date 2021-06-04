@@ -14,7 +14,7 @@ use List::Util qw(min max);
 BEGIN {
     require Exporter;
     our @ISA = qw( Exporter );
-    our $VERSION = '1.22';
+    our $VERSION = '1.23';
     our @EXPORT = qw( _perl_logo splash );
     our @EXPORT_OK = qw();
 }
@@ -110,7 +110,7 @@ sub splash {
             'hatch'  => 'dots16'
         }
     );
-    $self->alpha_mode() if ($self->{'GPU'} !~ /nouveaufb/);
+    $self->alpha_mode() if ($self->{'GPU'} !~ /nouveaufb/ && $self->{'ACCELERATED'});
     $self->set_color({ 'red' => 0, 'green' => 0, 'blue' => 128, 'alpha' => 255 });
     $self->polygon(
         {
@@ -484,7 +484,7 @@ sub splash {
     $rk->{'x'} = (1710 * $hf) - $rk->{'pwidth'};
     $self->ttf_print($rk);
 
-    $self->alpha_mode() if ($self->{'GPU'} !~ /nouveaufb/);
+    $self->alpha_mode() if ($self->{'GPU'} !~ /nouveaufb/ && $self->{'ACCELERATED'}); # Nouveau totally sucks for framebuffer work, so we disable alpha
 
     $self->rbox(
         {
@@ -513,8 +513,8 @@ sub splash {
             {
                 'bounding_box' => TRUE,
                 'x'            => 0,
-                'y'            => (801 * $vf) + $Y,
-                'height'       => 120 * $vf,
+                'y'            => (785 * $vf) + $Y,
+                'height'       => 118 * $vf,
                 'wscale'       => 1,
                 'color'        => 'FFFFFFFF',
                 'text'         => sprintf('Version %.02f', $version),
@@ -528,8 +528,8 @@ sub splash {
         {
             'bounding_box' => TRUE,
             'x'            => 0,
-            'y'            => (931 * $vf) + $Y,
-            'height'       => 120 * $vf,
+            'y'            => (915 * $vf) + $Y,
+            'height'       => 118 * $vf,
             'wscale'       => 1,
             'color'        => 'FFFFFFFF',
             'text'         => sprintf('%dx%d-%02d on %s', $self->{'XRES'}, $self->{'YRES'}, $self->{'BITS'}, $self->{'GPU'}),
