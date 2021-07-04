@@ -1,4 +1,4 @@
-6.49 Jun 04, 2021
+6.50 Jun 07, 2021
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
@@ -2216,6 +2216,7 @@ Draws a line, in the foreground color, from the last plotted position to the pos
     my $start_x     = $self->{'X'};
     my $start_y     = $self->{'Y'};
     my $antialiased = $params->{'antialiased'} || 0;
+    $size = $params->{'pixel_size'} = 1 if ($antialiased);
     my $XX          = $x_end;
     my $YY          = $y_end;
 
@@ -3539,6 +3540,7 @@ It is up to you to make sure the coordinates are "sane".  Weird things can resul
 
     my $size       = int($params->{'pixel_size'} || 1);
     my $aa         = $params->{'antialiased'} || 0;
+    $size = $params->{'pixel_size'} = 1 if ($aa);
     my $history_on = (exists($self->{'history'})) ? TRUE : FALSE;
 
     if ($params->{'filled'}) {
