@@ -354,6 +354,7 @@ use Imager::Matrix2d;
 use Imager::Fill;                                                # For hatch fills
 use Imager::Fountain;                                            #
 use Imager::Font::Wrap;
+use Graphics::Framebuffer::GFB;                                  # File/String vector parser
 use Graphics::Framebuffer::Mouse;                                # The mouse handler
 use Graphics::Framebuffer::Splash;                               # The splash code is here
 
@@ -1278,6 +1279,8 @@ To get back into X-Windows, you just hit ALT-F7 (or ALT-F8 on some systems).
 
         bless($self, $class);
     }
+    $self->{'X_FACTOR'} = 3840 / $self->{'XRES'};
+    $self->{'Y_FACTOR'} = 2160 / $self->{'YRES'};
     if ($self->{'RESET'}) {
         $SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = \&_reset;
     }

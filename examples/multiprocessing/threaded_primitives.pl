@@ -26,7 +26,7 @@ my $dev      = 0;
 my $psize    = 1;
 my $noaccel  = 0;
 my $nosplash = 0;
-my $delay    = 5;
+my $delay    = 3;
 my $threads  = Sys::CPU::cpu_count();
 $threads    -= 1 if ($threads > 1);
 
