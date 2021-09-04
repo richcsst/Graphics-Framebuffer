@@ -354,7 +354,6 @@ use Imager::Matrix2d;
 use Imager::Fill;                                                # For hatch fills
 use Imager::Fountain;                                            #
 use Imager::Font::Wrap;
-use Graphics::Framebuffer::GFB;                                  # File/String vector parser
 use Graphics::Framebuffer::Mouse;                                # The mouse handler
 use Graphics::Framebuffer::Splash;                               # The splash code is here
 
