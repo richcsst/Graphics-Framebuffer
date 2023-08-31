@@ -1801,7 +1801,7 @@ Richard Kelsch <rich@rk-internet.com>
 
 =head1 COPYRIGHT
 
-Copyright 2003-2019 Richard Kelsch
+Copyright 2003-2023 Richard Kelsch
 All Rights Reserved
 
 =head1 LICENSE
