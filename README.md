@@ -46,10 +46,8 @@ To install this module, run the following commands:
 perl Makefile.PL
 make
 make test
-make install
+[sudo] make install
 ```
-
-NOTE:  _The install step may require sudo (root access)._
 
 *Build.PL is not supported by Inline::C, and thus not by this module as well.*
 
