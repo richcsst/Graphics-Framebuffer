@@ -1,6 +1,6 @@
 # Graphics-Framebuffer
 
-### Note, this module does NOT work (natively) in Microsoft Windows
+###   Note, this module does NOT work (natively) in Microsoft Windows.  It will only function in "emulation" mode, and you will not see any screen output.  See the documentation on emulation mode for more details.  Use a Virtual Machine like VirtualBox to use on Windows, with a Linux distribution installed.
 
 ## PREREQUISITES
 
@@ -103,14 +103,15 @@ You can also look for information at:
 
 * **Search CPAN** - http://search.cpan.org/dist/Graphics-Framebuffer/
 
-* **YouTube** - https://youtu.be/4Yzs55Wpr7E
+* **YouTube** - https://www.youtube.com/channel/UCxhjUfniyPze02GU4sWBJrw
 
 * **GitHub** - https://github.com/richcsst/Graphics-Framebuffer
-  **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
+
+* **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
 
 ## LICENSE AND COPYRIGHT
 
-Copyright (C) 2013-2023 Richard Kelsch
+Copyright © 2013-2023 Richard Kelsch
 
 This program is free software; you can redistribute it and/or modify it under the terms of either: the GNU General Public License as published by the Free Software Foundation; or the Artistic License.
 
