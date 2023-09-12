@@ -109,7 +109,7 @@ WriteMakefile(
         'Inline::C'      => '0.53',
     },
     dist  => {COMPRESS => 'gzip -9f', SUFFIX => 'gz',},
-    clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *log lib/Graphics/Framebuffer.pm'},
+    clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *log lib/Graphics/Framebuffer.pm *bak'},
 );
 print colored(['cyan on_cyan'],$line),"\n";
 

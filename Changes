@@ -1614,3 +1614,7 @@ Revision history for Graphics-Framebuffer
 
        Update to "Makefile.PL" for easier to read output.  Also improved
        pre-processing.
+
+6.55   Sep 11, 2023
+
+       Eliminated META.* files in the MANIFEST to avoid versioning issues.
