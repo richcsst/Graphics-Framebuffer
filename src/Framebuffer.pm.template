@@ -7445,4 +7445,12 @@ There is a YouTube channel with demonstrations of the module's capabilities.  Ev
 
 L<YouTube Graphics::Framebuffer Channel|https://www.youtube.com/@richardkelsch3640>
 
+=head1 GITHUB
+
+L<GitHub Graphics::Framebuffer|https://github.com/richcsst/Graphics-Framebuffer>
+
+Clone
+
+L<GitHub Clone|https://github.com/richcsst/Graphics-Framebuffer.git>
+
 =cut
