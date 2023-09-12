@@ -18,5 +18,5 @@ test*
 *.yml
 src/Framebuffer.pm
 subs.pl
-examples/many*
-examples/mce*
+examples/multiprocessing/many*
+examples/multiprocessing/mce*

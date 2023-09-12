@@ -2,7 +2,7 @@
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
-#  Copyright 2003 - ## YEAR ## Richard Kelsch
+#  Copyright 2003 - 2023 Richard Kelsch
 ## TEMPCOPYRIGHT ##
 
 =head1 NAME

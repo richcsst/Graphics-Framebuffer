@@ -4,18 +4,18 @@ use 5.008;
 use strict;
 use warnings FATAL => 'all';
 use Config;
-use Inline::MakeMaker;
+use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
 use Term::ANSIColor;
 
 my ($ROWS,$COLS) = (24,80);
-eval {
+eval { # Some platforms may not have this.
 	chomp(my $TERM = `/usr/bin/stty size`);
 	($ROWS,$COLS) = split(/ /,$TERM);
 };
 my $pmt = 'Y';
 if ($^O =~ /MSWin/i) { # Some people will still try
 	print colored(['white on_red'],"\n\n This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
-	$pmt = prompt('Do you wish to install anyway [Y]?  ','Y');
+	$pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway [Y]?  ','Y');
 } elsif (defined($ENV{'DISPLAY'})) {
 	print "\n\n",
 	  colored(['white on_red'],' ' x 79),"\n",
@@ -49,33 +49,36 @@ my $line = '-' x $COLS;
 print $logo,colored(['cyan on_cyan'],$line),"\n";
 
 # Process the src files
-my $ccode = slurp_file('src/Framebuffer.c');
+my $ccode    = slurp_file('src/Framebuffer.c');
 my $template = slurp_file('src/Framebuffer.pm.template');
 my $Eml;
 
-print colored(['bright_yellow'],'Adding C to Module') . ' ...';
+print colored(['bright_yellow'],' Adding C to Framebuffer.pm') . ' ...';
 $template =~ s/\#\# C CODE \#\#/$ccode/s;
 print colored(['green']," Added\n");
 
 if ($template =~ /^\# (.*?)\n/s) {
-    print colored(['bright_yellow'],'Inserting versions'), ' ... ';
+    print colored(['bright_yellow'],'         Inserting versions'), ' ... ';
     my ($version, $date, $email) = split(/\:/, $1 );
 	my ($month, $day, $year) = split(/ |, /,$date);
     $template =~ s/^.*?\n//s;
     $template =~ s/\#\# VERSION \#\#/$version/sg;
     $template =~ s/\#\# VERSION DATE \#\#/$date/sg;
     $template =~ s/\#\# YEAR \#\#/$year/sg;
-    $template =~ s/\#\# TEMP COPYRIGHT \#\#.*?\#\# TEMPCOPYRIGHT \#\#//sg;
-	$template =~ s/\#\# EMAIL \#\#/$email/sg;
     print colored(['bright_green'],"Version: $version, $date"),"\n";
+	print colored(['bright_yellow'],'  Finalizing Copyright Year'), ' ... ';
+    $template =~ s/\#\# TEMP COPYRIGHT \#\#.*?\#\# TEMPCOPYRIGHT \#\#//sg;
+	print colored(['bright_green'],"Copyright 2017-$year Richard Kelsch"),"\n";
+	$template =~ s/\#\# EMAIL \#\#/$email/sg;
 	$Eml = $email;
-	print colored(['bright_yellow'],"            Author ... "), colored(['bright_green'],"$email") . "\n";
+	print colored(['bright_yellow'],'                     Author') . ' ... ', colored(['bright_green'],"$email") . "\n";
 }
+
+print colored(['cyan'],'Framebuffer.pm Modification'), ' ... ';
 open(my $FILE,'>','lib/Graphics/Framebuffer.pm');
 print $FILE $template;
 close($FILE);
-
-print colored(['black on_green'],' Corrected Framebuffer.pm added '),"\n";
+print colored(['bright_green'],'Complete'),"\n";
 
 WriteMakefile(
     NAME               => 'Graphics::Framebuffer',
