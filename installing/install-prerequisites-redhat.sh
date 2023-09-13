@@ -34,5 +34,6 @@ case $yn in
                          perl-imager \
                          perl-inline-c \
                          perl-sys-cpu \
+                         perl-term-readkey \
                          perl-test-most;;
 esac

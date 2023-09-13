@@ -5,13 +5,10 @@ use strict;
 use warnings FATAL => 'all';
 use Config;
 use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
+use Term::ReadKey;
 use Term::ANSIColor;
 
-my ($ROWS,$COLS) = (24,80);
-eval { # Some platforms may not have this.
-	chomp(my $TERM = `/usr/bin/stty size`);
-	($ROWS,$COLS) = split(/ /,$TERM);
-};
+my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 my $pmt = 'Y';
 if ($^O =~ /MSWin/i) { # Some people will still try
 	print colored(['white on_red'],"\n\n This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
@@ -22,9 +19,11 @@ if ($^O =~ /MSWin/i) { # Some people will still try
 	  colored(['white on_red'],' Graphics::Framebuffer should not be installed from within X-Windows!  You     '),"\n",
 	  colored(['white on_red'],' should install it from the console itself, and not a console window.          '),"\n",
 	  colored(['white on_red'],' ' x 79),"\n",
+	  colored(['black on_yellow'],' ' x 79),"\n",
 	  colored(['black on_yellow'],' If you insist on installing from within X-Windows, please keep in mind that   '),"\n",
 	  colored(['black on_yellow'],' the tests will show nothing, as they will be unable to draw to the screen,    '),"\n",
-	  colored(['black on_yellow'],' since X-Windows is using it.  Thus the tests will run in emulation mode only. '),"\n\n";
+	  colored(['black on_yellow'],' since X-Windows is using it.  Thus the tests will run in emulation mode only. '),"\n",
+	  colored(['black on_yellow'],' ' x 79), "\n\n";
 	$pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
 }
 unless($pmt =~ /^Y/i) {
@@ -91,6 +90,7 @@ WriteMakefile(
         'Inline::MakeMaker'   => '0.45',
         'ExtUtils::MakeMaker' => '6.52',
 		'Term::ANSIColor'     => '0',
+        'Term::ReadKey'       => '0',
     },
     BUILD_REQUIRES => {
         'Test::More' => '1.00',
@@ -131,14 +131,15 @@ text_mode.pl           - A rescue script to force the tty into text mode.
 template.pl            - A skeleton single-tasking script shell for you to use
                          as as template.  Do not edit this, but instead copy
                          it.
------------------------------ MULTIPROCESSING ---------------------------------
+----------------------------- MULTIPROCESSING --------------------------------
 threaded_primitives.pl - A threaded version of the above.  It can make a mess
                          of the screen.  Requires Sys::CPU.
 threaded_slideshow.pl  - This script shows all of the images in a specific
                          path.  It divides your screen by how many threads,
                          and dedicates each to show an image.  Requires
                          Sys::CPU.
-threaded_template.pl   - Like the above, but for threading.  Requires Sys::CPU
+threaded_template.pl   - Like the above, but for threading.  Requires
+                         Sys::CPU
 get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate
 	                     threading method using only one instance of GFB)
 };

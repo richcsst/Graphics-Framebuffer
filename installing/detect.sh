@@ -82,6 +82,8 @@ known_arm_compatible_distros=(
                         "Raspbian"
                         "Parrot arm"
                         "Kali arm"
+                        "Debian"
+                        "Ubuntu"
                     )
 
 #First phase of Linux distro detection based on uname output
