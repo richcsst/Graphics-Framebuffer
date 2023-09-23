@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Detects which OS and if it is Linux then it will detect which Linux
 # Distribution.
 # from http://linuxmafia.com/faq/Admin/release-files.html
@@ -157,4 +158,4 @@ detect_distro_phase1
 detect_distro_phase2
 
 echo "${distro}"
-# echo "${is_arm}"
+echo "Is it ARM?  ${is_arm}"

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-sudo apt update
+# Install all of the prerequsites for Graphics::Framebuffer
+
+sudo apt update # Bring the Debian module database up to date
 
 # Absolutely needed
 

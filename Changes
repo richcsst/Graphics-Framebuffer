@@ -1618,3 +1618,6 @@ Revision history for Graphics-Framebuffer
 6.55   Sep 11, 2023
 
        Eliminated META.* files in the MANIFEST to avoid versioning issues.
+
+       Made additions and corrections to all external text files and
+       documentation.

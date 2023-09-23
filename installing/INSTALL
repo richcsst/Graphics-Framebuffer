@@ -1,4 +1,8 @@
-DETERMINING IF YOUR SYSTEM HAS A FRAMEBUFFER
+******************************************************************************
+*             Installing Graphics::Framebuffer Instructions                  *
+******************************************************************************
+
+DETERMINING IF YOUR SYSTEM HAS A FRAMEBUFFER FIRST
 
   You need to make sure your system has a Framebuffer driver installed.  The
   easiest way to find this out, is to look in the "/dev" directory and see if
@@ -33,7 +37,8 @@ DETERMINE YOUR DISTRIBUTION
   The two I will concentrate on in this document are Debian and RedHat based
   linux distributions.
 
-  Debian distributions are typically:
+  Debian distributions use "apt" utility to manage packages.  Debian
+  distributions are typically:
 
     *  Debian
     *  Ubuntu
@@ -42,7 +47,8 @@ DETERMINE YOUR DISTRIBUTION
     *  Mint
     *  Raspian
 
-  RedHat distributions are typically:
+  RedHat distributions use the "yum" utility to manage packages.  RedHat
+  distributions are typically:
 
     *  RedHat
     *  Fedora
@@ -54,7 +60,7 @@ DETERMINE YOUR DISTRIBUTION
     *  Berry
     *  Yellow Dog
 
-  I have added to shell scripts to make installation of this module very easy.
+  I have added two shell scripts to make installation of this module very easy.
 
   For Debian based systems:
 
@@ -64,12 +70,13 @@ DETERMINE YOUR DISTRIBUTION
 
     *  installing/install-prerequesites-redhat.sh
 
-  I have also included a script to detect the type of distribution you have:
+  I have also included a script to detect the type of distribution you have.
+  It's not 100% accurate, but usually works:
 
     *  detect.sh
 
   If you still are not sure, you can go to the following URL and your
-  distribution should be there:
+  distribution should be there, with the type of core base it is:
 
     *  https://en.wikipedia.org/wiki/List_of_Linux_distributions
 
@@ -92,7 +99,7 @@ INSTALLING WITH PACKAGED PERL
        perl Makefile.PL
        make
        make test
-       sudo make install
+       [sudo] make install
 
 INSTALLING WITH PERLBREW (and installing Perlbrew)
 

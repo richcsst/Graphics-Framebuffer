@@ -1,6 +1,8 @@
 #!/bin/bash
 
-sudo yum update
+# Install the prerequisites for Graphics::Framebuffer
+
+sudo yum update # Bring RedHat's module database up to date
 
 # I use "upgrade" instead of "install" to prevent errors if you already
 # have some of these packages installed.  "upgrade" will install them if
