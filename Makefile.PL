@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings FATAL => 'all';
 use Config;
+# These should be in Perl's installation already
 use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
 use Term::ReadKey;
 use Term::ANSIColor;
@@ -12,7 +13,7 @@ my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 my $pmt = 'Y';
 if ($^O =~ /MSWin/i) { # Some people will still try
 	print colored(['white on_red'],"\n\n This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
-	$pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway [Y]?  ','Y');
+	$pmt = ExtUtils::MakeMaker::prompt('Do you really wish to install anyway?  ','N');
 } elsif (defined($ENV{'DISPLAY'})) {
 	print "\n\n",
 	  colored(['white on_red'],' ' x 79),"\n",
@@ -186,3 +187,12 @@ sub slurp_file {
     my $file = shift;
     return( do { local (@ARGV, $/) = $file; <> } );
 }
+
+__END__
+  
+=pod
+
+Copyright (C) 2013-2023 Richard Kelsch
+All Rights Reserved
+
+=cut

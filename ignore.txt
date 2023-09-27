@@ -1,6 +1,7 @@
 blib*
 Makefile
 Makefile.old
+Makefile.pl
 Build
 Build.bat
 _build*
