@@ -1,0 +1,14 @@
+01-splash.pl
+02-blitting.pl
+src/Framebuffer.pm
+many_boxes.pl
+many_ellipses.pl
+many_lines.pl
+mcechnl_primitives.pl
+mcehobo_primitives.pl
+mcehobo_slideshow.pl
+mce-examples
+Framebuffer.pm
+Makefile.pl
+Makefile.old
+
