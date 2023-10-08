@@ -1,4 +1,4 @@
-# 6.55:Sep 11, 2023:Richard Kelsch <rich@rk-internet.com>
+# 6.56:Oct 08, 2023:Richard Kelsch <rich@rk-internet.com>
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
@@ -437,6 +437,7 @@ sub DESTROY { # Always clean up after yourself before exiting
     my $self = shift;
     $self->text_mode();
     $self->_screen_close();
+	unlink('/tmp/output.gif') if (-e '/tmp/output.gif');
     _reset() if ($self->{'RESET'});    # Exit by calling 'reset' first
 }
 
@@ -688,12 +689,19 @@ Why do many video cards use the BGR color order?  Simple, their GPUs operate wit
     # code that directly uses values.
     my $this;
     $ENV{'PATH'} = '/usr/bin:/bin:/usr/local/bin'; # Testing doesn't work in taint mode unless this is here.
+	my $FFMPEG;
+	if (-e '/usr/bin/ffmpeg') {
+		$FFMPEG = '/usr/bin/ffmpeg';
+	} elsif (-e '/usr/local/bin/ffmpeg') {
+		$FFMPEG = '/usr/local/bin/ffmpeg';
+	}
     my $self = {
         'SCREEN'        => '',            # The all mighty framebuffer that is mapped to the real framebuffer later
 
         'RESET'         => TRUE,          # Default to use 'reset' on destroy
         'VERSION'       => $VERSION,      # Helps with debugging for people sending me dumps
         'HATCHES'       => [@HATCHES],    # Pull in hatches from Imager
+		'FFMPEG'        => $FFMPEG,
 
         # Set up the user defined graphics primitives and attributes default values
         'Imager-Has-TrueType'  => $Imager::formats{'tt'}  || 0,
@@ -6129,6 +6137,12 @@ If the image has multiple frames, then a reference to an array of hashes is retu
     my $bench_subtotal = $bench_start;
     my $bench_load     = $bench_start;
     my $color_order    = $self->{'COLOR_ORDER'};
+	my $hold;
+	if (defined($self->{'FFMPEG'}) && $params->{'file'} =~ /\.(mkv|mp4|avi|mpeg4|webp)$/i) {
+		system($self->{'FFMPEG'},'-i',$params->{'file'},'-vf', 'fps=10,scale=-1:-1:flags=bicubic', '-loop','0','-loglevel','quiet','/tmp/output.gif');
+		$hold = $params->{'file'};
+		$params->{'file'} = '/tmp/output.gif';
+	}
     if ($params->{'file'} =~ /\.(gif|png|apng)$/i) {
         eval {
             @Img = Imager->read_multi(
@@ -6330,6 +6344,10 @@ If the image has multiple frames, then a reference to an array of hashes is retu
                 $self->{'DRAW_MODE'} = $saved;
             }
         }
+		if (-e '/tmp/output.gif') {
+			unlink('/tmp/output.gif');
+			$params->{'file'} = $hold;
+		}
 
         if (scalar(@odata) > 1) { # Animation
             return (    # return it in a form the blit routines can dig

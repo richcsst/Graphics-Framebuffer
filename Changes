@@ -1621,3 +1621,33 @@ Revision history for Graphics-Framebuffer
 
        Made additions and corrections to all external text files and
        documentation.
+
+6.56   Oct 08, 2023
+
+       Loading very small videos is supported, IF ffmpeg is installed.  The
+	   voodoo is to convert to an animated GIF file via ffmpeg, then load
+	   that file, and then show it.  Yes, there is a time penalty, but it
+	   does work.  There is NO SOUND, but you see the video.  FPS is hard
+	   set to 15 FPS.
+
+       When viewing a video, it creates the file "/tmp/output.gif", loads
+	   that file, then deletes that file once loaded.
+
+       It loads the video in its entirety, as an animated GIF.  Therefore,
+	   load only small videos.
+
+       Example scripts full-screen logic has been reversed.  Full screen is
+	   now the default.
+
+       Splash screen is off by default on the example scripts.  You still
+	   need to set "SPLASH" to zero for disabling it in your code.
+
+       Included animated GIF example changed to a much smaller one.
+
+       "dump.pl" improved to be even more helpful for diagnostics.
+
+       Versioning added to the example scripts.
+
+       "slideshow.pl" and "viewpic.pl" added the option "--small" to make it
+	   easy to diagnose bus errors.  It sets an artificial 320x200 screen.
+	   It's a shortcut for "--x=320 --y=200".

@@ -13,6 +13,7 @@ sudo apt install -y build-essential \
                     libpng-dev \
                     libtiff-dev \
                     libfreetype6-dev \
+					ffmpeg \
                     fonts-wine
 
 # Only needed if you are using the OS installed (packaged) Perl

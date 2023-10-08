@@ -19,6 +19,7 @@ sudo yum upgrade gcc \
                  byacc \
                  flex \
                  patch \
+				 ffmpeg \
                  giflib-devel \
                  libjpeg-turbo-devel \
                  libpng-devel \

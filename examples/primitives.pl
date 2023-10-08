@@ -203,8 +203,8 @@ my %func = (
 );
 
 my @order;
-if (defined($show_func) && exists($func{$show_func})) {
-	push(@order,$show_func);
+if (defined($show_func)) {
+	@order = split(/,/,$show_func);
 } else {
 	@order = (
 		'Color Mapping',
@@ -277,9 +277,10 @@ if (defined($show_func) && exists($func{$show_func})) {
 	);
 }
 
-# @order = ('Color Replace None-Clipped');
 foreach my $name (@order) {
-    $func{$name}->($name);
+	if (exists($func{$name})) {
+		$func{$name}->($name);
+	}
 }
 
 ##################################
@@ -292,15 +293,15 @@ $F->cls('ON');
 foreach my $name (@order) {
     next if ($name =~ /Mode/);
     if ($name =~ /Image Load|Flood/i) {
-        print STDOUT "$name = $benchmark->{$name} seconds\n";
+        print STDOUT sprintf('%-33s = %.02f seconds', $name, $benchmark->{$name}), "\n";
     } elsif ($name eq 'Animated') {
-        print STDOUT "$name Native = " . ($benchmark->{"$name Native"} / $delay) . " frames per second\n";
-        print STDOUT "$name Fullscreen = " . ($benchmark->{"$name Native"} / $delay) . " frames per second\n";
+        print STDOUT sprintf('%-33s = %.02f frames per second', "$name Native", ($benchmark->{"$name Native"} / $delay)), "\n";
+        print STDOUT sprintf('%-33s = %.02f frames per second', "$name Fullscreen", ($benchmark->{"$name Fullscreen"} / $delay)), "\n";
     } elsif ($name eq 'Rotate') {
-        print STDOUT "Clockwise $name" . ($benchmark->{"Clockwise $name"} / $delay) . " per second\n";
-        print STDOUT "Counter Clockwise $name" . ($benchmark->{"Counter Clockwise $name"} / $delay) . " per second\n";
+        print STDOUT sprintf('%-33s = %.02f per second', "Clockwise $name", ($benchmark->{"Clockwise $name"} / $delay)), "\n";
+        print STDOUT sprintf('%-33s = %.02f per second', "Counter Clockwise $name", ($benchmark->{"Counter Clockwise $name"} / $delay)), "\n";
     } else {
-        print STDOUT "$name = " .  ($benchmark->{$name} / $delay) . " per second\n";
+        print STDOUT sprintf('%-33s = %.02f per second', $name, ($benchmark->{$name} / $delay)), "\n";
     }
 }
 
