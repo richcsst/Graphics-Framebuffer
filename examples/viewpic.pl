@@ -10,6 +10,10 @@ use Graphics::Framebuffer;
 use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
 
+BEGIN {
+	our $VERSION = '1.02';
+};
+
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys=1;
 exit(0) unless(scalar(@ARGV));
 my $file = $ARGV[-1];
@@ -104,7 +108,7 @@ Wait number of seconds before returning (0=don't wait)
 
 =head1 COPYRIGHT
 
-Copyright (C) 2010 - 2019 Richard Kelsch
+Copyright (C) 2010 - 2023 Richard Kelsch
 All Rights Reserved
 
 =head1 LICENSE

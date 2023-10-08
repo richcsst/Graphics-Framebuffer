@@ -14,6 +14,10 @@ use Getopt::Long;
 
 # use Data::Dumper;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
+BEGIN {
+	our $VERSION = '5.00';
+};
+
 our $F;
 
 my $new_x;
@@ -24,6 +28,7 @@ my $noaccel  = FALSE;
 my $nosplash = FALSE;
 my $delay    = 3;
 my $ignore_x = FALSE;
+my $small    = FALSE;
 
 GetOptions(
     'x=i'              => \$new_x,
@@ -34,9 +39,14 @@ GetOptions(
     'nosplash'         => \$nosplash,
     'delay=i'          => \$delay,
 	'ignore-x-windows' => \$ignore_x,
+	'small'            => \$small,
 );
 
 $noaccel = ($noaccel) ? 1 : 0;    # Only 1 or 0 please
+if ($small) {
+	$new_x = 320;
+	$new_y = 200;
+}
 
 my $images_path = (-e 'images/4KTest_Pattern.png') ? 'images' : 'examples/images';
 
@@ -1753,9 +1763,13 @@ Examples:
 
 =over 4
 
+ perl primitives.pl
+
  perl primitives.pl --dev=1 --x=640 --y=480
 
  perl primitives.pl --x=1280 --y=720 --pixel=2
+
+ perl primitives.pl --small
 
 =back
 
@@ -1778,6 +1792,10 @@ This tells the script to tell the Graphics::Framebuffer module to simulate a dev
 This tells the script to tell the Graphics::Framebuffer module to simulate a device of a specific height.  It will center it on the screen.
 
  "--y=480" would set the height to 480 pixels.
+
+=item B<--small>
+
+This is a shortcut (and diagnostic tool) to set "x" and "y" to 320x200 respectively.  Use this if you are getting bus errors.  See the "TROUBLESHOOTING" file for using this setting to determine if GFB is incorrectly detecting screen parameters.
 
 =item B<--pixel>=C<pixel size>
 

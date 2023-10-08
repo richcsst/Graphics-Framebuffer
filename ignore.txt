@@ -1,7 +1,6 @@
 blib*
 Makefile
 Makefile.old
-Makefile.pl
 Build
 Build.bat
 _build*
@@ -18,6 +17,7 @@ test*
 *.inl
 *.yml
 src/Framebuffer.pm
+src/Makefile.pl
 subs.pl
 examples/multiprocessing/many*
 examples/multiprocessing/mce*
