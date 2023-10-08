@@ -19,7 +19,7 @@ exit(0) unless(scalar(@ARGV));
 my $file = $ARGV[-1];
 
 my $full     = TRUE;
-my $noclea r = FALSE;
+my $noclear  = FALSE;
 my $ignore_x = FALSE;
 my $delay    = 10;
 my $alpha    = 255;
