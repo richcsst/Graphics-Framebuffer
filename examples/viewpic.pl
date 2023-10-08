@@ -11,31 +11,33 @@ use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
 
 BEGIN {
-	our $VERSION = '1.02';
+	our $VERSION = '1.03';
 };
 
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys=1;
 exit(0) unless(scalar(@ARGV));
 my $file = $ARGV[-1];
 
-my $full     = FALSE;
+my $full     = TRUE;
 my $noclea r = FALSE;
 my $ignore_x = FALSE;
 my $delay    = 10;
 my $alpha    = 255;
+my $dummy    = FALSE;
 
 GetOptions(
-    'full'    => \$full,
-    'wait=i'  => \$delay,
-    'noclear' => \$noclear,
-    'alpha=i' => \$alpha,
+    'nofull'           => \$full,
+	'full'             => \$dummy,
+    'wait=i'           => \$delay,
+    'noclear'          => \$noclear,
+    'alpha=i'          => \$alpha,
 	'ignore-x-windows' => \$ignore_x,
 );
 
 our $f = Graphics::Framebuffer->new(
-    'SPLASH'      => FALSE,
-    'SHOW_ERRORS' => FALSE,
-    'RESET'       => 1 - $noclear,
+    'SPLASH'           => FALSE,
+    'SHOW_ERRORS'      => FALSE,
+    'RESET'            => 1 - $noclear,
 	'IGNORE_X_WINDOWS' => $ignore_x,
 );
 
@@ -92,9 +94,9 @@ Single image (or animation) viewer
 
 =over 2
 
-=item B<--full>
+=item B<--nofull>
 
-Tells it to scale (proportionally) all images (and animations) to full screen.
+The image is automatically proportionally scaled to full screen.  This turns that off and shows the image in its original resolution (unless it is too big for the screen).
 
 =item B<--alpha>=1-254
 
@@ -102,7 +104,7 @@ Alpha value to overlay an image on what is already there.  Usually used to just 
 
 =item B<--wait>=seconds
 
-Wait number of seconds before returning (0=don't wait)
+Wait number of seconds before returning (0 = don't wait)
 
 =back
 
