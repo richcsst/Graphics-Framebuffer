@@ -43,7 +43,5 @@ Makefile.PL
 MANIFEST			This list of files
 README.md
 src/Framebuffer.c
-src/Framebuffer.pm
 src/Framebuffer.pm.template
-t/01-splash.pl
-t/01-splash.t
+t/01-primitives.t

@@ -1,4 +1,4 @@
-# 6.56:Oct 08, 2023:Richard Kelsch <rich@rk-internet.com>
+# 6.57:Oct 29, 2023:Richard Kelsch <rich-at-rk-internet.com>
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
@@ -6280,6 +6280,7 @@ If the image has multiple frames, then a reference to an array of hashes is retu
             } else {    # 16 bit
                 $channels = $img->getchannels();
                 $img      = $img->convert('preset' => 'noalpha') if ($channels == 4);
+				# $img = $img->to_rgb16(); # Maybe use this for speed?
                 $img->write(
                     'type'              => 'raw',
                     'interleave'        => FALSE,

@@ -3,6 +3,10 @@
 use 5.008;
 use strict;
 use warnings FATAL => 'all';
+use constant {
+	TRUE  => 1,
+	FALSE => 0,
+};
 use Config;
 # These should be in Perl's installation already
 use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
@@ -11,11 +15,20 @@ use Term::ANSIColor;
 
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 my $pmt = 'Y';
+
+my $t = '  ';
+my $top  = '  ' . colored(['bright_green'],'/                       /');
+my $mid  = ' ' . colored(['bright_green'],'/ ') . colored(['bright_yellow'],'Graphics::Framebuffer') . colored(['bright_green'],' /');
+my $btm  = colored(['bright_green'],'/                       /');
+my $logo = colored(['bold white on_red'],' G ') . colored(['bold white on_green'],' F ') . colored(['bold white on_blue'],' B ') . "$mid\n";
+my $line = '-' x $COLS;
+print $logo,colored(['cyan on_cyan'],$line),"\n";
+
 if ($^O =~ /MSWin/i) { # Some people will still try
-	print colored(['white on_red'],"\n\n This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
+	print colored(['white on_red']," This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
 	$pmt = ExtUtils::MakeMaker::prompt('Do you really wish to install anyway?  ','N');
 } elsif (defined($ENV{'DISPLAY'})) {
-	print "\n\n",
+	print
 	  colored(['white on_red'],' ' x 79),"\n",
 	  colored(['white on_red'],' Graphics::Framebuffer should not be installed from within X-Windows!  You     '),"\n",
 	  colored(['white on_red'],' should install it from the console itself, and not a console window.          '),"\n",
@@ -26,8 +39,8 @@ if ($^O =~ /MSWin/i) { # Some people will still try
 	  colored(['black on_yellow'],' since X-Windows is using it.  Thus the tests will run in emulation mode only. '),"\n",
 	  colored(['black on_yellow'],' ' x 79), "\n\n";
 	$pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
-} elsif (! -e "/dev/fb*" && ! -e "/dev/graphics/fb*" && ! -e "/dev/graphics/fb/*") {
-    print "\n\n",
+} elsif (no_framebuffer()) {
+    print 
       colored(['white on_red'],' Your system does not appear to have a framebuffer device!  This is required '),"\n",
       colored(['white on_red'],' for this library to function.                                               '),"\n\n";
     $pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
@@ -45,13 +58,6 @@ unless($pmt =~ /^Y/i) {
 # Why did I do this?  Simple, managing the version and the C code is a lot
 # easier this way, and eliminates the Inline::C quirks.
 
-my $t = '  ';
-my $top  = '  ' . colored(['bright_green'],'/                       /');
-my $mid  = ' ' . colored(['bright_green'],'/ ') . colored(['bright_yellow'],'Graphics::Framebuffer') . colored(['bright_green'],' /');
-my $btm  = colored(['bright_green'],'/                       /');
-my $logo = colored(['bold white on_red'],' G ') . colored(['bold white on_green'],' F ') . colored(['bold white on_blue'],' B ') . "$mid\n";
-my $line = '-' x $COLS;
-print $logo,colored(['cyan on_cyan'],$line),"\n";
 
 # Process the src files
 my $ccode    = slurp_file('src/Framebuffer.c');
@@ -60,7 +66,7 @@ my $Eml;
 
 print colored(['bright_yellow'],' Adding C to Framebuffer.pm') . ' ...';
 $template =~ s/\#\# C CODE \#\#/$ccode/s;
-print colored(['green']," Added\n");
+print colored(['bright_green']," Added\n");
 
 if ($template =~ /^\# (.*?)\n/s) {
     print colored(['bright_yellow'],'         Inserting versions'), ' ... ';
@@ -70,6 +76,7 @@ if ($template =~ /^\# (.*?)\n/s) {
     $template =~ s/\#\# VERSION \#\#/$version/sg;
     $template =~ s/\#\# VERSION DATE \#\#/$date/sg;
     $template =~ s/\#\# YEAR \#\#/$year/sg;
+	$email    =~ s/-at-/\@/gi;
     print colored(['bright_green'],"Version: $version, $date"),"\n";
 	print colored(['bright_yellow'],'  Finalizing Copyright Year'), ' ... ';
     $template =~ s/\#\# TEMP COPYRIGHT \#\#.*?\#\# TEMPCOPYRIGHT \#\#//sg;
@@ -102,8 +109,8 @@ WriteMakefile(
         'Test::More' => '1.00',
         'List::Util' => '1.20',
     },
-#    PREREQ_FATAL   => 1,
-    PREREQ_PRINT   => 1,
+#    PREREQ_FATAL   => TRUE,
+    PREREQ_PRINT   => TRUE,
     PREREQ_PM      => {
         'Math::Bezier'   => '0.01',
         'Math::Trig'     => '1.10',
@@ -181,16 +188,32 @@ foreach my $l (split(/\n/,$message)) {
 }
 print colored(['blue on_blue'],$line),"\n";
 
-print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'  make'),"\n";
-print colored(['bright_white on_magenta'],' Testing     -> '),colored(['bright_green'],'  make')," test\n";
+print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'       make'),"\n";
+print colored(['bright_white on_magenta'],' Testing     -> '),colored(['bright_green'],'       make')," test\n";
 print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],'  sudo '),colored(['bright_green'],'make')," install\n";
-print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'  make')," realclean\n";
+print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'       make')," realclean\n";
 
 exit(0);
 
 sub slurp_file {
     my $file = shift;
     return( do { local (@ARGV, $/) = $file; <> } );
+}
+
+sub no_framebuffer {
+	my $fb_absent = TRUE;
+	foreach my $device (0 .. 31) {
+		foreach my $prefix (qw( /dev/fb /dev/fb/ /dev/graphics/fb/ )) {
+			if (-e "$prefix$device") {
+				$fb_absent = FALSE;
+				print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"$prefix$device"),"\n";
+			}
+		}
+	}
+	if ($fb_absent) {
+		print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_red'],'NOT FOUND'),"\n";
+	}
+	return($fb_absent);
 }
 
 __END__

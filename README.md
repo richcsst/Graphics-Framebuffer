@@ -43,9 +43,9 @@ With that out of the way, you can now install this module.
 To install this module, run the following commands:
 
 ```bash
-perl Makefile.PL
-make
-make test
+       perl Makefile.PL
+       make
+       make test
 [sudo] make install
 ```
 

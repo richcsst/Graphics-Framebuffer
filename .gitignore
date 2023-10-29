@@ -1,5 +1,4 @@
-01-splash.pl
-02-blitting.pl
+01-primitives.pl
 src/Framebuffer.pm
 many_boxes.pl
 many_ellipses.pl
