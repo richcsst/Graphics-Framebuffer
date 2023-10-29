@@ -26,6 +26,11 @@ if ($^O =~ /MSWin/i) { # Some people will still try
 	  colored(['black on_yellow'],' since X-Windows is using it.  Thus the tests will run in emulation mode only. '),"\n",
 	  colored(['black on_yellow'],' ' x 79), "\n\n";
 	$pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
+} elsif (! -e "/dev/fb*" && ! -e "/dev/graphics/fb*" && ! -e "/dev/graphics/fb/*") {
+    print "\n\n",
+      colored(['white on_red'],' Your system does not appear to have a framebuffer device!  This is required '),"\n",
+      colored(['white on_red'],' for this library to function.                                               '),"\n\n";
+    $pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
 }
 unless($pmt =~ /^Y/i) {
 	print "\n\nInstall Aborted.\n\n";
