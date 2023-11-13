@@ -1659,3 +1659,4 @@ Revision history for Graphics-Framebuffer
 	   
 	   Added a better explanation of the 'make test' process and the caveats
 	   of perl versus C accelerated operation.
+
