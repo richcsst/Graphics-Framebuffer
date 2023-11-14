@@ -15,14 +15,24 @@ use Term::ANSIColor;
 
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 my $pmt = 'Y';
+my $line = '-' x 28 . ' Graphics::Framebuffer ' . '-' x 28;
+# Graphics::Framebuffer
+print colored(['red on_red'],$line),"\n";
 
-my $t = '  ';
-my $top  = '  ' . colored(['bright_green'],'/                       /');
-my $mid  = ' ' . colored(['bright_green'],'/ ') . colored(['bright_yellow'],'Graphics::Framebuffer') . colored(['bright_green'],' /');
-my $btm  = colored(['bright_green'],'/                       /');
-my $logo = colored(['bold white on_red'],' G ') . colored(['bold white on_green'],' F ') . colored(['bold white on_blue'],' B ') . "$mid\n";
-my $line = '-' x $COLS;
-print $logo,colored(['cyan on_cyan'],$line),"\n";
+print colored(['on_red'],' '),colored(['red'],                  '                     ____                 _     _                            '), colored(['on_red'],' '), "\n";
+print colored(['on_red'],' '),colored(['red'],                  '                    / ___|_ __ __ _ _ __ | |__ (_) ___ ___                   '),colored(['on_red'],' '),"\n";
+print colored(['on_bright_red'],' '),colored(['bright_red'],   q(                   | |  _| '__/ _` | '_ \| '_ \| |/ __/ __                   ) ), colored(['on_bright_red'],' '),"\n";
+print colored(['on_bright_red'],' '),colored(['bright_red'],    '                   | |_| | | | (_| | |_) | | | | | (__\__ \                  '),colored(['on_bright_red'],' '),"\n";
+print colored(['on_green'],' '),colored(['green'],              '                    \____|_|  \__,_| .__/|_| |_|_|\___|___/                  '),colored(['on_green'],' '),"\n";
+print colored(['on_green'],' '),colored(['green'],              '                                   |_|                                       '),colored(['on_green'],' '),"\n";
+print colored(['on_bright_green'],' '),colored(['bright_green'],'         _____                         _            __  __                   '),colored(['on_bright_green'],' '),"\n";
+print colored(['on_bright_green'],' '),colored(['bright_green'],'        |  ___| __ __ _ _ __ ___   ___| |__  _   _ / _|/ _| ___ _ __         '),colored(['on_bright_green'],' '),"\n";
+print colored(['on_blue'],' '),colored(['blue'],               q(        | |_ | '__/ _` | '_ ` _ \ / _ \ '_ \| | | | |_| |_ / _ \ '__|        ) ),colored(['on_blue'],' '),"\n";
+print colored(['on_blue'],' '),colored(['blue'],                '        |  _|| | | (_| | | | | | |  __/ |_) | |_| |  _|  _|  __/ |           '),colored(['on_blue'],' '),"\n";
+print colored(['on_bright_blue'],' '),colored(['bright_blue'],  '        |_|  |_|  \__,_|_| |_| |_|\___|_.__/ \__,_|_| |_|  \___|_|           '),colored(['on_bright_blue'],' '),"\n";
+print colored(['on_bright_blue'], ' '),                         '                                                                             ',colored(['on_bright_blue'],' '),"\n";
+
+print colored(['bright_blue on_bright_blue'],$line),"\n";
 
 if ($^O =~ /MSWin/i) { # Some people will still try
     print colored(['white on_red']," This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
