@@ -445,6 +445,7 @@ sub DESTROY { # Always clean up after yourself before exiting
 
 # use Inline 'info', 'noclean', 'noisy'; # Only needed for debugging
 
+use Inline Config => warnings => 0;
 use Inline C => <<'C_CODE','name' => 'Graphics::Framebuffer', 'VERSION' => $VERSION;
 ## C CODE ##
 C_CODE

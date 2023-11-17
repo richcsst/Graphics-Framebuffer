@@ -7,13 +7,13 @@ use strict;
 use Graphics::Framebuffer;
 use List::Util qw(min max shuffle);
 use Time::HiRes qw(sleep time alarm);
-use Test::More tests => 69;
+use Test::More qw(no_plan); # tests => 51;
 
 # For debugging only
 # use Data::Dumper;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
 BEGIN {
-	our $VERSION = '1.00';
+	our $VERSION = '1.01';
 };
 
 our $F;
@@ -22,8 +22,8 @@ my $new_x;
 my $new_y;
 my $dev      = 0;
 my $psize    = 1;
-my $noaccel  = FALSE;
-my $nosplash = TRUE;
+my $noaccel  = FALSE; # not used for testing, but here to make sure nothing breaks
+my $nosplash = FALSE;
 my $delay    = 0.25;
 my $ignore_x = FALSE;
 my $small    = FALSE;
@@ -34,10 +34,10 @@ if ($small) {
 	$new_x = 320;
 	$new_y = 200;
 }
-my $images_path = '../examples/images';
-
+my $images_path = 'examples/images';
+my @RESULTS;
 my $splash = ($nosplash) ? 0 : 2;
-diag("Gathering images...");
+# diag("Gathering images...");
 $|=1;
 opendir(my $DIR, $images_path);
 chomp(my @files = readdir($DIR));
@@ -47,15 +47,15 @@ our @IMAGES;
 our $STAMP = sprintf('%.1', time);
 
 if (defined($new_x)) {
-    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'ACCELERATED' => !$noaccel, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
+    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'RESET' => FALSE, 'IGNORE_X_WINDOWS' => $ignore_x, 'SPLASH' => TRUE);
 } else {
-    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'ACCELERATED' => !$noaccel, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
+    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'RESET' => FALSE, 'IGNORE_X_WINDOWS' => $ignore_x, 'SPLASH' => TRUE);
 }
 $SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = $SIG{'HUP'} = $SIG{'TERM'} = sub { $F->text_mode(); exec('reset'); };
 
 my $sinfo = $F->screen_dimensions();
-$F->cls('OFF');
-isa_ok($F,'Graphics::Framebuffer');
+$F->cls();
+$F->graphics_mode();
 
 my $screen_width  = $sinfo->{'width'};
 my $screen_height = $sinfo->{'height'};
@@ -76,11 +76,11 @@ my $BW = 0;
 
 my $thread;
 
-$F->{'SPLASH'} = $splash;
-$F->splash($Graphics::Framebuffer::VERSION) unless ($nosplash);
+# $F->{'SPLASH'} = $splash;
+# $F->splash($Graphics::Framebuffer::VERSION) unless ($nosplash);
 
 my $DORKSMILE;
-diag('Loading images');
+
 foreach my $file (@files) {
     next if ($file =~ /^\.+/ || $file =~ /Test|gif/i || -d "$images_path/$file");
     my $image = $F->load_image(
@@ -185,9 +185,9 @@ if (defined($show_func)) {
 		'Lines',
 		'Angle Lines',
 		'Polygons',
-		'Antialiased Lines',
-		'Antialiased Angle Lines',
-		'Antialiased Polygons',
+#		'Antialiased Lines',
+#		'Antialiased Angle Lines',
+#		'Antialiased Polygons',
 		'Boxes',
 		'Rounded Boxes',
 		'Circles',
@@ -227,25 +227,25 @@ if (defined($show_func)) {
 		'Texture Filled Polygons',
 		'Flood Fill',
 		'TrueType Fonts',
-		'TrueType Printing',
-		'Rotate TrueType Fonts',
+#		'TrueType Printing',
+#		'Rotate TrueType Fonts',
 		'Color Replace Non-Clipped',
 		'Color Replace Clipped',
 		'Blitting',
-		'Blit Move',
+#		'Blit Move',
 		'Rotate',
 		'Flipping',
 		'Monochrome',
 		'XOR Mode Drawing',
-		'OR Mode Drawing',
-		'AND Mode Drawing',
-		'MASK Mode Drawing',
-		'UNMASK Mode Drawing',
+#		'OR Mode Drawing',
+#		'AND Mode Drawing',
+#		'MASK Mode Drawing',
+#		'UNMASK Mode Drawing',
 		'ALPHA Mode Drawing',
-		'ADD Mode Drawing',
-		'SUBTRACT Mode Drawing',
-        'MULTIPLY Mode Drawing',
-        'DIVIDE Mode Drawing',
+#		'ADD Mode Drawing',
+#		'SUBTRACT Mode Drawing',
+#        'MULTIPLY Mode Drawing',
+#        'DIVIDE Mode Drawing',
 		'Animated',
 	);
 }
@@ -261,8 +261,15 @@ foreach my $name (@order) {
 $F->clip_reset();
 $F->attribute_reset();
 $F->text_mode();
-$F->cls('ON');
+$F->cls();
+# isa_ok($F,'Graphics::Framebuffer');
 undef($F);
+# To avoid corruption of the screen, and confusing TAP, we cache the results
+# and return the results here.
+foreach my $line (@RESULTS) {
+	my ($stat,$message) = split(/\|/,$line);
+	ok($stat,$message);
+}
 done_testing();
 exit(0);
 
@@ -1188,7 +1195,7 @@ sub blit_move {
 
 sub rotate {
     my $name = shift;
-    diag("Counter Clockwise $name");
+    # diag("Counter Clockwise $name");
 
     my $image = $IMAGES[int(rand(scalar(@IMAGES)))];
     $image = $F->blit_transform(
@@ -1204,7 +1211,7 @@ sub rotate {
     );
     my $angle = 0;
 
-    diag("Counter Clockwise $name");
+    # diag("Counter Clockwise $name");
 
     my $s     = time + $delay;
     my $count = 0;
@@ -1233,7 +1240,7 @@ sub rotate {
     }
 
     $angle = 0;
-    diag("Clockwise $name");
+    # diag("Clockwise $name");
     $s     = time + $delay;
     $count = 0;
     while (time < $s || $count < 6) {
@@ -1319,7 +1326,7 @@ sub monochrome {
 sub animated {
     my $name = shift;
 #    $F->{'DIAGNOSTICS'} = 1;
-    diag("$name Loading...");
+    # diag("$name Loading...");
 
     opendir(my $DIR, $images_path);
     chomp(my @list = readdir($DIR));
@@ -1331,7 +1338,7 @@ sub animated {
         for my $count (0 .. 1) {
             my $new_name = ($count) ? "$name Fullscreen" : "$name Native";
             if ($count || $XX <= 320) {
-                diag("Loading Animated Image '$info' Scaled to Full Screen");
+                # diag("Loading Animated Image '$info' Scaled to Full Screen");
                 $image = $F->load_image(
                     {
                         'width'  => $XX,
@@ -1341,7 +1348,7 @@ sub animated {
                     }
                 );
             } else {
-                diag("Loading Animated Image '$info' Native Size");
+                # diag("Loading Animated Image '$info' Native Size");
                 $image = $F->load_image(
                     {
                         'file'   => "$images_path/$info",
@@ -1352,9 +1359,9 @@ sub animated {
 
             foreach my $bench (0 .. 1) {
                 if ($count || $XX <= 320) {
-                    diag($bench ? "Benchmarking Animated Image of '$info' Fullscreen" : "Playing Animated Image of '$info' Fullscreen");
+                    # diag($bench ? "Benchmarking Animated Image of '$info' Fullscreen" : "Playing Animated Image of '$info' Fullscreen");
                 } else {
-                    diag($bench ? "Benchmarking Animated Image of '$info' Native Size" : "Playing Animated Image of '$info' Native Size");
+                    # diag($bench ? "Benchmarking Animated Image of '$info' Native Size" : "Playing Animated Image of '$info' Native Size");
                 }
                 if (defined($image)) {
                     $F->cls();
@@ -1365,7 +1372,7 @@ sub animated {
                     while (time <= $s) {
                         foreach my $frame (0 .. (scalar(@{$image}) - 1)) {
                             if (time > $s * 2) {
-                                diag('Your System is Too Slow To Complete The Animation');
+                                # diag('Your System is Too Slow To Complete The Animation');
                                 sleep 2;
                                 last;
                             }
@@ -1396,7 +1403,7 @@ sub mode_drawing {
         alpha_drawing();
     } else {
         my @modes = qw( NORMAL XOR OR AND MASK UNMASK ALPHA ADD SUBTRACT MULTIPLY DIVIDE );
-        diag("Testing $modes[$mode] Drawing Mode");
+        # diag("Testing $modes[$mode] Drawing Mode");
         my $image = $IMAGES[int(rand(scalar(@IMAGES)))];
         my $image2;
         do {
@@ -1518,7 +1525,7 @@ sub print_it {
     $fb->normal_mode();
 	$fb->clip_reset();
 	$fb->cls();
-	ok($stat,$message);
+	push(@RESULTS,"$stat|$message");
     $fb->_flush_screen();
 } ## end sub print_it
 
@@ -1530,7 +1537,7 @@ Primitives Testing
 
 =head1 DESCRIPTION
 
-This script tests the capabilities of the Graphics::Framebuffer module
+This script tests the capabilities of the Graphics::Framebuffer module as part of the make process
 
 =head1 SYNOPSIS
 

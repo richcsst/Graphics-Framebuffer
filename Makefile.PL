@@ -31,9 +31,9 @@ print colored(['on_blue'],' '),colored(['blue'],               q(        | |_ | 
 print colored(['on_blue'],' '),colored(['blue'],                '        |  _|| | | (_| | | | | | |  __/ |_) | |_| |  _|  _|  __/ |           '),colored(['on_blue'],' '),"\n";
 print colored(['on_bright_blue'],' '),colored(['bright_blue'],  '        |_|  |_|  \__,_|_| |_| |_|\___|_.__/ \__,_|_| |_|  \___|_|           '),colored(['on_bright_blue'],' '),"\n";
 print colored(['on_bright_blue'], ' '),                         '                                                                             ',colored(['on_bright_blue'],' '),"\n";
-
+$line = ' ' x 79;
 print colored(['bright_blue on_bright_blue'],$line),"\n";
-
+$line = ' ' x $COLS;
 if ($^O =~ /MSWin/i) { # Some people will still try
     print colored(['white on_red']," This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
     $pmt = ExtUtils::MakeMaker::prompt('Do you really wish to install anyway?  ','N');

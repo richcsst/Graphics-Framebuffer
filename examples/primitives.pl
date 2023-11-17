@@ -271,7 +271,6 @@ if (defined($show_func)) {
         'ALPHA Mode Drawing',
         'ADD Mode Drawing',
         'SUBTRACT Mode Drawing',
-
         #       'MULTIPLY Mode Drawing',
         #       'DIVIDE Mode Drawing',
         'Animated',
