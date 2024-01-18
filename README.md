@@ -29,7 +29,7 @@ I highly recommend you install the system (or package) version of the "Imager" l
 
 The "build-essential" tools need to be installed. This is generally a C compiler, linker, and standard C libraries (usually gcc variety).  The module "Inline::C", which this module uses, requires it.  Also, the package "kernel-headers".
 
-You should also install typical TTF fonts as well.  I suggest the Windows fonts (fonts-wine), Ubuntu fonts (fonts-ubuntu) and anything else you wish to use.
+You should also install typical TTF fonts as well.  I suggest the FreeType fonts, the Windows fonts (fonts-wine), Ubuntu fonts (fonts-ubuntu) and anything else you wish to use.
 
 ## INSTALLATION
 
@@ -47,6 +47,12 @@ installation/install-prerequisites-debian.sh
 
 ```bash
 installation/install-prerequisites-redhat.sh
+```
+
+You can use the following to detect your distribution type:
+
+```bash
+installation/detech.sh
 ```
 
 ## Continuing...
