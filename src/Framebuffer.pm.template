@@ -1,8 +1,8 @@
-# 6.58:Nov 13, 2023:Richard Kelsch <rich-at-rk-internet.com>
+# 6.59:Jan 18, 2024:Richard Kelsch <rich@rk-internet.com>
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
-#  Copyright 2003 - 2023 Richard Kelsch
+#  Copyright 2003 - 2024 Richard Kelsch
 ## TEMPCOPYRIGHT ##
 
 =encoding utf8
@@ -5692,7 +5692,8 @@ Failures of this method are usually due to it not being able to find the font.  
     my $font = Imager::Font->new(
         'file'  => $pfont,
         'color' => $P_color,
-        'size'  => $TTF_h
+        'size'  => $TTF_h,
+		'aa'    => $aa,
     );
     unless (defined($font)) {
         warn __LINE__ . " Can't initialize Imager::Font!\n", Imager->errstr() if ($self->{'SHOW_ERRORS'});

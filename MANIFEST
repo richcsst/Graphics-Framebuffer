@@ -26,6 +26,7 @@ examples/text_mode.pl
 examples/vector-usa.gfb
 examples/vector.pl
 examples/viewpic.pl
+examples/banner.vt
 ignore.txt
 installing/detect.sh
 installing/FAQ

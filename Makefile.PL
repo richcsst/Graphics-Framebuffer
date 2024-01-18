@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-use 5.008;
+use 5.020;
 use strict;
 use warnings FATAL => 'all';
 use constant {
@@ -108,7 +108,7 @@ WriteMakefile(
     VERSION_FROM       => 'lib/Graphics/Framebuffer.pm',
     ABSTRACT_FROM      => 'lib/Graphics/Framebuffer.pm',
     PL_FILES           => {},
-    MIN_PERL_VERSION   => 5.008, # 5.6 (5.006) is considered slow and unstable.  Upgrade
+    MIN_PERL_VERSION   => 5.020, # 5.6 (5.006) is considered slow and unstable.  Upgrade
     CONFIGURE_REQUIRES => {
         'Inline::MakeMaker'   => '0.45',
         'ExtUtils::MakeMaker' => '6.52',
@@ -119,7 +119,6 @@ WriteMakefile(
         'Test::More' => '1.00',
         'List::Util' => '1.20',
     },
-#    PREREQ_FATAL   => TRUE,
     PREREQ_PRINT   => TRUE,
     PREREQ_PM      => {
         'Math::Bezier'   => '0.01',
