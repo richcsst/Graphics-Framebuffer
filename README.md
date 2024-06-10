@@ -100,7 +100,7 @@ Here's what I have tested this module on (all 1920x1080x32):
 
 * **Windows 10 PC with VirtualBox, 4 GHz 6 core i7 CPU and 2 NVidia 970 Ti's** - Holy cow!  No, seriously, this sucker is fast!  I wonder how much faster if it were running Linux natively?  In addition, 3840x2160x32 (4K) is surprisingly fast.  Who'd have thought?  Full screen animations were choppy, but everything else was plenty fast enough.
 
-* **Native Linux Mint with 4.2 GHz 6 core i7 CPU and 2 NVidia 1080 Ti's** - This is how I found out that the Nouveau driver is very poor when handling a framebuffer.  It's actually disgraceful at how bad and how slow it really is.  It doesn't appear to be using any DMA for the memory copy of the framebuffer, but CPU itself for transfers.  Running Virtual Box on Windows is much faster than running Linux natively with the  Nouveau framebuffer drivers.  Sad, really sad.
+* **Native Linux Mint with 4.2 GHz 6 core i7 CPU and 2 NVidia 1080 Ti's** - This is how I found out that the Nouveau driver is very poor when handling a framebuffer.  It's actually disgraceful at how bad and how slow it really is.  It doesn't appear to be using any DMA for the memory copy of the framebuffer, but CPU itself for transfers.  Running Virtual Box on Windows is much faster than running Linux natively with the Nouveau framebuffer drivers.  Sad, really sad.
 
 * **NVidia Jetson Nano with 4GB of RAM** - Plenty zippy.  I am quite pleased with this offering by NVidia.
 

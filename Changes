@@ -1671,3 +1671,9 @@ Revision history for Graphics-Framebuffer
        Minor changes to font handling
 
        Added missing font documentation
+
+6.60   Jun 10, 2024
+
+       More aliased commands added to cater to taste.
+
+       Documentation updated and improved, typos corrected.
