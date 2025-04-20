@@ -2,7 +2,7 @@
 
 ![Graphics::Framebuffer Logo](GFB.png?raw=true "Graphics::Framebuffer")
 
-###   Note, this module does NOT work (natively) in Microsoft Windows.  It will only function in "emulation" mode, and you will not see any screen output.  See the documentation on emulation mode for more details.  Use a Virtual Machine like VirtualBox to use on Windows, with a Linux distribution installed.
+![Windows Incompatible](Win-No.png?raw=true "Windows Incompatible") Note, this module does NOT work (natively) in Microsoft Windows.  It will only function in "emulation" mode, and you will not see any screen output.  See the documentation on emulation mode for more details.  Use a Virtual Machine like VirtualBox to use on Windows, with a Linux distribution installed.
 
 ## PREREQUISITES
 
