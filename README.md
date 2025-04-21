@@ -45,7 +45,7 @@ installation/install-prerequisites-redhat.sh
 You can use the following to detect your distribution type:
 
 ```bash
-installation/detech.sh
+installation/detect.sh
 ```
 
 ## Continuing...
