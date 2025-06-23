@@ -1693,3 +1693,5 @@ Revision history for Graphics-Framebuffer
 6.62   Jun 19, 2025
 
        Minor changes to threaded Perl detection in Makefile.PL
+
+       Diagnostic script "dump.pl" bugs fixed.
