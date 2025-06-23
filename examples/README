@@ -1,10 +1,12 @@
 Example file descriptions
 To view the documentation for these, just use "perldoc".
+Also note, to exit these just use CTRL-C
 ==============================================================================
 
 * dump.pl        - A program that dumps important diagnostic data to a file
                    called, "dump.log".  Send this file as an email attachment
-                   along with your explanation of the issue.
+                   along with your explanation of the issue.  Note, it MUST be
+				   a file attachment, not pasted inline.
 
 * fonts.pl       - A program that just shows each system TrueType font.  It is
                    not too glamorous, but it shows Graphics::Framebuffer and

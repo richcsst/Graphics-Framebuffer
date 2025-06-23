@@ -48,4 +48,3 @@ Win-No.png
 src/Framebuffer.c
 src/Framebuffer.pm.template
 t/01-primitives.t
-t/Environment_Variables.txt

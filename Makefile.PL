@@ -7,8 +7,8 @@ use constant {
     TRUE  => 1,
     FALSE => 0,
 };
-use Config;
 # These should be in Perl's installation already
+use Config;
 use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
 use Term::ReadKey;
 use Term::ANSIColor;
@@ -67,6 +67,13 @@ $template =~ s/\#\# C CODE \#\#/$ccode/s;
 print colored(['bright_green']," Added\n");
 
 if ($template =~ /^\# (.*?)\n/s) {
+	print colored(['bright_yellow'],'   Is this a threaded Perl?'), ' ... ';
+	if ($Config{'useithreads'}) {
+		print colored(['bright_green'],'YES'),"\n";
+	} else {
+		$template =~ s/\#\# THREADS \#.*?\#\#THREADS\#\#//sg;
+		print colored(['red'],'NO'),"\n";
+	}
     print colored(['bright_yellow'],'         Inserting versions'), ' ... ';
     my ($version, $date, $email) = split(/\:/, $1 );
     my ($month, $day, $year) = split(/ |, /,$date);
