@@ -1695,3 +1695,11 @@ Revision history for Graphics-Framebuffer
        Minor changes to threaded Perl detection in Makefile.PL
 
        Diagnostic script "dump.pl" bugs fixed.
+
+6.63   Jul 16, 2025
+
+       Improvements to "examples/primitives.pl".  Converted README file to
+	   GitHub markup.
+
+       Improvements to "Makefile.PL", hopefully to catch missing prerequisites
+	   much better.

@@ -7,6 +7,5 @@ mcechnl_primitives.pl
 mcehobo_primitives.pl
 mcehobo_slideshow.pl
 mce-examples
-Framebuffer.pm
 Makefile.pl
 Makefile.old

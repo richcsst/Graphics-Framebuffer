@@ -13,9 +13,9 @@ TROUBLESHOOTING
   You Have To Run From The Console
 
     A console window doesn't count as "the console".  You cannot use this
-    module from within X-Windows.  It won't work, and likely will only go into
-    emulation mode if you do, or maybe crash, or even corrupt your X-Windows
-    screen.
+    module from within X-Windows/Wayland.  It won't work, and likely will only
+	go into emulation mode if you do, or maybe crash, or even corrupt your
+	X-Windows screen.
 
     If you want to run your program within X-Windows, then you have the wrong
     module.  Use SDL, QT, or GTK or something similar.
@@ -183,7 +183,7 @@ TROUBLESHOOTING
        perl dump.pl
 
     Please include the dump file it creates (dump.log) as an attachment to
-    your email.  Please do not include it inline as part of the message
+    your email.  Please do NOT include it inline as part of the message
     text.
 
     Also, please include a copy of your code (or at least the portion of it

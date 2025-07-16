@@ -41,7 +41,7 @@ DETERMINE YOUR DISTRIBUTION
   system.  This includes, but is not limited to Unix, Linux, and BSD.
 
   The two I will concentrate on in this document are Debian and RedHat based
-  linux distributions.
+  Linux distributions.
 
   Debian distributions use "apt" utility to manage packages.  Debian
   distributions are typically:

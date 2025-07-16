@@ -1,6 +1,9 @@
-Example file descriptions
+# Example File Descriptions
+
 To view the documentation for these, just use "perldoc".
 Also note, to exit these just use CTRL-C
+
+```
 ==============================================================================
 
 * dump.pl        - A program that dumps important diagnostic data to a file
@@ -41,3 +44,4 @@ Also note, to exit these just use CTRL-C
                    an example.
 
 * viewpic.pl     - Shows one image passed to it.
+```

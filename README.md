@@ -123,7 +123,7 @@ You can also look for information at:
 
 ## LICENSE AND COPYRIGHT
 
-Copyright © 2013-2024 Richard Kelsch
+Copyright © 2013-2025 Richard Kelsch
 
 This program is free software; you can redistribute it and/or modify it under the terms of either: the GNU General Public License as published by the Free Software Foundation; or the Artistic License.
 
