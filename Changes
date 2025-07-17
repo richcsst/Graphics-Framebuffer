@@ -1699,7 +1699,9 @@ Revision history for Graphics-Framebuffer
 6.63   Jul 16, 2025
 
        Improvements to "examples/primitives.pl".  Converted README file to
-	   GitHub markup.
+       GitHub markup.
 
        Improvements to "Makefile.PL", hopefully to catch missing prerequisites
-	   much better.
+       much better.
+
+       Test script improved.
