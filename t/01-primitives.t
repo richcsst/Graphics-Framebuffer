@@ -37,7 +37,7 @@ if ($small) {
 	$new_x = 320;
 	$new_y = 200;
 }
-my $images_path = '../examples/images';
+my $images_path = 'examples/images';
 my @RESULTS;
 my $splash = ($nosplash) ? 0 : 2;
 diag("Gathering images...");
@@ -91,7 +91,7 @@ my $image = $F->load_image(
 		  'y' => 0,
 		  'width' => $XX,
 		  'height' => $F->{'H_CLIP'},
-		  'file' => '../GFB.png',
+		  'file' => 'GFB.png',
 		  'center' => CENTER_XY,
 	}
 );

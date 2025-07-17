@@ -203,10 +203,10 @@ get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate thr
 		print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],' sudo '),colored(['bright_green'],'make')," install\n";
 		print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'      make')," veryclean\n";
 	} else {
-		print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'              make'),"\n";
+		print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'               make'),"\n";
 		print colored(['bright_white on_magenta'],' Testing     -> '),colored(['red'],'GFB_IGNORE_X=1 '),colored(['bright_green'],'make')," test\n";
-		print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],'         sudo '),colored(['bright_green'],'make')," install\n";
-		print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'              make')," veryclean\n";
+		print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],'          sudo '),colored(['bright_green'],'make')," install\n";
+		print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'               make')," veryclean\n";
 	}
     exit(0);
 } else {
