@@ -1,4 +1,4 @@
-# 6.63:Jul 16, 2025:Richard Kelsch <rich@rk-internet.com>
+# 6.64:Aug 19, 2025:Richard Kelsch <rich@rk-internet.com>
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
@@ -5610,6 +5610,19 @@ It applies the following formula to calculate greyscale:
 
 =cut
 
+	##########################################################################
+	# This applies a well known set of blending constants to create a        #
+	# monochrome representation of a color image                             #
+	#                                                                        #
+	# Multiply each color by the constant, then add them together to get the #
+	# final monochrome value.                                                #
+	#                                                                        #
+	# NEWRED     = RED   * 0.2126                                            #
+	# NEWGREEN   = GREEN * 0.7115                                            #
+	# NEWBLUE    = BLUE  * 0.0722                                            #
+	# MONOCHROME = NEWRED + NEWGREEN + NEWBLUE                               #
+	##########################################################################
+
     my $self   = shift;
     my $params = shift;
 
@@ -5739,6 +5752,7 @@ Failures of this method are usually due to it not being able to find the font.  
     # coordinates given.  Since no decent True Type packages or libraries are    #
     # available for Perl, this turned out to be the best and easiest solution.   #
     ##############################################################################
+
     my $self   = shift;
     my $params = shift;
 

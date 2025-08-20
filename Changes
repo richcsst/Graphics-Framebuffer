@@ -1705,3 +1705,7 @@ Revision history for Graphics-Framebuffer
        much better.
 
        Test script improved.
+
+6.64   Aug 19, 2025
+
+       Added Moire to primitives.pl
