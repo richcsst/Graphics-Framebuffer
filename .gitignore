@@ -9,3 +9,5 @@ mcehobo_slideshow.pl
 mce-examples
 Makefile.pl
 Makefile.old
+_Inline
+blib
