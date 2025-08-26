@@ -1,19 +1,21 @@
 #!/usr/bin/env perl -T
 
 ## This is converted from the examples/primitives.pl file
+## There are leftovers, but it functions well as a test
 
 use strict;
 
 use Graphics::Framebuffer;
 use List::Util  qw(min max shuffle);
 use Time::HiRes qw(sleep time alarm);
-use Test::More  qw(no_plan);            # tests => 51;
+use Test::More  tests => 55;
+# use Test::More  qw(no_plan);
 
 # For debugging only
 # use Data::Dumper;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
 BEGIN {
-    our $VERSION = '1.02';
+    our $VERSION = '1.03';
 }
 
 our $F;

@@ -11,11 +11,12 @@ use Graphics::Framebuffer;
 use List::Util qw(min max shuffle);
 use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
+use Pod::Usage;
 
 # use Data::Dumper;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
 BEGIN {
-    our $VERSION = '6.02';
+    our $VERSION = '6.03';
 }
 
 our $F;
@@ -24,14 +25,18 @@ my $new_x;
 my $new_y;
 my $dev      = 0;
 my $psize    = 1;
+my $delay    = 3;
 my $noaccel  = FALSE;
 my $nosplash = FALSE;
-my $delay    = 3;
 my $ignore_x = FALSE;
 my $small    = FALSE;
+my $help     = FALSE;
+my $man      = FALSE;
 my $show_func;
 
 GetOptions(
+	'help|?'           => \$help,
+	'man'              => \$man,
     'x=i'              => \$new_x,
     'y=i'              => \$new_y,
     'dev=i'            => \$dev,
@@ -43,6 +48,9 @@ GetOptions(
     'ignore-x-windows' => \$ignore_x,
     'small'            => \$small,
 );
+
+pod2usage(1) if ($help);
+pod2usage(-exitval => 0, -verbose => 2) if ($man);
 
 $noaccel = ($noaccel) ? 1 : 0;    # Only 1 or 0 please
 if ($small) {
@@ -1692,6 +1700,8 @@ sub print_it {
 	$fb->acceleration($acc);
 } ## end sub print_it
 
+# The data below is used for the Moire subroutine
+
 __DATA__
 4
 9
@@ -1724,7 +1734,7 @@ This script demonstrates the capabilities of the Graphics::Framebuffer module
 
 =head1 SYNOPSIS
 
- perl primitives.pl [--dev=device number] [--x=X emulated resolution] [--y=Y emulated resolution] [--pixel=pixel size] [--noaccel]
+ perl primitives.pl [options]
 
 =over 2
 
@@ -1747,6 +1757,18 @@ Examples:
 =head1 OPTIONS
 
 =over 2
+
+=item B<--help>
+
+Print brief help instructions
+
+=item B<--man>
+
+Print the full manual page
+
+=item B<--nosplash>
+
+Turn off the splash screen
 
 =item B<--dev>=C<device number>
 
@@ -1784,6 +1806,12 @@ Changes the amount of time given to each function
 
 Instead of running all functions, just run one or more (separated by commas)
 
+=item B<ignore-x-windows>
+
+DANGEROUS TO USE!
+
+This will turn off all checks for Wayland and X-Windows.  It will try to initialize a framebuffer anyway.
+
 =back
 
 =head1 NOTES
@@ -1808,3 +1836,5 @@ GNU Public License Version 3.0
 * See the "LICENSE" file in the distribution for this license.
 
 This program must always be included as part of the Graphics::Framebuffer package.
+
+=cut
