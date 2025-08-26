@@ -6185,6 +6185,15 @@ If 'width' and/or 'height' is given, the image is resized.  Note, resizing is CP
                                    # GIFs look right when this is done.
                                    # the safest setting is to not use this,
                                    # and playback using normal_mode.
+
+              'fpsmax' => 10,
+                                   # If the file is a video file, it will be
+                                   # converted to a GIF file.  This value
+                                   # determines the maximum number of frames
+                                   # per second allowed in the conversion.
+                                   # Note, the higher the number, the slower
+                                   # the conversion process.  This only works
+                                   # if "ffmpeg" is installed.
          }
      )
  );
@@ -6252,7 +6261,11 @@ If the image has multiple frames, then a reference to an array of hashes is retu
     my $color_order    = $self->{'COLOR_ORDER'};
     my $hold;
     if (defined($self->{'FFMPEG'}) && $params->{'file'} =~ /\.(mkv|mp4|avi|mpeg4|webp)$/i) { # This uses ffmpeg to convert a movie to a temporary GIF and then plays it
-        system($self->{'FFMPEG'},'-i',$params->{'file'},'-vf', 'fps=10,scale=-1:-1:flags=bicubic', '-loop','0','-loglevel','quiet','/tmp/output.gif');
+		my $quiet = ($self->{'SHOW_ERRORS'}) ? 'verbose' : 'quiet';
+		my $fpsmax = (defined($params->{'fpsmax'})) ? $params->{'fpsmax'} : 10;
+        warn "ffmpeg -i $params->{'file'} -y -fpsmax $fpsmax -loop 0 -loglevel $quiet '/tmp/output.gif'" if ($self->{'SHOW_ERRORS'});
+        system($self->{'FFMPEG'},'-i',$params->{'file'},'-y', '-fpsmax',$fpsmax, '-loop','0','-loglevel',$quiet,'/tmp/output.gif');
+		warn "Finished converting $params->{'file'}" if ($self->{'SHOW_ERRORS'});
         $hold = $params->{'file'};
         $params->{'file'} = '/tmp/output.gif';
     }
