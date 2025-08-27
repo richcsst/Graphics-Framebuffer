@@ -12,7 +12,7 @@ Use a Virtual Machine like VirtualBox to use on Windows, with a Linux distributi
 
 ## PREREQUISITES
 
-This module was developed for Linux, but can work on any Unix-like OS as long as it has a framebuffer.
+This module was developed for Linux, but can work on any Unix-like OS *as long as it has a framebuffer*.
 
 This module REQUIRES access to the video framebuffer, usually "/dev/fb0".  You must be using a video device and driver that exposes this device to software.  Video cards with their proprietary drivers are not likely to work.  However, most open-sourced drivers, seem to work fine.  VirtualBox drivers work too.  You must also have the appropriate permissions to write to this device (usually membership with group "video").
 
@@ -51,6 +51,17 @@ You can use the following to detect your distribution type:
 ```bash
 installation/detect.sh
 ```
+
+### Linux in VirtualBox with EFI
+
+Add the following to your "vbox" XML definition file:
+
+```
+<ExtraData>
+    <ExtraDataItem name="VBoxInternal2/EfiGraphicsResolution" value="3840x2160"/>
+</ExtraData>
+```
+The "ExtraData" section may already have other definitions in it.  Just place the "ExtraDataItem" as the last definition.  You can Set the resolution to anything sane.
 
 ## Continuing...
 
