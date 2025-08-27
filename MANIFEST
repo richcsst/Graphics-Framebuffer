@@ -4,7 +4,7 @@ examples/fonts.pl
 examples/images/4KTest_Pattern.png
 examples/images/Blonde_Pigtails.jpg
 examples/images/Halloween.jpg
-examples/images/README
+examples/images/README.md
 examples/images/RWBY_Beuowolf.png
 examples/images/RWBY_Crescent_Rose_Ruby.png
 examples/images/RWBY_White.jpg
@@ -12,13 +12,13 @@ examples/images/Ryuko.jpg
 examples/images/Solid.jpg
 examples/images/nothing_to_see.gif
 examples/multiprocessing/get-mce-demos
-examples/multiprocessing/README
-examples/multiprocessing/README-MCE
+examples/multiprocessing/README.md
+examples/multiprocessing/README-MCE.md
 examples/multiprocessing/threaded_primitives.pl
 examples/multiprocessing/threaded_slideshow.pl
 examples/multiprocessing/threaded_template.pl
 examples/primitives.pl
-examples/README
+examples/README.md
 examples/screensaver.pl
 examples/slideshow.pl
 examples/template.pl

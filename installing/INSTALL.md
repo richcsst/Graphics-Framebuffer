@@ -1,8 +1,6 @@
-******************************************************************************
-*             Installing Graphics::Framebuffer Instructions                  *
-******************************************************************************
+# Installing Graphics::Framebuffer Instructions
 
-DETERMINING IF YOUR SYSTEM HAS A FRAMEBUFFER FIRST
+## DETERMINING IF YOUR SYSTEM HAS A FRAMEBUFFER FIRST
 
   You need to make sure your system has a Framebuffer driver installed.  The
   easiest way to find this out, is to look in the "/dev" directory and see if
@@ -28,13 +26,13 @@ DETERMINING IF YOUR SYSTEM HAS A FRAMEBUFFER FIRST
 	 top of the 24/32 bit routines, so more CPU time is involved in
 	 conversion.
 
-MAKE SURE YOUR USER ACCOUNT HAS ACCESS TO THE VIDEO DEVICE
+## MAKE SURE YOUR USER ACCOUNT HAS ACCESS TO THE VIDEO DEVICE
 
   *  sudo usermod -a -G video username
 
      Change "username" with the username of your account
 
-DETERMINE YOUR DISTRIBUTION
+## DETERMINE YOUR DISTRIBUTION
 
   There are various distributions of operating systems this module should work
   on.  Those are POSIX or Unix like systems that map devices to the file
@@ -95,7 +93,7 @@ DETERMINE YOUR DISTRIBUTION
   included in your distribution.  If you are, then you need to answer "yes"
   to the question and allow it to install the Perl prerequisites.
 
-INSTALLING WITH PACKAGED PERL
+## INSTALLING WITH PACKAGED PERL
 
   Acquiring (use only one method):
   
@@ -107,7 +105,7 @@ INSTALLING WITH PACKAGED PERL
        make test
        [sudo] make install
 
-INSTALLING WITH PERLBREW (and installing Perlbrew)
+## INSTALLING WITH PERLBREW (and installing Perlbrew)
 
   If you do not want to use the package version of Perl, but would rather use
   a customized and more optimized version of Perl, then do the following:

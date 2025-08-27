@@ -1,7 +1,4 @@
-
-##############################################################################
-#         Graphics::Framebuffer Module Frequently Asked Questions            #
-##############################################################################
+# Graphics::Framebuffer Module Frequently Asked Questions
 
 Q:  Does GFB play video?
 
