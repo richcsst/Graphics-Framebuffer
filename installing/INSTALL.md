@@ -15,12 +15,12 @@
   files and passing the video type to the kernel command line.  This is
   typically the "vga" variable.
 
-  ** Mario Roy has an excellent tutorial on enabling the Framebuffer on a
+  * Mario Roy has an excellent tutorial on enabling the Framebuffer on a
      CentOS system.  This may be helpful on other distributions as well:
 
-     *  https://github.com/marioroy/mce-examples/tree/master/framebuffer
+     https://github.com/marioroy/mce-examples/tree/master/framebuffer
 
-  ** Raspberry PI Users!  Change the settings to use a 24/32 bit framebuffer.
+  * Raspberry PI Users!  Change the settings to use a 24/32 bit framebuffer.
      The PI defaults to 16 bit color and this module is much faster using
 	 24/32 bit color mode.  This module's 16 bit mode is a hack layered on
 	 top of the 24/32 bit routines, so more CPU time is involved in
