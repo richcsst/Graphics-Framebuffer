@@ -1721,3 +1721,9 @@ Revision history for Graphics-Framebuffer
        Improved the speed of flood fill.  Various documentation changes.
 	   Improved the help options of various examples scripts.  Added 'raw'
 	   option to color replacement routines.
+
+6.67   Aug 27, 2025
+
+       Simplified test script.
+
+	   Added screen restore feature if RESET is off.
