@@ -29,13 +29,13 @@ examples/viewpic.pl
 examples/banner.vt
 ignore.txt
 installing/detect.sh
-installing/FAQ
-installing/INSTALL
+installing/FAQ.md
+installing/INSTALL.md
 installing/install-prerequisites-debian.sh
 installing/install-prerequisites-redhat.sh
-installing/KNOWN_ISSUES
-installing/TODO
-installing/TROUBLESHOOTING
+installing/KNOWN_ISSUES.md
+installing/TODO.md
+installing/TROUBLESHOOTING.md
 lib/Graphics/Framebuffer.pm
 lib/Graphics/Framebuffer/Mouse.pm
 lib/Graphics/Framebuffer/Splash.pm
@@ -47,4 +47,5 @@ GFB.png
 Win-No.png
 src/Framebuffer.c
 src/Framebuffer.pm.template
+src/README.md
 t/01-primitives.t
