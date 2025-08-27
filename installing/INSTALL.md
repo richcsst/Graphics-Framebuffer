@@ -28,7 +28,7 @@
 
 ## MAKE SURE YOUR USER ACCOUNT HAS ACCESS TO THE VIDEO DEVICE
 
-  *  sudo usermod -a -G video username
+     sudo usermod -a -G video username
 
      Change "username" with the username of your account
 
@@ -110,12 +110,12 @@
   If you do not want to use the package version of Perl, but would rather use
   a customized and more optimized version of Perl, then do the following:
 
-*  wget -O - https://install.perlbrew.pl | bash
+       wget -O - https://install.perlbrew.pl | bash
 
   Append the following line to your " ~/.bash_profile " then log out and log in
   again:
 
-*  source ~/perl5/perlbrew/etc/bashrc
+       source ~/perl5/perlbrew/etc/bashrc
 
   Now to install Perlbrew (you can use higher version numbers where applicable):
 
