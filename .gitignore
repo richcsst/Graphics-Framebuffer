@@ -12,3 +12,4 @@ Makefile.old
 _Inline
 blib
 .gitignore
+ignore.txt
