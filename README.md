@@ -69,27 +69,27 @@ To install this module, run the following commands:
 
 ## FURTHER TEST SCRIPTS
 
-To test the installation properly.  Log into the text console (not X).  Go to the 'examples' directory and run 'primitives.pl'.  It basically calls most of the features of the module.
+To test the installation properly.  Log into the text console (not X).  Go to the ```examples``` directory and run ```primitives.pl```.  It basically calls most of the features of the module.
 
-The scripts beginning with 'thread' requires 'Sys::CPU'.  It is not listed as a prerequisite for this module (as it isn't), but if you want to run the threaded scripts, then this is a required module.  It demonstrates how to use this module in a threaded environment.
+The scripts beginning with 'thread' requires ' *Sys::CPU* '.  It is not listed as a prerequisite for this module (as it isn't), but if you want to run the threaded scripts, then this is a required module.  It demonstrates how to use this module in a threaded environment.
 
 Mario Roy's MCE test scripts have been added (well, a script to go get them) to demonstrate alternate multiprocessing methods of using Graphics::Framebuffer, even with Perls built without threads support.
 
 ## GETTING STARTED
 
-There is a script template in the 'examples' directory in this package.  You can use it as a starting point for your script.  It is conveniently called 'template.pl' or "threaded_template.pl".  I recommend copying it, renaming it, and leaving the original template intact for use on another project.
+There is a script template in the ```examples``` directory in this package.  You can use it as a starting point for your script.  It is conveniently called ```template.pl``` or ```threaded_template.pl```.  I recommend copying it, renaming it, and leaving the original template intact for use on another project.
 
 ## COMPATIBILITY vs. SPEED
 
 This module, suprisingly, runs on a variety of hardware with accessible framebuffer devices.  The only limitation is CPU power.  Why CPU power?  The module uses the CPU for its graphics calculations and drawing, not the GPU.  There are very little framebuffer drivers that use the GPU for anything, and thus no reliable libraries for calling the GPU at the framebuffer level.
 
-Some lower clocked ARM devices may be too slow for practical use of all of the methods in this module, but the best way to find out is to run 'examples/primitives.pl' to see which are fast enough to use.
+Some lower clocked ARM devices may be too slow for practical use of all of the methods in this module, but the best way to find out is to run ```examples/primitives.pl``` to see which are fast enough to use.
 
 Here's what I have tested this module on (all 1920x1080x32):
 
 * **Raspberry PI2/3** - Tollerable, I did 16 bit mode testing and coding on this machine.  Using a Perlbrew custom compiled Perl helps a bit.  The Raspberry PI are configured, by default, to be in 16 bit graphics mode.  This is not the best mode if you are going to be loading images or rendering TrueType text, as color space conversions can take a long time (with acceleration off).  Overall, 32 bit mode works best on this machine, especially for image loading and text rendering.  This performance limitation can, however, be minimized using the C acceleration features, if you still wish to use the 16 bit display mode.
 
-* **Odroid XU3/XU4** - Surprisingly fast.  All methods plenty fast enough for heavy use.  Works great with threads too, 8 of them (when done properly).  Most coding for this module is done on this machine at 1920x1080x32.  This is fast enough for full screen (1920 x 1080 or less) animations at 30 fps.  If your resolution is lower, then your FPS rating will be higher.
+* **Odroid XU3/XU4** - Surprisingly fast.  All methods plenty fast enough for heavy use.  Works great with threads too, 8 of them (when done properly).  Most early coding for this module was done on this machine at 1920x1080x32.  This is fast enough for full screen (1920 x 1080 or less) animations at 30 fps.  If your resolution is lower, then your FPS rating will be higher.
 
 * **Atom 1.60 GHz with NVidia Nouveau driver** - Decent, not nearly as fast as the Odroid XU3/4.  Works good with threads too (when done properly).  Great for normal graphical apps and static displayed output.  Recent versions of the Nouveau framebuffer driver have become noticably slower now days though.
 
@@ -100,6 +100,10 @@ Here's what I have tested this module on (all 1920x1080x32):
 * **Native Linux Mint with 4.2 GHz 6 core i7 CPU and 2 NVidia 1080 Ti's** - This is how I found out that the Nouveau driver is very poor when handling a framebuffer.  It's actually disgraceful at how bad and how slow it really is.  It doesn't appear to be using any DMA for the memory copy of the framebuffer, but CPU itself for transfers.  Running Virtual Box on Windows is much faster than running Linux natively with the Nouveau framebuffer drivers.  Sad, really sad.
 
 * **NVidia Jetson Nano with 4GB of RAM** - Plenty zippy.  I am quite pleased with this offering by NVidia.
+
+* **Windows 11 PC with Virtualbox, 5 GHz 12 core AMD Ryzen 9900X with GeForce RTX 4080 Ti GPU** - Amazingly fast.  I have Linux installed on VirtualBox as an EFI OS.  I have the EFI resolution set to 3840x2160.  You can use the "ExtraData" section in the "vbox" description file to set that up.  For example:
+
+  * ```<ExtraDataItem name="VBoxInternal2/EfiGraphicsResolution" value="3840x2160"/>```
 
 ## SUPPORT AND DOCUMENTATION
 
