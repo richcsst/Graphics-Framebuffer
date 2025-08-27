@@ -2,6 +2,8 @@
 
 ## The following are some ideas for the future:
 
+-----
+
 * Requests are seriously considered for new features or system compatibility.
 
 Many features this module have were as a result of user requests.
