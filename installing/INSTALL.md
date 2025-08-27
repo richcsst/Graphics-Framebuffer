@@ -92,6 +92,25 @@ Change "username" with the username of your account
   included in your distribution.  If you are, then you need to answer "yes"
   to the question and allow it to install the Perl prerequisites.
 
+### INSTALLING ON VIRTUAL BOX WITH EFI
+
+   If your distribution of Linux has EFI install capability, then I encourage you install that version and set up the virtual machine accordingly.
+
+   Make sure NOTHING VirtualBox is running, not the GUI nor any virtual machine.  This is *important*.
+
+   Open the "vbox" definition file in you virtual machine directory in your favorite text editor.  You will see it is an XML file.  Look for the ```<ExtraData>``` section (usually near the beginning).  It is likely there are already items called ```ExtraDataItem``` listed in there.  Insert the following "ExtraDataItem" at the end of that list, before ```</ExtraData>```, so it looks something like this:
+
+   ```
+      <ExtraData>
+
+		 <ExtraDataItem name="VBoxInternal2/EfiGraphicsResolution" value="3840x2160"/>
+      </ExtraData>
+   ```
+
+   You can change "3840x2160" to any sane resolution you wish.
+
+   Using the EFI install means no need to fiddle with Grub.  VirtualBox already has a framebuffer for EFI.  Just make sure that you install the extensions (and re-install everytime the Kernel is updated)
+
 ## INSTALLING WITH PACKAGED PERL
 
   Acquiring (use only one method):
