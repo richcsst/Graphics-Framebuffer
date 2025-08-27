@@ -17,7 +17,8 @@ sudo apt install -y build-essential \
                     fonts-wine
 
 # Only needed if you are using the OS installed (packaged) Perl
-read -p "Do you wish to install the packaged/system Perl prerequisites?  " yn
+echo "OS prerequisites installed."
+read -p "Do you wish to install the packaged/system Perl module prerequisites?  " yn
 case $yn in
     [Yy]* ) 
         sudo apt install -y libimager-perl \
