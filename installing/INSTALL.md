@@ -44,45 +44,45 @@
   Debian distributions use "apt" utility to manage packages.  Debian
   distributions are typically:
 
-    *  Debian
-    *  Ubuntu
-    *  Kubuntu
-    *  Xubuntu
-    *  Mint
-    *  Raspian
+*  Debian
+*  Ubuntu
+*  Kubuntu
+*  Xubuntu
+*  Mint
+*  Raspian
 
   RedHat distributions use the "yum" utility to manage packages.  RedHat
   distributions are typically:
 
-    *  RedHat
-    *  Fedora
-    *  CentOS
-    *  ClearOS
-    *  Scientific Linux
-    *  SME
-    *  Aurora
-    *  Berry
-    *  Yellow Dog
+*  RedHat
+*  Fedora
+*  CentOS
+*  ClearOS
+*  Scientific Linux
+*  SME
+*  Aurora
+*  Berry
+*  Yellow Dog
 
   I have added two shell scripts to make installation of this module very easy.
 
   For Debian based systems:
 
-    *  installing/install-prerequisites-debian.sh
+*  installing/install-prerequisites-debian.sh
 
   For RedHat based systems:
 
-    *  installing/install-prerequesites-redhat.sh
+*  installing/install-prerequesites-redhat.sh
 
   I have also included a script to detect the type of distribution you have.
   It's not 100% accurate, but usually works:
 
-    *  detect.sh
+*  detect.sh
 
   If you still are not sure, you can go to the following URL and your
   distribution should be there, with the type of core base it is:
 
-    *  https://en.wikipedia.org/wiki/List_of_Linux_distributions
+*  https://en.wikipedia.org/wiki/List_of_Linux_distributions
 
   Pick the appropriate prerequisie script to run.
 
@@ -97,8 +97,8 @@
 
   Acquiring (use only one method):
   
-    *  Use CPAN, run:  install Graphics::Framebuffer
-    *  git clone https://github.com/richcsst/Graphics-Framebuffer.git
+*  Use CPAN, run:  install Graphics::Framebuffer
+*  git clone https://github.com/richcsst/Graphics-Framebuffer.git
 
        perl Makefile.PL
        make
@@ -110,22 +110,21 @@
   If you do not want to use the package version of Perl, but would rather use
   a customized and more optimized version of Perl, then do the following:
 
-    *  wget -O - https://install.perlbrew.pl | bash
+*  wget -O - https://install.perlbrew.pl | bash
 
   Append the following line to your " ~/.bash_profile " then log out and log in
   again:
 
-    *  source ~/perl5/perlbrew/etc/bashrc
+*  source ~/perl5/perlbrew/etc/bashrc
 
   Now to install Perlbrew (you can use higher version numbers where applicable):
 
-    *  perlbrew init
-    *  perlbrew install-cpanm
-    *  perlbrew install-patchperl
-    *  perlbrew install -n perl-5.30.1 -Dusethreads
-    *  perlbrew clean
-    *  perlbrew switch perl-5.30.1
-    *  cpanm -n Inline::C Math::Bezier Math::Gradient File::Map Imager
-    *  cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder Sys::CPU
-    *  cpanm -n Graphics::Framebuffer
-
+*  perlbrew init
+*  perlbrew install-cpanm
+*  perlbrew install-patchperl
+*  perlbrew install -n perl-5.30.1 -Dusethreads
+*  perlbrew clean
+*  perlbrew switch perl-5.30.1
+*  cpanm -n Inline::C Math::Bezier Math::Gradient File::Map Imager
+*  cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder Sys::CPU
+*  cpanm -n Graphics::Framebuffer
