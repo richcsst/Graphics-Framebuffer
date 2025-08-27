@@ -470,6 +470,7 @@ sub DESTROY { # Always clean up after yourself before exiting
     $self->_screen_close();
     unlink('/tmp/output.gif') if (-e '/tmp/output.gif');
     _reset() if ($self->{'RESET'});    # Exit by calling 'reset' first
+	substr($self->{'SCREEN'},0,length($self->{'START_SCREEN'})) = $self->{'START_SCREEN'};
 }
 
 # use Inline 'info', 'noclean', 'noisy'; # Only needed for debugging
@@ -1415,6 +1416,7 @@ To get back into X-Windows, you just hit ALT-F7 (or ALT-F8 on some systems).
         }
     }
     $self->_flush_screen();
+    $self->{'START_SCREEN'} = ''. $self->{'SCREEN'};
     chomp($self->{'this_tty'} = `tty`);
     if ($self->{'SPLASH'} > 0) {
         $self->splash($VERSION);
@@ -2031,7 +2033,6 @@ With 'pixel_size', if a positive number greater than 1, is drawn with square pix
             unless (exists($self->{'history'}) && defined($self->{'history'}->{$y}->{$x})) {
                 $index = ($self->{'BYTES_PER_LINE'} * ($y + $self->{'YOFFSET'})) + (($self->{'XOFFSET'} + $x) * $self->{'BYTES'});
                 if ($index >= 0 && $index <= ($self->{'fscreeninfo'}->{'smem_len'} - $self->{'BYTES'})) {
-                    eval {
                         $c = substr($self->{'SCREEN'}, $index, $self->{'BYTES'}) || chr(0) x $self->{'BYTES'};
                         if ($self->{'DRAW_MODE'} == NORMAL_MODE) {
                             $c  = $self->{'RAW_FOREGROUND_COLOR'};
@@ -2079,7 +2080,6 @@ With 'pixel_size', if a positive number greater than 1, is drawn with square pix
                             }
                         }
                         substr($self->{'SCREEN'}, $index, $self->{'BYTES'}) = $c;
-                    };
                     my $error = $@;
                     warn __LINE__ . " $error" if ($error && $self->{'SHOW_ERRORS'});
                     $self->_fix_mapping() if ($error);
