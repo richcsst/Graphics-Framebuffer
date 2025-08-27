@@ -3,9 +3,8 @@
 To view the documentation for these, just use "perldoc".
 Also note, to exit these just use CTRL-C
 
+-----
 ```
-==============================================================================
-
 * dump.pl        - A program that dumps important diagnostic data to a file
                    called, "dump.log".  Send this file as an email attachment
                    along with your explanation of the issue.  Note, it MUST be
