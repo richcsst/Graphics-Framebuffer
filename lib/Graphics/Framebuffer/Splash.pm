@@ -51,8 +51,8 @@ sub splash {
     $self->set_color(
 		{
 			'red'   => 0,
-			'green' => 0,
-			'blue'  => 32,
+			'green' => 64,
+			'blue'  => 0,
 			'alpha' => 255,
 		}
 	);
