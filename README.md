@@ -20,7 +20,7 @@ Sometimes you can force a VESA framebuffer console driver to be loaded by adding
 
 ### ATTENTION CPAN TESTERS!  Please make sure the above is noted before testing (and marking a fail)
 
-If you want a more detailed instruction than this document, then read "INSTALL".
+If you want a more detailed instruction than this document, then read "INSTALL.md".
 
 I highly recommend you install the system (or package) version of the "Imager" library, as it is already pre-compiled with all the needed C libraries for it to work with this module.  In Yum (RedHat) and Aptitude (Debian/Ubuntu) this module is called "libimager-perl" (or "perl-libImager").  However, if you desire to install it yourself, please do it manually, and not via CPAN.  When you do it manually, you can see the missing C libraries it is looking for in the "Makefile.PL" process and stop it there.  You can then install these libraries until it no longer says something is missing.  You see, it just turns off functionality if it can't find a library (when installing from CPAN), instead of stopping.  Libraries usually missing are those for GIF, JPEG, PNG, TrueType and FreeType fonts.  These are necessary not optional, if you wish to be able to work with fonts and images.
 
