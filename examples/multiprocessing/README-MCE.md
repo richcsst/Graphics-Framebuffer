@@ -8,4 +8,4 @@ Mario Roy has some excellent examples using alternate multiprocessing methods, i
 
 You may have to install extra prerequisites to get them to work, but they allow for a single shared object usage, instead of opening a separate object for each thread/process.
 
-(You will need MCE and MCE::Hobo)
+(You will need the modules "MCE" and "MCE::Hobo")
