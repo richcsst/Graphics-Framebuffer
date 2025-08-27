@@ -118,12 +118,12 @@ Change "username" with the username of your account
 
   Now to install Perlbrew (you can use higher version numbers where applicable):
 
-*  perlbrew init
-*  perlbrew install-cpanm
-*  perlbrew install-patchperl
-*  perlbrew install -n perl-5.30.1 -Dusethreads
-*  perlbrew clean
-*  perlbrew switch perl-5.30.1
-*  cpanm -n Inline::C Math::Bezier Math::Gradient File::Map Imager
-*  cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder Sys::CPU
-*  cpanm -n Graphics::Framebuffer
+       perlbrew init
+       perlbrew install-cpanm
+       perlbrew install-patchperl
+       perlbrew install -n perl-5.30.1 -Dusethreads
+       perlbrew clean
+       perlbrew switch perl-5.30.1
+       cpanm -n Inline::C Math::Bezier Math::Gradient File::Map Imager
+	   cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder Sys::CPU
+	   cpanm -n Graphics::Framebuffer
