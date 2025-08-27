@@ -138,14 +138,14 @@ Change "username" with the username of your account
 
        source ~/perl5/perlbrew/etc/bashrc
 
-  Now to install Perlbrew (you can use higher version numbers where applicable):
+  Now to install Perlbrew (you can use higher or lower version numbers where applicable):
 
        perlbrew init
        perlbrew install-cpanm
        perlbrew install-patchperl
-       perlbrew install -n perl-5.30.1 -Dusethreads
+       perlbrew install -n perl-5.40 -Dusethreads
        perlbrew clean
-       perlbrew switch perl-5.30.1
+       perlbrew switch perl-5.40
        cpanm -n Inline Inline::C Math::Bezier Math::Gradient
 	   cpanm -n File::Map Imager Term::ReadKey Test::Most File::Map
 	   cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder Sys::CPU
