@@ -1,12 +1,12 @@
-TO DO
+# TO DO
 
-The following are some ideas for the future:
+## The following are some ideas for the future:
 
 * Requests are seriously considered for new features or system compatibility.
 
 Many features this module have were as a result of user requests.
 
-==============================================================================
+-----
 
 * Completely C accelerate all primitive drawing
 
@@ -18,7 +18,7 @@ The slowest will be addressed first.
 Realistically though, I doubt some specific routines will be converted, as
 they would be determined to be sufficiently quick.
 
-==============================================================================
+-----
 
 * Incorporate all methods that need Imager to use their own C code, so Imager
   is no longer needed.
@@ -26,4 +26,4 @@ they would be determined to be sufficiently quick.
 Imager's lack of support for RGB565 (16 bit) is the reason for this need.  The
 slight increase in speed won't hurt either.
 
-==============================================================================
+-----
