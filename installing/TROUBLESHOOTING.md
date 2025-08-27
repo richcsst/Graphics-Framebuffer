@@ -50,7 +50,7 @@
 
    Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous items).
 
-   First, make sure your system has a framebuffer by seeing if "/dev/fb0" (actually "fb" then any number) exists.  If you don't see any "fb0" - "fb31" files inside "/dev" (or "/dev/fb/"), then you don't have a framebuffer driver running.  You need to fix that first.  Sometimes you have to manually load the driver with "modprobe -a drivername" (replacing "drivername" with the actual driver name).
+   First, make sure your system has a framebuffer by seeing if "/dev/fb0" (actually "fb" then any number) exists.  If you don't see any "fb0" - "fb31" files inside "/dev" (or "/dev/fb/"), then you don't have a framebuffer driver running.  You need to fix that first.  Sometimes you have to manually load the driver with ```modprobe -a drivername``` (replacing "drivername" with the actual driver name).
 
    Second, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "video" group.  Let's say the account is called "username", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint/RedHat/Fedora) environment you would use this to add "username" (your account name) to the "video" group:
 
@@ -60,23 +60,23 @@
 
 ### The Text Cursor Is Messing Things Up
 
-   It is?  Well then turn it off.  Use the $fb->cls('OFF') method to do it.  Use $fb->cls('ON') to turn it back on.
+   It is?  Well then turn it off.  Use the ```$fb->cls('OFF')``` method to do it.  Use ```$fb->cls('ON')``` to turn it back on.
 
    If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
 
-   * UPDATE:  The new default behavior is to do this for you via the "RESET" parameter when creating the object.  See the "new" method documentation above for more information.
+   * UPDATE:  The new default behavior is to do this for you via the "RESET" parameter when creating the object.  See the "new" method documentation for more information.
 
 ### TrueType Printing isn't working
 
-   This is likely caused by the Imager library either being unable to locate the font file, or when it was compiled, it couldn't find the FreeType development libraries, and was thus compiled without TrueType text support.
+   This is likely caused by the *Imager* library either being unable to locate the font file, or when it was compiled, it couldn't find the FreeType development libraries, and was thus compiled without TrueType text support.
 
-   See the INSTALLATION instructions (above) on getting Imager properly compiled.  If you have a package based Perl installation, then installing the Imager (usually "libimager-perl") package will always work.  If you already installed Imager via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install "libfreetype6-dev" and then re-install Imager via CPAN with a forced install.  If you don't want the package version but still want the CPAN version, then still uninstall what is there, then go and make sure the TrueType and FreeType development libraries are installed on your system, along with PNG, JPEG, and GIF development libraries.  Now you can go to CPAN and install Imager.
+   See the INSTALLATION instructions on getting *Imager* properly compiled.  If you have a package based Perl installation, then installing the *Imager* (usually "libimager-perl" or "perl-libimager") package will always work.  If you already installed *Imager* via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install ```libfreetype6-dev``` and then re-install *Imager* via CPAN with a forced install.  If you don't want the package version but still want the CPAN version, then still uninstall what is there, then go and make sure the TrueType and FreeType development libraries are installed on your system, along with PNG, JPEG, and GIF development libraries.  Now you can go to CPAN and install *Imager*.
 
 ### It's Too Slow
 
-   Ok, it does say a PERL graphics library in the description, if I am not mistaken.  This means Perl is doing most of the work.  This also means it is only as fast as your system and its CPU, as it does not use your GPU at all.
+   Ok, it does say a *PERL graphics library* in the description, if I am not mistaken.  This means Perl is doing most of the work.  This also means it is only as fast as your system and its CPU, as it does not use your GPU at all.
 
-   First, check to make sure the C acceleration routines are compiling properly.  Call the "acceleration" method without parameters.  It SHOULD return 1 and not 0 if C is properly compiling.  If it's not, then you need to make sure "Inline::C" is properly installed in your Perl environment.  THIS WILL BE THE BIGGEST HELP TO YOU, IF YOU GET THIS SOLVED FIRST.
+   First, check to make sure the C acceleration routines are compiling properly.  Call the "acceleration" method without parameters.  It SHOULD return 1 and not 0 if C is properly compiling.  If it's not, then you need to make sure *Inline::C* is properly installed in your Perl environment.  **THIS WILL BE THE BIGGEST HELP TO YOU, IF YOU GET THIS SOLVED FIRST**.
 
    Second, (and this is very advanced) you could try recompiling Perl with optimizations specific to your hardware.  That can help, but this is very advanced and you should know what you are doing before attempting this.  Keep in mind that if you do this, then ALL of the modules installed via your distribution packager won't work, and will have to be reinstalled via CPAN for the new perl.
 
