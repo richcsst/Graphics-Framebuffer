@@ -10,6 +10,8 @@
 
 ## Does this work on Microsoft Windows?
 
+![Windows Incompatible](../Win-No.png)
+
    No, as Windows does not have a memory mappable framebuffer.
 
    However, it works fine with VirtualBox and Linux installed on Windows.  If you fullscreen the VirtualBox display, then you can use the framebuffer on the Linux running on it.  You may have to adjust the grub variables and the settings in the "/etc/default/console-settings" and "/etc/default/grub" files, as well as configure VirtualBox to set the framebuffer to a large size.
