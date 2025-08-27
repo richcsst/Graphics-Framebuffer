@@ -11,3 +11,4 @@ Makefile.pl
 Makefile.old
 _Inline
 blib
+.gitignore
