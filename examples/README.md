@@ -4,7 +4,7 @@ To view the documentation for these, just use "perldoc".
 Also note, to exit these just use CTRL-C
 
 -----
-```
+
 * dump.pl        - A program that dumps important diagnostic data to a file
                    called, "dump.log".  Send this file as an email attachment
                    along with your explanation of the issue.  Note, it MUST be
@@ -13,8 +13,6 @@ Also note, to exit these just use CTRL-C
 * fonts.pl       - A program that just shows each system TrueType font.  It is
                    not too glamorous, but it shows Graphics::Framebuffer and
                    Imager is working.
-
-* mouse.pl       - [REMOVED]
 
 * primitives.pl  - A simple spam method of testing all of the module's screen-
                    specific operations.  It has a benchmark at the end.
@@ -43,4 +41,4 @@ Also note, to exit these just use CTRL-C
                    an example.
 
 * viewpic.pl     - Shows one image passed to it.
-```
+
