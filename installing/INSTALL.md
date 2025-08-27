@@ -18,7 +18,7 @@
   * Mario Roy has an excellent tutorial on enabling the Framebuffer on a
      CentOS system.  This may be helpful on other distributions as well:
 
-     https://github.com/marioroy/mce-examples/tree/master/framebuffer
+     [Mario Roy's Examples](https://github.com/marioroy/mce-examples/tree/master/framebuffer)
 
   * Raspberry PI Users!  Change the settings to use a 24/32 bit framebuffer.
      The PI defaults to 16 bit color and this module is much faster using
@@ -96,8 +96,11 @@ Change "username" with the username of your account
 
   Acquiring (use only one method):
   
-*  Use CPAN, run:  install Graphics::Framebuffer
-*  git clone https://github.com/richcsst/Graphics-Framebuffer.git
+*  Use CPAN, run (inside CPAN):
+
+       install Graphics::Framebuffer
+
+*  ```git clone https://github.com/richcsst/Graphics-Framebuffer.git```
 
        perl Makefile.PL
        make
