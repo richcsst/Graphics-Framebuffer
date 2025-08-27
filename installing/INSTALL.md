@@ -30,7 +30,7 @@
 
      sudo usermod -a -G video username
 
-     Change "username" with the username of your account
+Change "username" with the username of your account
 
 ## DETERMINE YOUR DISTRIBUTION
 
@@ -68,21 +68,20 @@
 
   For Debian based systems:
 
-*  installing/install-prerequisites-debian.sh
+    installing/install-prerequisites-debian.sh
 
   For RedHat based systems:
 
-*  installing/install-prerequesites-redhat.sh
+    installing/install-prerequesites-redhat.sh
 
   I have also included a script to detect the type of distribution you have.
   It's not 100% accurate, but usually works:
 
-*  detect.sh
+    detect.sh
 
   If you still are not sure, you can go to the following URL and your
   distribution should be there, with the type of core base it is:
 
-*  https://en.wikipedia.org/wiki/List_of_Linux_distributions
 
   Pick the appropriate prerequisie script to run.
 
