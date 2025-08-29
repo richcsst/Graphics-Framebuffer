@@ -107,7 +107,83 @@ open(my $FILE,'>','lib/Graphics/Framebuffer.pm');
 print $FILE $template;
 close($FILE);
 print colored(['bright_green'],'Complete'),"\n\n";
-print $blink,colored(['black on_bright_white'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE BELOW FOR ANY MISSING MODULES ')),"\n";
+print colored(['black on_cyan'],$line),"\n";
+
+my $message;
+if ($COLS <= 185) {
+	print "The ",'"', colored(['bold green'],'examples'), qq{" directory has some handy scripts to help get you started, and\nshow you how to use the module.  Just "} . colored(['bold green'],'perldoc') . qq{" on each to see how to use\nthem:};
+    $message = qq{
+------------------------------------------------------------------------------
+primitives.pl          - This script will pretty much demonstrate all of
+                         the capabilities of this module.
+slideshow.pl           - This script shows all of the images in a specific
+                         path (full screen, if asked).
+viewpic.pl             - This script shows one specific image (or animation).
+dump.pl                - This script does a diagnostic variable dump to the
+                         file 'dump.log', for the author to help you with
+                         troubleshooting.
+fonts.pl               - This script prints installed font names.
+text_mode.pl           - A rescue script to force the tty into text mode.
+template.pl            - A skeleton single-tasking script shell for you to use
+                         as as template.  Do not edit this, but instead copy
+                         it.
+----------------------------- MULTIPROCESSING --------------------------------
+threaded_primitives.pl - A threaded version of the above.  It can make a mess
+                         of the screen.  Requires Sys::CPU.
+threaded_slideshow.pl  - This script shows all of the images in a specific
+                         path.  It divides your screen by how many threads,
+                         and dedicates each to show an image.  Requires
+                         Sys::CPU.
+threaded_template.pl   - Like the above, but for threading.  Requires
+                         Sys::CPU
+get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate
+                         threading method using only one instance of GFB)
+};
+} else {
+	$pad = int(($COLS - 21)/2);
+	my $mult = '-' x $pad . '-- MULTIPROCESSING --' . '-' x $pad;
+	print "The ",'"', colored(['bold green'],'examples'), qq{" directory has some handy scripts to help get you started, and show you how to use the module.  Just "} . colored(['bold green'],'perldoc') . qq{" on each to see how to use them:\n};
+    $message = '-' x $COLS . qq{
+primitives.pl          - This script will pretty much demonstrate all of the capabilities of this module.
+slideshow.pl           - This script shows all of the images in a specific path (full screen, if asked).
+viewpic.pl             - This script shows one specific image (or animation).
+dump.pl                - This script does a diagnostic variable dump to the file 'dump.log', for the author to help you with troubleshooting.
+fonts.pl               - This script prints installed font names.
+text_mode.pl           - A rescue script to force the tty into text mode.
+template.pl            - A skeleton single-tasking script shell for you to use as as template.  Do not edit this, but instead copy it.
+$mult
+threaded_primitives.pl - A threaded version of the above.  It can make a mess of the screen.  Requires "Sys::CPU".
+threaded_slideshow.pl  - This script shows all of the images in a specific path.  It divides your screen by how many threads, and dedicates each to show an image.  Requires "Sys::CPU".
+threaded_template.pl   - Like the above, but for threading.  Requires "Sys::CPU"
+get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate threading method using only one instance of a GFB object).  Requires "MCE::Hobo".
+};
+}
+
+foreach my $l (split(/\n/,$message)) {
+	if ($l =~ /^(\S+pl|get-mce-demos)/) {
+		my $old = $1;
+		my $new = ($old =~ /template\.pl/) ? colored(['bright_cyan'],$old) : colored(['bold green'],$old);
+		$l =~ s/$old/$new/;
+	} elsif ($l =~ /^-------/) {
+		$l = colored(['bold cyan'],$l);
+	}
+	print "$l\n";
+}
+print colored(['black on_blue'],'-' x $COLS),"\n";
+
+unless (defined($ENV{'DISPLAY'})) {
+	print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'      make'),"\n";
+	print colored(['bright_white on_magenta'],' Testing     -> '),colored(['bright_green'],'      make')," test\n";
+	print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],' sudo '),colored(['bright_green'],'make')," install\n";
+	print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'      make')," veryclean\n";
+} else {
+	print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'               make'),"\n";
+	print colored(['bright_white on_magenta'],' Testing     -> '),colored(['red'],'GFB_IGNORE_X=1 '),colored(['bright_green'],'make')," test\n";
+	print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],'          sudo '),colored(['bright_green'],'make')," install\n";
+	print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'               make')," veryclean\n";
+}
+print colored(['black on_blue'],'-' x $COLS),"\n";
+# print $blink,colored(['black on_bright_white'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE BELOW FOR ANY MISSING MODULES ')),"\n";
 
 my $mm = WriteMakefile(
     NAME               => 'Graphics::Framebuffer',
@@ -142,84 +218,9 @@ my $mm = WriteMakefile(
     dist  => {COMPRESS => 'gzip -9f', SUFFIX => 'gz',},
     clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *.inl *log *bak *old'},
 );
-	print $blink,colored(['black on_bright_white'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE ABOVE FOR ANY MISSING MODULES ')),"\n";
-	sleep 1;
-	print colored(['black on_cyan'],$line),"\n";
+# print $blink,colored(['black on_bright_white'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE ABOVE FOR ANY MISSING MODULES ')),"\n";
 
-	my $message;
-	if ($COLS <= 185) {
-		print "The ",'"', colored(['bold green'],'examples'), qq{" directory has some handy scripts to help get you started, and\nshow you how to use the module.  Just "} . colored(['bold green'],'perldoc') . qq{" on each to see how to use\nthem:};
-        $message = qq{
-------------------------------------------------------------------------------
-primitives.pl          - This script will pretty much demonstrate all of
-                         the capabilities of this module.
-slideshow.pl           - This script shows all of the images in a specific
-                         path (full screen, if asked).
-viewpic.pl             - This script shows one specific image (or animation).
-dump.pl                - This script does a diagnostic variable dump to the
-                         file 'dump.log', for the author to help you with
-                         troubleshooting.
-fonts.pl               - This script prints installed font names.
-text_mode.pl           - A rescue script to force the tty into text mode.
-template.pl            - A skeleton single-tasking script shell for you to use
-                         as as template.  Do not edit this, but instead copy
-                         it.
------------------------------ MULTIPROCESSING --------------------------------
-threaded_primitives.pl - A threaded version of the above.  It can make a mess
-                         of the screen.  Requires Sys::CPU.
-threaded_slideshow.pl  - This script shows all of the images in a specific
-                         path.  It divides your screen by how many threads,
-                         and dedicates each to show an image.  Requires
-                         Sys::CPU.
-threaded_template.pl   - Like the above, but for threading.  Requires
-                         Sys::CPU
-get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate
-                         threading method using only one instance of GFB)
-};
-    } else {
-		$pad = int(($COLS - 21)/2);
-		my $mult = '-' x $pad . '-- MULTIPROCESSING --' . '-' x $pad;
-		print "The ",'"', colored(['bold green'],'examples'), qq{" directory has some handy scripts to help get you started, and show you how to use the module.  Just "} . colored(['bold green'],'perldoc') . qq{" on each to see how to use them:\n};
-        $message = '-' x $COLS . qq{
-primitives.pl          - This script will pretty much demonstrate all of the capabilities of this module.
-slideshow.pl           - This script shows all of the images in a specific path (full screen, if asked).
-viewpic.pl             - This script shows one specific image (or animation).
-dump.pl                - This script does a diagnostic variable dump to the file 'dump.log', for the author to help you with troubleshooting.
-fonts.pl               - This script prints installed font names.
-text_mode.pl           - A rescue script to force the tty into text mode.
-template.pl            - A skeleton single-tasking script shell for you to use as as template.  Do not edit this, but instead copy it.
-$mult
-threaded_primitives.pl - A threaded version of the above.  It can make a mess of the screen.  Requires "Sys::CPU".
-threaded_slideshow.pl  - This script shows all of the images in a specific path.  It divides your screen by how many threads, and dedicates each to show an image.  Requires "Sys::CPU".
-threaded_template.pl   - Like the above, but for threading.  Requires "Sys::CPU"
-get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate threading method using only one instance of a GFB object).  Requires "MCE::Hobo".
-};
-    }
-
-    foreach my $l (split(/\n/,$message)) {
-		if ($l =~ /^(\S+pl|get-mce-demos)/) {
-			my $old = $1;
-			my $new = ($old =~ /template\.pl/) ? colored(['bright_cyan'],$old) : colored(['bold green'],$old);
-			$l =~ s/$old/$new/;
-		} elsif ($l =~ /^-------/) {
-			$l = colored(['bold cyan'],$l);
-		}
-		print "$l\n";
-	}
-    print colored(['black on_blue'],'-' x $COLS),"\n";
-
-    unless (defined($ENV{'DISPLAY'})) {
-		print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'      make'),"\n";
-		print colored(['bright_white on_magenta'],' Testing     -> '),colored(['bright_green'],'      make')," test\n";
-		print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],' sudo '),colored(['bright_green'],'make')," install\n";
-		print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'      make')," veryclean\n";
-	} else {
-		print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'               make'),"\n";
-		print colored(['bright_white on_magenta'],' Testing     -> '),colored(['red'],'GFB_IGNORE_X=1 '),colored(['bright_green'],'make')," test\n";
-		print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],'          sudo '),colored(['bright_green'],'make')," install\n";
-		print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'               make')," veryclean\n";
-	}
-    exit(0);
+exit(0);
 
 sub slurp_file {
     my $file = shift;
