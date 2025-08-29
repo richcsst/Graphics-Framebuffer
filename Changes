@@ -1733,3 +1733,7 @@ Revision history for Graphics-Framebuffer
        Added various markdown documentation changes to many files.
 
        Cleaned up some unneeded extra files.
+
+6.69   Aug 28, 2025
+
+       Some CPAN testers complain about fatal on Makefile.PL, so I removed it.
