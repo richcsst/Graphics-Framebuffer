@@ -7,19 +7,25 @@ use constant {
     TRUE  => 1,
     FALSE => 0,
 };
+
 # These should be in Perl's installation already
 use Config;
 use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
 use Term::ReadKey;
 use Term::ANSIColor;
 
+# use Data::Dumper::Simple;$Data::Dumper::Terse=TRUE;$Data::Dumper::Indent=TRUE;$Data::Dumper::Useqq=TRUE;$Data::Dumper::Deparse=TRUE;$Data::Dumper::Quotekeys=TRUE;$Data::Dumper::Trailingcomma=TRUE;$Data::Dumper::Sortkeys=TRUE;$Data::Dumper::Purity=TRUE;$Data::Dumper::Deparse=TRUE;
+
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 my $pmt = 'Y';
 my $pad = int(($COLS - 23)/2);
 my $line = '-' x $pad . ' Graphics::Framebuffer ' . '-' x $pad;
-if (-e 'Makefile') {
-	`make veryclean;reset`;
+
+if (-e 'Makefile') { # We need a clean slate;
+	exec('make veryclean;reset;perl Makefile.PL');
 }
+
+my $blink = chr(27) . '[5m';
 # Graphics::Framebuffer
 my $banner = slurp_file('examples/banner.vt');
 print $banner;
@@ -100,9 +106,10 @@ print colored(['bright_white'],'Framebuffer.pm Modification'), ' ... ';
 open(my $FILE,'>','lib/Graphics/Framebuffer.pm');
 print $FILE $template;
 close($FILE);
-print colored(['bright_green'],'Complete'),"\n";
+print colored(['bright_green'],'Complete'),"\n\n";
+print $blink,colored(['black on_bright_white'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE BELOW FOR ANY MISSING MODULES ')),"\n";
 
-if (WriteMakefile(
+my $mm = WriteMakefile(
     NAME               => 'Graphics::Framebuffer',
     AUTHOR             => $Eml,
     VERSION_FROM       => 'lib/Graphics/Framebuffer.pm',
@@ -133,8 +140,10 @@ if (WriteMakefile(
         'Pod::Usage'         => '0',
     },
     dist  => {COMPRESS => 'gzip -9f', SUFFIX => 'gz',},
-    clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *log *bak *old'},
-)) {
+    clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *.inl *log *bak *old'},
+);
+	print $blink,colored(['black on_bright_white'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE ABOVE FOR ANY MISSING MODULES ')),"\n";
+	sleep 1;
 	print colored(['black on_cyan'],$line),"\n";
 
 	my $message;
@@ -211,10 +220,6 @@ get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate thr
 		print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'               make')," veryclean\n";
 	}
     exit(0);
-} else {
-	print colored(['red'],'Missing prerequisites'), "\n";
-}
-exit(1);
 
 sub slurp_file {
     my $file = shift;
