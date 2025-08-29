@@ -1,10 +1,11 @@
-# 6.68:Aug 27, 2025:Richard Kelsch <rich@rk-internet.com>
+# 6.69:Aug 28, 2025:Richard Kelsch <rich@rk-internet.com>
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
 #  Copyright 2017 - 2025 Richard Kelsch
 ## TEMPCOPYRIGHT ##
 
+# Only POD is utf-8.
 =encoding utf8
 
 =head1 NAME
