@@ -2031,6 +2031,7 @@ void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, un
     unsigned char b;
     unsigned char m;
     unsigned short rgb565;
+    unsigned char rgb8;
 
     for (idx = 0; idx < size; idx += bytes_per_pixel) {
         switch (bits_per_pixel) {
