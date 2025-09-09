@@ -19,7 +19,7 @@ use Term::ANSIColor;
 # This block can have issues on FreeBSD
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 $COLS = 80 if ($COLS < 80);
-$ROWS = 25 if (ROWS < 25);
+$ROWS = 25 if ($ROWS < 25);
 my $pmt = 'Y';
 my $pad = int(($COLS - 23)/2);
 my $line = '-' x $pad . ' Graphics::Framebuffer ' . '-' x $pad;
