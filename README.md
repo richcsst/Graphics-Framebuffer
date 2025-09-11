@@ -96,7 +96,7 @@ This module, suprisingly, runs on a variety of hardware with accessible framebuf
 
 Some lower clocked ARM devices may be too slow for practical use of all of the methods in this module, but the best way to find out is to run ```examples/primitives.pl``` to see which are fast enough to use.
 
-Here's what I have tested this module on (all 1920x1080x32):
+Here's what I have tested this module on (all at least 1920x1080x32):
 
 * **Raspberry PI2/3** - Tollerable, I did 16 bit mode testing and coding on this machine.  Using a Perlbrew custom compiled Perl helps a bit.  The Raspberry PI are configured, by default, to be in 16 bit graphics mode.  This is not the best mode if you are going to be loading images or rendering TrueType text, as color space conversions can take a long time (with acceleration off).  Overall, 32 bit mode works best on this machine, especially for image loading and text rendering.  This performance limitation can, however, be minimized using the C acceleration features, if you still wish to use the 16 bit display mode.
 
