@@ -78,7 +78,7 @@ do {
 		$FB->plot({'x' => $x, 'y' => $y});
 		last if (defined ($key = ReadKey(-1)));
 	}
-} until (defined($key) && uc($key) eq 'Q');
+} until (defined($key) && uc($key) eq 'Q' || $key eq chr(3));
 ReadMode 0;
 ##############################################################################
 
