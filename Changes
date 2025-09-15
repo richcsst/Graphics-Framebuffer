@@ -4,18 +4,17 @@ Change log for Graphics::Framebuffer
 
        Added more code for FreeBSD compatibility.  It will still likely not
        work, but it's getting there.  I am no FreeBSD user and FreeBSD is
-       what would happen if Ikea sold an operating system.
+       what would happen if Ikea made an operating system.
 
+       Changed the "Changes" file format to most recent first.
 
 6.73   Sep 10, 2025
 
        Added further warnings about attempting to install on FreeBSD.
 
-
 6.72   Sep 9, 2025
 
        Made changes to help with building on FreeBSD.
-
 
 6.71   Aug 29, 2025
 
@@ -25,7 +24,6 @@ Change log for Graphics::Framebuffer
        Made some additions to the C code to eventually make way for 8 bit
        (monochrome VGA) mode.  Oddly enough, the C code will be ready before
        the Perl code.
-
 
 6.70   Aug 29, 2025
 
@@ -38,11 +36,9 @@ Change log for Graphics::Framebuffer
        Reorganized the flow of "Makefile.PL" to make CPAN testers happy.
        Frankly, I agree with them.
 
-
 6.69   Aug 28, 2025
 
        Some CPAN testers complain about fatal on Makefile.PL, so I removed it.
-
 
 6.68   Aug 27, 2025
 
@@ -50,13 +46,11 @@ Change log for Graphics::Framebuffer
 
        Cleaned up some unneeded extra files.
 
-
 6.67   Aug 27, 2025
 
        Simplified test script.
 
        Added screen restore feature if RESET is off.
-
 
 6.66   Aug 26, 2025
 
@@ -64,18 +58,15 @@ Change log for Graphics::Framebuffer
        Improved the help options of various examples scripts.  Added 'raw'
        option to color replacement routines.
 
-
 6.65   Aug 25, 2025
 
        Improved the documentation options for examples/primitives
 
        Added a new script to the "examples" directory called "shapes.pl"
 
-
 6.64   Aug 19, 2025
 
        Added Moire to primitives.pl
-
 
 6.63   Jul 16, 2025
 
@@ -87,13 +78,11 @@ Change log for Graphics::Framebuffer
 
        Test script improved.
 
-
 6.62   Jun 19, 2025
 
        Minor changes to threaded Perl detection in Makefile.PL
 
        Diagnostic script "dump.pl" bugs fixed.
-
 
 6.61   July 10, 2024
 
@@ -107,13 +96,11 @@ Change log for Graphics::Framebuffer
        As a reminder, the option "IGNORE_X_WINDOWS" => 1 is available for
        when creating a GFB object.
 
-
 6.60   Jun 10, 2024
 
        More aliased commands added to cater to taste.
 
        Documentation updated and improved, typos corrected.
-
 
 6.59   Jan 18, 2024
 
@@ -121,13 +108,11 @@ Change log for Graphics::Framebuffer
 
        Added missing font documentation
 
-
 6.58   Nov 16, 2023
 
        Improved the Makefile.PL script
 
        Tests completely revamped
-
 
 6.57   Oct 29, 2023
 
@@ -136,7 +121,6 @@ Change log for Graphics::Framebuffer
           
        Added a better explanation of the 'make test' process and the caveats
        of perl versus C accelerated operation.
-
 
 6.56   Oct 08, 2023
 
@@ -168,7 +152,6 @@ Change log for Graphics::Framebuffer
        easy to diagnose bus errors.  It sets an artificial 320x200 screen.
        It's a shortcut for "--x=320 --y=200".
 
-
 6.55   Sep 11, 2023
 
        Eliminated META.* files in the MANIFEST to avoid versioning issues.
@@ -176,12 +159,10 @@ Change log for Graphics::Framebuffer
        Made additions and corrections to all external text files and
        documentation.
 
-
 6.54   Aug 29, 2023
 
        Update to "Makefile.PL" for easier to read output.  Also improved
        pre-processing.
-
 
 6.52   Jul 12, 2023
 
@@ -190,7 +171,6 @@ Change log for Graphics::Framebuffer
 
        Examples given extra option to ignore the X-Windows check
        " --ignore-x-windows "
-
 
 6.51   Apr 11, 2023
 
@@ -201,7 +181,6 @@ Change log for Graphics::Framebuffer
 
        Fixed YouTube link and description in documentation
 
-
 6.49   Jun 04, 2021
 
        Documentation modified to bring up-to-date.
@@ -211,39 +190,32 @@ Change log for Graphics::Framebuffer
 
        Sped up the Splash screen for Perl only drawing.
 
-
 6.48   Apr 14, 2020
 
        Pause was whining about the Makefile.PL script.  So it has been fixed
        to accommodate the whining.
-
 
 6.47   Apr 13, 2020
 
        Slight change to the example scripts.  Added a new "screensaver.pl"
        example script.
 
-
 6.46   Dec 10, 2019
 
        Fixed the prerequisite installation scripts.
-
 
 6.45   Dec 9, 2019
 
        More documentation updates and improved the installation instructions.
 
-
 6.43   Dec 3, 2019
 
        Made some documentation updates and fixed some examples
-
 
 6.42   Dec 1, 2019
 
        Apparently the CentOS/Redhat issue was not quite fixed.  This update
        addresses that.
-
 
 6.41   Nov 30, 2019
 
@@ -254,16 +226,13 @@ Change log for Graphics::Framebuffer
 
        Thank you Mario Roy for the heads-up on these issues.
 
-
 6.40   Nov 4, 2019
 
        Fixed some installation documentation related to installing.
 
-
 6.39   Nov 3, 2019
 
        Fixed a bug in anti-aliased lines introduced in 6.38
-
 
 6.38   Nov 2, 2019
 
@@ -276,7 +245,6 @@ Change log for Graphics::Framebuffer
 
        Changed how Splash and Mouse are exported.
 
-
 6.37   Oct 22, 2019
 
        Because $VERSION is no longer exported by default, the example scripts
@@ -288,7 +256,6 @@ Change log for Graphics::Framebuffer
 
        Removed a lot of "garbage" from the object that is created.
 
-
 6.36   Oct 7, 2019
 
        $VERSION is no longer exported.  This caused issues with other modules.
@@ -296,17 +263,14 @@ Change log for Graphics::Framebuffer
        Multiprocesssing examples now have been moved to their own directory in
        examples.
 
-
 6.35   Sept 9, 2019
 
        Yet another adventure in File::Map.  Now using the ":map" tag to import.
-
 
 6.34   Sept 9, 2019
 
        Issues with different versions of File::Map and exporting unmap.  The
        above changes incorporated, but an alternate method of unmap used.
-
 
 6.33   Sept 9, 2019
 
@@ -317,11 +281,9 @@ Change log for Graphics::Framebuffer
 
        README.md and README updated.
 
-
 6.32   Aug 25, 2019
 
        Adjusted the version numbers of the modules.
-
 
 6.31   Aug 24, 2019
 
@@ -336,28 +298,23 @@ Change log for Graphics::Framebuffer
        The Makefile.PL script has been improved, and now exits where there are
        missing prerequisites.
 
-
 6.30   Aug 11, 2019
 
        Many changes to the example scripts and documentation.
-
 
 6.29   July 17, 2019
 
        Fixed the threaded slideshow example script, as well as enabled the
        ability to show the filename.
 
-
 6.28   May 1, 2019
 
        Fixed an error in get_pixel and pixel methods.  "replace_color" was
        having issues and this was the cause.
 
-
 6.27   Apr 27, 2019
 
        Moved get_pixel and pixel to a more logical location for documentation
-
 
 6.26   Mar 15, 2019
 
@@ -366,7 +323,6 @@ Change log for Graphics::Framebuffer
 
        Also made attempts at making the "_console" methods workable... they're
        flakey still.
-
 
 6.25   Mar 14, 2019
 
@@ -394,7 +350,6 @@ Change log for Graphics::Framebuffer
        Added a new "examples/mouse.pl" script to demonstrate the mouse.  Like I
        said, it is rudimentary.
 
-
 6.24   Mar 13, 2019
 
        Some minor changes to the C routines to make stack operations more
@@ -407,7 +362,6 @@ Change log for Graphics::Framebuffer
 
        The Makefile.PL was updated.
 
-
 6.23   Feb 28, 2019
 
        Numerous bug fixes and optimizations for 16 bit color mode.
@@ -417,7 +371,6 @@ Change log for Graphics::Framebuffer
        Example scripts have been adapted to handle the fixes in 16 bit mode.
        Previously broken 16 bit code was bypassed, but now it works just like
        the 24/32 bit routines.
-
 
 6.22   Feb 20, 2019
 
@@ -432,7 +385,6 @@ Change log for Graphics::Framebuffer
        Some issues still with 16 bit mode on texture or patterned filled
        objects.  Temporarily turning off C acceleration for those may minimize
        some of the issues.
-
 
 6.21   Feb 20, 2019
 
@@ -452,11 +404,9 @@ Change log for Graphics::Framebuffer
        Fixes to compensate for the incorrect Imager compass coordinates for
        pies.  Imager was skewing them by 90 degrees for some reason.
 
-
 6.20   Feb 10, 2019
 
        Fixed a code typo and updated the module's POD.
-
 
 6.19   Feb 09, 2019
 
@@ -470,12 +420,10 @@ Change log for Graphics::Framebuffer
 
        Downgraded the testing requirements a bit.
 
-
 6.18   Jan 30, 2019
 
        Holy smokes!  The META files weren't updating.  No wonder some people
        were having prerequisite issues.
-
 
 6.17   Jan 30, 2019
 
@@ -494,12 +442,10 @@ Change log for Graphics::Framebuffer
        All sample scripts have been modified to accommodate the new changes,
        including the template script.
 
-
 6.16   Jan 30, 2019
 
        Improvements to image animation in the module and in the examples
        scripts.  Some errors were accounted for.
-
 
 6.15   Jan 20, 2019
 
@@ -509,7 +455,6 @@ Change log for Graphics::Framebuffer
        Nouveau devices.
 
        Minor changes to the double buffer setup of the test scripts.
-
 
 6.14   Jan 15, 2019
 
@@ -532,14 +477,12 @@ Change log for Graphics::Framebuffer
        test script given double buffering for 16 bit displays.  This doesn't
        affect 32 bit displays.
 
-
 6.13   Jan 10, 2019
 
        Changes to the splash screen.
 
        Changes to the C plotting routines to make way for 1 bit graphics (not
        yet implemented).
-
 
 6.12   Jan 08, 2019
 
@@ -552,20 +495,18 @@ Change log for Graphics::Framebuffer
        They do now, and should better run on Raspberry Pi machines if still in
        16 bit color mode.
 
-
 6.11   Dec 23, 2018
 
        *** DO NOT USE THIS VERSION.  IT'S BROKEN ***
 
-       I consolidated a lot of Perl and C code to make things for efficient and
-       to make more sense (in the source code).  Blitting and converting for
-       example.
+       I consolidated a lot of Perl and C code to make things more efficient
+	   and to make more sense (in the source code).  Blitting and converting
+	   for example.
 
        Modified the code to recognize pixel bit size instead of byte size.  I
        did this to make ready for adding single bit pixel sizes (for monochrome
        screens).  Someone asked if the module was capable of working in
        single bit monochrome, and currently it does not, but will be soon!
-
 
 6.10   May 14, 2018
 
@@ -577,18 +518,15 @@ Change log for Graphics::Framebuffer
        The 32 bit alpha routines have been optimized, and by optimized, I mean
        REALLY optimized.  They are considerably faster than they were before.
 
-
 6.09   April 6, 2018
 
        Installation instructions update.
-
 
 6.08   March 31, 2018
 
        Added some code to gather more information about the framebuffer and GPU.
 
        Fixes to the example scripts.
-
 
 6.07   March 31, 2018
 
@@ -604,7 +542,6 @@ Change log for Graphics::Framebuffer
        Also fixed "slideshow.pl" as that seemed to be broken.  It no longer uses
        threads.  It didn't need them.
 
-
 6.06   March 31, 2018
 
        Moved C routines out of the Perl code and into its own file
@@ -617,13 +554,11 @@ Change log for Graphics::Framebuffer
        Moved text around a bit for Makefile.PL for easier following on small
        screens.
 
-
 6.05   March 30, 2018
 
        Fixed crashes for Intel GPUs (and perhaps others)
        
        Updated documentation to help with troubleshooting.
-
 
 6.04   March 10, 2018
 
@@ -634,7 +569,6 @@ Change log for Graphics::Framebuffer
 
        Modified some of the examples scripts to work with switches.
 
-
 6.03   December 21, 2016
 
        Added runtime diagnostics to more easily diagnose failures.
@@ -643,7 +577,6 @@ Change log for Graphics::Framebuffer
 
        Runtime diagnostics ALWAYS are shown if there are catastrophic
        failures.
-
 
 6.02   October 25, 2016
 
@@ -655,7 +588,6 @@ Change log for Graphics::Framebuffer
        Lowered the Inline pre-requisite version requirement to 0.53.
 
        Caught a few bugs relating to gradients in circle and rounded boxes.
-
 
 6.01   October 15, 2016
 
@@ -673,7 +605,6 @@ Change log for Graphics::Framebuffer
 
        Changed the splash screen to better demonstrate most capabilities. 
 
-
 6.00   October 10, 2016
 
        Version jump because of major build change.
@@ -682,7 +613,6 @@ Change log for Graphics::Framebuffer
        an XS module.
 
        FILE_MODE has been completely removed.
-
 
 5.96   September 29, 2016
 
@@ -695,7 +625,6 @@ Change log for Graphics::Framebuffer
        won't break your code.
 
        Detecting the current console is up to you now.  I suggest "fgconsole".
-
 
 5.95   September 29, 2016
 
@@ -714,7 +643,6 @@ Change log for Graphics::Framebuffer
 
        THIS RELEASE WAS PULLED
 
-
 5.94   September 20, 2016
 
        Added "RESET" parameter for initialization.  As part of this, it
@@ -727,7 +655,6 @@ Change log for Graphics::Framebuffer
 
        Some improvements to documentation as well.
 
-
 5.93   July 21, 2016
 
        Fixed a bug in GPU identification, and added "Virtual Framebuffer"
@@ -738,11 +665,9 @@ Change log for Graphics::Framebuffer
        Modified "examples/primitives.pl" to update the screen using alarm
        event for 16 bit displays.  It auto-adjusts for slow Raspberry PIs.
 
-
 5.92   July 18, 2016
 
        Made some changes to the examples.
-
 
 5.91   July 16, 2016
 
@@ -769,7 +694,6 @@ Change log for Graphics::Framebuffer
            force install Graphics::Framebuffer
 
        if you are installing using CPAN.
-
 
 5.90   July 09, 2016
 
@@ -810,24 +734,20 @@ Change log for Graphics::Framebuffer
        data that has been drawn to it.  So do all operations (drawing,
        loading, blitting, etc) on the virtual display.
 
-
 5.89   July 05, 2016
 
        NOT RELEASED
-
 
 5.88   July 04, 2016
 
        Fixed a bug in the C code "c_filled_circle" routine causing failure
        to compile on some systems.
 
-
 5.87   July 02, 2016
 
        Fixed the fill issues with all filled primitives.  It was basically
        anything that called the internal "_polygon_fill" routine that had
        troubles.
-
 
 5.86   July 01, 2016
 
@@ -843,7 +763,6 @@ Change log for Graphics::Framebuffer
 
        The "examples" scripts have also been tweaked.
 
-
 5.85   June 24, 2016
 
        It seems there are issues with the POSIX module not having the
@@ -852,14 +771,12 @@ Change log for Graphics::Framebuffer
 
        The 'examples/primitives.pl" script has been streamlined a bit.
 
-
 5.84   June 22, 2016
 
        Fixed "ttf_print" font positioning.  Corrected splash generation
        to compensate.  Centering fixed too.
        
        NOTE:  Older code will have to be adjusted
-
 
 5.83   June 19, 2016
 
@@ -870,18 +787,15 @@ Change log for Graphics::Framebuffer
 
        Modified "primitives.pl" sample script to reflect the changes.
 
-
 5.82   June 17, 2016
 
        Corrected the threaded perl checks.
 
        Tests reports failures much more clearly,
 
-
 5.81   June 15, 2016
 
        Fixed the auto-detection for Inline-C compiling ability
-
 
 5.80   June 04, 2016
 
@@ -891,7 +805,6 @@ Change log for Graphics::Framebuffer
 
        Install documentation improved.
 
-
 5.79   June 03, 2016
 
        Inline has been made optional and not a prerequisite, as I considered
@@ -900,7 +813,6 @@ Change log for Graphics::Framebuffer
 
        Texture flood fill on some systems had issues, ignoring borders.  This
        should be fixed.
-
 
 5.78   May 9, 2016
 
@@ -929,19 +841,16 @@ Change log for Graphics::Framebuffer
        tools.  When installing the Inline module, its installer will tell you
        what you need, if you are missing anything.
 
-
 5.77   April 27, 2016
 
        Some improvements to the build scripts.  Version checking was still
        too stringent.  I have loosened the requirements a bit.
-
 
 5.76   April 26, 2016
 
        Build.PL and Makefile.PL was detecting the wrong versions (it was
        changed in the previous version in my heated attempt it getting
        past bogus testing).
-
 
 5.75   April 26, 2016
 
@@ -953,7 +862,6 @@ Change log for Graphics::Framebuffer
        almost always report success, but your own eyes are your means of
        determining success or failure.  If you need help, then you can
        contact me via my CPAN contact address.  I will be happy to help you.
-
 
 5.74   April 26, 2016
 
@@ -972,7 +880,6 @@ Change log for Graphics::Framebuffer
               it's being run from it.
 
        Corrected a spelling error in test script 'primitives.pl'.
-
 
 5.73   April 24, 2016
 
@@ -1001,7 +908,6 @@ Change log for Graphics::Framebuffer
 
        New method "play_animation" plays animated GIFs loaded via the
        'load_image' method.
-
 
 5.72   April 15, 2006
 
@@ -1037,11 +943,9 @@ Change log for Graphics::Framebuffer
        considerably faster than "for (my $var;$var <= 100;$var++)".  Where
        possible, this change was made, and a noticeable change it was.
 
-
 5.71   April 15, 2016
 
        Oops, accidentally left a "use Carp" in there.  It's gone now.
-
 
 5.70   April 15, 2016
 
@@ -1068,47 +972,39 @@ Change log for Graphics::Framebuffer
        It didn't have issues before, but this is safer, and according to
        its documentation, it should be done.
 
-
 5.63   April 11, 2016
 
        Some speed optimizations.  Nothing major.
 
        Removed the "sys/ioctl.ph" require.  It just was too flakey.
 
-
 5.62   April 02, 2016
 
        Fixed the perl rotation code for 16 bit, but also added a switch to use
        it in other color depths via "perl_only".
 
-
 5.61   March 31, 2016
 
        Split splash code off to "Graphics::Framebuffer::Splash"
-
 
 5.60   March 20, 2016
 
        Added "sys/ioctl.ph" require.  Changed "screen_dump" to allow for JPEG
        etc.
 
-
 5.59   March 18, 2016
 
        Forgot to document the updates
-
 
 5.58   March 18, 2016
 
        Added method "which_console".  This method returns the current active
        console and the console when started.
 
-
 5.57   January 28, 2016
 
        The method "screen_dimensions" was incorrectly returning the virtual
        resolution instead of the actual.
-
 
 5.56   October 05, 2015
 
@@ -1127,7 +1023,6 @@ Change log for Graphics::Framebuffer
        The method 'ttf_print' now has a 'wscale' parameter for scaling the
        width of the text.
 
-
 5.55   October 03, 2015
 
        Renamed a few color conversion methods.  Anything mentioning "RGB",
@@ -1139,7 +1034,6 @@ Change log for Graphics::Framebuffer
 
        Some documentation additions.  System variables are listed.
 
-
 5.54   October 02, 2015
 
        Added the ability to merge a smaller graphic on top of a larger one
@@ -1150,7 +1044,6 @@ Change log for Graphics::Framebuffer
        MASK, UNMASK modes and the faster alternative "blit_transform" with
        "merge".
 
-
 5.53   September 30, 2015
 
        Made 16 bit monochrome work a bit better.  It's not perfect and
@@ -1158,7 +1051,6 @@ Change log for Graphics::Framebuffer
 
        "primitives.pl" in the "examples" directory adapts for Raspberry PIs
        to prevent tests that take too long.
-
 
 5.52   September 27, 2015
 
@@ -1169,11 +1061,9 @@ Change log for Graphics::Framebuffer
 
        Added the YouTube channel to the README and POD manual.
 
-
 5.51   September 25, 2015
 
        Fixed manifying POD weirdness for TODO
-
 
 5.50   September 25, 2015
 
@@ -1190,7 +1080,6 @@ Change log for Graphics::Framebuffer
 
        Minor changes to the splash screen.
 
-
 5.49   September 23, 2015
 
        Some code optimization and documentation improvements
@@ -1200,7 +1089,6 @@ Change log for Graphics::Framebuffer
 
        Build.PL was broken.  I'm surprised nobody notified me of this.  It
        is fixed now.
-
 
 5.48   September 21, 2015
 
@@ -1217,7 +1105,6 @@ Change log for Graphics::Framebuffer
        I have also shrunk down the "MASK" and "UNMASK" graphics sizes to
        save some time in their rendered output, as they can be SLOOOW,
        especially on a Raspberry PI.
-
 
 5.47   September 19, 2015
 
@@ -1236,7 +1123,6 @@ Change log for Graphics::Framebuffer
        The method "get_font_face" has been fixed, as it wasn't working as
        documented.
 
-
 5.46   September 19. 2015
 
        I left "use threads" in when it was no longer needed.  I had been
@@ -1244,7 +1130,6 @@ Change log for Graphics::Framebuffer
        those lines when I trashed the idea.
 
        Also "use Config" was removed as well.  It was used previously in "new"
-
 
 5.45   September 18, 2015
 
@@ -1256,12 +1141,10 @@ Change log for Graphics::Framebuffer
        Note, alpha only works for 32 bit mode.  This parameter does nothing
        in 24 and 16 bit screen modes.
 
-
 5.44   September 18, 2015
 
        Fixed a majorly annoying and long-term clipping bug with blit_write.
        This was causing corruption and over drawing for horizontal gradients.
-
 
 5.43   September 16, 2015
 
@@ -1279,7 +1162,6 @@ Change log for Graphics::Framebuffer
        splash screen, it works and is properly tested, sufficiently for
        installing.
 
-
 5.42   September 14, 2015
 
        Fixed incorrect color mapping for horizontal gradient fills in 16 bit
@@ -1290,7 +1172,6 @@ Change log for Graphics::Framebuffer
        Changed how images are loaded for very low resolution screens in
        "primitives.pl".
 
-
 5.41   September 05, 2015
 
        Fixed the animated GIF rendering issue with transparency.  No more
@@ -1298,7 +1179,6 @@ Change log for Graphics::Framebuffer
 
        Changed example scripts. Added more images with different
        characteristics.
-
 
 5.40   September 03, 2015
 
@@ -1308,11 +1188,9 @@ Change log for Graphics::Framebuffer
        need to check, as the first element needs to be defined anyway.
        This should make new Perls happy.
 
-
 5.39   September 03, 2015
 
        Fixed a time bug on primitives.pl that showed up on slow machines.
-
 
 5.38   September 03, 2015
 
@@ -1325,7 +1203,6 @@ Change log for Graphics::Framebuffer
 
        Update the "examples" scripts to show off new methods.
 
-
 5.37   August 31, 2015
 
        Fixed the 'angle_line' bug.  It just plain wasn't working right.  Now
@@ -1334,7 +1211,6 @@ Change log for Graphics::Framebuffer
        Added the 'last_plot' method to return the current X,Y cursor position.
 
        Added an 'angle_line' call to the "primitives.pl" script.
-
 
 5.36   August 29, 2015
 
@@ -1350,7 +1226,6 @@ Change log for Graphics::Framebuffer
        connected TFT devices actually work much faster in file handle mode
        instead of memory mapped mode (go figure).
 
-
 5.35   August 28, 2015
 
        Improved cursor show/hide in clear_screen/cls.
@@ -1358,14 +1233,12 @@ Change log for Graphics::Framebuffer
        Added more tests to primitives.pl.  Made slideshow.pl show on all
        framebuffer devices on the system automatically.
 
-
 5.34   August 26, 2015
 
        Horizontal gradients are now allowed (in addition to the vertical).  See
        the documentation for details.  Surprisingly, this draws faster on some
        primitives.  It's not perfect yet though.  Polygon fills seem to have
        some issues.
-
 
 5.33   August 26, 2015
 
@@ -1377,11 +1250,9 @@ Change log for Graphics::Framebuffer
        Added a disagnostics script call "dump.pl" in the "examples" directory.
        I may ask you to send me the output of this, if you contact me for help.
 
-
 5.32   August 25, 2015
 
        Fixed some typos
-
 
 5.31   August 25, 2015
 
@@ -1393,7 +1264,6 @@ Change log for Graphics::Framebuffer
        from CPAN can result in a useless Imager if the necessary libraries aren't
        present ahead of time.
 
-
 5.30   August 21, 2015
 
        'image_load' now allows you to define the type of scaling to use, if
@@ -1401,13 +1271,11 @@ Change log for Graphics::Framebuffer
 
        A few minor changes to the example scripts.
 
-
 5.29   August 20, 2015
 
        Documentation changes
 
        Improved a couple of the example scripts
-
 
 5.28   August 20, 2015
 
@@ -1416,22 +1284,18 @@ Change log for Graphics::Framebuffer
        points in a clockwise direction.  Keep that in mind and filled
        polygons will look great.
 
-
 5.27   August 19, 2015
 
        Fixed POD errors
-
 
 5.26   August 19, 2015
 
        Fixed image load routine.
 
-
 5.25   August 18, 2015
 
        Added assign colorspace ability to emulation mode.  No longer is it
        just RGB.  You can define it yourself.
-
 
 5.24   August 17, 2015
 
@@ -1441,25 +1305,21 @@ Change log for Graphics::Framebuffer
        must have been related to the buffering fixes for the graphics.  Doing
        a flush on STDOUT seems to have fixed it.
 
-
 5.23   August 16, 2015
 
        I fixed one last clipping bug in horizontal line drawing and the top
        of the screen.
-
 
 5.22   August 14, 2015
 
        I somehow reintroduced some clipping errors I had previously fixed.
        Well, those are fixed once again.
 
-
 5.21   August 14, 2015
 
        Modified clear_screen a bit.
 
        Made changes to the test and examples scripts.
-
 
 5.20   August 14, 2015
 
@@ -1481,12 +1341,10 @@ Change log for Graphics::Framebuffer
        crazy.  Fortunately, this doesn't affect speed, as I don't tell it to
        flush the buffer until after the entire primitive is drawn.
 
-
 5.19   August 13, 2015
 
        Replaced some for[each] loops with map for just that slight boost
        of speed.  Every optimization helps.
-
 
 5.18   August 13, 2015
 
@@ -1494,23 +1352,19 @@ Change log for Graphics::Framebuffer
 
        Modified the scripts to work with the images.
 
-
 5.17   August 13, 2015
 
        Removed MALI and LINE_PADDING parameters.
        
        Byte aligning helped figure out the driver paramenter structures.
 
-
 5.16   August 13, 2015
 
        Fixed color mapping for ttf_print
 
-
 5.15   August 12, 2015
 
        Added a real test pattern to image tests
-
 
 5.14   August 12, 2015
 
@@ -1525,14 +1379,12 @@ Change log for Graphics::Framebuffer
        you not reading the instructions!  I don't like receiving CPAN reporter
        errors when the error is not reading the instructions (wink wink).
 
-
 5.13   August 11, 2015
 
        More fixes to line drawing and blitting routines.
 
        Made test scripts completely resolution independent.  They should
        display sane graphics for even the smallest displays.
-
 
 5.12   August 11, 2015
 
@@ -1546,49 +1398,40 @@ Change log for Graphics::Framebuffer
        didn't work (duh).  Right now it's just turned off.  It requires
        Inline C code, and I am not prepared for that yet.
 
-
 5.11   August 10, 2015
 
        Fixed a POD error
 
-
 5.10   August 09, 2015
 
        Fixed a bug in xoffset calculations.
-
 
 5.09   August 09, 2015
 
        Updated the documentation.
 
        Updates to set_color and related methods
-       
 
 5.08   August 08, 2015
 
        Ugh, I left some debug code in one of the examples scripts.
 
-
 5.07   August 08, 2015
 
        Fixed the 32/24/16 bit conversions for image loading.
-
 
 5.06   August 08, 2015
 
        Documentation for 'load_image' was incorrect.  'load_image' returns
        a structure containing the image for display with 'blit_write'.
 
-
 5.05   August 08, 2015
 
        Fixed load_image, and added color remapping as well.
 
-
 5.04   August 06, 2015
 
        Optimized circles and boxes with rounded corners... by a lot.
-
 
 5.03   August 05, 2015
 
@@ -1609,7 +1452,6 @@ Change log for Graphics::Framebuffer
 
        Changed the examoples scripts to fall in line with the changes.
 
-
 5.02   August 03, 2015
 
        Discontinued "cubic_bezier' and replaced it with 'bezier'.  It was so
@@ -1622,7 +1464,6 @@ Change log for Graphics::Framebuffer
        Module prerequisites changed.
 
        Optimized rounded corner box drawing.
-
 
 5.01   August 03, 2015
 
@@ -1644,7 +1485,6 @@ Change log for Graphics::Framebuffer
        acceleration is used.  It also indicates which color order RGB are
        (look at the 'GFB' in the upper left circle, they are colored
        according your video card's order).
-
 
 5.00   July 31, 2015
 
@@ -1701,7 +1541,6 @@ Change log for Graphics::Framebuffer
 
        Please read the manual for info on the new additions.
 
-
 4.24   July 23, 2015
 
        Vertical Gradents for boxes, ellipses, circles, and polygons
@@ -1719,7 +1558,6 @@ Change log for Graphics::Framebuffer
        "unmask_mode".
 
        Added "angle_line" method for drawing lines at specific angles.
-
 
 4.23   July 21, 2015
 
@@ -1750,7 +1588,6 @@ Change log for Graphics::Framebuffer
        Oh, and blitcopy is hardware accelerated in normal mode only as
        well, if your video card supports it.
 
-
 4.22   July 21, 2015
 
        I added a new mode to the framebuffer engine.  Typically the module
@@ -1760,7 +1597,6 @@ Change log for Graphics::Framebuffer
        instead.  File handle mode is a little slower, so use this mode
        only if necessary.  See the manual for specifics.
 
-
 4.21   July 16, 2015
 
        Ugh, I left "Data::Dumper::Simple" in the previous version.  Build
@@ -1769,22 +1605,18 @@ Change log for Graphics::Framebuffer
        I try to leave out all debugging code to keep the module as fast as
        possible, but I missed this one.
 
-
 4.20   July 16, 2015
 
        Removed the harmless leftover SCREEN2 code.  Since that variable no
        longer existed, the code skips by it.
 
-
 4.19   July 16, 2015
 
        Fixed the POD errors on test.  I could swear I tested that.  Oh well.
 
-
 4.18   July 14, 2015
 
        Added new arc drawing methods.  See the POD docs (man) for details.
-
 
 4.17   July 14, 2015
 
@@ -1796,7 +1628,6 @@ Change log for Graphics::Framebuffer
        
        Added the constants 'ARC', 'PIE', and 'POLY_ARC' to make drawing arcs
        easier to code.
-
 
 4.16   July 14, 2015
 
@@ -1824,7 +1655,6 @@ Change log for Graphics::Framebuffer
 
        Documentation has been updated / fixed where appropriate.
 
-
 4.15   July 07, 2015
 
        Optimizations!
@@ -1834,12 +1664,10 @@ Change log for Graphics::Framebuffer
        drawn before.  Which makes it quite faster (although still not a speed
        demon).
 
-
 4.14   July 07, 2015
 
        Fixed borked plot test.  Functionality of the module is fine.  The test
        was broken.
-
 
 4.13   July 06, 2015
 
@@ -1854,7 +1682,6 @@ Change log for Graphics::Framebuffer
 
        There are some minor optimizations, although likely not obvious.
 
-
 4.12   July 05, 2015
 
        Minor POD fix
@@ -1863,7 +1690,6 @@ Change log for Graphics::Framebuffer
        have worked fine if installed.
 
        No new functionality in this release, just that one issue fixed.
-
 
 4.11   July 03, 2015
 
@@ -1889,7 +1715,6 @@ Change log for Graphics::Framebuffer
        Circle/ellipse clipping weirdness remains.  I should have that addressed
        in the next release.
 
-
 4.10   May 10, 2015
 
        Added the ability to customize the framebuffer file path.
@@ -1899,7 +1724,6 @@ Change log for Graphics::Framebuffer
 
        Some minor documentation fixes.
 
-
 4.09   November 26, 2014
 
        Added more FBIOCTL flags to make ready for future hardware
@@ -1908,12 +1732,10 @@ Change log for Graphics::Framebuffer
        
        Also fixed a code comment that was mislabeled.
 
-
 4.08   July 25, 2014
 
        Added additional information to the documentation for the new
        emulation mode.  No actual code changes made.
-
 
 4.07   July 23, 2014
 
@@ -1926,7 +1748,6 @@ Change log for Graphics::Framebuffer
 
        Added more tests for most used methods.
 
-
 4.06   July 19, 2014
 
        Added better testing
@@ -1934,23 +1755,19 @@ Change log for Graphics::Framebuffer
        Added framebuffer emulation mode for test running on systems
        without a hardware framebuffer.  It draws to a 640x480x32
        virtual screen in memory.  You can dump this screen to a file.
-       
 
 4.05   April 14, 2014
 
        Documentation updates.  POD section revamped.
 
-
 4.03   March 20, 2014
 
        Minor changes to the CPAN package
-
 
 4.02   Dec 29, 2013
 
        Public CPAN release.  This is considerably more advanced
        than the one distributed as part of the media player.
-
 
 1.00   2004
 
