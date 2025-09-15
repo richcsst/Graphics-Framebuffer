@@ -16,7 +16,7 @@ use Pod::Usage;
 # use Data::Dumper;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
 BEGIN {
-    our $VERSION = '6.06';
+    our $VERSION = '6.07';
 }
 
 our $F;
@@ -72,9 +72,9 @@ our @ANIM;
 our $STAMP = sprintf('%.1', time);
 
 if (defined($new_x)) {
-    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => FALSE, 'IGNORE_X_WINDOWS' => $ignore_x);
+    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
 } else {
-    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => FALSE, 'IGNORE_X_WINDOWS' => $ignore_x);
+    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
 }
 $SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = $SIG{'HUP'} = $SIG{'TERM'} = sub { eval { $F->text_mode(); exec('reset'); }; };
 
@@ -162,6 +162,7 @@ $F->cls();
 
 ##################################
 my %func = (
+	'Drop'                              => sub { drop(shift); },
     'Color Mapping'                     => sub { color_mapping(shift); },
     'Plotting'                          => sub { plotting(shift); },
     'Lines'                             => sub { lines(shift, 0); },
@@ -251,6 +252,7 @@ if (defined($show_func)) {
         'Arcs',
         'Poly Arcs',
         'Beziers',
+		'Drop',
         'Filled Boxes',
         'Filled Rounded Boxes',
         'Filled Circles',
@@ -331,6 +333,38 @@ $F->cls('ON');
 undef($F);
 
 exit(0);
+
+sub drop {
+	# Bases on some BASIC code I found on a Facebook group
+	my $name = shift;
+	print_it($F, $name);
+
+	my $xs = 3;
+	my $xp = $xs * 96;
+	my $xr = $xs * pi;
+	my $xf = $xr / $xp;
+	my $ys = 112;
+
+	for (my $zi=-64;$zi<=64;$zi++) {
+		my $zt = $zi * ($xp / 64);
+		my $zs = $zt * $zt;
+		my $xl = int(sqrt($xp * $xp - $zs) + 0.5);
+		for (my $xi=-($xl);$xi<=$xl;$xi++) {
+			my $xt = sqrt($xi * $xi + $zs) * $xf;
+			my $yy = (sin($xt) + sin($xt * 3) * 0.4) * $ys;
+			my $x1 = $xi + $zi + $screen_width / 2;
+			my $y1 = ($screen_height / 2) - $yy + $zi;
+			if ($F->acceleration()) {
+				$F->set_color({'alpha' => 255, 'red' => 255, 'green' => 255,'blue' => 0});
+			} else {
+				$F->set_color({'alpha' => 255, 'red' => 0, 'green' => 255,'blue' => 0});
+			}
+			$F->plot({'x' => $x1, 'y' => $y1});
+			$F->set_color({'red' => 0, 'green' => 0,'blue' => 0});
+			$F->line({'x' => $x1, 'y' => ($y1 + 1), 'xx' => $x1, 'yy' => (($screen_height / 2) + 205)});
+		}
+	}
+}
 
 sub color_mapping {
 	my $name = shift;
@@ -1615,7 +1649,7 @@ sub unmask_drawing {
 sub print_it {
     my $fb      = shift;
     my $message = shift;
-    my $color   = shift || 'FFFF00FF';
+    my $color   = shift || ($message =~ /Perl/) ? '00FF00FF' : 'FFFF00FF';
     my $bgcolor = shift || { 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 0 };
     my $noclear = shift || 0;
 

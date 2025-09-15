@@ -450,6 +450,7 @@ BEGIN {
       BRG
       GBR
       GRB
+	  pi
       CENTER_NONE
       CENTER_X
       CENTER_Y
