@@ -344,7 +344,7 @@ foreach my $name (@order) {
 		unless ($name =~ /^(Anti)/) {
 			$F->cls();
 			$F->acceleration(SOFTWARE);
-			$func{$name}->($name . ' -> Accelerated');
+			$func{$name}->($name . ' -> C Accelerated');
 			sleep $delay unless($name =~ /Plot|Lines|Poly|Boxes|Circles|Ellipses|Arcs|Beziers|Pies/);
 		}
     }
