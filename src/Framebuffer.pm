@@ -13,7 +13,7 @@ Graphics::Framebuffer - A Simple Framebuffer Graphics Library
 
 =head1 SYNOPSIS
 
-Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked for)
+Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked for, and I have the means to test it)
 
  use Graphics::Framebuffer;
 

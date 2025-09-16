@@ -73,9 +73,25 @@ our @ANIM;
 our $STAMP = sprintf('%.1', time);
 
 if (defined($new_x)) { # Ignore kernel structure and force a specific resolution
-    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
+    $F = Graphics::Framebuffer->new(
+		'FB_DEVICE'        => "/dev/fb$dev",
+		'SHOW_ERRORS'      => 0,
+		'SIMULATED_X'      => $new_x,
+		'SIMULATED_Y'      => $new_y,
+		'ACCELERATED'      => !$noaccel,
+		'SPLASH'           => 0,
+		'RESET'            => TRUE,
+		'IGNORE_X_WINDOWS' => $ignore_x,
+	);
 } else { # Adhere to the kernel structuter for the screen layout (normal usage)
-    $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
+    $F = Graphics::Framebuffer->new(
+		'FB_DEVICE'        => "/dev/fb$dev",
+		'SHOW_ERRORS'      => 0,
+		'ACCELERATED'      => !$noaccel,
+		'SPLASH'           => 0,
+		'RESET'            => TRUE,
+		'IGNORE_X_WINDOWS' => $ignore_x,
+	);
 }
 # Trap all means to end, and exit cleanly
 $SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = $SIG{'HUP'} = $SIG{'TERM'} = sub { eval { $F->text_mode(); exec('reset'); }; };
@@ -2488,9 +2504,7 @@ All Rights Reserved
 
 =head1 LICENSE
 
-GNU Public License Version 3.0
-
-* See the "LICENSE" file in the distribution for this license.
+Perl Artistic License
 
 This program must always be included as part of the Graphics::Framebuffer package.
 
