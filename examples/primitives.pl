@@ -13,25 +13,26 @@ use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
 use Pod::Usage;
 
+# Just for debugging and will cause a lot of overhead, hence why it is normally commented out.
 # use Data::Dumper;$Data::Dumper::Sortkeys=1; $Data::Dumper::Purity=1; $Data::Dumper::Deepcopy=1;
 
 BEGIN {
-    our $VERSION = '6.07';
+    our $VERSION = '6.08';
 }
 
 our $F;
 
 my $new_x;
 my $new_y;
-my $dev      = 0;
-my $psize    = 1;
-my $delay    = 3;
-my $noaccel  = FALSE;
-my $nosplash = FALSE;
-my $ignore_x = FALSE;
-my $small    = FALSE;
-my $help     = FALSE;
-my $man      = FALSE;
+my $dev      = 0;     # Framebuffer device
+my $psize    = 1;     # Pixel size
+my $delay    = 3;     # Delay in seconds
+my $noaccel  = FALSE; # Turn on/off C acceleration
+my $nosplash = FALSE; # Turn on/off the splash screen
+my $ignore_x = FALSE; # Ignore the check for X-Windows/Wayland
+my $small    = FALSE; # Force a small screen for debugging core dumps
+my $help     = FALSE; # Shows a brief help screen
+my $man      = FALSE; # Shows the full POD manual
 my $show_func;
 
 GetOptions(
@@ -49,11 +50,11 @@ GetOptions(
     'small'            => \$small,
 );
 
-pod2usage(1) if ($help);
-pod2usage(-exitval => 0, -verbose => 2) if ($man);
+pod2usage(1) if ($help); # Show brief help
+pod2usage(-exitval => 0, -verbose => 2) if ($man); # Show the full POD manual
 
 $noaccel = ($noaccel) ? 1 : 0;    # Only 1 or 0 please
-if ($small) {
+if ($small) { # force a centered 320x200 screen for core dump debugging
     $new_x = 320;
     $new_y = 200;
 }
@@ -71,29 +72,34 @@ our @IMAGES;
 our @ANIM;
 our $STAMP = sprintf('%.1', time);
 
-if (defined($new_x)) {
+if (defined($new_x)) { # Ignore kernel structure and force a specific resolution
     $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'SIMULATED_X' => $new_x, 'SIMULATED_Y' => $new_y, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
-} else {
+} else { # Adhere to the kernel structuter for the screen layout (normal usage)
     $F = Graphics::Framebuffer->new('FB_DEVICE' => "/dev/fb$dev", 'SHOW_ERRORS' => 0, 'ACCELERATED' => !$noaccel, 'SPLASH' => 0, 'RESET' => TRUE, 'IGNORE_X_WINDOWS' => $ignore_x);
 }
+# Trap all means to end, and exit cleanly
 $SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = $SIG{'HUP'} = $SIG{'TERM'} = sub { eval { $F->text_mode(); exec('reset'); }; };
 
-my $sinfo = $F->screen_dimensions();
-$F->cls('OFF');
+my $sinfo = $F->screen_dimensions(); # Get the screen demensions
+$F->cls('OFF'); # Clear the screen and turn off the cursor
 
 my $screen_width  = $sinfo->{'width'};
 my $screen_height = $sinfo->{'height'};
 
 # Everything is based on a 3840x2160 screen, but different resolutions
-# are mathematically scaled.
+# are mathematically scaled.  It's better to scale down than to scale up.
+
 my $xm = $screen_width / 3840;
 my $ym = $screen_height / 2160;
 
 my $XX = $screen_width;
 my $YY = $screen_height;
 
+# Determine the center point of the screen
 my $center_x = $F->{'X_CLIP'} + ($F->{'W_CLIP'} / 2);
 my $center_y = $F->{'Y_CLIP'} + ($F->{'H_CLIP'} / 2);
+# Some Raspberry Pis are very slow.  This detects them and allows the code to adjust.
+# Only those that are BCM2708 and BCM2709 are detected (the slow ones).
 my $rpi      = ($F->{'fscreeninfo'}->{'id'} =~ /BCM270(8|9)/i) ? TRUE : FALSE;
 
 $delay *= 3 if ($rpi);    # Older Raspberry PIs are sloooooow.  Let's give extra time for each test
@@ -103,16 +109,16 @@ if ($rpi) {
     sleep 3;
 }
 
-my $thread;
-
 print_it($F, ' ', '00FFFFFF');
 $F->{'SPLASH'} = $splash;
 $F->splash($Graphics::Framebuffer::VERSION) unless ($nosplash);
 
 my $DORKSMILE;
 
+# Pre-load the images
+
 foreach my $file (@files) {
-    next if ($file =~ /^\.+/ || $file =~ /Test/i || -d "$images_path/$file");
+    next if ($file =~ /^\.+/ || $file =~ /Test/i || -d "$images_path/$file"); # Ignore the test pattern and directories
 	if ($file =~ /\.gif$/i) {
 		print_it($F, "Loading Animation > $file", '00FFFFFF', undef, 1);
 		my $image;
@@ -159,6 +165,9 @@ foreach my $file (@files) {
 }
 
 $F->cls();
+
+# This is a hash calling each demo.  It typically just passes through the framebuffer object
+# The hash names are also used for the "--func=" option.
 
 ##################################
 my %func = (
@@ -233,10 +242,10 @@ my %func = (
 );
 
 my @order;
-if (defined($show_func)) {
+if (defined($show_func)) { # If the "--func" option is used, the they are run only
     @order = split(/,/, $show_func);
 } else {
-    @order = (
+    @order = ( # Define the order to run for each demo
         'Color Mapping',
         'Plotting',
         'Lines',
@@ -302,12 +311,13 @@ if (defined($show_func)) {
         'ALPHA Mode Drawing',
         'ADD Mode Drawing',
         'SUBTRACT Mode Drawing',
-#        'MULTIPLY Mode Drawing',
+#        'MULTIPLY Mode Drawing', # These are nuts and not really helpful
 #        'DIVIDE Mode Drawing',
         'Animated',
     );
 }
 
+# Each demo is run with and without C acceleration
 foreach my $name (@order) {
     if (exists($func{$name})) {
 		unless ($name =~ /^(Color Mapping|ADD|SUBTRACT|Rotate TrueType Fonts|TrueType|Flipping)/) {
@@ -326,11 +336,11 @@ foreach my $name (@order) {
 
 ##################################
 
-$F->clip_reset();
-$F->attribute_reset();
-$F->text_mode();
-$F->cls('ON');
-undef($F);
+$F->clip_reset();      # Turn off any clipping
+$F->attribute_reset(); # Reset attributes to their defaults
+$F->text_mode();       # Turn off graphics mode and restore text mode
+$F->cls('ON');         # Clear the screen and turn the cursor on
+undef($F);             # Destroy the framebuffer object
 
 exit(0);
 
@@ -355,18 +365,50 @@ sub drop {
 			my $x1 = $xi + $zi + $screen_width / 2;
 			my $y1 = ($screen_height / 2) - $yy + $zi;
 			if ($F->acceleration()) {
-				$F->set_color({'alpha' => 255, 'red' => 255, 'green' => 255,'blue' => 0});
+				$F->set_color(
+					{
+						'alpha' => 255,
+						'red'   => 255,
+						'green' => 255,
+						'blue'  => 0,
+					}
+				);
 			} else {
-				$F->set_color({'alpha' => 255, 'red' => 0, 'green' => 255,'blue' => 0});
+				$F->set_color(
+					{
+						'alpha' => 255,
+						'red'   => 0,
+						'green' => 255,
+						'blue'  => 0,
+					}
+				);
 			}
-			$F->plot({'x' => $x1, 'y' => $y1});
-			$F->set_color({'red' => 0, 'green' => 0,'blue' => 0});
-			$F->line({'x' => $x1, 'y' => ($y1 + 1), 'xx' => $x1, 'yy' => (($screen_height / 2) + 205)});
+			$F->plot(
+				{
+					'x' => $x1,
+					'y' => $y1,
+				}
+			);
+			$F->set_color(
+				{
+					'red'   => 0,
+					'green' => 0,
+					'blue'  => 0,
+				}
+			);
+			$F->line(
+				{
+					'x'  => $x1,
+					'y'  => ($y1 + 1),
+					'xx' => $x1,
+					'yy' => (($screen_height / 2) + 205),
+				}
+			);
 		}
 	}
 }
 
-sub color_mapping {
+sub color_mapping { # Shows Red-Green-Blue to see if color mapping is correct (in the proper order).
 	my $name = shift;
 	print_it($F, $name);
     $F->rbox(
@@ -430,8 +472,21 @@ sub plotting {
     while (time < $s) {
         my $x = int(rand($screen_width));
         my $y = int(rand($screen_height));
-        $F->set_color({ 'alpha' => 255, 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->plot({ 'x' => $x, 'y' => $y, 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'alpha' => 255,
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+			}
+		);
+        $F->plot(
+			{
+				'x'          => $x,
+				'y'          => $y,
+				'pixel_size' => $psize,
+			}
+		);
     }
 }
 
@@ -442,8 +497,24 @@ sub lines {
 	print_it($F, $name);
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->line({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xx' => int(rand($XX)), 'yy' => int(rand($YY)), 'antialiased' => $aa, 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->line(
+			{
+				'x'           => int(rand($XX)),
+				'y'           => int(rand($YY)),
+				'xx'          => int(rand($XX)),
+				'yy'          => int(rand($YY)),
+				'antialiased' => $aa,
+				'pixel_size'  => $psize,
+			}
+		);
     }
 } ## end sub lines
 
@@ -456,8 +527,24 @@ sub angle_lines {
     my $s     = time + $delay;
     my $angle = 0;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->angle_line({ 'x' => $center_x, 'y' => $center_y, 'radius' => int($F->{'H_CLIP'} / 2), 'angle' => $angle, 'antialiased' => $aa, 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->angle_line(
+			{
+				'x'           => $center_x,
+				'y'           => $center_y,
+				'radius'      => int($F->{'H_CLIP'} / 2),
+				'angle'       => $angle,
+				'antialiased' => $aa,
+				'pixel_size'  => $psize,
+			}
+		);
         $angle = ($F->acceleration()) ? $angle + .1 : $angle + 1;
         $angle -= 360 if ($angle >= 360);
     }
@@ -468,8 +555,23 @@ sub boxes {
 	print_it($F, $name);
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->box({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xx' => int(rand($XX)), 'yy' => int(rand($YY)), 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->box(
+			{
+				'x'          => int(rand($XX)),
+				'y'          => int(rand($YY)),
+				'xx'         => int(rand($XX)),
+				'yy'         => int(rand($YY)),
+				'pixel_size' => $psize,
+			}
+		);
     }
 }
 
@@ -478,8 +580,23 @@ sub filled_boxes {
 	print_it($F, $name);
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->box({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xx' => int(rand($XX)), 'yy' => int(rand($YY)), 'filled' => 1 });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->box(
+			{
+				'x'      => int(rand($XX)),
+				'y'      => int(rand($YY)),
+				'xx'     => int(rand($XX)),
+				'yy'     => int(rand($YY)),
+				'filled' => 1,
+			}
+		);
     }
 }
 
@@ -528,8 +645,22 @@ sub hatch_filled_boxes {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'alpha' => 255, 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->set_b_color({ 'alpha' => 255, 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
+        $F->set_color(
+			{
+				'alpha' => 255,
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+			}
+		);
+        $F->set_b_color(
+			{
+				'alpha' => 255,
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+			}
+		);
         my $x  = int(rand($XX));
         my $xx = int(rand($XX));
         my $y  = int(rand($YY));
@@ -578,8 +709,24 @@ sub rounded_boxes {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->box({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xx' => int(rand($XX)), 'yy' => int(rand($YY)), 'radius' => 4 + rand($XX / 16), 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->box(
+			{
+				'x'          => int(rand($XX)),
+				'y'          => int(rand($YY)),
+				'xx'         => int(rand($XX)),
+				'yy'         => int(rand($YY)),
+				'radius'     => 4 + rand($XX / 16),
+				'pixel_size' => $psize,
+			}
+		);
     }
 }
 
@@ -589,8 +736,22 @@ sub filled_rounded_boxes {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->box({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xx' => int(rand($XX)), 'yy' => int(rand($YY)), 'radius' => 4 + rand($XX / 16), 'filled' => 1 });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->box(
+			{
+				'x'      => int(rand($XX)),
+				'y'      => int(rand($YY)),
+				'xx'     => int(rand($XX)),
+				'yy'     => int(rand($YY)),
+				'radius' => 4 + rand($XX / 16),
+				'filled' => 1 });
     }
 }
 
@@ -600,9 +761,33 @@ sub hatch_filled_rounded_boxes {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->set_b_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->box({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xx' => int(rand($XX)), 'yy' => int(rand($YY)), 'radius' => 4 + rand($XX / 16), 'filled' => 1, 'hatch' => $HATCHES[int(rand(scalar(@HATCHES)))] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->set_b_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->box(
+			{
+				'x'      => int(rand($XX)),
+				'y'      => int(rand($YY)),
+				'xx'     => int(rand($XX)),
+				'yy'     => int(rand($YY)),
+				'radius' => 4 + rand($XX / 16),
+				'filled' => 1,
+				'hatch'  => $HATCHES[int(rand(scalar(@HATCHES)))],
+			}
+		);
     }
     $F->attribute_reset();
 }
@@ -673,8 +858,22 @@ sub circles {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->circle({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'          => int(rand($XX)),
+				'y'          => int(rand($YY)),
+				'radius'     => rand($center_y),
+				'pixel_size' => $psize,
+			}
+		);
     }
 }
 
@@ -684,8 +883,22 @@ sub filled_circles {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->circle({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'filled' => 1 });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'      => int(rand($XX)),
+				'y'      => int(rand($YY)),
+				'radius' => rand($center_y),
+				'filled' => 1,
+			}
+		);
     }
 }
 
@@ -695,9 +908,31 @@ sub hatch_filled_circles {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->set_b_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->circle({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'filled' => 1, 'hatch' => $HATCHES[int(rand(scalar(@HATCHES)))] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->set_b_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'      => int(rand($XX)),
+				'y'      => int(rand($YY)),
+				'radius' => rand($center_y),
+				'filled' => 1,
+				'hatch'  => $HATCHES[int(rand(scalar(@HATCHES)))],
+			}
+		);
     }
     $F->attribute_reset();
 }
@@ -709,8 +944,6 @@ sub gradient_circles {
 
     my $s = time + $delay;
     while (time < $s) {
-
-        #        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
         my $x     = int(rand($XX));
         my $r     = int(rand($center_y) + 20);
         my $w     = $r * 2;
@@ -762,8 +995,24 @@ sub arcs {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->arc({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'start_degrees' => rand(360), 'end_degrees' => rand(360), 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->arc(
+			{
+				'x'             => int(rand($XX)),
+				'y'             => int(rand($YY)),
+				'radius'        => rand($center_y),
+				'start_degrees' => rand(360),
+				'end_degrees'   => rand(360),
+				'pixel_size'    => $psize,
+			}
+		);
     }
 }
 
@@ -773,8 +1022,24 @@ sub poly_arcs {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->poly_arc({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'start_degrees' => rand(360), 'end_degrees' => rand(360), 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->poly_arc(
+			{
+				'x'             => int(rand($XX)),
+				'y'             => int(rand($YY)),
+				'radius'        => rand($center_y),
+				'start_degrees' => rand(360),
+				'end_degrees'   => rand(360),
+				'pixel_size'    => $psize,
+			}
+		);
     }
 }
 
@@ -784,8 +1049,23 @@ sub filled_pies {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->filled_pie({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'start_degrees' => rand(360), 'end_degrees' => rand(360) });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->filled_pie(
+			{
+				'x' => int(rand($XX)),
+				'y' => int(rand($YY)),
+				'radius' => rand($center_y),
+				'start_degrees' => rand(360),
+				'end_degrees' => rand(360),
+			}
+		);
     }
 }
 
@@ -795,9 +1075,32 @@ sub hatch_filled_pies {
 
     my $s = time + ($delay * 2);
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->set_b_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->filled_pie({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'radius' => rand($center_y), 'start_degrees' => rand(360), 'end_degrees' => rand(360), 'hatch' => $HATCHES[int(rand(scalar(@HATCHES)))] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->set_b_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->filled_pie(
+			{
+				'x'             => int(rand($XX)),
+				'y'             => int(rand($YY)),
+				'radius'        => rand($center_y),
+				'start_degrees' => rand(360),
+				'end_degrees'   => rand(360),
+				'hatch'         => $HATCHES[int(rand(scalar(@HATCHES)))],
+			}
+		);
     }
     $F->attribute_reset();
 }
@@ -866,8 +1169,23 @@ sub ellipses {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->ellipse({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xradius' => rand($center_x), 'yradius' => rand($center_y), 'pixel_size' => $psize });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->ellipse(
+			{
+				'x'          => int(rand($XX)),
+				'y'          => int(rand($YY)),
+				'xradius'    => rand($center_x),
+				'yradius'    => rand($center_y),
+				'pixel_size' => $psize,
+			}
+		);
     }
 }
 
@@ -877,8 +1195,23 @@ sub filled_ellipses {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)), 'alpha' => int(rand(256)) });
-        $F->ellipse({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xradius' => rand($center_x), 'yradius' => rand($center_y), 'filled' => 1 });
+        $F->set_color(
+			{
+				'red' => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue' => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->ellipse(
+			{
+				'x'       => int(rand($XX)),
+				'y'       => int(rand($YY)),
+				'xradius' => rand($center_x),
+				'yradius' => rand($center_y),
+				'filled'  => 1,
+			}
+		);
     }
 }
 
@@ -888,9 +1221,32 @@ sub hatch_filled_ellipses {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->set_b_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->ellipse({ 'x' => int(rand($XX)), 'y' => int(rand($YY)), 'xradius' => rand($center_x), 'yradius' => rand($center_y), 'filled' => 1, 'hatch' => $HATCHES[int(rand(scalar(@HATCHES)))] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->set_b_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->ellipse(
+			{
+				'x' => int(rand($XX)),
+				'y' => int(rand($YY)),
+				'xradius' => rand($center_x),
+				'yradius' => rand($center_y),
+				'filled' => 1,
+				'hatch' => $HATCHES[int(rand(scalar(@HATCHES)))],
+			}
+		);
     }
     $F->attribute_reset();
 }
@@ -955,7 +1311,13 @@ sub polygons {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
+        $F->set_color(
+			{
+				'red' => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue' => int(rand(256)),
+			}
+		);
         my $points = 4;
         my $coords = [];
         foreach my $p (1 .. $points) {
@@ -978,7 +1340,14 @@ sub filled_polygons {
     $F->mask_mode() if ($F->acceleration());
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
         my $points = 4;
         my $coords = [];
         foreach my $p (1 .. $points) {
@@ -1000,8 +1369,22 @@ sub hatch_filled_polygons {
     $F->mask_mode() if ($F->acceleration());
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->set_b_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->set_b_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
         my $points = 4;
         my $coords = [];
         foreach my $p (1 .. $points) {
@@ -1082,12 +1465,25 @@ sub beziers {
 
     my $s = time + $delay;
     while (time < $s) {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
         my @coords = ();
         foreach my $c (1 .. int(rand(20))) {
             push(@coords, int(rand($XX)), int(rand($YY)));
         }
-        $F->bezier({ 'coordinates' => \@coords, 'points' => 100, 'pixel_size' => $psize });
+        $F->bezier(
+			{
+				'coordinates' => \@coords,
+				'points'      => 100,
+				'pixel_size'  => $psize,
+			}
+		);
     }
 }
 
@@ -1205,27 +1601,137 @@ sub flood_fill {
 
     if ($XX > 255) {    # && !$rpi) {
         my $image = $IMAGES[int(rand(scalar(@IMAGES)))];
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->polygon({ 'coordinates' => [440 * $xm, 190 * $ym, 3040 * $xm, 160 * $xm, 2320 * $xm, $YY, 1920 * $xm, 1080 * $ym, 1520 * $xm, 1560 * $ym] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->polygon(
+			{
+				'coordinates' => [
+					440 * $xm,
+					190 * $ym,
+					3040 * $xm,
+					160 * $xm,
+					2320 * $xm,
+					$YY,
+					1920 * $xm,
+					1080 * $ym,
+					1520 * $xm,
+					1560 * $ym
+				],
+			}
+		);
 
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->polygon({ 'coordinates' => [2540 * $xm, 1140 * $ym, 1940 * $xm, 340 * $ym, 1200 * $xm, 1000 * $ym] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->polygon(
+			{
+				'coordinates' => [
+					2540 * $xm,
+					1140 * $ym,
+					1940 * $xm,
+					340 * $ym,
+					1200 * $xm,
+					1000 * $ym
+				],
+			}
+		);
 
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->circle({ 'x' => 1200 * $xm, 'y' => 640 * $ym, 'radius' => 200 * $xm });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'      => 1200 * $xm,
+				'y'      => 640 * $ym,
+				'radius' => 200 * $xm,
+			}
+		);
 
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
 
-        $F->fill({ 'x' => int(700 * $xm), 'y' => int(500 * $ym), 'texture' => $image });
+        $F->fill(
+			{
+				'x'       => int(700 * $xm),
+				'y'       => int(500 * $ym),
+				'texture' => $image,
+			}
+		);
 
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->fill({ 'x' => 1920 * $xm, 'y' => 880 * $ym });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->fill(
+			{
+				'x' => 1920 * $xm,
+				'y' => 880 * $ym,
+			}
+		);
     } else {
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->polygon({ 'coordinates' => [$center_x, 3, 3, $YY - 3, $center_x, $center_y, $XX - 3, $YY - 4] });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->polygon(
+			{
+				'coordinates' => [
+					$center_x,
+					3,
+					3,
+					$YY - 3,
+					$center_x,
+					$center_y,
+					$XX - 3,
+					$YY - 4,
+				],
+			}
+		);
 
-        $F->set_color({ 'red' => int(rand(256)), 'green' => int(rand(256)), 'blue' => int(rand(256)) });
-        $F->fill({ 'x' => 3, 'y' => 3 });
+        $F->set_color(
+			{
+				'red'   => int(rand(256)),
+				'green' => int(rand(256)),
+				'blue'  => int(rand(256)),
+				'alpha' => 255,
+			}
+		);
+        $F->fill(
+			{
+				'x' => 3,
+				'y' => 3,
+			}
+		);
     }
 }
 
@@ -1239,7 +1745,14 @@ sub color_replace {
 
     $F->attribute_reset();
     $F->blit_write($DORKSMILE);
-    $F->clip_set({ 'x' => $x, 'y' => $y, 'xx' => $x * 3, 'yy' => $y * 3 }) if ($clipped);
+    $F->clip_set(
+		{
+			'x'  => $x,
+			'y'  => $y,
+			'xx' => $x * 3,
+			'yy' => $y * 3,
+		}
+	) if ($clipped);
     my $s = time + $delay;
     while (time < $s) {
         my $pixel = $F->pixel(
@@ -1327,7 +1840,13 @@ sub blit_move {
     while (time < $s) {
 		$x = abs(rand($XX - $image->{'width'}));
 		$y = $y_clip + abs(rand(($YY - $y_clip) - $image->{'height'}));
-        $image = $F->blit_move({ %{$image}, 'x_dest' => abs($x), 'y_dest' => int(abs($y)) });
+        $image = $F->blit_move(
+			{
+				%{$image},
+				'x_dest' => abs($x),
+				'y_dest' => int(abs($y)),
+			}
+		);
         $x++;
         $y += .5;
 		sleep .0166666667;
@@ -1554,24 +2073,101 @@ sub mode_drawing {
         my $size = int(($YY - $F->{'Y_CLIP'}) / 3);
         my $mid  = int($XX / 2);
 
-        $F->set_color({ 'red' => 255, 'green' => 0, 'blue' => 0 });
-        $F->circle({ 'x' => $mid - ($size / 2), 'y' => $F->{'Y_CLIP'} + $size * 2, 'radius' => $size, 'filled' => 1 });
+        $F->set_color(
+			{
+				'red'   => 255,
+				'green' => 0,
+				'blue'  => 0,
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'      => $mid - ($size / 2),
+				'y'      => $F->{'Y_CLIP'} + $size * 2,
+				'radius' => $size,
+				'filled' => 1,
+			}
+		);
 
-        $F->set_color({ 'red' => 0, 'green' => 255, 'blue' => 0 });
-        $F->circle({ 'x' => $mid, 'y' => $F->{'Y_CLIP'} + $size, 'radius' => $size, 'filled' => 1 });
+        $F->set_color(
+			{
+				'red'   => 0,
+				'green' => 255,
+				'blue'  => 0,
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'      => $mid,
+				'y'      => $F->{'Y_CLIP'} + $size,
+				'radius' => $size,
+				'filled' => 1,
+			}
+		);
 
-        $F->set_color({ 'red' => 0, 'green' => 0, 'blue' => 255 });
-        $F->circle({ 'x' => $mid + ($size / 2), 'y' => $F->{'Y_CLIP'} + $size * 2, 'radius' => $size, 'filled' => 1 });
+        $F->set_color(
+			{
+				'red'   => 0,
+				'green' => 0,
+				'blue'  => 255,
+				'alpha' => 255,
+			}
+		);
+        $F->circle(
+			{
+				'x'      => $mid + ($size / 2),
+				'y'      => $F->{'Y_CLIP'} + $size * 2,
+				'radius' => $size,
+				'filled' => 1,
+			}
+		);
 
         if ($mode == XOR_MODE) {
 			sleep 1;
-            $F->circle({ 'x' => $mid + ($size / 2), 'y' => $F->{'Y_CLIP'} + $size * 2, 'radius' => $size, 'filled' => 1 });
+            $F->circle(
+				{
+					'x'      => $mid + ($size / 2),
+					'y'      => $F->{'Y_CLIP'} + $size * 2,
+					'radius' => $size,
+					'filled' => 1,
+				}
+			);
 
-            $F->set_color({ 'red' => 0, 'green' => 255, 'blue' => 0 });
-            $F->circle({ 'x' => $mid, 'y' => $F->{'Y_CLIP'} + $size, 'radius' => $size, 'filled' => 1 });
+            $F->set_color(
+				{
+					'red'   => 0,
+					'green' => 255,
+					'blue'  => 0,
+					'alpha' => 255,
+				}
+			);
+            $F->circle(
+				{
+					'x'      => $mid,
+					'y'      => $F->{'Y_CLIP'} + $size,
+					'radius' => $size,
+					'filled' => 1,
+				}
+			);
 
-            $F->set_color({ 'red' => 255, 'green' => 0, 'blue' => 0 });
-            $F->circle({ 'x' => $mid - ($size / 2), 'y' => $F->{'Y_CLIP'} + $size * 2, 'radius' => $size, 'filled' => 1 });
+            $F->set_color(
+				{
+					'red'   => 255,
+					'green' => 0,
+					'blue'  => 0,
+					'alpha' => 255,
+				}
+			);
+            $F->circle(
+				{
+					'x'      => $mid - ($size / 2),
+					'y'      => $F->{'Y_CLIP'} + $size * 2,
+					'radius' => $size,
+					'filled' => 1,
+				}
+			);
 
             $F->blit_write($image2);
 
@@ -1598,14 +2194,59 @@ sub alpha_drawing {
     $F->alpha_mode();
     $F->blit_write($image2);
 
-    $F->set_color({ 'red' => 0, 'green' => 255, 'blue' => 255, 'alpha' => int(rand(128) + 128) });
-    $F->rbox({ 'x' => 0, 'y' => 0, 'width' => ($XX / 2), 'height' => ($YY / 2), 'filled' => 1 });
+    $F->set_color(
+		{
+			'red'   => 0,
+			'green' => 255,
+			'blue'  => 255,
+			'alpha' => int(rand(128) + 128),
+		}
+	);
+    $F->rbox(
+		{
+			'x'      => 0,
+			'y'      => 0,
+			'width'  => ($XX / 2),
+			'height' => ($YY / 2),
+			'filled' => 1,
+		}
+	);
 
-    $F->set_color({ 'red' => 255, 'green' => 0, 'blue' => 255, 'alpha' => int(rand(128) + 128) });
-    $F->rbox({ 'x' => $XX / 4, 'y' => $YY / 4, 'width' => ($XX / 2), 'height' => ($YY / 2), 'filled' => 1 });
+    $F->set_color(
+		{
+			'red'   => 255,
+			'green' => 0,
+			'blue'  => 255,
+			'alpha' => int(rand(128) + 128),
+		}
+	);
+    $F->rbox(
+		{
+			'x'      => $XX / 4,
+			'y'      => $YY / 4,
+			'width'  => ($XX / 2),
+			'height' => ($YY / 2),
+			'filled' => 1,
+		}
+	);
 
-    $F->set_color({ 'red' => 255, 'green' => 255, 'blue' => 0, 'alpha' => int(rand(128) + 128) });
-    $F->rbox({ 'x' => ($XX / 2), 'y' => ($YY / 2), 'width' => ($XX / 2), 'height' => ($YY / 2), 'filled' => 1 });
+    $F->set_color(
+		{
+			'red'   => 255,
+			'green' => 255,
+			'blue'  => 0,
+			'alpha' => int(rand(128) + 128),
+		}
+	);
+    $F->rbox(
+		{
+			'x'      => ($XX / 2),
+			'y'      => ($YY / 2),
+			'width'  => ($XX / 2),
+			'height' => ($YY / 2),
+			'filled' => 1,
+		}
+	);
 } ## end sub alpha_drawing
 
 sub mask_drawing {
@@ -1613,7 +2254,14 @@ sub mask_drawing {
     $F->attribute_reset();
 	print_it($F, $name);
 
-    $F->set_b_color({ 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 0 });
+    $F->set_b_color(
+		{
+			'red'   => 0,
+			'green' => 0,
+			'blue'  => 0,
+			'alpha' => 0,
+		}
+	);
     my $h = int($YY - $F->{'Y_CLIP'});
     my $image1;
     my $image2 = $IMAGES[$BW];
@@ -1632,7 +2280,14 @@ sub unmask_drawing {
     $F->attribute_reset();
 	print_it($F, $name . ' (draw under)');
 
-    $F->set_b_color({ 'red' => 0, 'green' => 0, 'blue' => 0, 'alpha' => 0 });
+    $F->set_b_color(
+		{
+			'red'   => 0,
+			'green' => 0,
+			'blue'  => 0,
+			'alpha' => 0,
+		}
+	);
     my $h = int($YY - $F->{'Y_CLIP'});
     my $image2;
     my $image1 = $IMAGES[$BW];
@@ -1676,10 +2331,24 @@ sub print_it {
                 'antialias'    => 0
             }
         );
-        $fb->clip_set({ 'x' => 0, 'y' => 0, 'yy' => $b->{'pheight'} * .75, 'xx' => $XX });
+        $fb->clip_set(
+			{
+				'x' => 0,
+				'y' => 0,
+				'xx' => $XX,
+				'yy' => $b->{'pheight'} * .75,
+			}
+		);
         $fb->cls();
         $fb->ttf_print($b);
-        $fb->clip_set({ 'x' => 0, 'y' => $b->{'pheight'} * .75, 'xx' => $XX, 'yy' => $YY });
+        $fb->clip_set(
+			{
+				'x'  => 0,
+				'y'  => $b->{'pheight'} * .75,
+				'xx' => $XX,
+				'yy' => $YY,
+			}
+		);
 
         #        $center_y = (($YY - $b->{'pheight'}) / 2) + $b->{'pheight'};
         #        $fb->normal_mode();
