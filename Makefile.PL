@@ -33,9 +33,14 @@ if (-e 'Makefile') { # We need a clean slate;
 }
 
 my $blink = chr(27) . '[5m';
-# Graphics::Framebuffer
-my $banner = slurp_file('examples/banner.vt');
+
+# Graphics::Framebuffer banner
+my $banner = '';
+while (my $line = <DATA>) {
+	$banner .= $line;
+}
 print $banner;
+
 if ($^O =~ /MSWin/i) { # Some people will still try
     print colored(['white on_red']," This module does not work natively on MS Windows.  It will only function in emulation mode, and you will not be able to see the output.  Please read the documentation on emulation mode. \n\n");
     $pmt = ExtUtils::MakeMaker::prompt('Do you really wish to install anyway?  ','N');
@@ -100,7 +105,7 @@ if ($meta =~ /^\# (.*?)\n/s) {
     print colored(['bright_yellow'],'         Inserting versions'), ' ... ';
     my ($version, $date, $email) = split(/\:/, $1 );
     my ($month, $day, $year) = split(/ |, /,$date);
-#    $template =~ s/^.*?\n//s;
+
     $template =~ s/\#\# VERSION \#\#/$version/sg;
     $template =~ s/\#\# VERSION DATE \#\#/$date/sg;
     $template =~ s/\#\# YEAR \#\#/$year/sg;
@@ -268,11 +273,27 @@ sub no_framebuffer {
     return($fb_absent);
 }
 
+__DATA__
+[31;41m---------------------------- Graphics::Framebuffer ----------------------------[0m
+[41m [0m[31m                     ____                 _     _                            [0m[41m [0m
+[41m [0m[31m                    / ___|_ __ __ _ _ __ | |__ (_) ___ ___                   [0m[41m [0m
+[101m [0m[91m                   | |  _| '__/ _` | '_ \| '_ \| |/ __/ __                   [0m[101m [0m
+[101m [0m[91m                   | |_| | | | (_| | |_) | | | | | (__\__ \                  [0m[101m [0m
+[42m [0m[32m                    \____|_|  \__,_| .__/|_| |_|_|\___|___/                  [0m[42m [0m
+[42m [0m[32m                                   |_|                                       [0m[42m [0m
+[102m [0m[92m         _____                         _            __  __                   [0m[102m [0m
+[102m [0m[92m        |  ___| __ __ _ _ __ ___   ___| |__  _   _ / _|/ _| ___ _ __         [0m[102m [0m
+[44m [0m[34m        | |_ | '__/ _` | '_ ` _ \ / _ \ '_ \| | | | |_| |_ / _ \ '__|        [0m[44m [0m
+[44m [0m[34m        |  _|| | | (_| | | | | | |  __/ |_) | |_| |  _|  _|  __/ |           [0m[44m [0m
+[104m [0m[94m        |_|  |_|  \__,_|_| |_| |_|\___|_.__/ \__,_|_| |_|  \___|_|           [0m[104m [0m
+[104m [0m                                                                             [104m [0m
+[94;104m                                                                               [0m
+
 __END__
   
 =pod
 
-Copyright (C) 2013-2023 Richard Kelsch
+Copyright (C) 2013-2025 Richard Kelsch
 All Rights Reserved
 
 =cut
