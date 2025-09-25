@@ -273,6 +273,15 @@ sub no_framebuffer {
     return($fb_absent);
 }
 
+__END__
+
+=pod
+
+Copyright (C) 2013-2025 Richard Kelsch
+All Rights Reserved
+
+=cut
+
 __DATA__
 [31;41m---------------------------- Graphics::Framebuffer ----------------------------[0m
 [41m [0m[31m                     ____                 _     _                            [0m[41m [0m
@@ -289,11 +298,3 @@ __DATA__
 [104m [0m                                                                             [104m [0m
 [94;104m                                                                               [0m
 
-__END__
-  
-=pod
-
-Copyright (C) 2013-2025 Richard Kelsch
-All Rights Reserved
-
-=cut
