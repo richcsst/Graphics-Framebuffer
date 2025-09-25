@@ -19,7 +19,7 @@ Also note, to exit these just use CTRL-C
 
 * **text_mode.pl** - Maybe your script crashed, and the cursor is not responding.  Hit [ENTER] then blindly run this to fix the screen and restore text mode.
 
-  Note, I highly suggest not using graphics mode while developing your code.  It will still show you graphics output, but if your code crashes, you can still use the cursor.
+  *Note, I highly suggest not using graphics mode while developing your code.  It will still show you graphics output, but if your code crashes, you can still use the cursor.*
 
 * **vector.pl** - A rudimentary vector drawing language that uses source "gfb" files to draw on the screen.  See "vector-usa.gfb" as an example.
 
