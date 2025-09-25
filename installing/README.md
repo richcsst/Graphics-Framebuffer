@@ -10,7 +10,7 @@ Graphics::Framebuffer needs other Perl modules and OS libraries to function.  Th
 
 * **TODO.md** - Ideas for future features
 
-* **detech.sh** - Helps detect the type of Linux distribution is running.
+* **detech.sh** - Helps detect the type of Linux distribution is running.  This URL contains a full list of Linux distributions:  https://en.wikipedia.org/wiki/List_of_Linux_distributions
 
 * **install-prerequisites-debian.sh** - Run this for Debian based distributions.
 
