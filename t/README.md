@@ -9,4 +9,6 @@
 For "make test" you can set these variables to change the test behavior.
 
 For example:
+```
     GFB_IGNORE_X=1 make test
+```
