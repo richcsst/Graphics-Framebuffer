@@ -1,5 +1,10 @@
 Change log for Graphics::Framebuffer
 
+6.75   September 25, 2025
+
+       Minor changes to POD documentation.
+	   Minor changes to Perl code.
+
 6.74   September 14, 2025
 
        Added more code for FreeBSD compatibility.  It will still likely not
