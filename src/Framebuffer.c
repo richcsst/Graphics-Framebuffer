@@ -62,66 +62,70 @@ struct fb_fix_screeninfo finfo;
 // This gets the framebuffer info and populates the above structures, then sends them to Perl
 void c_get_screen_info(char *fb_file) {
     int fbfd = open(fb_file,O_RDWR);
-    ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo); // Get the physical information
-    ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo); // Get the virtual console information
-    close(fbfd);
+    #if defined(__linux__)
+        ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo); // Get the physical information
+        ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo); // Get the virtual console information
+        close(fbfd);
 
-    // This monstrosity pushes the needed values on Perl's stack, like "return" does.
+        // This monstrosity pushes the needed values on Perl's stack, like "return" does.
 
-    Inline_Stack_Vars;
-    Inline_Stack_Reset;
+        Inline_Stack_Vars;
+        Inline_Stack_Reset;
 
-    Inline_Stack_Push(sv_2mortal(newSVpvn(finfo.id,16)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(finfo.smem_start)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.smem_len)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.type)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.type_aux)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.visual)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.xpanstep)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.ypanstep)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.ywrapstep)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.line_length)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(finfo.mmio_start)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.mmio_len)));
-    Inline_Stack_Push(sv_2mortal(newSVuv(finfo.accel)));
+        Inline_Stack_Push(sv_2mortal(newSVpvn(finfo.id,16)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(finfo.smem_start)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.smem_len)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.type)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.type_aux)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.visual)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.xpanstep)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.ypanstep)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.ywrapstep)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.line_length)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(finfo.mmio_start)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.mmio_len)));
+        Inline_Stack_Push(sv_2mortal(newSVuv(finfo.accel)));
 
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.xres)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.yres)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.xres_virtual)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.yres_virtual)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.xoffset)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.yoffset)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.bits_per_pixel)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.grayscale)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.red.offset)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.red.length)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.red.msb_right)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.green.offset)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.green.length)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.green.msb_right)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.blue.offset)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.blue.length)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.blue.msb_right)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.transp.offset)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.transp.length)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.transp.msb_right)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.nonstd)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.activate)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.height)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.accel_flags)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.pixclock)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.left_margin)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.right_margin)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.upper_margin)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.lower_margin)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.hsync_len)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.vsync_len)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.sync)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.vmode)));
-    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.rotate)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.xres)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.yres)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.xres_virtual)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.yres_virtual)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.xoffset)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.yoffset)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.bits_per_pixel)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.grayscale)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.red.offset)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.red.length)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.red.msb_right)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.green.offset)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.green.length)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.green.msb_right)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.blue.offset)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.blue.length)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.blue.msb_right)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.transp.offset)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.transp.length)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.transp.msb_right)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.nonstd)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.activate)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.height)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.accel_flags)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.pixclock)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.left_margin)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.right_margin)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.upper_margin)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.lower_margin)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.hsync_len)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.vsync_len)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.sync)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.vmode)));
+        Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.rotate)));
 
-    Inline_Stack_Done;
-    // Phew!
+        Inline_Stack_Done;
+        // Phew!
+	#elif defined(__FreeBSD__)
+        // FreeBSD is so vastly different than Linux framebuffer handling, I am not sure if this is going to work
+    #endif
 }
 
 // Sets the framebuffer to text mode, which enables the cursor
@@ -184,12 +188,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) = (unsigned short) color; // 16 bit can send a word at a time, the second most efficient method.
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
 							*((unsigned char*)(framebuffer + index)) = (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -214,12 +218,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) ^= (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported
+                    case 8 : // Not yet supported
 						{
 						    *((unsigned char*)(framebuffer + index)) ^= (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -244,12 +248,12 @@ void c_plot(
                            *((unsigned short*)(framebuffer + index)) |= (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported
+                    case 8 : // Not yet supported
 						{
                            *((unsigned char*)(framebuffer + index)) |= (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -274,12 +278,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) &= (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported
+                    case 8 : // Not yet supported
 						{
                             *((unsigned char*)(framebuffer + index)) &= (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -310,14 +314,14 @@ void c_plot(
                             }
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
                             if (*((unsigned char*)(framebuffer + index)) != (bcolor & 0xFF)) {
                                 *((unsigned char*)(framebuffer + index )) = (unsigned char) color;
                             }
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -348,14 +352,14 @@ void c_plot(
                              }
                          }
                          break;
-                     case 8 : // Obviously not yet supported 
+                     case 8 : // Not yet supported 
 						 {
                              if (*((unsigned char*)(framebuffer + index)) == (bcolor & 0xFF)) {
                                  *((unsigned char*)(framebuffer + index )) = (unsigned char) color;
                              }
 						 }
                          break;
-                     case 1 : // Obviously not yet supported 
+                     case 1 : // Not yet supported 
 						 {
 						 }
                          break;
@@ -418,7 +422,7 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) = rgb565;
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
                             unsigned char rgb8  = *(framebuffer + index);
                             unsigned char invA  = (255 - alpha);
@@ -429,7 +433,7 @@ void c_plot(
                             *(framebuffer + index)     = rgb8;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -454,12 +458,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) += (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
                             *((unsigned char*)(framebuffer + index)) += (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -484,12 +488,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) -= (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
                             *((unsigned char*)(framebuffer + index)) -= (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -514,12 +518,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) *= (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
                             *((unsigned char*)(framebuffer + index)) *= (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
@@ -544,12 +548,12 @@ void c_plot(
                             *((unsigned short*)(framebuffer + index)) /= (unsigned short) color;
                         }
                         break;
-                    case 8 : // Obviously not yet supported 
+                    case 8 : // Not yet supported 
 						{
                             *((unsigned char*)(framebuffer + index)) /= (unsigned char) color;
 						}
                         break;
-                    case 1 : // Obviously not yet supported 
+                    case 1 : // Not yet supported 
 						{
 						}
                         break;
