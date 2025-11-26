@@ -170,7 +170,7 @@ void c_plot(
                         break;
                     case 24 :
                         {
-                            *(framebuffer + index)     = color         & 255; // 24 Bit requites one byte at a time.  Not as efficient as 32 bit.
+                            *(framebuffer + index)     = color         & 255; // 24 Bit requires one byte at a time.  Not as efficient as 32 bit.
                             *(framebuffer + index + 1) = (color >> 8)  & 255;
                             *(framebuffer + index + 2) = (color >> 16) & 255;
                         }
