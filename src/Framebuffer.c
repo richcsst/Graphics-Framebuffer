@@ -8,7 +8,7 @@
    that may not be the one being displayed.  This means using the two structures
    would break functionality.  Therefore, the data from Perl is passed along.
 
-   8 bit and 1 bit modes are not yet supported and their case values are just
+   8 bit and 1 bit modes are not yet supported and their case values just
    placeholders.
 
    I am NOT a C programmer and this code likely proves that, but this code works
@@ -24,6 +24,7 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <math.h>
+#include <string.h> /* for memcpy */
 
 #define NORMAL_MODE   0
 #define XOR_MODE      1
@@ -1199,7 +1200,7 @@ void c_blit_write(
                                         unsigned int vhz       = vbl + hzpixel;
                                         unsigned int yvhz      = yvbl + hzpixel;
                                         unsigned int xhbp_yvbl = xhbp + yvbl;
-                                        if (*((unsigned int*)(framebuffer + xhbp + yvhz )) == (bcolor & 0xFFFFFF00)) {
+                                        if (*((unsigned int*)(framebuffer + xhbp_yvbl )) == (bcolor & 0xFFFFFF00)) {
                                             *(framebuffer + xhbp_yvbl )     = *(blit_data + vhz );
                                             *(framebuffer + xhbp_yvbl  + 1) = *(blit_data + vhz  + 1);
                                             *(framebuffer + xhbp_yvbl  + 2) = *(blit_data + vhz  + 2);
@@ -1223,7 +1224,7 @@ void c_blit_write(
                                         unsigned int vhz       = vbl + hzpixel;
                                         unsigned int yvhz      = yvbl + hzpixel;
                                         unsigned int xhbp_yvbl = xhbp + yvbl;
-                                        if (*((unsigned short*)(framebuffer + xhbp + yvhz )) == (bcolor & 0xFFFF)) {
+                                        if (*((unsigned short*)(framebuffer + xhbp_yvbl )) == (bcolor & 0xFFFF)) {
                                             *((unsigned short*)(framebuffer + xhbp_yvbl )) = *((unsigned short*)(blit_data + vhz ));
                                         }
                                     }
@@ -1839,8 +1840,9 @@ void c_flip_horizontal(char* pixels, short width, short height, unsigned char by
         for (x = 0; x < hwidth ; x++) { // Stop when you reach the middle
             for (offset = 0; offset < bytes_per_pixel; offset++) {
                 left    = *(pixels + (x * bytes_per_pixel) + ydx + offset);
-                *(pixels + (x * bytes_per_pixel) + ydx + offset)           = *(pixels + ((width - x) * bytes_per_pixel) + ydx + offset);
-                *(pixels + ((width - x) * bytes_per_pixel) + ydx + offset) = left;
+                /* corrected index: swap with (width - 1 - x) */
+                *(pixels + (x * bytes_per_pixel) + ydx + offset)           = *(pixels + ((width - 1 - x) * bytes_per_pixel) + ydx + offset);
+                *(pixels + ((width - 1 - x) * bytes_per_pixel) + ydx + offset) = left;
             }
         }
     }
@@ -1946,7 +1948,6 @@ void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned cha
         unsigned char r8 = *(buf24 + loc24++);
         unsigned char g8 = *(buf24 + loc24++);
         unsigned char b8 = *(buf24 + loc24++);
-	    loc24 += 3;
         unsigned char r5 = ( r8 * 249 + 1014 ) >> 11;
         unsigned char g6 = ( g8 * 253 + 505  ) >> 10;
         unsigned char b5 = ( b8 * 249 + 1014 ) >> 11;
@@ -1955,8 +1956,9 @@ void c_convert_24_16(char* buf24, unsigned int size24, char* buf16, unsigned cha
         } else {
             rgb565 = (r5 << 11) | (g6 << 5) | b5;
         }
-        *((unsigned short*)(buf16 + loc16++)) = rgb565;
-        loc16++;
+        /* write 16-bit value at loc16 and advance by 2 bytes */
+        *((unsigned short*)(buf16 + loc16)) = rgb565;
+        loc16 += 2;
     }
 }
 
@@ -1979,8 +1981,9 @@ void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned cha
         } else {
             rgb565 = (r5 << 11) | (g6 << 5) | b5;
         }
-        *((unsigned short*)(buf16 + loc16++)) = rgb565;
-        loc16++;
+        /* write 16-bit value and advance */
+        *((unsigned short*)(buf16 + loc16)) = rgb565;
+        loc16 += 2;
     }
 }
 
@@ -2064,7 +2067,7 @@ void c_convert_16_8(char* buf16, unsigned int size16, char* buf8, unsigned char 
         unsigned char r8 = (r5 * 527 + 23) >> 6;
         unsigned char g8 = (g6 * 259 + 33) >> 6;
         unsigned char b8 = (b5 * 527 + 23) >> 6;
-        *((unsigned int*)(buf8 + loc8++)) = (unsigned char) round(0.2126 * r8 + 0.7152 * g8 + 0.0722 * b8);
+        *((unsigned char*)(buf8 + loc8++)) = (unsigned char) round(0.2126 * r8 + 0.7152 * g8 + 0.0722 * b8);
     }
 }
 void c_convert_8_32(char* buf8, unsigned int size8, char* buf32, unsigned char color_order) {
@@ -2088,8 +2091,10 @@ void c_convert_8_24(char* buf8, unsigned int size8, char* buf24, unsigned char c
 
     while(loc8 < size8) {
         unsigned char m = *((unsigned char*)(buf8 + loc8++));
-        *((unsigned int*)(buf24 + loc24)) = m | (m << 8) | (m << 16);
-        loc24 += 3;
+        /* write 3 bytes explicitly to avoid accidental 4-byte writes */
+        *(buf24 + loc24++) = m;
+        *(buf24 + loc24++) = m;
+        *(buf24 + loc24++) = m;
     }
 }
 void c_convert_8_16(char* buf8, unsigned int size8, char* buf16, unsigned char color_order) {
@@ -2220,15 +2225,33 @@ void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, un
 		    case 16 :
 				{
                 	rgb565 = *((unsigned short*)(pixels + idx));
-                	g      = (rgb565 >> 6) & 31;
-                	if (color_order == 0) { // RGB
-                	    r = rgb565 & 31;
-                	    b = (rgb565 >> 11) & 31;
-                	} else {                // BGR
-                	    b = rgb565 & 31;
-                	    r = (rgb565 >> 11) & 31;
+                	/* extract components consistent with other conversion routines */
+                	unsigned char r5;
+                	unsigned char g6;
+                	unsigned char b5;
+                	if (color_order == RGB) {
+                	    b5 = (rgb565 & 0xf800) >> 11;
+                	    r5 = (rgb565 & 0x001f);
+                	} else {
+                	    r5 = (rgb565 & 0xf800) >> 11;
+                	    b5 = (rgb565 & 0x001f);
                 	}
-                	m = (unsigned char) round(0.2126 * r + 0.7152 * g + 0.0722 * b);
+                	g6 = (rgb565 & 0x07e0) >> 5;
+                    /* expand to 8-bit */
+                    unsigned char r8 = (r5 * 527 + 23) >> 6;
+                    unsigned char g8 = (g6 * 259 + 33) >> 6;
+                    unsigned char b8 = (b5 * 527 + 23) >> 6;
+                    unsigned char m8 = (unsigned char) round(0.2126 * r8 + 0.7152 * g8 + 0.0722 * b8);
+                    /* convert back to RGB565 components */
+                    unsigned char nr5 = ( m8 * 249 + 1014 ) >> 11;
+                    unsigned char ng6 = ( m8 * 253 + 505  ) >> 10;
+                    unsigned char nb5 = ( m8 * 249 + 1014 ) >> 11;
+                    if (color_order == RGB) {
+                        rgb565 = (nb5 << 11) | (ng6 << 5) | nr5;
+                    } else {
+                        rgb565 = (nr5 << 11) | (ng6 << 5) | nb5;
+                    }
+                	m = 0; /* will be set below when writing */
 				}
 		        break;
 		    case 8 :
@@ -2260,8 +2283,7 @@ void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, un
                 break;
             case 16 :
 				{
-					rgb565                             = 0;
-                	rgb565                             = (m << 11) | (m << 6) | m;
+					/* for 16-bit we've prepared rgb565 above */
                 	*((unsigned short*)(pixels + idx)) = rgb565;
 				}
                 break;
