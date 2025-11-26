@@ -1,6 +1,5 @@
 AUTHOR.md
 Changes
-examples/banner.vt
 examples/dump.pl
 examples/fonts.pl
 examples/images/4KTest_Pattern.png
@@ -42,7 +41,7 @@ lib/Graphics/Framebuffer.pm
 lib/Graphics/Framebuffer/Mouse.pm
 lib/Graphics/Framebuffer/Splash.pm
 Makefile.PL
-MANIFESTThis list of files
+MANIFEST          This list of files
 README.md
 src/Framebuffer.c
 src/Framebuffer.pm
