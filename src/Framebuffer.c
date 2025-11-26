@@ -19,13 +19,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
-#if defined(__linux__)
-    #include <linux/fb.h>
-    #include <linux/kd.h>
-#elif defined(__FreeBSD__)
-    #include <sys/fbio.h>
-    #include <sys/consio.h>
-#endif
+#include <linux/fb.h>
+#include <linux/kd.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <math.h>
@@ -62,7 +57,6 @@ struct fb_fix_screeninfo finfo;
 // This gets the framebuffer info and populates the above structures, then sends them to Perl
 void c_get_screen_info(char *fb_file) {
     int fbfd = open(fb_file,O_RDWR);
-    #if defined(__linux__)
         ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo); // Get the physical information
         ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo); // Get the virtual console information
         close(fbfd);
@@ -123,9 +117,6 @@ void c_get_screen_info(char *fb_file) {
 
         Inline_Stack_Done;
         // Phew!
-	#elif defined(__FreeBSD__)
-        // FreeBSD is so vastly different than Linux framebuffer handling, I am not sure if this is going to work
-    #endif
 }
 
 // Sets the framebuffer to text mode, which enables the cursor
@@ -2286,3 +2277,4 @@ void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, un
         }
     }
 }
+
