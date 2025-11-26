@@ -25,6 +25,7 @@
 #include <sys/ioctl.h>
 #include <math.h>
 #include <string.h> /* for memcpy */
+#include <stdint.h> /* added for fixed width integer types */
 
 #define NORMAL_MODE   0
 #define XOR_MODE      1
@@ -156,402 +157,159 @@ void c_plot(
     unsigned int bytes_per_line,
     short xoffset, short yoffset)
 {
-    if (x >= x_clip && x <= xx_clip && y >= y_clip && y <= yy_clip) { // Make sure the pixel is within the clipped area
-        x += xoffset;
-        y += yoffset;
-        unsigned int index = (x * bytes_per_pixel) + (y * bytes_per_line);
-        switch(draw_mode) {
-            case NORMAL_MODE :
-                switch(bits_per_pixel) {
-                    case 32 : 
-                        {
-                           *((unsigned int*)(framebuffer + index)) = color; // 32 bit drawing can send a long word in one operation.  Which is why it is the fastest.
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     = color         & 255; // 24 Bit requires one byte at a time.  Not as efficient as 32 bit.
-                            *(framebuffer + index + 1) = (color >> 8)  & 255;
-                            *(framebuffer + index + 2) = (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) = (unsigned short) color; // 16 bit can send a word at a time, the second most efficient method.
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-							*((unsigned char*)(framebuffer + index)) = (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case XOR_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) ^= color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     ^= color         & 255;
-                            *(framebuffer + index + 1) ^= (color >> 8)  & 255;
-                            *(framebuffer + index + 2) ^= (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) ^= (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported
-						{
-						    *((unsigned char*)(framebuffer + index)) ^= (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case OR_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) |= color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     |= color         & 255;
-                            *(framebuffer + index + 1) |= (color >> 8)  & 255;
-                            *(framebuffer + index + 2) |= (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                           *((unsigned short*)(framebuffer + index)) |= (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported
-						{
-                           *((unsigned char*)(framebuffer + index)) |= (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case AND_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) &= color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     &= color         & 255;
-                            *(framebuffer + index + 1) &= (color >> 8)  & 255;
-                            *(framebuffer + index + 2) &= (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) &= (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported
-						{
-                            *((unsigned char*)(framebuffer + index)) &= (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case MASK_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            if ((*((unsigned int*)(framebuffer + index )) & 0xFFFFFF00) != (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                *((unsigned int*)(framebuffer + index )) = color;
-                            }
-                        }
-                        break;
-                    case 24 :
-                        {
-                            if ((*((unsigned int*)(framebuffer + index )) & 0xFFFFFF00) != (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                *(framebuffer + index )     = color         & 255;
-                                *(framebuffer + index  + 1) = (color >> 8)  & 255;
-                                *(framebuffer + index  + 2) = (color >> 16) & 255;
-                            }
-                        }
-                        break;
-                    case 16 :
-                        {
-                            if (*((unsigned short*)(framebuffer + index)) != (bcolor & 0xFFFF)) {
-                                *((unsigned short*)(framebuffer + index )) = (unsigned short) color;
-                            }
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-                            if (*((unsigned char*)(framebuffer + index)) != (bcolor & 0xFF)) {
-                                *((unsigned char*)(framebuffer + index )) = (unsigned char) color;
-                            }
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case UNMASK_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            if ((*((unsigned int*)(framebuffer + index )) & 0xFFFFFF00) == (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                *((unsigned int*)(framebuffer + index )) = color;
-                            }
-                        }
-                        break;
-                     case 24 :
-                         {
-                             if ((*((unsigned int*)(framebuffer + index )) & 0xFFFFFF00) == (bcolor & 0xFFFFFF00)) { // Ignore alpha channel
-                                 *(framebuffer + index )     = color         & 255;
-                                 *(framebuffer + index  + 1) = (color >> 8)  & 255;
-                                 *(framebuffer + index  + 2) = (color >> 16) & 255;
-                             }
-                         }
-                         break;
-                     case 16 :
-                         {
-                             if (*((unsigned short*)(framebuffer + index)) == (bcolor & 0xFFFF)) {
-                                 *((unsigned short*)(framebuffer + index )) = (unsigned short) color;
-                             }
-                         }
-                         break;
-                     case 8 : // Not yet supported 
-						 {
-                             if (*((unsigned char*)(framebuffer + index)) == (bcolor & 0xFF)) {
-                                 *((unsigned char*)(framebuffer + index )) = (unsigned char) color;
-                             }
-						 }
-                         break;
-                     case 1 : // Not yet supported 
-						 {
-						 }
-                         break;
-                }
-            break;
-            case ALPHA_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            unsigned int fb_rgb = *((unsigned int*)(framebuffer + index));
-                            unsigned char fb_r  = fb_rgb & 255;
-                            unsigned char fb_g  = (fb_rgb >> 8) & 255;
-                            unsigned char fb_b  = (fb_rgb >> 16) & 255;
-                            unsigned char R     = color         & 255;
-                            unsigned char G     = (color >> 8)  & 255;
-                            unsigned char B     = (color >> 16) & 255;
-                            unsigned char A     = (color >> 24) & 255;
-                            unsigned char invA  = (255 - A);
+    if (!(x >= x_clip && x <= xx_clip && y >= y_clip && y <= yy_clip)) {
+        return; // outside clip
+    }
 
-                            fb_r = ((R * A) + (fb_r * invA)) >> 8;
-                            fb_g = ((G * A) + (fb_g * invA)) >> 8;
-                            fb_b = ((B * A) + (fb_b * invA)) >> 8;
+    x = x + xoffset;
+    y = y + yoffset;
 
-                            *((unsigned int*)(framebuffer + index)) = fb_r | (fb_g << 8) | (fb_b << 16) | (A << 24);
-                        }
-                        break;
-                    case 24 :
-                        {
-                            unsigned char fb_r  = *(framebuffer + index);
-                            unsigned char fb_g  = *(framebuffer + index + 1);
-                            unsigned char fb_b  = *(framebuffer + index + 2);
-                            unsigned char invA  = (255 - alpha);
-                            unsigned char R     = color         & 255;
-                            unsigned char G     = (color >> 8)  & 255;
-                            unsigned char B     = (color >> 16) & 255;
+    unsigned int index = ((unsigned int)x * (unsigned int)bytes_per_pixel) + ((unsigned int)y * bytes_per_line);
+    unsigned char *p = (unsigned char*)(framebuffer + index);
 
-                            fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
-                            fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
-                            fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
-
-                            *(framebuffer + index)     = fb_r;
-                            *(framebuffer + index + 1) = fb_g;
-                            *(framebuffer + index + 2) = fb_b;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            unsigned short rgb565 = *((unsigned short*)(framebuffer + index));
-                            unsigned short fb_r   = rgb565 & 31;
-                            unsigned short fb_g   = (rgb565 >> 5) & 63;
-                            unsigned short fb_b   = (rgb565 >> 11) & 31;
-                            unsigned short R = color & 31;
-                            unsigned short G = (color >> 5) & 63;
-                            unsigned short B = (color >> 11) & 31;
-                            unsigned char invA = (255 - alpha);
-                            fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
-                            fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
-                            fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
-                            rgb565 = (fb_b << 11) | (fb_g << 5) | fb_r;
-                            *((unsigned short*)(framebuffer + index)) = rgb565;
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-                            unsigned char rgb8  = *(framebuffer + index);
-                            unsigned char invA  = (255 - alpha);
-                            unsigned char RGB_8 = color & 255;
-
-                            rgb8 = ((RGB_8 * alpha) + (rgb8 * invA)) >> 8;
-
-                            *(framebuffer + index)     = rgb8;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case ADD_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) += color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     += color         & 255;
-                            *(framebuffer + index + 1) += (color >> 8)  & 255;
-                            *(framebuffer + index + 2) += (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) += (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-                            *((unsigned char*)(framebuffer + index)) += (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case SUBTRACT_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) -= color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     -= color         & 255;
-                            *(framebuffer + index + 1) -= (color >> 8)  & 255;
-                            *(framebuffer + index + 2) -= (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) -= (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-                            *((unsigned char*)(framebuffer + index)) -= (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case MULTIPLY_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) *= color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     *= color         & 255;
-                            *(framebuffer + index + 1) *= (color >> 8)  & 255;
-                            *(framebuffer + index + 2) *= (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) *= (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-                            *((unsigned char*)(framebuffer + index)) *= (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
-            break;
-            case DIVIDE_MODE :
-                switch(bits_per_pixel) {
-                    case 32 :
-                        {
-                            *((unsigned int*)(framebuffer + index)) /= color;
-                        }
-                        break;
-                    case 24 :
-                        {
-                            *(framebuffer + index)     /= color         & 255;
-                            *(framebuffer + index + 1) /= (color >> 8)  & 255;
-                            *(framebuffer + index + 2) /= (color >> 16) & 255;
-                        }
-                        break;
-                    case 16 :
-                        {
-                            *((unsigned short*)(framebuffer + index)) /= (unsigned short) color;
-                        }
-                        break;
-                    case 8 : // Not yet supported 
-						{
-                            *((unsigned char*)(framebuffer + index)) /= (unsigned char) color;
-						}
-                        break;
-                    case 1 : // Not yet supported 
-						{
-						}
-                        break;
-                }
+    switch (bits_per_pixel) {
+        case 32: {
+            uint32_t fb = *((uint32_t*)p);
+            uint32_t col = (uint32_t)color;
+            uint32_t bcol = (uint32_t)bcolor;
+            uint32_t res = fb;
+            switch (draw_mode) {
+                case NORMAL_MODE:  res = col; break;
+                case XOR_MODE:     res = fb ^ col; break;
+                case OR_MODE:      res = fb | col; break;
+                case AND_MODE:     res = fb & col; break;
+                case MASK_MODE:    if ((fb & 0xFFFFFF00) != (bcol & 0xFFFFFF00)) res = col; break;
+                case UNMASK_MODE:  if ((fb & 0xFFFFFF00) == (bcol & 0xFFFFFF00)) res = col; break;
+                case ALPHA_MODE: {
+                    unsigned char fb_r = fb & 0xFF;
+                    unsigned char fb_g = (fb >> 8) & 0xFF;
+                    unsigned char fb_b = (fb >> 16) & 0xFF;
+                    unsigned char R = col & 0xFF;
+                    unsigned char G = (col >> 8) & 0xFF;
+                    unsigned char B = (col >> 16) & 0xFF;
+                    unsigned char A = (col >> 24) & 0xFF;
+                    unsigned char invA = 255 - A;
+                    fb_r = ((R * A) + (fb_r * invA)) >> 8;
+                    fb_g = ((G * A) + (fb_g * invA)) >> 8;
+                    fb_b = ((B * A) + (fb_b * invA)) >> 8;
+                    res = fb_r | (fb_g << 8) | (fb_b << 16) | (A << 24);
+                } break;
+                case ADD_MODE:      res = fb + col; break;
+                case SUBTRACT_MODE: res = fb - col; break;
+                case MULTIPLY_MODE: res = fb * col; break;
+                case DIVIDE_MODE:   if (col != 0) res = fb / col; break;
+                default: break;
+            }
+            *((uint32_t*)p) = res;
             break;
         }
+        case 24: {
+            /* pack 3 bytes into a 32-bit local (low 24 bits used) */
+            uint32_t fb = (uint32_t)p[0] | ((uint32_t)p[1] << 8) | ((uint32_t)p[2] << 16);
+            uint32_t col = color & 0x00FFFFFF;
+            uint32_t bcol = bcolor & 0x00FFFFFF;
+            uint32_t res = fb;
+            switch (draw_mode) {
+                case NORMAL_MODE:  res = col; break;
+                case XOR_MODE:     res = fb ^ col; break;
+                case OR_MODE:      res = fb | col; break;
+                case AND_MODE:     res = fb & col; break;
+                case MASK_MODE:    if ((fb & 0xFFFFFF00) != (bcol & 0xFFFFFF00)) res = col; break;
+                case UNMASK_MODE:  if ((fb & 0xFFFFFF00) == (bcol & 0xFFFFFF00)) res = col; break;
+                case ALPHA_MODE: {
+                    unsigned char fb_r = fb & 0xFF;
+                    unsigned char fb_g = (fb >> 8) & 0xFF;
+                    unsigned char fb_b = (fb >> 16) & 0xFF;
+                    unsigned char R = col & 0xFF;
+                    unsigned char G = (col >> 8) & 0xFF;
+                    unsigned char B = (col >> 16) & 0xFF;
+                    unsigned char invA = 255 - alpha;
+                    fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
+                    fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
+                    fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
+                    res = (uint32_t)fb_r | ((uint32_t)fb_g << 8) | ((uint32_t)fb_b << 16);
+                } break;
+                case ADD_MODE:      res = fb + col; break;
+                case SUBTRACT_MODE: res = fb - col; break;
+                case MULTIPLY_MODE: res = fb * col; break;
+                case DIVIDE_MODE:   {
+                    uint32_t c0 = col & 0xFF, c1 = (col >> 8) & 0xFF, c2 = (col >> 16) & 0xFF;
+                    uint32_t r0 = (c0 != 0) ? ((fb & 0xFF) / c0) : (fb & 0xFF);
+                    uint32_t r1 = (c1 != 0) ? (((fb >> 8) & 0xFF) / c1) : ((fb >> 8) & 0xFF);
+                    uint32_t r2 = (c2 != 0) ? (((fb >> 16) & 0xFF) / c2) : ((fb >> 16) & 0xFF);
+                    res = r0 | (r1 << 8) | (r2 << 16);
+                } break;
+                default: break;
+            }
+            p[0] = res & 0xFF;
+            p[1] = (res >> 8) & 0xFF;
+            p[2] = (res >> 16) & 0xFF;
+            break;
+        }
+        case 16: {
+            uint16_t fb = *((uint16_t*)p);
+            uint16_t col16 = (uint16_t)color;
+            uint16_t res16 = fb;
+            switch (draw_mode) {
+                case NORMAL_MODE:  res16 = col16; break;
+                case XOR_MODE:     res16 = fb ^ col16; break;
+                case OR_MODE:      res16 = fb | col16; break;
+                case AND_MODE:     res16 = fb & col16; break;
+                case MASK_MODE:    if (fb != (bcolor & 0xFFFF)) res16 = col16; break;
+                case UNMASK_MODE:  if (fb == (bcolor & 0xFFFF)) res16 = col16; break;
+                case ALPHA_MODE: {
+                    unsigned short rgb565 = fb;
+                    unsigned short fb_r = rgb565 & 31;
+                    unsigned short fb_g = (rgb565 >> 5) & 63;
+                    unsigned short fb_b = (rgb565 >> 11) & 31;
+                    unsigned short R = col16 & 31;
+                    unsigned short G = (col16 >> 5) & 63;
+                    unsigned short B = (col16 >> 11) & 31;
+                    unsigned char invA = 255 - alpha;
+                    fb_r = ((R * alpha) + (fb_r * invA)) >> 8;
+                    fb_g = ((G * alpha) + (fb_g * invA)) >> 8;
+                    fb_b = ((B * alpha) + (fb_b * invA)) >> 8;
+                    res16 = (fb_b << 11) | (fb_g << 5) | fb_r;
+                } break;
+                case ADD_MODE:      res16 = fb + col16; break;
+                case SUBTRACT_MODE: res16 = fb - col16; break;
+                case MULTIPLY_MODE: res16 = fb * col16; break;
+                case DIVIDE_MODE:   if (col16 != 0) res16 = fb / col16; break;
+                default: break;
+            }
+            *((uint16_t*)p) = res16;
+            break;
+        }
+        case 8: {
+            uint8_t fb = *p;
+            uint8_t col8 = (uint8_t)color;
+            uint8_t res8 = fb;
+            switch (draw_mode) {
+                case NORMAL_MODE:  res8 = col8; break;
+                case XOR_MODE:     res8 = fb ^ col8; break;
+                case OR_MODE:      res8 = fb | col8; break;
+                case AND_MODE:     res8 = fb & col8; break;
+                case MASK_MODE:    if (fb != (bcolor & 0xFF)) res8 = col8; break;
+                case UNMASK_MODE:  if (fb == (bcolor & 0xFF)) res8 = col8; break;
+                case ALPHA_MODE: {
+                    uint8_t invA = 255 - alpha;
+                    res8 = (uint8_t)((((uint32_t)col8 * alpha) + ((uint32_t)fb * invA)) >> 8);
+                } break;
+                case ADD_MODE:      res8 = fb + col8; break;
+                case SUBTRACT_MODE: res8 = fb - col8; break;
+                case MULTIPLY_MODE: res8 = fb * col8; break;
+                case DIVIDE_MODE:   if (col8 != 0) res8 = fb / col8; break;
+                default: break;
+            }
+            *p = res8;
+            break;
+        }
+        case 1: {
+            /* Not supported yet; no-op */
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -1987,7 +1745,7 @@ void c_convert_32_16(char* buf32, unsigned int size32, char* buf16, unsigned cha
     }
 }
 
-// Convert a RGB8888 bitmap to a RGB888 bitmap
+// Convert a RGB888 bitmap to a RGB8888 bitmap
 void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned char color_order) {
     unsigned int loc24 = 0;
     unsigned int loc32 = 0;
@@ -1999,7 +1757,7 @@ void c_convert_32_24(char* buf32, unsigned int size32, char* buf24, unsigned cha
     }
 }
 
-// Convert a RGB888 bitmap to a RGB8888 bitmap
+// Convert a RGB8888 bitmap to a RGB888 bitmap
 void c_convert_24_32(char* buf24, unsigned int size24, char* buf32, unsigned char color_order) {
     unsigned int loc32 = 0;
     unsigned int loc24 = 0;
