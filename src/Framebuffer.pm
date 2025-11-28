@@ -491,85 +491,51 @@ our @COLORORDER = (qw( RGB RBG BGR BRG GBR GRB ));
 
 =head1 METHODS
 
-X<acceleration>
-X<active_console>
-X<add_mode>
-X<alpha_mode>
-X<and_mode>
-X<angle_line>
-X<arc>
-X<attribute_reset>
-X<bezier>
-X<blit_copy>
-X<blit_move>
-X<blit_read>
-X<blit_transform>
-X<blit_write>
-X<box>
-X<circle>
-X<clear_screen>
-X<clip_off>
-X<clip_reset>
-X<clip_rset>
-X<clip_set>
-X<cls>
-X<divide_mode>
-X<draw_arc>
-X<draw_mode>
-X<drawto>
-X<ellipse>
-X<fill>
-X<filled_pie>
-X<get_face_name>
-X<get_font_list>
-X<getpixel>
-X<get_pixel>
-X<graphics_mode>
-X<hardware>
-X<last_plot>
-X<line>
-X<load_image>
-X<mask_mode>
-X<monochrome>
-X<multiply_mode>
-X<new>
-X<normal_mode>
-X<or_mode>
-X<perl>
-X<pixel>
-X<play_animation>
-X<plot>
-X<poly_arc>
-X<polygon>
-X<rbox>
-X<rounded_box>
-X<replace_color>
-X<RGB565_to_RGB888>
-X<RGB565_to_RGBA8888>
-X<RGB888_to_RGB565>
-X<RGB888_to_RGBA8888>
-X<RGBA8888_to_RGB565>
-X<RGBA8888_to_RGB888>
-X<screen_dimensions>
-X<screen_dump>
-X<set_b_color>
-X<setbcolor>
-X<set_background_color>
-X<setcolor>
-X<set_color>
-X<set_foreground_color>
-X<setpixel>
-X<set_pixel>
-X<software>
-X<subtract_mode>
-X<text_mode>
-X<ttf_paragraph>
-X<ttf_print>
-X<unmask_mode>
-X<vsync>
-X<wait_for_console>
-X<which_console>
-X<xor_mode>
+The following are names you can search to get to the desired method (sorted alphabetically):
+
+=over 4
+
+=item * B<acceleration>, B<active_console>, B<add_mode>, B<alpha_mode>, B<and_mode>, B<angle_line>, B<arc>, B<attribute_reset>
+
+=item * B<bezier>, B<blit_copy>, B<blit_mode>, B<blit_read>, B<blit_transform>, B<blit_write>, B<box>
+
+=item * B<circle>, B<clear_screen>, B<clip_off>, B<clip_reset>, B<clip_rset>, B<clip_set>, B<cls>
+
+=item * B<divide_mode>, B<draw_arc>, B<draw_mode>, B<drawto>
+
+=item * B<ellipse>
+
+=item * B<fill>, B<filled_pie>
+
+=item * B<get_face_name>, B<get_font_list>, B<getpixel>, B<get_pixel>, B<graphics_mode>
+
+=item * B<hardware>
+
+=item * B<last_plot>, B<line>, B<load_image>
+
+=item * B<mask_mode>, B<monochrome>, B<multiply_mode>
+
+=item * B<new>, B<normal_mode>
+
+=item * B<or_mode>
+
+=item * B<perl>, B<pixel>, B<play_animation>, B<plot>, B<poly_arc>, B<polygon>
+
+=item * B<rbox>, B<rounded_box>, B<replace_color>, B<RGB565_to_RGB888>, B<RGB565_to_RGBA8888>, B<RGB888_to_RGB565>, B<RGB888_to_RGBA8888>, B<RGBA8888_to_RGB565>, B<RGBA8888_to_RGB888>
+
+=item * B<screen_dimensions>, B<screen_dump>, B<set_b_color>, B<setbcolor>, B<set_background_color>, B<setcolor>, B<set_color>, B<set_foreground_color>, B<setpixel>, B<set_pixel>, B<software>, B<subtract_mode>
+
+=item * B<text_mode>, B<ttf_paragraph>, B<ttf_print>
+
+=item * B<unmask_mode>
+
+=item * B<vsync>
+
+=item * B<wait_for_console>, B<which_console>
+
+=item * B<xor_mode>
+
+=back
 
 With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
 
