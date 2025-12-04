@@ -2120,6 +2120,7 @@ $pixel is a hash reference in the form:
     my $x     = int($params->{'x'});
     my $y     = int($params->{'y'});
     my $bytes = $self->{'BYTES'};
+	my $bits  = $self->{'BITS'};
 
     # Values outside of the clipping area return undefined.
     unless (($x > $self->{'XX_CLIP'}) || ($y > $self->{'YY_CLIP'}) || ($x < $self->{'X_CLIP'}) || ($y < $self->{'Y_CLIP'})) {
@@ -2131,7 +2132,7 @@ $pixel is a hash reference in the form:
 
         my $color_order = $self->{'COLOR_ORDER'};
         my $A           = $self->{'COLOR_ALPHA'};
-        if ($self->{'BITS'} == 32) {
+        if ($bits == 32) {
             if ($color_order == BGR) {
                 ($B, $G, $R, $A) = unpack("C$bytes", $color);
             } elsif ($color_order == BRG) {
@@ -2145,7 +2146,7 @@ $pixel is a hash reference in the form:
             } elsif ($color_order == GBR) {
                 ($G, $B, $R, $A) = unpack("C$bytes", $color);
             }
-        } elsif ($self->{'BITS'} == 24) {
+        } elsif ($bits == 24) {
             if ($color_order == BGR) {
                 ($B, $G, $R) = unpack("C$bytes", $color);
             } elsif ($color_order == BRG) {
@@ -2159,15 +2160,18 @@ $pixel is a hash reference in the form:
             } elsif ($color_order == GBR) {
                 ($G, $B, $R) = unpack("C$bytes", $color);
             }
-        } elsif ($self->{'BITS'} == 16) {
+        } elsif ($bits == 16) {
             my $C = unpack('S', $color);
+			my $rl = $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'};
+			my $gl = $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'};
+			my $bl = $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'};
 
-            $B = ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'} < 6)  ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 31  : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 63;
-            $G = ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'} < 6) ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'})) & 31 : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'})) & 63;
-            $R = ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'} < 6)   ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 31   : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 63;
-            $R = $R << (8 - $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'});
-            $G = $G << (8 - $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'});
-            $B = $B << (8 - $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'});
+            $B = ($bl < 6)  ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 31  : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 63;
+            $G = ($gl < 6) ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'})) & 31 : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'})) & 63;
+            $R = ($rl < 6)   ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 31   : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 63;
+            $R = $R << (8 - $rl);
+            $G = $G << (8 - $gl);
+            $B = $B << (8 - $bl);
         } ## end elsif ($self->{'BITS'} ==...)
         return ({ 'red' => $R, 'green' => $G, 'blue' => $B, 'alpha' => $A, 'raw' => $color, 'hex' => sprintf('%02x%02x%02x%02x', $R, $G, $B, $A) });
     } ## end unless (($x > $self->{'XX_CLIP'...}))
