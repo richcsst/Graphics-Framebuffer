@@ -343,12 +343,10 @@ foreach my $name (@order) {
 			$F->acceleration(PERL);
 			$func{$name}->($name . ' -> Pure-Perl');
 		}
-		unless ($name =~ /^(Anti)/) {
-			$F->cls();
-			$F->acceleration(SOFTWARE);
-			$func{$name}->($name . ' -> C Accelerated');
-			sleep $delay unless($name =~ /Plot|Lines|Poly|Boxes|Circles|Ellipses|Arcs|Beziers|Pies/);
-		}
+		$F->cls();
+		$F->acceleration(SOFTWARE);
+		$func{$name}->($name . ' -> C Accelerated');
+		sleep $delay unless($name =~ /Plot|Lines|Poly|Boxes|Circles|Ellipses|Arcs|Beziers|Pies/);
     }
 }
 
@@ -563,7 +561,7 @@ sub angle_lines {
 				'pixel_size'  => $psize,
 			}
 		);
-        $angle = ($F->acceleration()) ? $angle + .1 : $angle + 1;
+        $angle = ($F->acceleration()) ? $angle + .5 : $angle + 1;
         $angle -= 360 if ($angle >= 360);
     }
 }
