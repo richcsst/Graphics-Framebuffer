@@ -2,7 +2,7 @@ Change log for Graphics::Framebuffer
 
 6.79   December 04, 2025
 
-       Optimizing
+       "pixel_size" removed.  Other optimizations.
 
 6.78   November 28, 2025
 

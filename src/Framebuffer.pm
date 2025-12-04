@@ -1998,66 +1998,67 @@ Set a single pixel in the set foreground color at position x,y with the given pi
         my $raw_foreground_color = $self->{'RAW_FOREGROUND_COLOR'};
         my $raw_background_color = $self->{'RAW_BACKGROUND_COLOR'};
         my $draw_mode            = $self->{'DRAW_MODE'};
-
         # Only plot if the pixel is within the clipping region
         unless (($x > $xx_clip) || ($y > $yy_clip) || ($x < $x_clip) || ($y < $y_clip)) {
             # The 'history' is a 'draw_arc' optimization and beautifier for xor mode.  It only draws pixels not in
             # the history buffer.
-            unless (exists($self->{'history'}) && defined($self->{'history'}->[$y]->[$x])) {
+            unless (exists($self->{'history'}) && defined($self->{'history'}->{$y}->{$x})) {
                 $index = ($self->{'BYTES_PER_LINE'} * ($y + $self->{'YOFFSET'})) + (($self->{'XOFFSET'} + $x) * $bytes);
                 if ($index >= 0 && $index <= ($self->{'fscreeninfo'}->{'smem_len'} - $bytes)) {
-                    $c = substr($self->{'SCREEN'}, $index, $self->{'BYTES'}) || chr(0) x $bytes;
-                    if ($draw_mode == NORMAL_MODE) {
+					if ($draw_mode == NORMAL_MODE) {
                         $c = $raw_foreground_color;
-                    } elsif ($draw_mode == XOR_MODE) {
-                        $c ^= $raw_foreground_color;
-                    } elsif ($draw_mode == OR_MODE) {
-                        $c |= $raw_foreground_color;
-                    } elsif ($draw_mode == ALPHA_MODE) {
-                        my $back  = $self->get_pixel({ 'x' => $x, 'y' => $y });
-                        my $saved = { 'main' => $raw_foreground_color };
-                        foreach my $color (qw( red green blue )) {
-                            $saved->{$color} = $self->{ 'COLOR_' . uc($color) };
-                            $back->{$color}  = ($self->{ 'COLOR_' . uc($color) } * $color_alpha) + ($back->{$color} * (1 - $color_alpha));
-                        }
-                        $back->{'alpha'} = min(255, $color_alpha + $back->{'alpha'});
-                        $self->set_color($back);
-                        $c                    = $raw_foreground_color;
-                        $raw_foreground_color = $saved->{'main'};
-                        foreach my $color (qw( red green blue )) {
-                            $self->{ 'COLOR_' . uc($color) } = $saved->{$color};
-                        }
-                    } elsif ($draw_mode == AND_MODE) {
-                        $c &= $raw_foreground_color;
-                    } elsif ($draw_mode == ADD_MODE) {
-                        $c += $raw_foreground_color;
-                    } elsif ($draw_mode == SUBTRACT_MODE) {
-                        $c -= $raw_foreground_color;
-                    } elsif ($draw_mode == MULTIPLY_MODE) {
-                        $c *= $raw_foreground_color;
-                    } elsif ($draw_mode == DIVIDE_MODE) {
-                        $c /= $raw_foreground_color;
-                    } elsif ($draw_mode == MASK_MODE) {
-                        if ($self->{'BITS'} == 32) {
-                            $c = $raw_foreground_color if (substr($raw_foreground_color, 0, 3) ne substr($raw_background_color, 0, 3));
-                        } else {
-                            $c = $raw_foreground_color if ($raw_foreground_color ne $raw_background_color);
-                        }
-                    } elsif ($draw_mode == UNMASK_MODE) {
-                        my $pixel = $self->pixel({ 'x' => $x, 'y' => $y });
-                        if ($self->{'BITS'} == 32) {
-                            $c = $raw_foreground_color if (substr($pixel->{'raw'}, 0, 3) eq substr($raw_background_color, 0, 3));
-                        } else {
-                            $c = $raw_foreground_color if ($pixel->{'raw'} eq $raw_background_color);
-                        }
-                    }
-                    substr($self->{'SCREEN'}, $index, $bytes) = $c;
+					} else {
+						$c = substr($self->{'SCREEN'}, $index, $self->{'BYTES'}) || chr(0) x $bytes;
+						if ($draw_mode == XOR_MODE) {
+							$c ^= $raw_foreground_color;
+						} elsif ($draw_mode == OR_MODE) {
+							$c |= $raw_foreground_color;
+						} elsif ($draw_mode == ALPHA_MODE) {
+							my $back  = $self->get_pixel({ 'x' => $x, 'y' => $y });
+							my $saved = { 'main' => $raw_foreground_color };
+							foreach my $color (qw( red green blue )) {
+								$saved->{$color} = $self->{ 'COLOR_' . uc($color) };
+								$back->{$color}  = ($self->{ 'COLOR_' . uc($color) } * $color_alpha) + ($back->{$color} * (1 - $color_alpha));
+							}
+							$back->{'alpha'} = min(255, $color_alpha + $back->{'alpha'});
+							$self->set_color($back);
+							$c                    = $raw_foreground_color;
+							$raw_foreground_color = $saved->{'main'};
+							foreach my $color (qw( red green blue )) {
+								$self->{ 'COLOR_' . uc($color) } = $saved->{$color};
+							}
+						} elsif ($draw_mode == MASK_MODE) {
+							if ($self->{'BITS'} == 32) {
+								$c = $raw_foreground_color if (substr($raw_foreground_color, 0, 3) ne substr($raw_background_color, 0, 3));
+							} else {
+								$c = $raw_foreground_color if ($raw_foreground_color ne $raw_background_color);
+							}
+						} elsif ($draw_mode == UNMASK_MODE) {
+							my $pixel = $self->pixel({ 'x' => $x, 'y' => $y });
+							if ($self->{'BITS'} == 32) {
+								$c = $raw_foreground_color if (substr($pixel->{'raw'}, 0, 3) eq substr($raw_background_color, 0, 3));
+							} else {
+								$c = $raw_foreground_color if ($pixel->{'raw'} eq $raw_background_color);
+							}
+						} elsif ($draw_mode == AND_MODE) {
+							$c &= $raw_foreground_color;
+						} elsif ($draw_mode == ADD_MODE) {
+							$c += $raw_foreground_color;
+						} elsif ($draw_mode == SUBTRACT_MODE) {
+							$c -= $raw_foreground_color;
+						} elsif ($draw_mode == MULTIPLY_MODE) {
+							$c *= $raw_foreground_color;
+						} elsif ($draw_mode == DIVIDE_MODE) {
+							$c /= $raw_foreground_color;
+						}
+					}
+					substr($self->{'SCREEN'}, $index, $bytes) = $c;
 					if ($@) {
 						warn __LINE__ . " $@" if ($self->{'SHOW_ERRORS'});
 						$self->_fix_mapping();
 					}
                 } ## end if ($index >= 0 && $index...)
-                $self->{'history'}->[$y]->[$x] = 1 if (exists($self->{'history'}));
+                $self->{'history'}->{$y}->{$x} = 1 if (exists($self->{'history'}));
             } ## end unless (exists($self->{'history'...}))
         }
     } ## end else [ if ($self->{'ACCELERATED'...})]
