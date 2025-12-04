@@ -96,6 +96,18 @@ void c_plot(char *framebuffer,
             unsigned int bytes_per_line,
             short xoffset, short yoffset);
 
+void c_fill(char *framebuffer,
+            short x, short y,
+            short x_clip, short y_clip, short xx_clip, short yy_clip,
+            unsigned int color,
+            unsigned int bcolor,
+            unsigned char alpha,
+            unsigned char draw_mode,
+            unsigned char bytes_per_pixel,
+            unsigned char bits_per_pixel,
+            unsigned int bytes_per_line,
+            short xoffset, short yoffset);
+
 // Helper to plot one antialiased pixel. Moved out of c_line to file scope.
 // It accepts the required context as parameters (previously captured by nested
 // function).
@@ -225,6 +237,21 @@ void c_graphics_mode(char *tty_file)
    int tty_fd = open(tty_file,O_RDWR);
    ioctl(tty_fd,KDSETMODE,KD_GRAPHICS);
    close(tty_fd);
+}
+
+
+void c_fill(char *framebuffer,
+            short x, short y,
+            short x_clip, short y_clip, short xx_clip, short yy_clip,
+            unsigned int color,
+            unsigned int bcolor,
+            unsigned char alpha,
+            unsigned char draw_mode,
+            unsigned char bytes_per_pixel,
+            unsigned char bits_per_pixel,
+            unsigned int bytes_per_line,
+            short xoffset, short yoffset) 
+{
 }
 
 /* The other routines call this.  It handles all draw modes

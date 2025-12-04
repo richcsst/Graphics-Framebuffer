@@ -4308,44 +4308,90 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
 
     return if ($back eq $self->{'RAW_FOREGROUND_COLOR'});
     unless ($self->{'ACCELERATED'}) {
+# ... (file header unchanged) ...
 
+		# This doesn't over-use the system stack.  While flood fill algorithms are famous being a stack memory hog, this one goes easy on it.
+		# Optimized: avoid repeated shift() (O(n)), reduce method-call overhead by
+		# caching small helpers, and use a queue with head index.
+		my $background = $pixel->{'raw'};
+		my @visited    = ();                # Used to be an associative array, which was slower
+		my @queue      = ();
+
+		# queue head index (faster than shift)
+		my $qhead = 0;
+		push @queue, [$x, $y];
+
+		# small cached subs to reduce repeated hash construction for method calls
+		my $get_pixel = sub {
+			my ($px, $py) = @_;
+			return $self->pixel( { x => $px, y => $py, raw => TRUE } );
+		};
+		my $do_plot = sub {
+			my ($px, $py) = @_;
+			$self->plot( { x => $px, y => $py } );
+		};
+
+		while ($qhead <= $#queue) {
+			my ($cx, $cy) = @{ $queue[$qhead++] };
+			# clip check
+			next
+			  if ( $cx < $x_clip
+				  || $cx > $xx_clip
+				  || $cy < $y_clip
+				  || $cy > $yy_clip );
+
+			# skip already visited
+			next if ( defined $visited[$cx] && $visited[$cx][$cy] );
+
+			# fetch pixel raw and compare
+			my $curpix = $get_pixel->( $cx, $cy );
+			if ( $curpix eq $background ) {
+				$do_plot->( $cx, $cy );
+				$visited[$cx][$cy] = 1;
+
+				# enqueue neighbors (bounds will be checked on dequeue)
+				push @queue, [ $cx + 1, $cy ], [ $cx - 1, $cy ],
+				  [ $cx, $cy + 1 ], [ $cx, $cy - 1 ];
+			}
+		}
+		# ... (rest of file unchanged) ...
         # This doesn't over-use the system stack.  While flood fill algorithms are famous being a stack memory hog, this one goes easy on it.
-        my $background = $pixel->{'raw'};
-        my @visited    = ();                # Used to be an associative array, which was slower
-        my @queue      = ();
+#        my $background = $pixel->{'raw'};
+#        my @visited    = ();                # Used to be an associative array, which was slower
+#        my @queue      = ();
 
-        push(@queue, [$x, $y]);
+#        push(@queue, [$x, $y]);
 
-        while (scalar(@queue)) {
-            my $pointref = shift(@queue);
-            ($x, $y) = @{$pointref};
-            next if (($x < $x_clip)
-                || ($x > $xx_clip)
-                || ($y < $y_clip)
-                || ($y > $yy_clip));
-            unless (defined($visited[$x][$y])) {
-                $pixel = $self->pixel(
-                    {
-                        'x'   => $x,
-                        'y'   => $y,
-                        'raw' => TRUE,
-                    }
-                );
-                if ($pixel eq $background) {
-                    $self->plot(
-                        {
-                            'x' => $x,
-                            'y' => $y,
-                        }
-                    );
-                    $visited[$x][$y]++;
-                    push(@queue, [$x + 1, $y]);
-                    push(@queue, [$x - 1, $y]);
-                    push(@queue, [$x, $y + 1]);
-                    push(@queue, [$x, $y - 1]);
-                } ## end if ($pixel eq $background)
-            } ## end unless (defined($visited[$x...]))
-        } ## end while (scalar(@queue))
+#        while (scalar(@queue)) {
+#            my $pointref = shift(@queue);
+#            ($x, $y) = @{$pointref};
+#            next if (($x < $x_clip)
+#                || ($x > $xx_clip)
+#                || ($y < $y_clip)
+#                || ($y > $yy_clip));
+#            unless (defined($visited[$x][$y])) {
+#                $pixel = $self->pixel(
+#                    {
+#                        'x'   => $x,
+#                        'y'   => $y,
+#                        'raw' => TRUE,
+#                    }
+#                );
+#                if ($pixel eq $background) {
+#                    $self->plot(
+#                        {
+#                            'x' => $x,
+#                            'y' => $y,
+#                        }
+#                    );
+#                    $visited[$x][$y]++;
+#                    push(@queue, [$x + 1, $y]);
+#                    push(@queue, [$x - 1, $y]);
+#                    push(@queue, [$x, $y + 1]);
+#                    push(@queue, [$x, $y - 1]);
+#                } ## end if ($pixel eq $background)
+#            } ## end unless (defined($visited[$x...]))
+#        } ## end while (scalar(@queue))
     } else {
         my $width  = int($self->{'W_CLIP'});
         my $height = int($self->{'H_CLIP'});
