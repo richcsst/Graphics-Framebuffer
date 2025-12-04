@@ -4308,8 +4308,6 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
 
     return if ($back eq $self->{'RAW_FOREGROUND_COLOR'});
     unless ($self->{'ACCELERATED'}) {
-# ... (file header unchanged) ...
-
 		# This doesn't over-use the system stack.  While flood fill algorithms are famous being a stack memory hog, this one goes easy on it.
 		# Optimized: avoid repeated shift() (O(n)), reduce method-call overhead by
 		# caching small helpers, and use a queue with head index.
@@ -4354,44 +4352,6 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
 				  [ $cx, $cy + 1 ], [ $cx, $cy - 1 ];
 			}
 		}
-		# ... (rest of file unchanged) ...
-        # This doesn't over-use the system stack.  While flood fill algorithms are famous being a stack memory hog, this one goes easy on it.
-#        my $background = $pixel->{'raw'};
-#        my @visited    = ();                # Used to be an associative array, which was slower
-#        my @queue      = ();
-
-#        push(@queue, [$x, $y]);
-
-#        while (scalar(@queue)) {
-#            my $pointref = shift(@queue);
-#            ($x, $y) = @{$pointref};
-#            next if (($x < $x_clip)
-#                || ($x > $xx_clip)
-#                || ($y < $y_clip)
-#                || ($y > $yy_clip));
-#            unless (defined($visited[$x][$y])) {
-#                $pixel = $self->pixel(
-#                    {
-#                        'x'   => $x,
-#                        'y'   => $y,
-#                        'raw' => TRUE,
-#                    }
-#                );
-#                if ($pixel eq $background) {
-#                    $self->plot(
-#                        {
-#                            'x' => $x,
-#                            'y' => $y,
-#                        }
-#                    );
-#                    $visited[$x][$y]++;
-#                    push(@queue, [$x + 1, $y]);
-#                    push(@queue, [$x - 1, $y]);
-#                    push(@queue, [$x, $y + 1]);
-#                    push(@queue, [$x, $y - 1]);
-#                } ## end if ($pixel eq $background)
-#            } ## end unless (defined($visited[$x...]))
-#        } ## end while (scalar(@queue))
     } else {
         my $width  = int($self->{'W_CLIP'});
         my $height = int($self->{'H_CLIP'});
@@ -4418,79 +4378,82 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
             $pattern = $self->_generate_fill($width, $height, undef, $params->{'hatch'});
         }
 
-        my $saved = $self->blit_read(
-            {
-                'x'      => $x_clip,
-                'y'      => $y_clip,
-                'width'  => $width,
-                'height' => $height,
-            }
-        );
-        if ($self->{'BITS'} == 16) {
-            $saved->{'image'} = $self->_convert_16_to_24($saved->{'image'}, RGB);
-            $pattern = $self->_convert_16_to_24($pattern, RGB) if (defined($pattern));
-        }
-        eval {
-            my $img = Imager->new(
-                'xsize'             => $width,
-                'ysize'             => $height,
-                'raw_datachannels'  => $tc_bytes,
-                'raw_storechannels' => $tc_bytes,
-                'channels'          => $tc_bytes,
-            );
+		if (defined($pattern)) {
+			my $saved = $self->blit_read(
+				{
+					'x'      => $x_clip,
+					  'y'      => $y_clip,
+					  'width'  => $width,
+					  'height' => $height,
+				}
+			);
+			if ($self->{'BITS'} == 16) {
+				$saved->{'image'} = $self->_convert_16_to_24($saved->{'image'}, RGB);
+				$pattern = $self->_convert_16_to_24($pattern, RGB) if (defined($pattern));
+			}
+			eval {
+				my $img = Imager->new(
+					'xsize'             => $width,
+					'ysize'             => $height,
+					'raw_datachannels'  => $tc_bytes,
+					'raw_storechannels' => $tc_bytes,
+					'channels'          => $tc_bytes,
+				);
 
-            #            unless ($self->{'DRAW_MODE'}) {
-            $img->read(
-                'xsize'             => $width,
-                'ysize'             => $height,
-                'raw_datachannels'  => $tc_bytes,
-                'raw_storechannels' => $tc_bytes,
-                'channels'          => $tc_bytes,
-                'raw_interleave'    => 0,
-                'data'              => $saved->{'image'},
-                'type'              => 'raw',
-                'allow_incomplete'  => 1
-            );
+				#            unless ($self->{'DRAW_MODE'}) {
+				$img->read(
+					'xsize'             => $width,
+					'ysize'             => $height,
+					'raw_datachannels'  => $tc_bytes,
+					'raw_storechannels' => $tc_bytes,
+					'channels'          => $tc_bytes,
+					'raw_interleave'    => 0,
+					'data'              => $saved->{'image'},
+					'type'              => 'raw',
+					'allow_incomplete'  => 1
+				);
+				my $fill;
+				if (defined($pattern)) {
+					my $pimg = Imager->new();
+					$pimg->read(
+						'xsize'             => $width,
+						'ysize'             => $height,
+						'raw_datachannels'  => $tc_bytes,
+						'raw_storechannels' => $tc_bytes,
+						'raw_interleave'    => 0,
+						'channels'          => $tc_bytes,
+						'data'              => $pattern,
+						'type'              => 'raw',
+						'allow_incomplete'  => 1
+					);
+					$img->flood_fill(
+						'x'     => $x - $x_clip,
+						'y'     => $y - $y_clip,
+						'color' => $self->{'IMAGER_FOREGROUND_COLOR'},
+						'fill'  => { 'image' => $pimg }
+					);
+				} else {
+					$img->flood_fill(
+						'x'     => $x - $x_clip,
+						'y'     => $y - $y_clip,
+						'color' => $self->{'IMAGER_FOREGROUND_COLOR'},
+					);
+				} ## end else [ if (defined($pattern))]
+				$img->write(
+					'type'          => 'raw',
+					'datachannels'  => $tc_bytes,
+					'storechannels' => $tc_bytes,
+					'interleave'    => 0,
+					'data'          => \$saved->{'image'},
+				);
+				$saved->{'image'} = $self->_convert_24_to_16($saved->{'image'}, RGB) if ($self->{'BITS'} == 16);
+			};
+			warn __LINE__ . " $@\n", Imager->errstr() if ($@ && $self->{'SHOW_ERRORS'});
 
-            my $fill;
-            if (defined($pattern)) {
-                my $pimg = Imager->new();
-                $pimg->read(
-                    'xsize'             => $width,
-                    'ysize'             => $height,
-                    'raw_datachannels'  => $tc_bytes,
-                    'raw_storechannels' => $tc_bytes,
-                    'raw_interleave'    => 0,
-                    'channels'          => $tc_bytes,
-                    'data'              => $pattern,
-                    'type'              => 'raw',
-                    'allow_incomplete'  => 1
-                );
-                $img->flood_fill(
-                    'x'     => $x - $x_clip,
-                    'y'     => $y - $y_clip,
-                    'color' => $self->{'IMAGER_FOREGROUND_COLOR'},
-                    'fill'  => { 'image' => $pimg }
-                );
-            } else {
-                $img->flood_fill(
-                    'x'     => $x - $x_clip,
-                    'y'     => $y - $y_clip,
-                    'color' => $self->{'IMAGER_FOREGROUND_COLOR'},
-                );
-            } ## end else [ if (defined($pattern))]
-            $img->write(
-                'type'          => 'raw',
-                'datachannels'  => $tc_bytes,
-                'storechannels' => $tc_bytes,
-                'interleave'    => 0,
-                'data'          => \$saved->{'image'},
-            );
-            $saved->{'image'} = $self->_convert_24_to_16($saved->{'image'}, RGB) if ($self->{'BITS'} == 16);
-        };
-        warn __LINE__ . " $@\n", Imager->errstr() if ($@ && $self->{'SHOW_ERRORS'});
-
-        $self->blit_write($saved);
+			$self->blit_write($saved);
+		} else {
+			c_fill($self->{'SCREEN'}, $x, $y, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $color_alpha, $self->{'DRAW_MODE'}, $bytes, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'},);
+		}
     } ## end else
 } ## end sub fill
 

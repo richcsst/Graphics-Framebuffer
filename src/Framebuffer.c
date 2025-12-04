@@ -252,6 +252,275 @@ void c_fill(char *framebuffer,
             unsigned int bytes_per_line,
             short xoffset, short yoffset) 
 {
+    /* Flood fill (scanline) using c_plot for writes. Reads are done directly
+       from the framebuffer memory (matching c_plot's read layout). Supports
+       32, 24, and 16 bits per pixel. Respects clipping rectangle and x/y offsets. */
+
+    /* quick sanity: start point must be inside clip */
+    if (!(x >= x_clip && x <= xx_clip && y >= y_clip && y <= yy_clip)) {
+        return;
+    }
+
+    /* helper to read a pixel in the same packed format used elsewhere in this file */
+    uint32_t target32 = 0;
+    uint16_t target16 = 0;
+    uint8_t target8 = 0;
+
+auto_read_pixel:
+    {
+        unsigned int rx = (unsigned int)(x + xoffset);
+        unsigned int ry = (unsigned int)(y + yoffset);
+        unsigned int index = rx * (unsigned int)bytes_per_pixel + ry * bytes_per_line;
+        unsigned char *p = (unsigned char*)(framebuffer + index);
+
+        if (bits_per_pixel == 32) {
+            target32 = *((uint32_t*)p);
+        } else if (bits_per_pixel == 24) {
+            /* pack 3 bytes into 24-bit value (low 24 bits) */
+            target32 = (uint32_t)p[0] | ((uint32_t)p[1] << 8) | ((uint32_t)p[2] << 16);
+        } else if (bits_per_pixel == 16) {
+            target16 = *((uint16_t*)p);
+        } else if (bits_per_pixel == 8) {
+            target8 = *p;
+        } else {
+            /* unsupported bpp for fill */
+            return;
+        }
+    }
+
+    /* If drawing in NORMAL mode and the target pixel already equals the fill color,
+       no work to do (compare in the same packed representation). */
+    if (draw_mode == NORMAL_MODE) {
+        if (bits_per_pixel == 32) {
+            if (target32 == (uint32_t)color) return;
+        } else if (bits_per_pixel == 24) {
+            if (target32 == (uint32_t)(color & 0x00FFFFFF)) return;
+        } else if (bits_per_pixel == 16) {
+            if (target16 == (uint16_t)color) return;
+        } else if (bits_per_pixel == 8) {
+            if (target8 == (uint8_t)color) return;
+        }
+    }
+
+    /* Define a small point struct and a dynamic stack for spans */
+    typedef struct { short x, y; } Point;
+    size_t stack_capacity = 4096;
+    size_t stack_size = 0;
+    Point *stack = (Point*)malloc(stack_capacity * sizeof(Point));
+    if (!stack) return; /* allocation failed */
+
+    /* push initial point */
+    stack[stack_size++] = (Point){ x, y };
+
+    while (stack_size > 0) {
+        /* pop */
+        Point pt = stack[--stack_size];
+        short sx = pt.x;
+        short sy = pt.y;
+
+        /* move left from sx until pixel != target or left clip */
+        short lx = sx;
+        for (;; --lx) {
+            if (lx < x_clip) { lx = x_clip; break; }
+            /* read pixel at (lx,sy) */
+            unsigned int rx = (unsigned int)(lx + xoffset);
+            unsigned int ry = (unsigned int)(sy + yoffset);
+            unsigned int index = rx * (unsigned int)bytes_per_pixel + ry * bytes_per_line;
+            unsigned char *p = (unsigned char*)(framebuffer + index);
+
+            bool equal = false;
+            if (bits_per_pixel == 32) {
+                uint32_t v = *((uint32_t*)p);
+                equal = (v == target32);
+            } else if (bits_per_pixel == 24) {
+                uint32_t v = (uint32_t)p[0] | ((uint32_t)p[1] << 8) | ((uint32_t)p[2] << 16);
+                equal = (v == (target32 & 0x00FFFFFF));
+            } else if (bits_per_pixel == 16) {
+                uint16_t v = *((uint16_t*)p);
+                equal = (v == target16);
+            } else if (bits_per_pixel == 8) {
+                uint8_t v = *p;
+                equal = (v == target8);
+            } else {
+                equal = false;
+            }
+
+            if (!equal) { lx++; break; }
+            if (lx == x_clip) { break; }
+        }
+
+        /* move right from sx until pixel != target or right clip */
+        short rxp = sx;
+        for (;; ++rxp) {
+            if (rxp > xx_clip) { rxp = xx_clip; break; }
+            unsigned int rxr = (unsigned int)(rxp + xoffset);
+            unsigned int ryr = (unsigned int)(sy + yoffset);
+            unsigned int indexr = rxr * (unsigned int)bytes_per_pixel + ryr * bytes_per_line;
+            unsigned char *pr = (unsigned char*)(framebuffer + indexr);
+
+            bool equalr = false;
+            if (bits_per_pixel == 32) {
+                uint32_t v = *((uint32_t*)pr);
+                equalr = (v == target32);
+            } else if (bits_per_pixel == 24) {
+                uint32_t v = (uint32_t)pr[0] | ((uint32_t)pr[1] << 8) | ((uint32_t)pr[2] << 16);
+                equalr = (v == (target32 & 0x00FFFFFF));
+            } else if (bits_per_pixel == 16) {
+                uint16_t v = *((uint16_t*)pr);
+                equalr = (v == target16);
+            } else if (bits_per_pixel == 8) {
+                uint8_t v = *pr;
+                equalr = (v == target8);
+            } else {
+                equalr = false;
+            }
+
+            if (!equalr) { rxp--; break; }
+            if (rxp == xx_clip) { break; }
+        }
+
+        if (rxp < lx) continue; /* nothing to fill on this line */
+
+        /* fill the span from lx to rxp inclusive using c_plot */
+        for (short fx = lx; fx <= rxp; ++fx) {
+            c_plot(framebuffer, fx, sy, x_clip, y_clip, xx_clip, yy_clip,
+                   color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+        }
+
+        /* check the line above (sy - 1) for new spans */
+        if (sy - 1 >= y_clip) {
+            short scanx = lx;
+            while (scanx <= rxp) {
+                bool inSpan = false;
+                /* advance until we find a pixel equal to target */
+                while (scanx <= rxp) {
+                    unsigned int rxs = (unsigned int)(scanx + xoffset);
+                    unsigned int rys = (unsigned int)(sy - 1 + yoffset);
+                    unsigned int idxs = rxs * (unsigned int)bytes_per_pixel + rys * bytes_per_line;
+                    unsigned char *ps = (unsigned char*)(framebuffer + idxs);
+                    bool equalu = false;
+                    if (bits_per_pixel == 32) {
+                        uint32_t v = *((uint32_t*)ps);
+                        equalu = (v == target32);
+                    } else if (bits_per_pixel == 24) {
+                        uint32_t v = (uint32_t)ps[0] | ((uint32_t)ps[1] << 8) | ((uint32_t)ps[2] << 16);
+                        equalu = (v == (target32 & 0x00FFFFFF));
+                    } else if (bits_per_pixel == 16) {
+                        uint16_t v = *((uint16_t*)ps);
+                        equalu = (v == target16);
+                    } else if (bits_per_pixel == 8) {
+                        uint8_t v = *ps;
+                        equalu = (v == target8);
+                    }
+                    if (!equalu) { scanx++; continue; }
+                    /* found span start */
+                    inSpan = true;
+                    short spanStart = scanx;
+                    /* find span end */
+                    while (scanx <= rxp) {
+                        unsigned int rxs2 = (unsigned int)(scanx + xoffset);
+                        unsigned int rys2 = (unsigned int)(sy - 1 + yoffset);
+                        unsigned int idxs2 = rxs2 * (unsigned int)bytes_per_pixel + rys2 * bytes_per_line;
+                        unsigned char *ps2 = (unsigned char*)(framebuffer + idxs2);
+                        bool equald = false;
+                        if (bits_per_pixel == 32) {
+                            uint32_t v = *((uint32_t*)ps2);
+                            equald = (v == target32);
+                        } else if (bits_per_pixel == 24) {
+                            uint32_t v = (uint32_t)ps2[0] | ((uint32_t)ps2[1] << 8) | ((uint32_t)ps2[2] << 16);
+                            equald = (v == (target32 & 0x00FFFFFF));
+                        } else if (bits_per_pixel == 16) {
+                            uint16_t v = *((uint16_t*)ps2);
+                            equald = (v == target16);
+                        } else if (bits_per_pixel == 8) {
+                            uint8_t v = *ps2;
+                            equald = (v == target8);
+                        }
+                        if (!equald) break;
+                        scanx++;
+                    }
+                    /* push the span start (one representative point) */
+                    if (stack_size + 1 >= stack_capacity) {
+                        size_t newcap = stack_capacity * 2;
+                        Point *newstack = (Point*)realloc(stack, newcap * sizeof(Point));
+                        if (!newstack) { free(stack); return; }
+                        stack = newstack;
+                        stack_capacity = newcap;
+                    }
+                    stack[stack_size++] = (Point){ spanStart, (short)(sy - 1) };
+                }
+                if (!inSpan) break;
+            }
+        }
+
+        /* check the line below (sy + 1) for new spans */
+        if (sy + 1 <= yy_clip) {
+            short scanx = lx;
+            while (scanx <= rxp) {
+                bool inSpan = false;
+                /* advance until we find a pixel equal to target */
+                while (scanx <= rxp) {
+                    unsigned int rxs = (unsigned int)(scanx + xoffset);
+                    unsigned int rys = (unsigned int)(sy + 1 + yoffset);
+                    unsigned int idxs = rxs * (unsigned int)bytes_per_pixel + rys * bytes_per_line;
+                    unsigned char *ps = (unsigned char*)(framebuffer + idxs);
+                    bool equalu = false;
+                    if (bits_per_pixel == 32) {
+                        uint32_t v = *((uint32_t*)ps);
+                        equalu = (v == target32);
+                    } else if (bits_per_pixel == 24) {
+                        uint32_t v = (uint32_t)ps[0] | ((uint32_t)ps[1] << 8) | ((uint32_t)ps[2] << 16);
+                        equalu = (v == (target32 & 0x00FFFFFF));
+                    } else if (bits_per_pixel == 16) {
+                        uint16_t v = *((uint16_t*)ps);
+                        equalu = (v == target16);
+                    } else if (bits_per_pixel == 8) {
+                        uint8_t v = *ps;
+                        equalu = (v == target8);
+                    }
+                    if (!equalu) { scanx++; continue; }
+                    /* found span start */
+                    inSpan = true;
+                    short spanStart = scanx;
+                    /* find span end */
+                    while (scanx <= rxp) {
+                        unsigned int rxs2 = (unsigned int)(scanx + xoffset);
+                        unsigned int rys2 = (unsigned int)(sy + 1 + yoffset);
+                        unsigned int idxs2 = rxs2 * (unsigned int)bytes_per_pixel + rys2 * bytes_per_line;
+                        unsigned char *ps2 = (unsigned char*)(framebuffer + idxs2);
+                        bool equald = false;
+                        if (bits_per_pixel == 32) {
+                            uint32_t v = *((uint32_t*)ps2);
+                            equald = (v == target32);
+                        } else if (bits_per_pixel == 24) {
+                            uint32_t v = (uint32_t)ps2[0] | ((uint32_t)ps2[1] << 8) | ((uint32_t)ps2[2] << 16);
+                            equald = (v == (target32 & 0x00FFFFFF));
+                        } else if (bits_per_pixel == 16) {
+                            uint16_t v = *((uint16_t*)ps2);
+                            equald = (v == target16);
+                        } else if (bits_per_pixel == 8) {
+                            uint8_t v = *ps2;
+                            equald = (v == target8);
+                        }
+                        if (!equald) break;
+                        scanx++;
+                    }
+                    /* push the span start (one representative point) */
+                    if (stack_size + 1 >= stack_capacity) {
+                        size_t newcap = stack_capacity * 2;
+                        Point *newstack = (Point*)realloc(stack, newcap * sizeof(Point));
+                        if (!newstack) { free(stack); return; }
+                        stack = newstack;
+                        stack_capacity = newcap;
+                    }
+                    stack[stack_size++] = (Point){ spanStart, (short)(sy + 1) };
+                }
+                if (!inSpan) break;
+            }
+        }
+    } /* end while stack */
+
+    free(stack);
 }
 
 /* The other routines call this.  It handles all draw modes
@@ -1520,5 +1789,4 @@ void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, un
         }
     }
 }
-
 

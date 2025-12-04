@@ -1616,7 +1616,7 @@ sub flood_fill {
     $F->clip_reset();
 
     if ($XX > 255) {    # && !$rpi) {
-        my $image = $IMAGES[int(rand(scalar(@IMAGES)))];
+#        my $image = $IMAGES[int(rand(scalar(@IMAGES)))];
         $F->set_color(
 			{
 				'red'   => int(rand(256)),
@@ -1692,7 +1692,7 @@ sub flood_fill {
 			{
 				'x'       => int(700 * $xm),
 				'y'       => int(500 * $ym),
-				'texture' => $image,
+#				'texture' => $image,
 			}
 		);
 
