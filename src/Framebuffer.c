@@ -325,7 +325,8 @@ void c_line(
     unsigned char bytes_per_pixel,
     unsigned char bits_per_pixel,
     unsigned int bytes_per_line,
-    short xoffset, short yoffset)
+    short xoffset, short yoffset,
+	bool antialiased)
 {
     short shortLen = y2 - y1;
     short longLen  = x2 - x1;

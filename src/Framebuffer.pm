@@ -2308,7 +2308,6 @@ Draws a line, in the global foreground color, from point x,y at an angle of 'ang
 } ## end sub angle_line
 
 sub drawto {
-
 =head2 drawto
 
 Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
@@ -2332,8 +2331,7 @@ Draws a line, in the foreground color, from the last plotted position to the pos
     # BLIT functions.  This assists greatly with drawing filled objects.  In #
     # fact, it's hundreds of times faster!                                   #
     ##########################################################################
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x_end = int($params->{'x'});
     my $y_end = int($params->{'y'});
@@ -2348,7 +2346,7 @@ Draws a line, in the foreground color, from the last plotted position to the pos
     my $xx_clip     = $self->{'XX_CLIP'};
     my $yy_clip     = $self->{'YY_CLIP'};
 
-    if ($self->{'ACCELERATED'} && !$antialiased) {
+    if ($self->{'ACCELERATED'}) {
         c_line(
             $self->{'SCREEN'},
             $start_x, $start_y, $x_end,   $y_end,
@@ -2361,8 +2359,7 @@ Draws a line, in the foreground color, from the last plotted position to the pos
             $self->{'BITS'},
             $self->{'BYTES_PER_LINE'},
             $self->{'XOFFSET'}, $self->{'YOFFSET'},
-
-            # $antialiased,
+            $antialiased,
         );
     } else {
         my $width;
