@@ -26,6 +26,7 @@
 #include <math.h>
 #include <string.h> /* for memcpy */
 #include <stdint.h> /* added for fixed width integer types */
+#include <stdbool.h> /* for bool */
 
 #define NORMAL_MODE   0
 #define XOR_MODE      1
@@ -55,6 +56,94 @@
 /* Global Structures */
 struct fb_var_screeninfo vinfo;
 struct fb_fix_screeninfo finfo;
+
+// Helper functions for Xiaolin Wu antialiased line algorithm.
+// These used to be nested inside c_line; moved here to file scope so they
+// compile under standard C and so XS wrappers can call them (they were
+// previously implicitly declared).
+double ipart(double x)
+{
+    return floor(x);
+}
+
+double roundd(double x)
+{
+    return floor(x + 0.5);
+}
+
+double fpart(double x)
+{
+    return x - floor(x);
+}
+
+double rfpart(double x)
+{
+    return 1.0 - fpart(x);
+}
+
+// Forward declaration of c_plot so functions defined earlier (like plot_aa_pixel)
+// can call it without triggering implicit-declaration warnings/errors.
+// Signature must match the later definition of c_plot.
+void c_plot(char *framebuffer,
+            short x, short y,
+            short x_clip, short y_clip, short xx_clip, short yy_clip,
+            unsigned int color,
+            unsigned int bcolor,
+            unsigned char alpha,
+            unsigned char draw_mode,
+            unsigned char bytes_per_pixel,
+            unsigned char bits_per_pixel,
+            unsigned int bytes_per_line,
+            short xoffset, short yoffset);
+
+// Helper to plot one antialiased pixel. Moved out of c_line to file scope.
+// It accepts the required context as parameters (previously captured by nested
+// function).
+static void plot_aa_pixel(char *framebuffer,
+                          unsigned int color,
+                          unsigned int bcolor,
+                          unsigned char alpha,
+                          unsigned char bytes_per_pixel,
+                          unsigned char bits_per_pixel,
+                          unsigned int bytes_per_line,
+                          short x_clip, short y_clip, short xx_clip, short yy_clip,
+                          short xoffset, short yoffset,
+                          int steep,
+                          long xx, long yy, double intensity)
+{
+    if (intensity <= 0.0) return;
+    if (intensity > 1.0) intensity = 1.0;
+    unsigned char ia = (unsigned char)(intensity * 255.0 + 0.5);
+
+    if (bits_per_pixel == 32)
+    {
+        unsigned int col_with_a = ((unsigned int)ia << 24) | (color & 0x00FFFFFF);
+        if (steep)
+        {
+            c_plot(framebuffer, (short)yy, (short)xx, x_clip, y_clip, xx_clip, yy_clip,
+                   col_with_a, bcolor, 0, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+        }
+        else
+        {
+            c_plot(framebuffer, (short)xx, (short)yy, x_clip, y_clip, xx_clip, yy_clip,
+                   col_with_a, bcolor, 0, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+        }
+    }
+    else
+    {
+        /* pass alpha via the alpha parameter for non-32bpp modes */
+        if (steep)
+        {
+            c_plot(framebuffer, (short)yy, (short)xx, x_clip, y_clip, xx_clip, yy_clip,
+                   color, bcolor, ia, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+        }
+        else
+        {
+            c_plot(framebuffer, (short)xx, (short)yy, x_clip, y_clip, xx_clip, yy_clip,
+                   color, bcolor, ia, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+        }
+    }
+}
 
 // This gets the framebuffer info and populates the above structures, then sends them to Perl
 void c_get_screen_info(char *fb_file)
@@ -146,17 +235,17 @@ void c_graphics_mode(char *tty_file)
  * arriving at this routine.
 */
 void c_plot(
-			char *framebuffer,
-			short x, short y,
-			short x_clip, short y_clip, short xx_clip, short yy_clip,
-			unsigned int color,
-			unsigned int bcolor,
-			unsigned char alpha,
-			unsigned char draw_mode,
-			unsigned char bytes_per_pixel,
-			unsigned char bits_per_pixel,
-			unsigned int bytes_per_line,
-			short xoffset, short yoffset)
+            char *framebuffer,
+            short x, short y,
+            short x_clip, short y_clip, short xx_clip, short yy_clip,
+            unsigned int color,
+            unsigned int bcolor,
+            unsigned char alpha,
+            unsigned char draw_mode,
+            unsigned char bytes_per_pixel,
+            unsigned char bits_per_pixel,
+            unsigned int bytes_per_line,
+            short xoffset, short yoffset)
 {
    if (!(x >= x_clip && x <= xx_clip && y >= y_clip && y <= yy_clip))
 {
@@ -324,7 +413,7 @@ void c_plot(
             }
    *p = res8;
    break;
-        }
+       }
  case 1:
 {
    /* Not supported yet; no-op */
@@ -337,210 +426,152 @@ void c_plot(
 
 // Draws a line
 void c_line(
-			char *framebuffer,
-			short x1, short y1, short x2, short y2,
-			short x_clip, short y_clip, short xx_clip, short yy_clip,
-			unsigned int color,
-			unsigned int bcolor,
-			unsigned char alpha,
-			unsigned char draw_mode,
-			unsigned char bytes_per_pixel,
-			unsigned char bits_per_pixel,
-			unsigned int bytes_per_line,
-			short xoffset, short yoffset,
-			bool antialiased)
+            char *framebuffer,
+            short x1, short y1, short x2, short y2,
+            short x_clip, short y_clip, short xx_clip, short yy_clip,
+            unsigned int color,
+            unsigned int bcolor,
+            unsigned char alpha,
+            unsigned char draw_mode,
+            unsigned char bytes_per_pixel,
+            unsigned char bits_per_pixel,
+            unsigned int bytes_per_line,
+            short xoffset, short yoffset,
+            bool antialiased)
     {
 
-	   /* If antialiasing is requested, use Xiaolin Wu's algorithm which blends
-		*        the endpoints and adjacent pixels using coverage (alpha) values.
-		*        Otherwise fallback to the previous integer-based Bresenham-like routine.
-		*     */
+       /* If antialiasing is requested, use Xiaolin Wu's algorithm which blends
+        *        the endpoints and adjacent pixels using coverage (alpha) values.
+        *        Otherwise fallback to the previous integer-based Bresenham-like routine.
+        *     */
 
-	if (antialiased)
-		 {
-			/* helper lambdas (implemented as inline functions) */
-			auto double_fpart = (double(*)(double))NULL; /* placeholder, will not be used directly */
-			/* local inline functions (using local static functions is messy in C89; implement here) */
-			double ipart(double x)
-			  {
-				 return floor(x);
-			  }
+    if (antialiased)
+         {
+            double x0 = (double)x1;
+            double y0 = (double)y1;
+            double x1d = (double)x2;
+            double y1d = (double)y2;
 
-			double roundd(double x)
-			  {
-				 return floor(x + 0.5);
-			  }
+            int steep = fabs(y1d - y0) > fabs(x1d - x0);
 
-			double fpart(double x)
-			  {
-				 return x - floor(x);
-			  }
+            if (steep)
+              {
+                 swap_(x0, y0);
+                 swap_(x1d, y1d);
+              }
 
-			double rfpart(double x)
-			  {
-				 return 1.0 - fpart(x);
-			  }
+            if (x0 > x1d)
+              {
+                 swap_(x0, x1d);
+                 swap_(y0, y1d);
+              }
 
-			double x0 = (double)x1;
-			double y0 = (double)y1;
-			double x1d = (double)x2;
-			double y1d = (double)y2;
+            double dx = x1d - x0;
+            double dy = y1d - y0;
+            double gradient = (dx == 0.0) ? 1.0 : dy / dx;
 
-			int steep = fabs(y1d - y0) > fabs(x1d - x0);
+            /* handle first endpoint */
+            double xend = roundd(x0);
+            double yend = y0 + gradient * (xend - x0);
+            double xgap = rfpart(x0 + 0.5);
+            long xpxl1 = (long)xend;
+            long ypxl1 = (long)floor(yend);
 
-			if (steep)
-			  {
-				 swap_(x0, y0);
-				 swap_(x1d, y1d);
-			  }
+            /* plot first endpoint */
+            double intery = yend + gradient; /* first y-intersection for the main loop */
 
-			if (x0 > x1d)
-			  {
-				 swap_(x0, x1d);
-				 swap_(y0, y1d);
-			  }
+            /* First endpoint pixels */
+            plot_aa_pixel(framebuffer, color, bcolor, alpha, bytes_per_pixel, bits_per_pixel, bytes_per_line,
+                          x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, steep, xpxl1, ypxl1, rfpart(yend) * xgap);
+            plot_aa_pixel(framebuffer, color, bcolor, alpha, bytes_per_pixel, bits_per_pixel, bytes_per_line,
+                          x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, steep, xpxl1, ypxl1 + 1, fpart(yend) * xgap);
+            /* handle second endpoint */
+            xend = roundd(x1d);
+            yend = y1d + gradient * (xend - x1d);
+            xgap = fpart(x1d + 0.5);
+            long xpxl2 = (long)xend;
+            long ypxl2 = (long)floor(yend);
 
-			double dx = x1d - x0;
-			double dy = y1d - y0;
-			double gradient = (dx == 0.0) ? 1.0 : dy / dx;
+            plot_aa_pixel(framebuffer, color, bcolor, alpha, bytes_per_pixel, bits_per_pixel, bytes_per_line,
+                          x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, steep, xpxl2, ypxl2, rfpart(yend) * xgap);
+            plot_aa_pixel(framebuffer, color, bcolor, alpha, bytes_per_pixel, bits_per_pixel, bytes_per_line,
+                          x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, steep, xpxl2, ypxl2 + 1, fpart(yend) * xgap);
 
-			/* handle first endpoint */
-			double xend = roundd(x0);
-			double yend = y0 + gradient * (xend - x0);
-			double xgap = rfpart(x0 + 0.5);
-			long xpxl1 = (long)xend;
-			long ypxl1 = (long)floor(yend);
+            /* main loop */
+            long x;
+            if (xpxl1 + 1 <= xpxl2 - 1)
+              {
+                 for (x = xpxl1 + 1; x <= xpxl2 - 1; x++)
+                   {
+                      double iy = intery;
+                      long yint = (long)floor(iy);
+                      plot_aa_pixel(framebuffer, color, bcolor, alpha, bytes_per_pixel, bits_per_pixel, bytes_per_line,
+                                    x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, steep, x, yint, rfpart(iy));
+                      plot_aa_pixel(framebuffer, color, bcolor, alpha, bytes_per_pixel, bits_per_pixel, bytes_per_line,
+                                    x_clip, y_clip, xx_clip, yy_clip, xoffset, yoffset, steep, x, yint + 1, fpart(iy));
+                      intery += gradient;
+                   }
+              }
+            return;
+         }
+       /* Original (non-antialiased) integer-based line drawing code follows */
+       short shortLen = y2 - y1;
+       short longLen  = x2 - x1;
+       int yLonger    = false;
 
-			/* plot first endpoint */
-			double intery = yend + gradient; /* first y-intersection for the main loop */
-
-			/* function to plot a pixel taking into account steepness and bits_per_pixel */
-			auto void plot_aa_pixel = (
-									   long xx, long yy, double intensity
-									  )
-			  {
-
-				 if (intensity <= 0.0) return;
-				 if (intensity > 1.0) intensity = 1.0;
-				 unsigned char ia = (unsigned char)(intensity * 255.0 + 0.5);
-
-				 if (bits_per_pixel == 32)
-				   {
-					  unsigned int col_with_a = ( (unsigned int)ia << 24 ) | (color & 0x00FFFFFF);
-					  if (steep)
-						{
-						   c_plot(framebuffer, (short)yy, (short)xx, x_clip, y_clip, xx_clip, yy_clip,
-								  col_with_a, bcolor, 0, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-						}
-					  else
-						{
-						   c_plot(framebuffer, (short)xx, (short)yy, x_clip, y_clip, xx_clip, yy_clip,
-								  col_with_a, bcolor, 0, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-						}
-				   }
-				 else
-				   {
-					  /* pass alpha via the alpha parameter for non-32bpp modes */
-					  unsigned char old_alpha = alpha; /* not used but kept for clarity */
-					  if (steep)
-						{
-						   c_plot(framebuffer, (short)yy, (short)xx, x_clip, y_clip, xx_clip, yy_clip,
-								  color, bcolor, ia, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-						}
-					  else
-						{
-						   c_plot(framebuffer, (short)xx, (short)yy, x_clip, y_clip, xx_clip, yy_clip,
-								  color, bcolor, ia, ALPHA_MODE, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-						}
-				   }
-			  }
-			;
-			/* First endpoint pixels */
-			plot_aa_pixel(xpxl1, ypxl1, rfpart(yend) * xgap);
-			plot_aa_pixel(xpxl1, ypxl1 + 1, fpart(yend) * xgap);
-			/* handle second endpoint */
-			xend = roundd(x1d);
-			yend = y1d + gradient * (xend - x1d);
-			xgap = fpart(x1d + 0.5);
-			long xpxl2 = (long)xend;
-			long ypxl2 = (long)floor(yend);
-
-			plot_aa_pixel(xpxl2, ypxl2, rfpart(yend) * xgap);
-			plot_aa_pixel(xpxl2, ypxl2 + 1, fpart(yend) * xgap);
-
-			/* main loop */
-			long x;
-			if (xpxl1 + 1 <= xpxl2 - 1)
-			  {
-				 for (x = xpxl1 + 1; x <= xpxl2 - 1; x++)
-				   {
-					  double iy = intery;
-					  long yint = (long)floor(iy);
-					  plot_aa_pixel(x, yint, rfpart(iy));
-					  plot_aa_pixel(x, yint + 1, fpart(iy));
-					  intery += gradient;
-				   }
-			  }
-			return;
-		 }
-	   /* Original (non-antialiased) integer-based line drawing code follows */
-	   short shortLen = y2 - y1;
-	   short longLen  = x2 - x1;
-	   int yLonger    = false;
-
-	   if (abs(shortLen) > abs(longLen))
-		 {
-			short swap = shortLen;
-			shortLen   = longLen;
-			longLen    = swap;
-			yLonger    = true;
-		 }
-	   int decInc;
-	   if (longLen == 0)
-		 {
-			decInc = 0;
-		 }
-	   else
-		 {
-			decInc = (shortLen << 16) / longLen;
-		 }
-	   int count;
-	   if (yLonger)
-		 {
-			if (longLen > 0)
-			  {
-				 longLen += y1;
-				 for (count = 0x8000 + (x1 << 16); y1 <= longLen; ++y1)
-				   {
-					  c_plot(framebuffer, count >> 16, y1, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-					  count += decInc;
-				   }
-				 return;
-			  }
-			longLen += y1;
-			for (count = 0x8000 + (x1 << 16); y1 >= longLen; --y1)
-			  {
-				 c_plot(framebuffer, count >> 16, y1, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-				 count -= decInc;
-			  }
-			return;
-		 }
-	   if (longLen > 0)
-		 {
-			longLen += x1;
-			for (count = 0x8000 + (y1 << 16); x1 <= longLen; ++x1)
-			  {
-				 c_plot(framebuffer, x1, count >> 16, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-				 count += decInc;
-			  }
-			return;
-		 }
-	   longLen += x1;
-	   for (count = 0x8000 + (y1 << 16); x1 >= longLen; --x1)
-		 {
-			c_plot(framebuffer, x1, count >> 16, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
-			count -= decInc;
-		 }
+       if (abs(shortLen) > abs(longLen))
+         {
+            short swap = shortLen;
+            shortLen   = longLen;
+            longLen    = swap;
+            yLonger    = true;
+         }
+       int decInc;
+       if (longLen == 0)
+         {
+            decInc = 0;
+         }
+       else
+         {
+            decInc = (shortLen << 16) / longLen;
+         }
+       int count;
+       if (yLonger)
+         {
+            if (longLen > 0)
+              {
+                 longLen += y1;
+                 for (count = 0x8000 + (x1 << 16); y1 <= longLen; ++y1)
+                   {
+                      c_plot(framebuffer, count >> 16, y1, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+                      count += decInc;
+                   }
+                 return;
+              }
+            longLen += y1;
+            for (count = 0x8000 + (x1 << 16); y1 >= longLen; --y1)
+              {
+                 c_plot(framebuffer, count >> 16, y1, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+                 count -= decInc;
+              }
+            return;
+         }
+       if (longLen > 0)
+         {
+            longLen += x1;
+            for (count = 0x8000 + (y1 << 16); x1 <= longLen; ++x1)
+              {
+                 c_plot(framebuffer, x1, count >> 16, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+                 count += decInc;
+              }
+            return;
+         }
+       longLen += x1;
+       for (count = 0x8000 + (y1 << 16); x1 >= longLen; --x1)
+         {
+            c_plot(framebuffer, x1, count >> 16, x_clip, y_clip, xx_clip, yy_clip, color, bcolor, alpha, draw_mode, bytes_per_pixel, bits_per_pixel, bytes_per_line, xoffset, yoffset);
+            count -= decInc;
+         }
 }
 
 // Reads in rectangular screen data as a string to a previously allocated buffer
@@ -1462,4 +1493,5 @@ void c_monochrome(char *pixels, unsigned int size, unsigned char color_order, un
         }
     }
 }
+
 

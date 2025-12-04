@@ -1905,8 +1905,8 @@ You can add an optional parameter to turn the console cursor on or off too.
 =cut
 
     # Fills the entire screen with the background color fast #
-    my $self   = shift;
-    my $cursor = shift || '';
+    my ($self, $cursor) = @_;
+    $cursor ||= '';
 
     unless ($self->{'DEVICE'} eq 'EMULATED') {    # We only do this stuff to real framebuffers
         if ($cursor =~ /off/i) {
@@ -1982,8 +1982,7 @@ Set a single pixel in the set foreground color at position x,y with the given pi
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x = int($params->{'x'} || 0);    # Ignore decimals
     my $y = int($params->{'y'} || 0);
@@ -2114,8 +2113,7 @@ $pixel is a hash reference in the form:
 =back
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x     = int($params->{'x'});
     my $y     = int($params->{'y'});
@@ -2262,8 +2260,7 @@ Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $self->plot($params);
     $params->{'x'} = $params->{'xx'};
@@ -2293,8 +2290,7 @@ Draws a line, in the global foreground color, from point x,y at an angle of 'ang
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my ($dp_cos, $dp_sin);
     my $index = int($params->{'angle'} * 100);
@@ -2510,22 +2506,14 @@ sub _flush_screen {
 sub _adj_plot {
 
     # Part of antialiased drawing
-    my $self = shift;
-    my $x    = shift;
-    my $y    = shift;
-    my $c    = shift;
-    my $s    = shift;
+    my ($self, $x, $y, $c, $s) = @_;
 
     $self->set_color({ 'red' => $s->{'red'} * $c, 'green' => $s->{'green'} * $c, 'blue' => $s->{'blue'} * $c });
     $self->plot({ 'x' => $x, 'y' => $y });
 } ## end sub _adj_plot
 
 sub _draw_line_antialiased {
-    my $self = shift;
-    my $x0   = shift;
-    my $y0   = shift;
-    my $x1   = shift;
-    my $y1   = shift;
+    my ($self, $x0, $y0, $x1, $y1) = @_;
 
     my $saved = { %{ $self->{'SET_RAW_FOREGROUND_COLOR'} } };
 
@@ -2612,8 +2600,7 @@ Draws a Bezier curve, based on a list of control points.
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $closed = $params->{'closed'} || 0;
     my $filled = $params->{'filled'} || 0;
@@ -2696,8 +2683,7 @@ Draws an arc/pie/poly arc of a circle at point x,y.
 =cut
 
     # This isn't exactly the fastest routine out there, hence the "granularity" parameter, but it is pretty neat.  Drawing lines between points smooths and compensates for high granularity settings.
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x      = int($params->{'x'});
     my $y      = int($params->{'y'});
@@ -2968,8 +2954,7 @@ Draws an arc of a circle at point x,y.  This is an alias to draw_arc above, but 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $params->{'mode'} = ARC;
     $self->draw_arc($params);
@@ -3032,8 +3017,7 @@ Draws a filled pie wedge at point x,y.  This is an alias to draw_arc above, but 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $params->{'mode'} = PIE;
     $self->draw_arc($params);
@@ -3080,8 +3064,7 @@ Draws a poly arc of a circle at point x,y.  This is an alias to draw_arc above, 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $params->{'mode'} = POLY_ARC;
     $self->draw_arc($params);
@@ -3132,8 +3115,7 @@ Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled e
 =cut
 
     # The routine even works properly for XOR mode when filled ellipses are drawn as well.  This was solved by drawing only if the X or Y position changed.
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $cx      = int($params->{'x'});
     my $cy      = int($params->{'y'});
@@ -3374,8 +3356,7 @@ Draws a circle at point x,y, with radius 'radius'.  It can be an outline, solid 
 
     # This also doubles as the rounded box routine.
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x0            = int($params->{'x'});
     my $y0            = int($params->{'y'});
@@ -3672,8 +3653,7 @@ It is up to you to make sure the coordinates are "sane".  Weird things can resul
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $aa         = $params->{'antialiased'} || 0;
     my $history_on = (exists($self->{'history'})) ? TRUE : FALSE;
@@ -3698,8 +3678,7 @@ It is up to you to make sure the coordinates are "sane".  Weird things can resul
 sub _point_in_polygon {
 
     # Does point x,y fall inside the polygon described in coordinates?  Not yet used.
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $poly_corners = (scalar(@{ $params->{'coordinates'} }) / 2);
     my ($x, $y) = (int($params->{'x'}), int($params->{'y'}));
@@ -3717,8 +3696,8 @@ sub _point_in_polygon {
 } ## end sub _point_in_polygon
 
 sub _fill_polygon {
-    my $self      = shift;
-    my $params    = shift;
+    my ($self, $params) = @_;
+
     my $bytes     = $self->{'BYTES'};
     my $min_bytes = $self->{'MIN_BYTES'};
 
@@ -3841,11 +3820,7 @@ sub _fill_polygon {
 } ## end sub _fill_polygon
 
 sub _generate_fill {
-    my $self   = shift;
-    my $width  = shift;
-    my $height = shift;
-    my $colors = shift;
-    my $type   = shift;
+    my ($self, $width, $height, $colors, $type) = @_;
 
     my $gradient  = '';
     my $bytes     = $self->{'BYTES'};
@@ -4006,8 +3981,7 @@ Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x      = int($params->{'x'});
     my $y      = int($params->{'y'});
@@ -4129,8 +4103,7 @@ Draws a box at point x,y with the width 'width' and height 'height'.  It draws a
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $params->{'xx'} = $params->{'x'} + $params->{'width'};
     $params->{'yy'} = $params->{'y'} + $params->{'height'};
@@ -4169,9 +4142,8 @@ Even if you are in 16 bit color mode, use 8 bit values.  They will be automatica
 =back
 =cut
 
-    my $self   = shift;
-    my $params = shift;
-    my $name   = shift || 'RAW_FOREGROUND_COLOR';
+    my ($self, $params, $name) = @_;
+    $name ||= 'RAW_FOREGROUND_COLOR';
 
     my $bytes       = $self->{'BYTES'};
     my $R           = int($params->{'red'}) & 255;                   # Color forced to fit within 0-255 value
@@ -4316,8 +4288,7 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $x = int($params->{'x'});
     my $y = int($params->{'y'});
@@ -4515,8 +4486,7 @@ This replaces one color with another inside the clipping region.  Sort of like a
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $old_r = int($params->{'old'}->{'red'})   || 0;
     my $old_g = int($params->{'old'}->{'green'}) || 0;
@@ -4641,8 +4611,7 @@ Copies a square portion of screen graphic data from x,y,w,h to x_dest,y_dest.  I
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $self->blit_write({ %{ $self->blit_read({ 'x' => int($params->{'x'}), 'y' => int($params->{'y'}), 'width' => int($params->{'width'}), 'height' => int($params->{'height'}) }) }, 'x' => int($params->{'x_dest'}), 'y' => int($params->{'y_dest'}) });
 } ## end sub blit_copy
@@ -4671,8 +4640,7 @@ It also returns the data moved like "blit_read"
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $old_mode = $self->{'DRAW_MODE'};
     my $image =
@@ -4718,9 +4686,8 @@ The animation will stop if "Q" is pressed
 
 =cut
 
-    my $self  = shift;
-    my $image = shift;
-    my $rate  = shift || 1;
+    my ($self, $image, $rate) = @_;
+    $rate  ||= 1;
 
     ReadMode 4;
     foreach my $frame (0 .. (scalar(@{$image}) - 1)) {
@@ -4860,8 +4827,7 @@ All you have to do is change X and Y, and just pass it to "blit_write" and it wi
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;    # $self->_blit_adjust_for_clipping(shift);
+    my ($self, $params) = @_;
 
     my $x     = int($params->{'x'} || $self->{'X_CLIP'});
     my $y     = int($params->{'y'} || $self->{'Y_CLIP'});
@@ -4914,8 +4880,7 @@ It takes a hash reference.  It draws in the current drawing mode.
 
 =cut
 
-    my $self    = shift;
-    my $pparams = shift;
+    my ($self, $pparams) = @_;
     return unless (defined($pparams));
 
     my $params = $self->_blit_adjust_for_clipping($pparams);
@@ -5071,8 +5036,7 @@ sub _blit_adjust_for_clipping {
 
     # Chops up the blit image to stay within the clipping (and screen) boundaries
     # This prevents nasty crashes
-    my $self    = shift;
-    my $pparams = shift;
+    my ($self, $pparams) = @_;
 
     my $bytes  = $self->{'BYTES'};
     my $yclip  = $self->{'Y_CLIP'};
@@ -5238,8 +5202,7 @@ It returns the transformed image in the same format the other BLIT methods use. 
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $width     = $params->{'blit_data'}->{'width'};
     my $height    = $params->{'blit_data'}->{'height'};
@@ -5548,8 +5511,7 @@ Sets the clipping rectangle starting at the top left point x,y and ending at bot
 =back
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $self->{'X_CLIP'}  = abs(int($params->{'x'}));
     $self->{'Y_CLIP'}  = abs(int($params->{'y'}));
@@ -5583,8 +5545,7 @@ Sets the clipping rectangle to point x,y,width,height
 =back
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     $params->{'xx'} = $params->{'x'} + $params->{'width'};
     $params->{'yy'} = $params->{'y'} + $params->{'height'};
@@ -5636,8 +5597,7 @@ It applies the following formula to calculate greyscale:
     # MONOCHROME = NEWRED + NEWGREEN + NEWBLUE                               #
     ##########################################################################
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my ($r, $g, $b);
 
@@ -5767,8 +5727,7 @@ Failures of this method are usually due to it not being able to find the font.  
     # available for Perl, this turned out to be the best and easiest solution.   #
     ##############################################################################
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     return ($params) unless (defined($params));
 
@@ -5966,8 +5925,7 @@ Text is started at "x" and wrapped to "x" for each line, no indentation.
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     return ($params) unless (defined($params));
 
@@ -6079,8 +6037,7 @@ Text is started at "x" and wrapped to "x" for each line, no indentation.
 sub _gather_fonts {
 
     # Gather in and find all the fonts
-    my $self = shift;
-    my $path = shift;
+    my ($self, $path) = @_;
 
     opendir(my $DIR, $path);
     chomp(my @dir = readdir($DIR));
@@ -6115,8 +6072,7 @@ Returns the TrueType face name based on the parameters passed.
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $file = $params->{'font_path'} . '/' . $params->{'face'};
     my $face = Imager::Font->new('file' => $file);
@@ -6264,8 +6220,7 @@ If the image has multiple frames, then a reference to an array of hashes is retu
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my @odata;
     my @Img;
@@ -6566,8 +6521,7 @@ The Tagged Image File Format.  Sort of an older version of PNG (but not the same
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $filename  = $params->{'file'} || 'screendump.jpg';
     my $bytes     = $self->{'BYTES'};
@@ -6613,9 +6567,7 @@ The Tagged Image File Format.  Sort of an older version of PNG (but not the same
 sub _convert_16_to_24 {
 
     # Convert 16 bit bitmap to 24 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
+    my ($self, $img, $color_order) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6647,12 +6599,8 @@ sub _convert_16_to_24 {
 } ## end sub _convert_16_to_24
 
 sub _convert_8_to_32 {
-
     # Convert 8 bit bitmap to 32 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
-    my $pallette    = shift;    # Reference to an array of 256 pallette entries
+    my ($self, $img, $color_order, $pallette) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6666,12 +6614,8 @@ sub _convert_8_to_32 {
 } ## end sub _convert_8_to_32
 
 sub _convert_8_to_24 {
-
     # Convert 8 bit bitmap to 24 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
-    my $pallette    = shift;    # Reference to an array of 256 pallette entries
+    my ($self, $img, $color_order, $pallette) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6685,12 +6629,8 @@ sub _convert_8_to_24 {
 } ## end sub _convert_8_to_24
 
 sub _convert_8_to_16 {
-
     # Convert 8 bit bitmap to 16 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
-    my $pallette    = shift;    # Reference to an array of 256 pallette entries
+    my ($self, $img, $color_order, $pallette) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6704,11 +6644,8 @@ sub _convert_8_to_16 {
 } ## end sub _convert_8_to_16
 
 sub _convert_16_to_32 {
-
     # Convert 16 bit bitmap to 32 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
+    my ($self, $img, $color_order) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6740,11 +6677,8 @@ sub _convert_16_to_32 {
 } ## end sub _convert_16_to_32
 
 sub _convert_24_to_16 {
-
     # Convert 24 bit bitmap to 16 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
+    my ($self, $img, $color_order) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6777,11 +6711,8 @@ sub _convert_24_to_16 {
 } ## end sub _convert_24_to_16
 
 sub _convert_32_to_16 {
-
     # Convert 32 bit bitmap to a 16 bit bitmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
+    my ($self, $img, $color_order) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6814,11 +6745,8 @@ sub _convert_32_to_16 {
 } ## end sub _convert_32_to_16
 
 sub _convert_32_to_24 {
-
     # Convert a 32 bit bitmap to a 24 bit bitmap.
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
+    my ($self, $img, $color_order) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6853,9 +6781,7 @@ sub _convert_32_to_24 {
 sub _convert_24_to_32 {
 
     # Convert a 24 bit bitmap to a 32 bit bipmap
-    my $self        = shift;
-    my $img         = shift;
-    my $color_order = shift;
+    my ($self, $img, $color_order) = @_;
 
     my $size    = length($img);
     my $new_img = '';
@@ -6901,8 +6827,7 @@ Convert a 16 bit color value to a 24 bit color value.  This requires the color t
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $rgb565 = unpack('S', $params->{'color'});
     my ($r, $g, $b);
@@ -6969,8 +6894,7 @@ Convert a 16 bit color value to a 32 bit color value.  This requires the color t
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $rgb565      = unpack('S', $params->{'color'});
     my $a           = $params->{'alpha'} || 255;
@@ -7039,8 +6963,7 @@ This simply does a bitshift, nothing more.
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $big_data       = $params->{'color'};
     my $in_color_order = defined($params->{'color_order'}) ? $params->{'color_order'} : $self->{'COLOR_ORDER'};
@@ -7088,8 +7011,7 @@ This simply does a bitshift, nothing more
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $big_data       = $params->{'color'};
     my $in_color_order = defined($params->{'color_order'}) ? $params->{'color_order'} : $self->{'COLOR_ORDER'};
@@ -7142,8 +7064,7 @@ This just simply adds an alpha value.  No actual color conversion is done.
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $alpha    = (exists($params->{'alpha'})) ? $params->{'alpha'} : 255;
     my $big_data = $params->{'color'};
@@ -7173,8 +7094,7 @@ This just removes the alpha value.  No color conversion is actually done.
 
 =cut
 
-    my $self   = shift;
-    my $params = shift;
+    my ($self, $params) = @_;
 
     my $big_data = $params->{'color'};
     my $bsize    = length($big_data);
