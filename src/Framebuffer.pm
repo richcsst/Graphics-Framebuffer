@@ -293,79 +293,79 @@ Acceleration method constants
 
 use constant {
     TRUE  => 1,
-	  FALSE => 0,
-	  ON    => 1,
-	  OFF   => 0,
+    FALSE => 0,
+    ON    => 1,
+    OFF   => 0,
 
     NORMAL_MODE   => 0,    #   Constants for DRAW_MODE
-	  XOR_MODE      => 1,
-	  OR_MODE       => 2,
-	  AND_MODE      => 3,
-	  MASK_MODE     => 4,
-	  UNMASK_MODE   => 5,
-	  ALPHA_MODE    => 6,
-	  ADD_MODE      => 7,
-	  SUBTRACT_MODE => 8,
-	  MULTIPLY_MODE => 9,
-	  DIVIDE_MODE   => 10,
+    XOR_MODE      => 1,
+    OR_MODE       => 2,
+    AND_MODE      => 3,
+    MASK_MODE     => 4,
+    UNMASK_MODE   => 5,
+    ALPHA_MODE    => 6,
+    ADD_MODE      => 7,
+    SUBTRACT_MODE => 8,
+    MULTIPLY_MODE => 9,
+    DIVIDE_MODE   => 10,
 
     ARC      => 0,         #   Constants for "draw_arc" method
-	  PIE      => 1,
-	  POLY_ARC => 2,
+    PIE      => 1,
+    POLY_ARC => 2,
 
     RGB => 0,              #   Constants for color mapping
-	  RBG => 1,
-	  BGR => 2,
-	  BRG => 3,
-	  GBR => 4,
-	  GRB => 5,
+    RBG => 1,
+    BGR => 2,
+    BRG => 3,
+    GBR => 4,
+    GRB => 5,
 
     CENTER_NONE => 0,      #   Constants for centering
-	  CENTER_X    => 1,
-	  CENTER_Y    => 2,
-	  CENTER_XY   => 3,
-	  CENTRE_NONE => 0,      #   Constants for centering (for English speaking nations using post King George III English)
-	  CENTRE_X    => 1,
-	  CENTRE_Y    => 2,
-	  CENTRE_XY   => 3,
+    CENTER_X    => 1,
+    CENTER_Y    => 2,
+    CENTER_XY   => 3,
+    CENTRE_NONE => 0,      #   Constants for centering (for English speaking nations using post King George III English)
+    CENTRE_X    => 1,
+    CENTRE_Y    => 2,
+    CENTRE_XY   => 3,
 
     PERL     => 0,
-	  SOFTWARE => 1,
-	  HARDWARE => 2,         # I seriously doubt hardware will ever be implemented since most framebuffers have no hardware acceleration capability
+    SOFTWARE => 1,
+    HARDWARE => 2,         # I seriously doubt hardware will ever be implemented since most framebuffers have no hardware acceleration capability
 
     ## Set up the Framebuffer driver "constants" defaults
     # Commands
     FBIOGET_VSCREENINFO => 0x4600,    # These come from "fb.h" in the kernel source
-	  FBIOPUT_VSCREENINFO => 0x4601,
-	  FBIOGET_FSCREENINFO => 0x4602,
-	  FBIOGETCMAP         => 0x4604,
-	  FBIOPUTCMAP         => 0x4605,
-	  FBIOPAN_DISPLAY     => 0x4606,
-	  FBIO_CURSOR         => 0x4608,
-	  FBIOGET_CON2FBMAP   => 0x460F,
-	  FBIOPUT_CON2FBMAP   => 0x4610,
-	  FBIOBLANK           => 0x4611,
-	  FBIOGET_VBLANK      => 0x4612,
-	  FBIOGET_GLYPH       => 0x4615,
-	  FBIOGET_HWCINFO     => 0x4616,
-	  FBIOPUT_MODEINFO    => 0x4617,
-	  FBIOGET_DISPINFO    => 0x4618,
-	  FBIO_WAITFORVSYNC   => 0x4620,
-	  VT_GETSTATE         => 0x5603,
-	  KDSETMODE           => 0x4B3A,
-	  KD_GRAPHICS         => 1,
-	  KD_TEXT             => 0,
+    FBIOPUT_VSCREENINFO => 0x4601,
+    FBIOGET_FSCREENINFO => 0x4602,
+    FBIOGETCMAP         => 0x4604,
+    FBIOPUTCMAP         => 0x4605,
+    FBIOPAN_DISPLAY     => 0x4606,
+    FBIO_CURSOR         => 0x4608,
+    FBIOGET_CON2FBMAP   => 0x460F,
+    FBIOPUT_CON2FBMAP   => 0x4610,
+    FBIOBLANK           => 0x4611,
+    FBIOGET_VBLANK      => 0x4612,
+    FBIOGET_GLYPH       => 0x4615,
+    FBIOGET_HWCINFO     => 0x4616,
+    FBIOPUT_MODEINFO    => 0x4617,
+    FBIOGET_DISPINFO    => 0x4618,
+    FBIO_WAITFORVSYNC   => 0x4620,
+    VT_GETSTATE         => 0x5603,
+    KDSETMODE           => 0x4B3A,
+    KD_GRAPHICS         => 1,
+    KD_TEXT             => 0,
 
     # FLAGS
     FBINFO_HWACCEL_NONE      => 0x0000,    # These come from "fb.h" in the kernel source
-	  FBINFO_HWACCEL_COPYAREA  => 0x0100,
-	  FBINFO_HWACCEL_FILLRECT  => 0x0200,
-	  FBINFO_HWACCEL_IMAGEBLIT => 0x0400,
-	  FBINFO_HWACCEL_ROTATE    => 0x0800,
-	  FBINFO_HWACCEL_XPAN      => 0x1000,
-	  FBINFO_HWACCEL_YPAN      => 0x2000,
-	  FBINFO_HWACCEL_YWRAP     => 0x4000,
-	  FBINFO_MISC_TILEBLITTING => 0x20000,
+    FBINFO_HWACCEL_COPYAREA  => 0x0100,
+    FBINFO_HWACCEL_FILLRECT  => 0x0200,
+    FBINFO_HWACCEL_IMAGEBLIT => 0x0400,
+    FBINFO_HWACCEL_ROTATE    => 0x0800,
+    FBINFO_HWACCEL_XPAN      => 0x1000,
+    FBINFO_HWACCEL_YPAN      => 0x2000,
+    FBINFO_HWACCEL_YWRAP     => 0x4000,
+    FBINFO_MISC_TILEBLITTING => 0x20000,
 
     pi => (4 * atan2(1, 1)),               # This gets rid of Math::Trig
 };
@@ -403,70 +403,70 @@ BEGIN {
     our $VERSION   = '## VERSION ##';
     our @ISA       = qw(Exporter);
     our @EXPORT_OK = qw(
-		FBIOGET_VSCREENINFO
-		FBIOPUT_VSCREENINFO
-		FBIOGET_FSCREENINFO
-		FBIOGETCMAP
-		FBIOPUTCMAP
-		FBIOPAN_DISPLAY
-		FBIO_CURSOR
-		FBIOGET_CON2FBMAP
-		FBIOPUT_CON2FBMAP
-		FBIOBLANK
-		FBIOGET_VBLANK
-		FBIOGET_GLYPH
-		FBIOGET_HWCINFO
-		FBIOPUT_MODEINFO
-		FBIOGET_DISPINFO
-		FBIO_WAITFORVSYNC
-		VT_GETSTATE
-		FBINFO_HWACCEL_NONE
-		FBINFO_HWACCEL_COPYAREA
-		FBINFO_HWACCEL_FILLRECT
-		FBINFO_HWACCEL_IMAGEBLIT
-		FBINFO_HWACCEL_ROTATE
-		FBINFO_HWACCEL_XPAN
-		FBINFO_HWACCEL_YPAN
-		FBINFO_HWACCEL_YWRAP
-		$VERSION
+      FBIOGET_VSCREENINFO
+      FBIOPUT_VSCREENINFO
+      FBIOGET_FSCREENINFO
+      FBIOGETCMAP
+      FBIOPUTCMAP
+      FBIOPAN_DISPLAY
+      FBIO_CURSOR
+      FBIOGET_CON2FBMAP
+      FBIOPUT_CON2FBMAP
+      FBIOBLANK
+      FBIOGET_VBLANK
+      FBIOGET_GLYPH
+      FBIOGET_HWCINFO
+      FBIOPUT_MODEINFO
+      FBIOGET_DISPINFO
+      FBIO_WAITFORVSYNC
+      VT_GETSTATE
+      FBINFO_HWACCEL_NONE
+      FBINFO_HWACCEL_COPYAREA
+      FBINFO_HWACCEL_FILLRECT
+      FBINFO_HWACCEL_IMAGEBLIT
+      FBINFO_HWACCEL_ROTATE
+      FBINFO_HWACCEL_XPAN
+      FBINFO_HWACCEL_YPAN
+      FBINFO_HWACCEL_YWRAP
+      $VERSION
     );
     our @EXPORT = qw(
-		TRUE
-		FALSE
-		NORMAL_MODE
-		XOR_MODE
-		OR_MODE
-		AND_MODE
-		MASK_MODE
-		UNMASK_MODE
-		ALPHA_MODE
-		ADD_MODE
-		SUBTRACT_MODE
-		MULTIPLY_MODE
-		DIVIDE_MODE
-		ARC
-		PIE
-		POLY_ARC
-		RGB
-		RBG
-		BGR
-		BRG
-		GBR
-		GRB
-		pi
-		CENTER_NONE
-		CENTER_X
-		CENTER_Y
-		CENTER_XY
-		CENTRE_NONE
-		CENTRE_X
-		CENTRE_Y
-		CENTRE_XY
-		PERL
-		SOFTWARE
-		HARDWARE
-		@HATCHES
-		@COLORORDER
+      TRUE
+      FALSE
+      NORMAL_MODE
+      XOR_MODE
+      OR_MODE
+      AND_MODE
+      MASK_MODE
+      UNMASK_MODE
+      ALPHA_MODE
+      ADD_MODE
+      SUBTRACT_MODE
+      MULTIPLY_MODE
+      DIVIDE_MODE
+      ARC
+      PIE
+      POLY_ARC
+      RGB
+      RBG
+      BGR
+      BRG
+      GBR
+      GRB
+      pi
+      CENTER_NONE
+      CENTER_X
+      CENTER_Y
+      CENTER_XY
+      CENTRE_NONE
+      CENTRE_X
+      CENTRE_Y
+      CENTRE_XY
+      PERL
+      SOFTWARE
+      HARDWARE
+      @HATCHES
+      @COLORORDER
     );
 } ## end BEGIN
 
@@ -476,7 +476,7 @@ sub DESTROY {    # Always clean up after yourself before exiting
     $self->_screen_close();
     unlink('/tmp/output.gif') if (-e '/tmp/output.gif');
     _reset()                  if ($self->{'RESET'});       # Exit by calling 'reset' first
-	# Restore the original screen before run
+                                                           # Restore the original screen before run
     substr($self->{'SCREEN'}, 0, length($self->{'START_SCREEN'})) = $self->{'START_SCREEN'};
 } ## end sub DESTROY
 
@@ -810,58 +810,58 @@ Why do many video cards use the BGR color order?  Simple, their GPUs operate wit
         # Structure Definitions (This is a legacy fallback for Pure Perl.  C handles this much better)
         'vt_stat'             => 'SSS',    # v_active, v_signal, v_state
         'FBioget_vscreeninfo' => 'L' .     # 32 bits for xres
-		'L' .                            # 32 bits for yres
-		'L' .                            # 32 bits for xres_virtual
-		'L' .                            # 32 bits for yres_vortual
-		'L' .                            # 32 bits for xoffset
-		'L' .                            # 32 bits for yoffset
-		'L' .                            # 32 bits for bits per pixel
-		'L' .                            # 32 bits for grayscale (0=color)
-		'L' .                            # 32 bits for red bit offset
-		'L' .                            # 32 bits for red bit length
-		'L' .                            # 32 bits for red msb_right (!0 msb is right)
-		'L' .                            # 32 bits for green bit offset
-		'L' .                            # 32 bits for green bit length
-		'L' .                            # 32 bits for green msb_right (!0 msb is right)
-		'L' .                            # 32 bits for blue bit offset
-		'L' .                            # 32 bits for blue bit length
-		'L' .                            # 32 bits for blue msb_right (!0 msb is right)
-		'L' .                            # 32 bits for alpha bit offset
-		'L' .                            # 32 bits for alpha bit length
-		'L' .                            # 32 bits for alpha msb_right (!0 msb is right)
-		'L' .                            # 32 bits for nonstd (!0 non standard pixel format)
-		'L' .                            # 32 bits for activate
-		'L' .                            # 32 bits for height in mm
-		'L' .                            # 32 bits for width in mm
-		'L' .                            # 32 bits for accel_flags (obsolete)
-		'L' .                            # 32 bits for pixclock
-		'L' .                            # 32 bits for left margin
-		'L' .                            # 32 bits for right margin
-		'L' .                            # 32 bits for upper margin
-		'L' .                            # 32 bits for lower margin
-		'L' .                            # 32 bits for hsync length
-		'L' .                            # 32 bits for vsync length
-		'L' .                            # 32 bits for sync
-		'L' .                            # 32 bits for vmode
-		'L' .                            # 32 bits for rotate (angle we rotate counter clockwise)
-		'L' .                            # 32 bits for colorspace
-		'L4',                            # 32 bits x 4 reserved
+          'L' .                            # 32 bits for yres
+          'L' .                            # 32 bits for xres_virtual
+          'L' .                            # 32 bits for yres_vortual
+          'L' .                            # 32 bits for xoffset
+          'L' .                            # 32 bits for yoffset
+          'L' .                            # 32 bits for bits per pixel
+          'L' .                            # 32 bits for grayscale (0=color)
+          'L' .                            # 32 bits for red bit offset
+          'L' .                            # 32 bits for red bit length
+          'L' .                            # 32 bits for red msb_right (!0 msb is right)
+          'L' .                            # 32 bits for green bit offset
+          'L' .                            # 32 bits for green bit length
+          'L' .                            # 32 bits for green msb_right (!0 msb is right)
+          'L' .                            # 32 bits for blue bit offset
+          'L' .                            # 32 bits for blue bit length
+          'L' .                            # 32 bits for blue msb_right (!0 msb is right)
+          'L' .                            # 32 bits for alpha bit offset
+          'L' .                            # 32 bits for alpha bit length
+          'L' .                            # 32 bits for alpha msb_right (!0 msb is right)
+          'L' .                            # 32 bits for nonstd (!0 non standard pixel format)
+          'L' .                            # 32 bits for activate
+          'L' .                            # 32 bits for height in mm
+          'L' .                            # 32 bits for width in mm
+          'L' .                            # 32 bits for accel_flags (obsolete)
+          'L' .                            # 32 bits for pixclock
+          'L' .                            # 32 bits for left margin
+          'L' .                            # 32 bits for right margin
+          'L' .                            # 32 bits for upper margin
+          'L' .                            # 32 bits for lower margin
+          'L' .                            # 32 bits for hsync length
+          'L' .                            # 32 bits for vsync length
+          'L' .                            # 32 bits for sync
+          'L' .                            # 32 bits for vmode
+          'L' .                            # 32 bits for rotate (angle we rotate counter clockwise)
+          'L' .                            # 32 bits for colorspace
+          'L4',                            # 32 bits x 4 reserved
 
         'FBioget_fscreeninfo' => 'A16' .   # 16 bytes for ID name
-		'I' .                            # 32/64 bits unsigned address
-		'L' .                            # 32 bits for smem_len
-		'L' .                            # 32 bits for type
-		'L' .                            # 32 bits for type_aux (interleave)
-		'L' .                            # 32 bits for visual
-		'S' .                            # 16 bits for xpanstep
-		'S' .                            # 16 bits for ypanstep
-		'S1' .                           # 16 bits for ywrapstep (extra 16 bits added on if system is 8 byte aligned)
-		'L' .                            # 32 bits for line length in bytes
-		'I' .                            # 32/64 bits for mmio_start
-		'L' .                            # 32 bits for mmio_len
-		'L' .                            # 32 bits for accel
-		'S' .                            # 16 bits for capabilities
-		'S2',                            # 16 bits x 2 reserved
+          'I' .                            # 32/64 bits unsigned address
+          'L' .                            # 32 bits for smem_len
+          'L' .                            # 32 bits for type
+          'L' .                            # 32 bits for type_aux (interleave)
+          'L' .                            # 32 bits for visual
+          'S' .                            # 16 bits for xpanstep
+          'S' .                            # 16 bits for ypanstep
+          'S1' .                           # 16 bits for ywrapstep (extra 16 bits added on if system is 8 byte aligned)
+          'L' .                            # 32 bits for line length in bytes
+          'I' .                            # 32/64 bits for mmio_start
+          'L' .                            # 32 bits for mmio_len
+          'L' .                            # 32 bits for accel
+          'S' .                            # 16 bits for capabilities
+          'S2',                            # 16 bits x 2 reserved
 
         # Default values
         'GARBAGE'             => FALSE,       # Load extra unneeded FB info if true
@@ -874,9 +874,9 @@ Why do many video cards use the BGR color order?  Simple, their GPUs operate wit
         'FB_DEVICE'           => undef,       # Framebuffer device name (defined later)
         'COLOR_ORDER'         => 'RGB',       # Default color Order.  Redefined later to be an integer
         'ACCELERATED'         => SOFTWARE,    # Use accelerated graphics
-		#   0 = PERL     = Pure Perl
-		#   1 = SOFTWARE = C Accelerated (but still software)
-		#   2 = HARDWARE = C & Hardware accelerated.
+                                              #   0 = PERL     = Pure Perl
+                                              #   1 = SOFTWARE = C Accelerated (but still software)
+                                              #   2 = HARDWARE = C & Hardware accelerated.
         'FBIO_WAITFORVSYNC'   => 0x4620,
         'VT_GETSTATE'         => 0x5603,
         'KDSETMODE'           => 0x4B3A,
@@ -982,9 +982,9 @@ Why do many video cards use the BGR color order?  Simple, their GPUs operate wit
             'FBinfo_hwaccel_copyarea'  => 'L6',      # dx(32),dy(32),width(32),height(32),sx(32),sy(32)
             'FBinfo_hwaccel_fillrect'  => 'L6',      # dx(32),dy(32),width(32),height(32),color(32),rop(32)
             'FBinfo_hwaccel_imageblit' => 'L6CL',    # dx(32),dy(32),width(32),height(32),fg_color(32),bg_color(32),depth(8),image pointer(32),color map pointer(32)
-			# COLOR MAP:
-			#   start(32),length(32),red(16),green(16),blue(16),alpha(16)
-			# FLAGS
+                                                     # COLOR MAP:
+                                                     #   start(32),length(32),red(16),green(16),blue(16),alpha(16)
+                                                     # FLAGS
             'FBINFO_HWACCEL_NONE'      => 0x0000,    # These come from "fb.h" in the kernel source.  Not Used
             'FBINFO_HWACCEL_COPYAREA'  => 0x0100,
             'FBINFO_HWACCEL_FILLRECT'  => 0x0200,
@@ -1101,7 +1101,7 @@ Why do many video cards use the BGR color order?  Simple, their GPUs operate wit
                 $self->{'vscreeninfo'}->{'rotate'},
             ) = (c_get_screen_info($self->{'FB_DEVICE'}));
         } else {    # Fallback if not accelerated.  Do it the old way
-			# Make the IOCTL call to get info on the virtual (viewable) screen (Sometimes different than physical)
+                    # Make the IOCTL call to get info on the virtual (viewable) screen (Sometimes different than physical)
             (       # This method has the potential for errors
                 $self->{'vscreeninfo'}->{'xres'},                                   # (32)
                 $self->{'vscreeninfo'}->{'yres'},                                   # (32)
@@ -1257,146 +1257,146 @@ Why do many video cards use the BGR color order?  Simple, their GPUs operate wit
 ###
         if ($@) {
             print STDERR qq{
-				OUCH!  Graphics::Framebuffer cannot memory map the framebuffer!
+                OUCH!  Graphics::Framebuffer cannot memory map the framebuffer!
 
-				This is usually caused by one or more of the following:
+                This is usually caused by one or more of the following:
 
-				*  Your account does not have proper permission to access the framebuffer
-				  device.
+                *  Your account does not have proper permission to access the framebuffer
+                  device.
 
-				This usually requires adding the "video" group to your account.  This is
-				  usually accomplished via the following command (replace "username" with
-					  your actual username):
+                This usually requires adding the "video" group to your account.  This is
+                  usually accomplished via the following command (replace "username" with
+                      your actual username):
 
-				\tsudo usermod -a -G video username
+                \tsudo usermod -a -G video username
 
-				*  You could be attempting to run this inside X-Windows/Wayland, which
-				  doesn't work.  You MUST run your script outside of X-Windows from the
+                *  You could be attempting to run this inside X-Windows/Wayland, which
+                  doesn't work.  You MUST run your script outside of X-Windows from the
   system Console.  If you are inside X-Windows/Wayland, and you do not know
   how to get to your console, just hit CTRL-ALT-F5 to access one of the
   consoles.  This has no windows or mouse functionality.  It is command
   line only (similar to old DOS).
 
 To get back into X-Windows/Wayland, you just hit ALT-F1 (or ALT-F8 or
-	ALT-F7 on some systems).  Linux can have many consoles, which are
+    ALT-F7 on some systems).  Linux can have many consoles, which are
   usually mapped F1 to F9.  One of them is set aside for X-Windows/Wayland.
 
 Actual error reported:\n\n$@\n};
-sleep($self->{'RESET'}) ? 10 : 1;
-exit(1);
-} ## end if ($@)
-} elsif (exists($ENV{'DISPLAY'}) && (-e $self->{'FB_DEVICE'})) {
-	print STDERR qq{
-		OUCH!  Graphics::Framebuffer cannot memory map the framebuffer!
+            sleep($self->{'RESET'}) ? 10 : 1;
+            exit(1);
+        } ## end if ($@)
+    } elsif (exists($ENV{'DISPLAY'}) && (-e $self->{'FB_DEVICE'})) {
+        print STDERR qq{
+        OUCH!  Graphics::Framebuffer cannot memory map the framebuffer!
 
-		You are attempting to run this inside X-Windows/Wayland, which doesn't work.
+        You are attempting to run this inside X-Windows/Wayland, which doesn't work.
   You MUST run your script outside of X-Windows from the system Console.  If
   you are inside X-Windows/Wayland, and you do not know how to get to your
   console, just hit CTRL-ALT-F5 to access one of the consoles.  This has no
   windows or mouse functionality.  It is command line only (similar to old
-	  DOS).
+      DOS).
 
 To get back into X-Windows/Wayland, you just hit ALT-F1 (or ALT-F7 or ALT-F8
-	on some systems).  Linux can have many consoles, which are usually mapped F1
+    on some systems).  Linux can have many consoles, which are usually mapped F1
   to F9.  One of them is set aside for X-Windows/Wayland.
   };
 ###
-sleep($self->{'RESET'}) ? 10 : 1;
-exit(1);
-} else {    # Go into emulation mode if no actual framebuffer available
-	$self->{'FB_DEVICE'}   = 'EMULATED';
-	$self->{'SPLASH'}      = FALSE;
-	$self->{'RESET'}       = FALSE;
-	$self->{'ERROR'}       = 'Framebuffer Device Not Found! Emulation mode.  EXPERIMENTAL!!';
-	$self->{'COLOR_ORDER'} = $self->{ uc($self->{'COLOR_ORDER'}) };                             # Translate the color order
+        sleep($self->{'RESET'}) ? 10 : 1;
+        exit(1);
+    } else {    # Go into emulation mode if no actual framebuffer available
+        $self->{'FB_DEVICE'}   = 'EMULATED';
+        $self->{'SPLASH'}      = FALSE;
+        $self->{'RESET'}       = FALSE;
+        $self->{'ERROR'}       = 'Framebuffer Device Not Found! Emulation mode.  EXPERIMENTAL!!';
+        $self->{'COLOR_ORDER'} = $self->{ uc($self->{'COLOR_ORDER'}) };                             # Translate the color order
 
-	$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'}      = 8;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'msb_right'}   = 0;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'}    = 8;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'msb_right'} = 0;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'}     = 8;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'msb_right'}  = 0;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'}    = 8;
-	$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'msb_right'} = 0;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'}      = 8;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'msb_right'}   = 0;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'}    = 8;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'msb_right'} = 0;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'}     = 8;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'msb_right'}  = 0;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'}    = 8;
+        $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'msb_right'} = 0;
 
-	if ($self->{'COLOR_ORDER'} == BGR) {
-		$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 16;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 8;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 0;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
-	} elsif ($self->{'COLOR_ORDER'} == RGB) {
-		$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 0;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 8;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 16;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
-	} elsif ($self->{'COLOR_ORDER'} == BRG) {
-		$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 8;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 16;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 0;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
-	} elsif ($self->{'COLOR_ORDER'} == RBG) {
-		$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 0;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 16;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 8;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
-	} elsif ($self->{'COLOR_ORDER'} == GRB) {
-		$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 8;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 0;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 16;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
-	} elsif ($self->{'COLOR_ORDER'} == GBR) {
-		$self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 16;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 0;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 8;
-		$self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
-	} ## end elsif ($self->{'COLOR_ORDER'...})
+        if ($self->{'COLOR_ORDER'} == BGR) {
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 16;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+        } elsif ($self->{'COLOR_ORDER'} == RGB) {
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 16;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+        } elsif ($self->{'COLOR_ORDER'} == BRG) {
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 16;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+        } elsif ($self->{'COLOR_ORDER'} == RBG) {
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 16;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+        } elsif ($self->{'COLOR_ORDER'} == GRB) {
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 16;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+        } elsif ($self->{'COLOR_ORDER'} == GBR) {
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 16;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+        } ## end elsif ($self->{'COLOR_ORDER'...})
 
-	# Set the resolution.  Either the defaults, or whatever the user passed in.
+        # Set the resolution.  Either the defaults, or whatever the user passed in.
 
-	$self->{'SCREEN'}                    = chr(0) x ($self->{'VXRES'} * $self->{'VYRES'} * $self->{'BYTES'});                                                                                           # This is the fake framebuffer
-	$self->{'XRES'}                      = $self->{'VXRES'};                                                                                                                                            # Virtual and physical are the same
-	$self->{'YRES'}                      = $self->{'VYRES'};
-	$self->{'XOFFSET'}                   = 0;
-	$self->{'YOFFSET'}                   = 0;
-	$self->{'PIXELS'}                    = (($self->{'XOFFSET'} + $self->{'VXRES'}) * ($self->{'YOFFSET'} + $self->{'VYRES'}));
-	$self->{'SIZE'}                      = $self->{'PIXELS'} * $self->{'BYTES'};
-	$self->{'fscreeninfo'}->{'id'}       = 'Virtual Framebuffer';
-	$self->{'GPU'}                       = $self->{'fscreeninfo'}->{'id'};
-	$self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES'} * ($self->{'VXRES'} * $self->{'VYRES'}) if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
-	$self->{'BYTES_PER_LINE'}            = int($self->{'fscreeninfo'}->{'smem_len'} / $self->{'VYRES'});
+        $self->{'SCREEN'}                    = chr(0) x ($self->{'VXRES'} * $self->{'VYRES'} * $self->{'BYTES'});                                                                                           # This is the fake framebuffer
+        $self->{'XRES'}                      = $self->{'VXRES'};                                                                                                                                            # Virtual and physical are the same
+        $self->{'YRES'}                      = $self->{'VYRES'};
+        $self->{'XOFFSET'}                   = 0;
+        $self->{'YOFFSET'}                   = 0;
+        $self->{'PIXELS'}                    = (($self->{'XOFFSET'} + $self->{'VXRES'}) * ($self->{'YOFFSET'} + $self->{'VYRES'}));
+        $self->{'SIZE'}                      = $self->{'PIXELS'} * $self->{'BYTES'};
+        $self->{'fscreeninfo'}->{'id'}       = 'Virtual Framebuffer';
+        $self->{'GPU'}                       = $self->{'fscreeninfo'}->{'id'};
+        $self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES'} * ($self->{'VXRES'} * $self->{'VYRES'}) if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
+        $self->{'BYTES_PER_LINE'}            = int($self->{'fscreeninfo'}->{'smem_len'} / $self->{'VYRES'});
 
-	bless($self, $class);
-} ## end else [ if ((!$has_X) && defined...)]
-$self->{'MIN_BYTES'} = max(3, $self->{'BYTES'});    # Helpful with Imager calls and avoids time wasting calculations
-$self->{'X_FACTOR'}  = 3840 / $self->{'XRES'};
-$self->{'Y_FACTOR'}  = 2160 / $self->{'YRES'};
-if ($self->{'RESET'}) {
-	$SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = \&_reset;
-}
-$self->_gather_fonts('/usr/share/fonts');
+        bless($self, $class);
+    } ## end else [ if ((!$has_X) && defined...)]
+    $self->{'MIN_BYTES'} = max(3, $self->{'BYTES'});    # Helpful with Imager calls and avoids time wasting calculations
+    $self->{'X_FACTOR'}  = 3840 / $self->{'XRES'};
+    $self->{'Y_FACTOR'}  = 2160 / $self->{'YRES'};
+    if ($self->{'RESET'}) {
+        $SIG{'QUIT'} = $SIG{'INT'} = $SIG{'KILL'} = \&_reset;
+    }
+    $self->_gather_fonts('/usr/share/fonts');
 
-# Loop and find the default font.  One of these should work for Debian and Redhat variants.
-foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma Helvetica)) {
-	if (exists($self->{'FONTS'}->{$font})) {
-		$self->{'FONT_PATH'} = $self->{'FONTS'}->{$font}->{'path'};
-		$self->{'FONT_FACE'} = $self->{'FONTS'}->{$font}->{'font'};
-		last;
-	}
-} ## end foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma Helvetica))
-$self->_flush_screen();
-unless ($self->{'RESET'}) {    # This is to restore the screen as it was when script started
-	$self->{'START_SCREEN'} = '' . $self->{'SCREEN'};    # Force Perl to copy the string, not the reference
-}
-chomp($self->{'this_tty'} = `tty`);
-if ($self->{'SPLASH'} > 0) {
-	$self->splash($VERSION);
-	sleep $self->{'SPLASH'};
-}
-$self->attribute_reset();
-if (wantarray) {    # For the temporarily supported (but no longer) double buffering mode
-	return ($self, $self);    # For those that coded for double buffering
-}
-return ($self);
+    # Loop and find the default font.  One of these should work for Debian and Redhat variants.
+    foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma Helvetica)) {
+        if (exists($self->{'FONTS'}->{$font})) {
+            $self->{'FONT_PATH'} = $self->{'FONTS'}->{$font}->{'path'};
+            $self->{'FONT_FACE'} = $self->{'FONTS'}->{$font}->{'font'};
+            last;
+        }
+    } ## end foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma Helvetica))
+    $self->_flush_screen();
+    unless ($self->{'RESET'}) {    # This is to restore the screen as it was when script started
+        $self->{'START_SCREEN'} = '' . $self->{'SCREEN'};    # Force Perl to copy the string, not the reference
+    }
+    chomp($self->{'this_tty'} = `tty`);
+    if ($self->{'SPLASH'} > 0) {
+        $self->splash($VERSION);
+        sleep $self->{'SPLASH'};
+    }
+    $self->attribute_reset();
+    if (wantarray) {    # For the temporarily supported (but no longer) double buffering mode
+        return ($self, $self);    # For those that coded for double buffering
+    }
+    return ($self);
 } ## end sub new
 
 sub _reset {
@@ -1404,7 +1404,7 @@ sub _reset {
 }
 
 sub _fix_mapping {    # File::Map SHOULD make this obsolete
-	# Fixes the mapping if Perl garbage collects (naughty Perl)
+                      # Fixes the mapping if Perl garbage collects (naughty Perl)
     my $self = shift;
     unmap($self->{'SCREEN'});    # Unmap missing on some File::Maps
     unless (defined($self->{'FB'})) {
@@ -1526,16 +1526,16 @@ When called in a scalar context, it returns a hash reference:
         return (
             {
                 'width'          => $self->{'XRES'},
-				  'height'         => $self->{'YRES'},
-				  'bits_per_pixel' => $self->{'BITS'},
-				  'bytes_per_line' => $self->{'BYTES_PER_LINE'},
-				  'top_clip'       => $self->{'Y_CLIP'},
-				  'left_clip'      => $self->{'X_CLIP'},
-				  'bottom_clip'    => $self->{'YY_CLIP'},
-				  'right_clip'     => $self->{'XX_CLIP'},
-				  'clip_width'     => $self->{'W_CLIP'},
-				  'clip_height'    => $self->{'H_CLIP'},
-				  'color_order'    => $COLORORDER[$self->{'COLOR_ORDER'}],
+                'height'         => $self->{'YRES'},
+                'bits_per_pixel' => $self->{'BITS'},
+                'bytes_per_line' => $self->{'BYTES_PER_LINE'},
+                'top_clip'       => $self->{'Y_CLIP'},
+                'left_clip'      => $self->{'X_CLIP'},
+                'bottom_clip'    => $self->{'YY_CLIP'},
+                'right_clip'     => $self->{'XX_CLIP'},
+                'clip_width'     => $self->{'W_CLIP'},
+                'clip_height'    => $self->{'H_CLIP'},
+                'color_order'    => $COLORORDER[$self->{'COLOR_ORDER'}],
             }
         );
     } ## end else [ if (wantarray) ]
@@ -1990,229 +1990,292 @@ Set a single pixel in the set foreground color at position x,y with the given pi
     my $index;
     my $bytes       = $self->{'BYTES'};
     my $color_alpha = $self->{'COLOR_ALPHA'};
-    my ($x_clip,$y_clip,$xx_clip,$yy_clip) = ($self->{'X_CLIP'},$self->{'Y_CLIP'},$self->{'XX_CLIP'},$self->{'YY_CLIP'});
+    my ($x_clip, $y_clip, $xx_clip, $yy_clip) = ($self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'});
     if ($self->{'ACCELERATED'}) {
         c_plot($self->{'SCREEN'}, $x, $y, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $color_alpha, $self->{'DRAW_MODE'}, $bytes, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'},);
     } else {
         my $raw_foreground_color = $self->{'RAW_FOREGROUND_COLOR'};
         my $raw_background_color = $self->{'RAW_BACKGROUND_COLOR'};
         my $draw_mode            = $self->{'DRAW_MODE'};
+
         # Only plot if the pixel is within the clipping region
         unless (($x > $xx_clip) || ($y > $yy_clip) || ($x < $x_clip) || ($y < $y_clip)) {
+
             # The 'history' is a 'draw_arc' optimization and beautifier for xor mode.  It only draws pixels not in
             # the history buffer.
             unless (exists($self->{'history'}) && defined($self->{'history'}->{$y}->{$x})) {
                 $index = ($self->{'BYTES_PER_LINE'} * ($y + $self->{'YOFFSET'})) + (($self->{'XOFFSET'} + $x) * $bytes);
                 if ($index >= 0 && $index <= ($self->{'fscreeninfo'}->{'smem_len'} - $bytes)) {
-                    # --- Optimized draft for the plot enclosure ---
-					# Assumes the following lexicals are already computed above:
-					#   my ($x, $y, $index, $color_alpha, $color_alpha_int);
-					# And raw color bytes:
-					#   my $raw_foreground_color = $self->{'RAW_FOREGROUND_COLOR'};
-					#   my $raw_background_color = $self->{'RAW_BACKGROUND_COLOR'};
-					# You can hoist these caches at method entry:
-					my $bytes     = $self->{'BYTES'};
-					my $bits      = $self->{'BITS'};
-					my $screenref = \$self->{'SCREEN'};
-					my $smem_len  = $self->{'fscreeninfo'}->{'smem_len'};
-					my $max_index = $smem_len - $bytes;
 
-					return if $index < 0 || $index > $max_index;
+                    # Assumes the following lexicals are already computed above:
+                    #   my ($x, $y, $index, $color_alpha, $color_alpha_int);
+                    # And raw color bytes:
+                    #   my $raw_foreground_color = $self->{'RAW_FOREGROUND_COLOR'};
+                    #   my $raw_background_color = $self->{'RAW_BACKGROUND_COLOR'};
+                    # You can hoist these caches at method entry:
+                    my $bytes     = $self->{'BYTES'};
+                    my $bits      = $self->{'BITS'};
+                    my $screenref = \$self->{'SCREEN'};
+                    my $smem_len  = $self->{'fscreeninfo'}->{'smem_len'};
+                    my $max_index = $smem_len - $bytes;
 
-					my $draw_mode = $self->{'DRAW_MODE'};
+                    return if $index < 0 || $index > $max_index;
 
-					if ($draw_mode == NORMAL_MODE) {
-						substr($$screenref, $index, $bytes) = $raw_foreground_color;
-					} else {
-						# Read the current pixel once and reuse
-						my $cur = substr($$screenref, $index, $bytes) || chr(0) x $bytes;
-						my $c;
+                    my $draw_mode = $self->{'DRAW_MODE'};
 
-						if ($draw_mode == XOR_MODE) {
-							$c = ($cur ^ $raw_foreground_color);
-						} elsif ($draw_mode == OR_MODE) {
-							$c = ($cur | $raw_foreground_color);
-						} elsif ($draw_mode == AND_MODE) {
-							$c = ($cur & $raw_foreground_color);
-						} elsif ($draw_mode == MASK_MODE) {
-							if ($bits == 32) {
-								# Compare RGB only
-								my $fg3 = substr($raw_foreground_color, 0, 3);
-								my $bg3 = substr($raw_background_color, 0, 3);
-								$c = $raw_foreground_color if ($fg3 ne $bg3);
-							} else {
-								$c = $raw_foreground_color if ($raw_foreground_color ne $raw_background_color);
-							}
-						} elsif ($draw_mode == UNMASK_MODE) {
-							if ($bits == 32) {
-								my $cur3 = substr($cur, 0, 3);
-								my $bg3  = substr($raw_background_color, 0, 3);
-								$c = $raw_foreground_color if ($cur3 eq $bg3);
-							} else {
-								$c = $raw_foreground_color if ($cur eq $raw_background_color);
-							}
-						} elsif ($draw_mode == ALPHA_MODE) {
-							# Prefer integer math for speed and to avoid float overhead
-							# color_alpha_int should be 0..255 (if you currently have 0..1, convert once: my $color_alpha_int = int(255 * $color_alpha + 0.5);)
-							my $A    = defined $color_alpha_int ? $color_alpha_int : int(255 * $color_alpha + 0.5);
-							my $invA = 255 - $A;
-							if ($bytes == 4) {
-								my ($r1,$g1,$b1,$a1) = unpack('C4', $cur);
-								my ($r2,$g2,$b2,$a2) = unpack('C4', $raw_foreground_color);
-								my $r = (($r2 * $A) + ($r1 * $invA)) >> 8;
-								my $g = (($g2 * $A) + ($g1 * $invA)) >> 8;
-								my $b = (($b2 * $A) + ($b1 * $invA)) >> 8;
-								my $a = $a2 + $a1; $a = 255 if $a > 255;
-								$c = pack('C4', $r,$g,$b,$a);
-							} elsif ($bytes == 3) {
-								my ($r1,$g1,$b1) = unpack('C3', $cur);
-								my ($r2,$g2,$b2) = unpack('C3', $raw_foreground_color);
-								my $r = (($r2 * $A) + ($r1 * $invA)) >> 8;
-								my $g = (($g2 * $A) + ($g1 * $invA)) >> 8;
-								my $b = (($b2 * $A) + ($b1 * $invA)) >> 8;
-								$c = pack('C3', $r,$g,$b);
-							} else {
-								# 16-bit RGB565 path (optional): do channel-wise integer blend
-								# Example skeleton using 5/6-bit channels; you can replace with existing helpers:
-								my $p1 = unpack('v', $cur);
-								my $p2 = unpack('v', $raw_foreground_color);
-								my $r1 = ($p1 >> 11) & 0x1F;
-								my $g1 = ($p1 >> 5)  & 0x3F;
-								my $b1 =  $p1        & 0x1F;
-								my $r2 = ($p2 >> 11) & 0x1F;
-								my $g2 = ($p2 >> 5)  & 0x3F;
-								my $b2 =  $p2        & 0x1F;
-								my $r = (($r2 * $A) + ($r1 * $invA)) >> 8; $r = 31 if $r > 31;
-								my $g = (($g2 * $A) + ($g1 * $invA)) >> 8; $g = 63 if $g > 63;
-								my $b = (($b2 * $A) + ($b1 * $invA)) >> 8; $b = 31 if $b > 31;
-								my $p = ($r << 11) | ($g << 5) | $b;
-								$c = pack('v', $p);
-							}
-						} elsif ($draw_mode == ADD_MODE) {
-							if ($bytes == 4) {
-								my ($r1,$g1,$b1,$a1) = unpack('C4', $cur);
-								my ($r2,$g2,$b2,$a2) = unpack('C4', $raw_foreground_color);
-								my $r = $r1 + $r2; $r = 255 if $r > 255;
-								my $g = $g1 + $g2; $g = 255 if $g > 255;
-								my $b = $b1 + $b2; $b = 255 if $b > 255;
-								my $a = $a1 + $a2; $a = 255 if $a > 255;
-								$c = pack('C4', $r,$g,$b,$a);
-							} elsif ($bytes == 3) {
-								my ($r1,$g1,$b1) = unpack('C3', $cur);
-								my ($r2,$g2,$b2) = unpack('C3', $raw_foreground_color);
-								my $r = $r1 + $r2; $r = 255 if $r > 255;
-								my $g = $g1 + $g2; $g = 255 if $g > 255;
-								my $b = $b1 + $b2; $b = 255 if $b > 255;
-								$c = pack('C3', $r,$g,$b);
-							} else {
-								# 16-bit RGB565 add (saturate)
-								my $p1 = unpack('v', $cur);
-								my $p2 = unpack('v', $raw_foreground_color);
-								my $r1 = ($p1 >> 11) & 0x1F; my $g1 = ($p1 >> 5) & 0x3F; my $b1 = $p1 & 0x1F;
-								my $r2 = ($p2 >> 11) & 0x1F; my $g2 = ($p2 >> 5) & 0x3F; my $b2 = $p2 & 0x1F;
-								my $r = $r1 + $r2; $r = 31 if $r > 31;
-								my $g = $g1 + $g2; $g = 63 if $g > 63;
-								my $b = $b1 + $b2; $b = 31 if $b > 31;
-								my $p = ($r << 11) | ($g << 5) | $b;
-								$c = pack('v', $p);
-							}
-						} elsif ($draw_mode == SUBTRACT_MODE) {
-							if ($bytes == 4) {
-								my ($r1,$g1,$b1,$a1) = unpack('C4', $cur);
-								my ($r2,$g2,$b2,$a2) = unpack('C4', $raw_foreground_color);
-								my $r = $r1 - $r2; $r = 0 if $r < 0;
-								my $g = $g1 - $g2; $g = 0 if $g < 0;
-								my $b = $b1 - $b2; $b = 0 if $b < 0;
-								my $a = $a1 - $a2; $a = 0 if $a < 0;
-								$c = pack('C4', $r,$g,$b,$a);
-							} elsif ($bytes == 3) {
-								my ($r1,$g1,$b1) = unpack('C3', $cur);
-								my ($r2,$g2,$b2) = unpack('C3', $raw_foreground_color);
-								my $r = $r1 - $r2; $r = 0 if $r < 0;
-								my $g = $g1 - $g2; $g = 0 if $g < 0;
-								my $b = $b1 - $b2; $b = 0 if $b < 0;
-								$c = pack('C3', $r,$g,$b);
-							} else {
-								my $p1 = unpack('v', $cur);
-								my $p2 = unpack('v', $raw_foreground_color);
-								my $r1 = ($p1 >> 11) & 0x1F; my $g1 = ($p1 >> 5) & 0x3F; my $b1 = $p1 & 0x1F;
-								my $r2 = ($p2 >> 11) & 0x1F; my $g2 = ($p2 >> 5) & 0x3F; my $b2 = $p2 & 0x1F;
-								my $r = $r1 - $r2; $r = 0 if $r < 0;
-								my $g = $g1 - $g2; $g = 0 if $g < 0;
-								my $b = $b1 - $b2; $b = 0 if $b < 0;
-								my $p = ($r << 11) | ($g << 5) | $b;
-								$c = pack('v', $p);
-							}
-						} elsif ($draw_mode == MULTIPLY_MODE) {
-							# Per-channel multiply scaled back to 0..255
-							if ($bytes == 4) {
-								my ($r1,$g1,$b1,$a1) = unpack('C4', $cur);
-								my ($r2,$g2,$b2,$a2) = unpack('C4', $raw_foreground_color);
-								my $r = ($r1 * $r2) >> 8;
-								my $g = ($g1 * $g2) >> 8;
-								my $b = ($b1 * $b2) >> 8;
-								my $a = ($a1 * $a2) >> 8;
-								$c = pack('C4', $r,$g,$b,$a);
-							} elsif ($bytes == 3) {
-								my ($r1,$g1,$b1) = unpack('C3', $cur);
-								my ($r2,$g2,$b2) = unpack('C3', $raw_foreground_color);
-								my $r = ($r1 * $r2) >> 8;
-								my $g = ($g1 * $g2) >> 8;
-								my $b = ($b1 * $b2) >> 8;
-								$c = pack('C3', $r,$g,$b);
-							} else {
-								# 16-bit approximate multiply: expand to 8-bit, multiply, compress back
-								my $p1 = unpack('v', $cur);
-								my $p2 = unpack('v', $raw_foreground_color);
-								my $r1 = (($p1 >> 11) & 0x1F) << 3; my $g1 = (($p1 >> 5) & 0x3F) << 2; my $b1 = ($p1 & 0x1F) << 3;
-								my $r2 = (($p2 >> 11) & 0x1F) << 3; my $g2 = (($p2 >> 5) & 0x3F) << 2; my $b2 = ($p2 & 0x1F) << 3;
-								my $r = ($r1 * $r2) >> 8; my $g = ($g1 * $g2) >> 8; my $b = ($b1 * $b2) >> 8;
-								$r >>= 3; $g >>= 2; $b >>= 3;
-								$r = 31 if $r > 31; $g = 63 if $g > 63; $b = 31 if $b > 31;
-								my $p = ($r << 11) | ($g << 5) | $b;
-								$c = pack('v', $p);
-							}
-						} elsif ($draw_mode == DIVIDE_MODE) {
-							if ($bytes == 4) {
-								my ($r1,$g1,$b1,$a1) = unpack('C4', $cur);
-								my ($r2,$g2,$b2,$a2) = unpack('C4', $raw_foreground_color);
-								my $r = $r2 ? int($r1 * 255 / $r2) : 255;
-								my $g = $g2 ? int($g1 * 255 / $g2) : 255;
-								my $b = $b2 ? int($b1 * 255 / $b2) : 255;
-								my $a = $a2 ? int($a1 * 255 / $a2) : 255;
-								$r = 255 if $r > 255; $g = 255 if $g > 255; $b = 255 if $b > 255; $a = 255 if $a > 255;
-								$c = pack('C4', $r,$g,$b,$a);
-							} elsif ($bytes == 3) {
-								my ($r1,$g1,$b1) = unpack('C3', $cur);
-								my ($r2,$g2,$b2) = unpack('C3', $raw_foreground_color);
-								my $r = $r2 ? int($r1 * 255 / $r2) : 255;
-								my $g = $g2 ? int($g1 * 255 / $g2) : 255;
-								my $b = $b2 ? int($b1 * 255 / $b2) : 255;
-								$r = 255 if $r > 255; $g = 255 if $g > 255; $b = 255 if $b > 255;
-								$c = pack('C3', $r,$g,$b);
-							} else {
-								my $p1 = unpack('v', $cur);
-								my $p2 = unpack('v', $raw_foreground_color);
-								my $r1 = (($p1 >> 11) & 0x1F) << 3; my $g1 = (($p1 >> 5) & 0x3F) << 2; my $b1 = ($p1 & 0x1F) << 3;
-								my $r2 = (($p2 >> 11) & 0x1F) << 3; my $g2 = (($p2 >> 5) & 0x3F) << 2; my $b2 = ($p2 & 0x1F) << 3;
-								my $r = $r2 ? int($r1 * 255 / $r2) : 255;
-								my $g = $g2 ? int($g1 * 255 / $g2) : 255;
-								my $b = $b2 ? int($b1 * 255 / $b2) : 255;
-								$r >>= 3; $g >>= 2; $b >>= 3;
-								$r = 31 if $r > 31; $g = 63 if $g > 63; $b = 31 if $b > 31;
-								my $p = ($r << 11) | ($g << 5) | $b;
-								$c = pack('v', $p);
-							}
-						}
+                    if ($draw_mode == NORMAL_MODE) {
+                        substr($$screenref, $index, $bytes) = $raw_foreground_color;
+                    } else {
 
-						# If no branch set $c (e.g., MASK condition not met), keep current pixel
-						substr($$screenref, $index, $bytes) = defined $c ? $c : $cur;
-					}
-					# --- End of optimized draft for the plot enclosure ---
+                        # Read the current pixel once and reuse
+                        my $cur = substr($$screenref, $index, $bytes) || chr(0) x $bytes;
+                        my $c;
+
+                        if ($draw_mode == XOR_MODE) {
+                            $c = ($cur ^ $raw_foreground_color);
+                        } elsif ($draw_mode == OR_MODE) {
+                            $c = ($cur | $raw_foreground_color);
+                        } elsif ($draw_mode == AND_MODE) {
+                            $c = ($cur & $raw_foreground_color);
+                        } elsif ($draw_mode == MASK_MODE) {
+                            if ($bits == 32) {
+
+                                # Compare RGB only
+                                my $fg3 = substr($raw_foreground_color, 0, 3);
+                                my $bg3 = substr($raw_background_color, 0, 3);
+                                $c = $raw_foreground_color if ($fg3 ne $bg3);
+                            } else {
+                                $c = $raw_foreground_color if ($raw_foreground_color ne $raw_background_color);
+                            }
+                        } elsif ($draw_mode == UNMASK_MODE) {
+                            if ($bits == 32) {
+                                my $cur3 = substr($cur,                  0, 3);
+                                my $bg3  = substr($raw_background_color, 0, 3);
+                                $c = $raw_foreground_color if ($cur3 eq $bg3);
+                            } else {
+                                $c = $raw_foreground_color if ($cur eq $raw_background_color);
+                            }
+                        } elsif ($draw_mode == ALPHA_MODE) {
+
+                            # Prefer integer math for speed and to avoid float overhead
+                            # color_alpha_int should be 0..255 (if you currently have 0..1, convert once: my $color_alpha_int = int(255 * $color_alpha + 0.5);)
+                            my $A    = defined $color_alpha_int ? $color_alpha_int : int(255 * $color_alpha + 0.5);
+                            my $invA = 255 - $A;
+                            if ($bytes == 4) {
+                                my ($r1, $g1, $b1, $a1) = unpack('C4', $cur);
+                                my ($r2, $g2, $b2, $a2) = unpack('C4', $raw_foreground_color);
+                                my $r = (($r2 * $A) + ($r1 * $invA)) >> 8;
+                                my $g = (($g2 * $A) + ($g1 * $invA)) >> 8;
+                                my $b = (($b2 * $A) + ($b1 * $invA)) >> 8;
+                                my $a = $a2 + $a1;
+                                $a = 255 if $a > 255;
+                                $c = pack('C4', $r, $g, $b, $a);
+                            } elsif ($bytes == 3) {
+                                my ($r1, $g1, $b1) = unpack('C3', $cur);
+                                my ($r2, $g2, $b2) = unpack('C3', $raw_foreground_color);
+                                my $r = (($r2 * $A) + ($r1 * $invA)) >> 8;
+                                my $g = (($g2 * $A) + ($g1 * $invA)) >> 8;
+                                my $b = (($b2 * $A) + ($b1 * $invA)) >> 8;
+                                $c = pack('C3', $r, $g, $b);
+                            } else {
+
+                                # 16-bit RGB565 path (optional): do channel-wise integer blend
+                                # Example skeleton using 5/6-bit channels; you can replace with existing helpers:
+                                my $p1 = unpack('v', $cur);
+                                my $p2 = unpack('v', $raw_foreground_color);
+                                my $r1 = ($p1 >> 11) & 0x1F;
+                                my $g1 = ($p1 >> 5) & 0x3F;
+                                my $b1 = $p1 & 0x1F;
+                                my $r2 = ($p2 >> 11) & 0x1F;
+                                my $g2 = ($p2 >> 5) & 0x3F;
+                                my $b2 = $p2 & 0x1F;
+                                my $r  = (($r2 * $A) + ($r1 * $invA)) >> 8;
+                                $r = 31 if $r > 31;
+                                my $g = (($g2 * $A) + ($g1 * $invA)) >> 8;
+                                $g = 63 if $g > 63;
+                                my $b = (($b2 * $A) + ($b1 * $invA)) >> 8;
+                                $b = 31 if $b > 31;
+                                my $p = ($r << 11) | ($g << 5) | $b;
+                                $c = pack('v', $p);
+                            } ## end else [ if ($bytes == 4) ]
+                        } elsif ($draw_mode == ADD_MODE) {
+                            if ($bytes == 4) {
+                                my ($r1, $g1, $b1, $a1) = unpack('C4', $cur);
+                                my ($r2, $g2, $b2, $a2) = unpack('C4', $raw_foreground_color);
+                                my $r = $r1 + $r2;
+                                $r = 255 if $r > 255;
+                                my $g = $g1 + $g2;
+                                $g = 255 if $g > 255;
+                                my $b = $b1 + $b2;
+                                $b = 255 if $b > 255;
+                                my $a = $a1 + $a2;
+                                $a = 255 if $a > 255;
+                                $c = pack('C4', $r, $g, $b, $a);
+                            } elsif ($bytes == 3) {
+                                my ($r1, $g1, $b1) = unpack('C3', $cur);
+                                my ($r2, $g2, $b2) = unpack('C3', $raw_foreground_color);
+                                my $r = $r1 + $r2;
+                                $r = 255 if $r > 255;
+                                my $g = $g1 + $g2;
+                                $g = 255 if $g > 255;
+                                my $b = $b1 + $b2;
+                                $b = 255 if $b > 255;
+                                $c = pack('C3', $r, $g, $b);
+                            } else {
+
+                                # 16-bit RGB565 add (saturate)
+                                my $p1 = unpack('v', $cur);
+                                my $p2 = unpack('v', $raw_foreground_color);
+                                my $r1 = ($p1 >> 11) & 0x1F;
+                                my $g1 = ($p1 >> 5) & 0x3F;
+                                my $b1 = $p1 & 0x1F;
+                                my $r2 = ($p2 >> 11) & 0x1F;
+                                my $g2 = ($p2 >> 5) & 0x3F;
+                                my $b2 = $p2 & 0x1F;
+                                my $r  = $r1 + $r2;
+                                $r = 31 if $r > 31;
+                                my $g = $g1 + $g2;
+                                $g = 63 if $g > 63;
+                                my $b = $b1 + $b2;
+                                $b = 31 if $b > 31;
+                                my $p = ($r << 11) | ($g << 5) | $b;
+                                $c = pack('v', $p);
+                            } ## end else [ if ($bytes == 4) ]
+                        } elsif ($draw_mode == SUBTRACT_MODE) {
+                            if ($bytes == 4) {
+                                my ($r1, $g1, $b1, $a1) = unpack('C4', $cur);
+                                my ($r2, $g2, $b2, $a2) = unpack('C4', $raw_foreground_color);
+                                my $r = $r1 - $r2;
+                                $r = 0 if $r < 0;
+                                my $g = $g1 - $g2;
+                                $g = 0 if $g < 0;
+                                my $b = $b1 - $b2;
+                                $b = 0 if $b < 0;
+                                my $a = $a1 - $a2;
+                                $a = 0 if $a < 0;
+                                $c = pack('C4', $r, $g, $b, $a);
+                            } elsif ($bytes == 3) {
+                                my ($r1, $g1, $b1) = unpack('C3', $cur);
+                                my ($r2, $g2, $b2) = unpack('C3', $raw_foreground_color);
+                                my $r = $r1 - $r2;
+                                $r = 0 if $r < 0;
+                                my $g = $g1 - $g2;
+                                $g = 0 if $g < 0;
+                                my $b = $b1 - $b2;
+                                $b = 0 if $b < 0;
+                                $c = pack('C3', $r, $g, $b);
+                            } else {
+                                my $p1 = unpack('v', $cur);
+                                my $p2 = unpack('v', $raw_foreground_color);
+                                my $r1 = ($p1 >> 11) & 0x1F;
+                                my $g1 = ($p1 >> 5) & 0x3F;
+                                my $b1 = $p1 & 0x1F;
+                                my $r2 = ($p2 >> 11) & 0x1F;
+                                my $g2 = ($p2 >> 5) & 0x3F;
+                                my $b2 = $p2 & 0x1F;
+                                my $r  = $r1 - $r2;
+                                $r = 0 if $r < 0;
+                                my $g = $g1 - $g2;
+                                $g = 0 if $g < 0;
+                                my $b = $b1 - $b2;
+                                $b = 0 if $b < 0;
+                                my $p = ($r << 11) | ($g << 5) | $b;
+                                $c = pack('v', $p);
+                            } ## end else [ if ($bytes == 4) ]
+                        } elsif ($draw_mode == MULTIPLY_MODE) {
+
+                            # Per-channel multiply scaled back to 0..255
+                            if ($bytes == 4) {
+                                my ($r1, $g1, $b1, $a1) = unpack('C4', $cur);
+                                my ($r2, $g2, $b2, $a2) = unpack('C4', $raw_foreground_color);
+                                my $r = ($r1 * $r2) >> 8;
+                                my $g = ($g1 * $g2) >> 8;
+                                my $b = ($b1 * $b2) >> 8;
+                                my $a = ($a1 * $a2) >> 8;
+                                $c = pack('C4', $r, $g, $b, $a);
+                            } elsif ($bytes == 3) {
+                                my ($r1, $g1, $b1) = unpack('C3', $cur);
+                                my ($r2, $g2, $b2) = unpack('C3', $raw_foreground_color);
+                                my $r = ($r1 * $r2) >> 8;
+                                my $g = ($g1 * $g2) >> 8;
+                                my $b = ($b1 * $b2) >> 8;
+                                $c = pack('C3', $r, $g, $b);
+                            } else {
+
+                                # 16-bit approximate multiply: expand to 8-bit, multiply, compress back
+                                my $p1 = unpack('v', $cur);
+                                my $p2 = unpack('v', $raw_foreground_color);
+                                my $r1 = (($p1 >> 11) & 0x1F) << 3;
+                                my $g1 = (($p1 >> 5) & 0x3F) << 2;
+                                my $b1 = ($p1 & 0x1F) << 3;
+                                my $r2 = (($p2 >> 11) & 0x1F) << 3;
+                                my $g2 = (($p2 >> 5) & 0x3F) << 2;
+                                my $b2 = ($p2 & 0x1F) << 3;
+                                my $r  = ($r1 * $r2) >> 8;
+                                my $g  = ($g1 * $g2) >> 8;
+                                my $b  = ($b1 * $b2) >> 8;
+                                $r >>= 3;
+                                $g >>= 2;
+                                $b >>= 3;
+                                $r = 31 if $r > 31;
+                                $g = 63 if $g > 63;
+                                $b = 31 if $b > 31;
+                                my $p = ($r << 11) | ($g << 5) | $b;
+                                $c = pack('v', $p);
+                            } ## end else [ if ($bytes == 4) ]
+                        } elsif ($draw_mode == DIVIDE_MODE) {
+                            if ($bytes == 4) {
+                                my ($r1, $g1, $b1, $a1) = unpack('C4', $cur);
+                                my ($r2, $g2, $b2, $a2) = unpack('C4', $raw_foreground_color);
+                                my $r = $r2 ? int($r1 * 255 / $r2) : 255;
+                                my $g = $g2 ? int($g1 * 255 / $g2) : 255;
+                                my $b = $b2 ? int($b1 * 255 / $b2) : 255;
+                                my $a = $a2 ? int($a1 * 255 / $a2) : 255;
+                                $r = 255 if $r > 255;
+                                $g = 255 if $g > 255;
+                                $b = 255 if $b > 255;
+                                $a = 255 if $a > 255;
+                                $c = pack('C4', $r, $g, $b, $a);
+                            } elsif ($bytes == 3) {
+                                my ($r1, $g1, $b1) = unpack('C3', $cur);
+                                my ($r2, $g2, $b2) = unpack('C3', $raw_foreground_color);
+                                my $r = $r2 ? int($r1 * 255 / $r2) : 255;
+                                my $g = $g2 ? int($g1 * 255 / $g2) : 255;
+                                my $b = $b2 ? int($b1 * 255 / $b2) : 255;
+                                $r = 255 if $r > 255;
+                                $g = 255 if $g > 255;
+                                $b = 255 if $b > 255;
+                                $c = pack('C3', $r, $g, $b);
+                            } else {
+                                my $p1 = unpack('v', $cur);
+                                my $p2 = unpack('v', $raw_foreground_color);
+                                my $r1 = (($p1 >> 11) & 0x1F) << 3;
+                                my $g1 = (($p1 >> 5) & 0x3F) << 2;
+                                my $b1 = ($p1 & 0x1F) << 3;
+                                my $r2 = (($p2 >> 11) & 0x1F) << 3;
+                                my $g2 = (($p2 >> 5) & 0x3F) << 2;
+                                my $b2 = ($p2 & 0x1F) << 3;
+                                my $r  = $r2 ? int($r1 * 255 / $r2) : 255;
+                                my $g  = $g2 ? int($g1 * 255 / $g2) : 255;
+                                my $b  = $b2 ? int($b1 * 255 / $b2) : 255;
+                                $r >>= 3;
+                                $g >>= 2;
+                                $b >>= 3;
+                                $r = 31 if $r > 31;
+                                $g = 63 if $g > 63;
+                                $b = 31 if $b > 31;
+                                my $p = ($r << 11) | ($g << 5) | $b;
+                                $c = pack('v', $p);
+                            } ## end else [ if ($bytes == 4) ]
+                        } ## end elsif ($draw_mode == DIVIDE_MODE)
+
+                        # If no branch set $c (e.g., MASK condition not met), keep current pixel
+                        substr($$screenref, $index, $bytes) = defined $c ? $c : $cur;
+                    } ## end else [ if ($draw_mode == NORMAL_MODE)]
                 } ## end if ($index >= 0 && $index...)
                 $self->{'history'}->{$y}->{$x} = 1 if (exists($self->{'history'}));
             } ## end unless (exists($self->{'history'...}))
-        }
+        } ## end unless (($x > $xx_clip) ||...)
     } ## end else [ if ($self->{'ACCELERATED'...})]
     $self->{'X'} = $x;
     $self->{'Y'} = $y;
@@ -2312,18 +2375,18 @@ $pixel is a hash reference in the form:
                 ($G, $B, $R) = unpack("C$bytes", $color);
             }
         } elsif ($bits == 16) {
-            my $C = unpack('S', $color);
+            my $C  = unpack('S', $color);
             my $rl = $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'};
             my $gl = $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'};
             my $bl = $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'};
 
-            $B = ($bl < 6)  ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 31  : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 63;
+            $B = ($bl < 6) ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 31  : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'})) & 63;
             $G = ($gl < 6) ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'})) & 31 : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'})) & 63;
-            $R = ($rl < 6)   ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 31   : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 63;
+            $R = ($rl < 6) ? ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 31   : ($C >> ($self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'})) & 63;
             $R = $R << (8 - $rl);
             $G = $G << (8 - $gl);
             $B = $B << (8 - $bl);
-        } ## end elsif ($self->{'BITS'} ==...)
+        } ## end elsif ($bits == 16)
         return ({ 'red' => $R, 'green' => $G, 'blue' => $B, 'alpha' => $A, 'raw' => $color, 'hex' => sprintf('%02x%02x%02x%02x', $R, $G, $B, $A) });
     } ## end unless (($x > $self->{'XX_CLIP'...}))
     return (undef);
@@ -2461,6 +2524,7 @@ Draws a line, in the global foreground color, from point x,y at an angle of 'ang
 } ## end sub angle_line
 
 sub drawto {
+
 =head2 drawto
 
 Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
@@ -2500,20 +2564,7 @@ Draws a line, in the foreground color, from the last plotted position to the pos
     my $yy_clip     = $self->{'YY_CLIP'};
 
     if ($self->{'ACCELERATED'}) {
-        c_line(
-            $self->{'SCREEN'},
-            $start_x, $start_y, $x_end,   $y_end,
-            $x_clip,  $y_clip,  $xx_clip, $yy_clip,
-            $self->{'INT_RAW_FOREGROUND_COLOR'},
-            $self->{'INT_RAW_BACKGROUND_COLOR'},
-            $self->{'COLOR_ALPHA'},
-            $self->{'DRAW_MODE'},
-            $self->{'BYTES'},
-            $self->{'BITS'},
-            $self->{'BYTES_PER_LINE'},
-            $self->{'XOFFSET'}, $self->{'YOFFSET'},
-            $antialiased,
-        );
+        c_line($self->{'SCREEN'}, $start_x, $start_y, $x_end, $y_end, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $self->{'COLOR_ALPHA'}, $self->{'DRAW_MODE'}, $self->{'BYTES'}, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $antialiased,);
     } else {
         my $width;
         my $height;
@@ -3023,9 +3074,9 @@ Draws an arc/pie/poly arc of a circle at point x,y.
                         $w, $w,
                         {
                             'red'   => [$params->{'gradient'}->{'start'}->{'red'},   $params->{'gradient'}->{'end'}->{'red'}],
-							  'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
-							  'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
-							  'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
+                            'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
+                            'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
+                            'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
                         },
                         $params->{'gradient'}->{'direction'} || 'vertical'
                     );
@@ -3318,9 +3369,9 @@ Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled e
                     $ydiameter,
                     {
                         'red'   => [$params->{'gradient'}->{'start'}->{'red'},   $params->{'gradient'}->{'end'}->{'red'}],
-						  'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
-						  'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
-						  'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$color_alpha, $color_alpha],
+                        'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
+                        'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
+                        'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$color_alpha, $color_alpha],
                     },
                     'horizontal'
                 );
@@ -3556,9 +3607,9 @@ Draws a circle at point x,y, with radius 'radius'.  It can be an outline, solid 
                 $wdth, $hgth,
                 {
                     'red'   => [$params->{'gradient'}->{'start'}->{'red'},   $params->{'gradient'}->{'end'}->{'red'}],
-					  'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
-					  'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
-					  'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
+                    'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
+                    'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
+                    'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
                 },
                 $params->{'gradient'}->{'direction'}
             );
@@ -3881,9 +3932,9 @@ sub _fill_polygon {
                 $width, $height,
                 {
                     'red'   => [$params->{'gradient'}->{'start'}->{'red'},   $params->{'gradient'}->{'end'}->{'red'}],
-					  'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
-					  'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
-					  'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
+                    'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
+                    'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
+                    'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
                 },
                 $params->{'gradient'}->{'direction'}
             );
@@ -3983,13 +4034,13 @@ sub _generate_fill {
             my $new = $self->blit_transform(
                 {
                     'blit_data' => $type,
-					  'scale'     => {
-						  'scale_type' => 'nonprop',
-						  'x'          => 0,
-						  'y'          => 0,
-						  'width'      => $width,
-						  'height'     => $height
-					  }
+                    'scale'     => {
+                        'scale_type' => 'nonprop',
+                        'x'          => 0,
+                        'y'          => 0,
+                        'width'      => $width,
+                        'height'     => $height
+                    }
                 }
             );
             $gradient = $new->{'image'};
@@ -4194,9 +4245,9 @@ Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 
                     $w, $h,
                     {
                         'red'   => [$params->{'gradient'}->{'start'}->{'red'},   $params->{'gradient'}->{'end'}->{'red'}],
-						  'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
-						  'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
-						  'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
+                        'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
+                        'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
+                        'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
                     },
                     $params->{'gradient'}->{'direction'},
                 );
@@ -4449,7 +4500,7 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
     my $pixel = $self->pixel(
         {
             'x' => $x,
-			  'y' => $y,
+            'y' => $y,
         }
     );
     my $bytes    = $self->{'BYTES'};
@@ -4461,6 +4512,7 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
 
     return if ($back eq $self->{'RAW_FOREGROUND_COLOR'});
     unless ($self->{'ACCELERATED'}) {
+
         # This doesn't over-use the system stack.  While flood fill algorithms are famous being a stack memory hog, this one goes easy on it.
         # Optimized: avoid repeated shift() (O(n)), reduce method-call overhead by
         # caching small helpers, and use a queue with head index.
@@ -4475,36 +4527,36 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
         # small cached subs to reduce repeated hash construction for method calls
         my $get_pixel = sub {
             my ($px, $py) = @_;
-            return $self->pixel( { x => $px, y => $py, raw => TRUE } );
+            return $self->pixel({ x => $px, y => $py, raw => TRUE });
         };
         my $do_plot = sub {
             my ($px, $py) = @_;
-            $self->plot( { x => $px, y => $py } );
+            $self->plot({ x => $px, y => $py });
         };
 
         while ($qhead <= $#queue) {
             my ($cx, $cy) = @{ $queue[$qhead++] };
+
             # clip check
             next
               if ( $cx < $x_clip
-                  || $cx > $xx_clip
-                  || $cy < $y_clip
-                  || $cy > $yy_clip );
+                || $cx > $xx_clip
+                || $cy < $y_clip
+                || $cy > $yy_clip);
 
             # skip already visited
-            next if ( defined $visited[$cx] && $visited[$cx][$cy] );
+            next if (defined $visited[$cx] && $visited[$cx][$cy]);
 
             # fetch pixel raw and compare
-            my $curpix = $get_pixel->( $cx, $cy );
-            if ( $curpix eq $background ) {
-                $do_plot->( $cx, $cy );
+            my $curpix = $get_pixel->($cx, $cy);
+            if ($curpix eq $background) {
+                $do_plot->($cx, $cy);
                 $visited[$cx][$cy] = 1;
 
                 # enqueue neighbors (bounds will be checked on dequeue)
-                push @queue, [ $cx + 1, $cy ], [ $cx - 1, $cy ],
-                  [ $cx, $cy + 1 ], [ $cx, $cy - 1 ];
-            }
-        }
+                push @queue, [$cx + 1, $cy], [$cx - 1, $cy], [$cx, $cy + 1], [$cx, $cy - 1];
+            } ## end if ($curpix eq $background)
+        } ## end while ($qhead <= $#queue)
     } else {
         my $width  = int($self->{'W_CLIP'});
         my $height = int($self->{'H_CLIP'});
@@ -4518,9 +4570,9 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
                     $width, $height,
                     {
                         'red'   => [$params->{'gradient'}->{'start'}->{'red'},   $params->{'gradient'}->{'end'}->{'red'}],
-						  'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
-						  'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
-						  'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
+                        'green' => [$params->{'gradient'}->{'start'}->{'green'}, $params->{'gradient'}->{'end'}->{'green'}],
+                        'blue'  => [$params->{'gradient'}->{'start'}->{'blue'},  $params->{'gradient'}->{'end'}->{'blue'}],
+                        'alpha' => (exists($params->{'gradient'}->{'start'}->{'alpha'})) ? [$params->{'gradient'}->{'start'}->{'alpha'}, $params->{'gradient'}->{'end'}->{'alpha'}] : [$self->{'COLOR_ALPHA'}, $self->{'COLOR_ALPHA'}],
                     },
                     $params->{'gradient'}->{'direction'}
                 );
@@ -4535,9 +4587,9 @@ NOTE:  The accelerated version of this routine may (and it is a small may) have 
             my $saved = $self->blit_read(
                 {
                     'x'      => $x_clip,
-                      'y'      => $y_clip,
-                      'width'  => $width,
-                      'height' => $height,
+                    'y'      => $y_clip,
+                    'width'  => $width,
+                    'height' => $height,
                 }
             );
             if ($self->{'BITS'} == 16) {
@@ -4664,8 +4716,8 @@ This replaces one color with another inside the clipping region.  Sort of like a
     $self->set_color(
         {
             'red'   => $new_r,
-			  'green' => $new_g,
-			  'blue'  => $new_b,
+            'green' => $new_g,
+            'blue'  => $new_b,
         }
     );
     my $old_mode = $self->{'DRAW_MODE'};
@@ -4731,9 +4783,9 @@ This replaces one color with another inside the clipping region.  Sort of like a
         my $save = $self->blit_read(
             {
                 'x'      => $self->{'X_CLIP'},
-				  'y'      => $self->{'Y_CLIP'},
-				  'width'  => $self->{'W_CLIP'},
-				  'height' => $self->{'H_CLIP'},
+                'y'      => $self->{'Y_CLIP'},
+                'width'  => $self->{'W_CLIP'},
+                'height' => $self->{'H_CLIP'},
             }
         );
         if ($self->{'BITS'} == 32 && length($old) == 3) {
@@ -4849,7 +4901,7 @@ The animation will stop if "Q" is pressed
 =cut
 
     my ($self, $image, $rate) = @_;
-    $rate  ||= 1;
+    $rate ||= 1;
 
     ReadMode 4;
     foreach my $frame (0 .. (scalar(@{$image}) - 1)) {
@@ -5423,10 +5475,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
         return (
             {
                 'x'      => $params->{'merge'}->{'dest_blit_data'}->{'x'},
-				  'y'      => $params->{'merge'}->{'dest_blit_data'}->{'y'},
-				  'width'  => $width,
-				  'height' => $height,
-				  'image'  => $data
+                'y'      => $params->{'merge'}->{'dest_blit_data'}->{'y'},
+                'width'  => $width,
+                'height' => $height,
+                'image'  => $data
             }
         );
     } ## end if (exists($params->{'merge'...}))
@@ -5460,10 +5512,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
         return (
             {
                 'x'      => $params->{'blit_data'}->{'x'},
-				  'y'      => $params->{'blit_data'}->{'y'},
-				  'width'  => $width,
-				  'height' => $height,
-				  'image'  => $new
+                'y'      => $params->{'blit_data'}->{'y'},
+                'width'  => $width,
+                'height' => $height,
+                'image'  => $new
             }
         );
     } elsif (exists($params->{'rotate'})) {
@@ -5483,10 +5535,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
                 return (
                     {
                         'x'      => $params->{'blit_data'}->{'x'},
-						  'y'      => $params->{'blit_data'}->{'y'},
-						  'width'  => $width,
-						  'height' => $height,
-						  'image'  => $new
+                        'y'      => $params->{'blit_data'}->{'y'},
+                        'width'  => $width,
+                        'height' => $height,
+                        'image'  => $new
                     }
                 );
             } else {
@@ -5499,10 +5551,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
                 return (
                     {
                         'x'      => $params->{'blit_data'}->{'x'},
-						  'y'      => $params->{'blit_data'}->{'y'},
-						  'width'  => $wh,
-						  'height' => $wh,
-						  'image'  => $data
+                        'y'      => $params->{'blit_data'}->{'y'},
+                        'width'  => $wh,
+                        'height' => $wh,
+                        'image'  => $data
                     }
                 );
             } ## end else [ if (abs($degrees) == 180)]
@@ -5542,10 +5594,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
         return (
             {
                 'x'      => $params->{'blit_data'}->{'x'},
-				  'y'      => $params->{'blit_data'}->{'y'},
-				  'width'  => $width,
-				  'height' => $height,
-				  'image'  => $data
+                'y'      => $params->{'blit_data'}->{'y'},
+                'width'  => $width,
+                'height' => $height,
+                'image'  => $data
             }
         );
     } elsif (exists($params->{'scale'})) {
@@ -5586,10 +5638,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
         return (
             {
                 'x'      => $params->{'blit_data'}->{'x'},
-				  'y'      => $params->{'blit_data'}->{'y'},
-				  'width'  => $width,
-				  'height' => $height,
-				  'image'  => $data
+                'y'      => $params->{'blit_data'}->{'y'},
+                'width'  => $width,
+                'height' => $height,
+                'image'  => $data
             }
         );
     } elsif (exists($params->{'monochrome'})) {
@@ -5607,10 +5659,10 @@ It returns the transformed image in the same format the other BLIT methods use. 
         return (
             {
                 'x'      => $x,
-				  'y'      => $y,
-				  'width'  => $width,
-				  'height' => $height,
-				  'image'  => $params->{'blit_data'}->{'image'}
+                'y'      => $y,
+                'width'  => $width,
+                'height' => $height,
+                'image'  => $params->{'blit_data'}->{'image'}
             }
         );
 
@@ -6761,6 +6813,7 @@ sub _convert_16_to_24 {
 } ## end sub _convert_16_to_24
 
 sub _convert_8_to_32 {
+
     # Convert 8 bit bitmap to 32 bit bitmap
     my ($self, $img, $color_order, $pallette) = @_;
 
@@ -6776,6 +6829,7 @@ sub _convert_8_to_32 {
 } ## end sub _convert_8_to_32
 
 sub _convert_8_to_24 {
+
     # Convert 8 bit bitmap to 24 bit bitmap
     my ($self, $img, $color_order, $pallette) = @_;
 
@@ -6791,6 +6845,7 @@ sub _convert_8_to_24 {
 } ## end sub _convert_8_to_24
 
 sub _convert_8_to_16 {
+
     # Convert 8 bit bitmap to 16 bit bitmap
     my ($self, $img, $color_order, $pallette) = @_;
 
@@ -6806,6 +6861,7 @@ sub _convert_8_to_16 {
 } ## end sub _convert_8_to_16
 
 sub _convert_16_to_32 {
+
     # Convert 16 bit bitmap to 32 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6839,6 +6895,7 @@ sub _convert_16_to_32 {
 } ## end sub _convert_16_to_32
 
 sub _convert_24_to_16 {
+
     # Convert 24 bit bitmap to 16 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6873,6 +6930,7 @@ sub _convert_24_to_16 {
 } ## end sub _convert_24_to_16
 
 sub _convert_32_to_16 {
+
     # Convert 32 bit bitmap to a 16 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6907,6 +6965,7 @@ sub _convert_32_to_16 {
 } ## end sub _convert_32_to_16
 
 sub _convert_32_to_24 {
+
     # Convert a 32 bit bitmap to a 24 bit bitmap.
     my ($self, $img, $color_order) = @_;
 
@@ -6994,11 +7053,7 @@ Convert a 16 bit color value to a 24 bit color value.  This requires the color t
     my $rgb565 = unpack('S', $params->{'color'});
     my ($r, $g, $b);
     my $color_order = $params->{'color_order'};
-    if ($color_order == RGB) {
-        $r = $rgb565 & 31;
-        $g = ($rgb565 >> 5) & 63;
-        $b = ($rgb565 >> 11) & 31;
-    } elsif ($color_order == BGR) {
+    if ($color_order == BGR) {
         $b = $rgb565 & 31;
         $g = ($rgb565 >> 5) & 63;
         $r = ($rgb565 >> 11) & 31;
@@ -7018,7 +7073,11 @@ Convert a 16 bit color value to a 24 bit color value.  This requires the color t
         $g = $rgb565 & 31;
         $b = ($rgb565 >> 5) & 63;
         $r = ($rgb565 >> 11) & 31;
-    }
+    } else {
+        $r = $rgb565 & 31;
+        $g = ($rgb565 >> 5) & 63;
+        $b = ($rgb565 >> 11) & 31;
+	}
     $r = int($r * 527 + 23) >> 6;
     $g = int($g * 259 + 33) >> 6;
     $b = int($b * 527 + 23) >> 6;
@@ -7028,15 +7087,13 @@ Convert a 16 bit color value to a 24 bit color value.  This requires the color t
         ($r, $g, $b) = ($b, $g, $r);
     } elsif ($color_order == BRG) {
         ($r, $g, $b) = ($b, $r, $g);
-
-        #    } elsif ($color_order == RGB) { # Redundant, but here for clarity
     } elsif ($color_order == RBG) {
         ($r, $g, $b) = ($r, $b, $g);
     } elsif ($color_order == GRB) {
         ($r, $g, $b) = ($g, $r, $b);
     } elsif ($color_order == GBR) {
         ($r, $g, $b) = ($g, $b, $r);
-    }
+    } # No changes needed for RGB
     $color = pack('CCC', $r, $g, $b);
     return ({ 'color' => $color });
 } ## end sub RGB565_to_RGB888
@@ -7062,11 +7119,7 @@ Convert a 16 bit color value to a 32 bit color value.  This requires the color t
     my $a           = $params->{'alpha'} || 255;
     my $color_order = $self->{'COLOR_ORDER'};
     my ($r, $g, $b);
-    if ($color_order == RGB) {
-        $r = $rgb565 & 31;
-        $g = ($rgb565 >> 5) & 63;
-        $b = ($rgb565 >> 11) & 31;
-    } elsif ($color_order == BGR) {
+	if ($color_order == BGR) {
         $b = $rgb565 & 31;
         $g = ($rgb565 >> 5) & 63;
         $r = ($rgb565 >> 11) & 31;
@@ -7086,7 +7139,11 @@ Convert a 16 bit color value to a 32 bit color value.  This requires the color t
         $g = $rgb565 & 31;
         $b = ($rgb565 >> 5) & 63;
         $r = ($rgb565 >> 11) & 31;
-    }
+    } else {
+        $r = $rgb565 & 31;
+        $g = ($rgb565 >> 5) & 63;
+        $b = ($rgb565 >> 11) & 31;
+	}
     $r = int($r * 527 + 23) >> 6;
     $g = int($g * 259 + 33) >> 6;
     $b = int($b * 527 + 23) >> 6;
@@ -7094,8 +7151,6 @@ Convert a 16 bit color value to a 32 bit color value.  This requires the color t
     my $color;
     if ($color_order == BGR) {
         ($r, $g, $b) = ($b, $g, $r);
-
-        #    } elsif ($color_order == RGB) { # Redundant
     } elsif ($color_order == BRG) {
         ($r, $g, $b) = ($b, $r, $g);
     } elsif ($color_order == RBG) {
