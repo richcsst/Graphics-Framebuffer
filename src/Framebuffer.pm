@@ -1391,10 +1391,8 @@ to F9.  One of them is set aside for X-Windows/Wayland.
         $self->{'START_SCREEN'} = '' . $self->{'SCREEN'};    # Force Perl to copy the string, not the reference
     }
     chomp($self->{'this_tty'} = `tty`);
-    if ($self->{'SPLASH'} > 0) {
-        $self->splash($VERSION);
-        sleep $self->{'SPLASH'};
-    }
+    $self->graphics_mode();
+    $self->splash($self->{'SPLASH'});
     $self->attribute_reset();
     if (wantarray) {    # For the temporarily supported (but no longer) double buffering mode
         return ($self, $self);    # For those that coded for double buffering
