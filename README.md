@@ -151,5 +151,3 @@ See http://dev.perl.org/licenses/ for more information.
 ## OTHER GITHUB PROJECTS
 
 * **GitHub** Repositories - https://github.com/richcsst
-* **Graphics::Framebuffer** repository - https://github.com/richcsst/Graphics-Framebuffer
-
