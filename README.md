@@ -132,6 +132,8 @@ You can also look for information at:
 
 * **CPAN Ratings** - http://cpanratings.perl.org/d/Graphics-Framebuffer
 
+* **MetaCPAN** - https://metacpan.org/pod/Graphics::Framebuffer
+
 * **Search CPAN** - http://search.cpan.org/dist/Graphics-Framebuffer/
 
 * **YouTube** - https://www.youtube.com/channel/UCxhjUfniyPze02GU4sWBJrw
