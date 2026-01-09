@@ -1,7 +1,7 @@
 package Graphics::Framebuffer;
 
 ## TEMP COPYRIGHT ##
-#  Copyright 2017 - 2025 Richard Kelsch
+#  Copyright 2017 - 2026 Richard Kelsch
 ## TEMPCOPYRIGHT ##
 
 # Only POD is utf-8.  The module code CANNOT be UTF-8
@@ -35,6 +35,8 @@ Drawing is this simple
  $fb->cls('ON'); # Clear screen and turn on the console cursor
 
 Methods requiring parameters require a hash (or anonymous hash) reference passed to the method (for speed).  All parameters have easy to understand english names, all lower case, to understand exactly what the method is doing.
+
+While reading this man page will describe how each method works, looking at the source code of "examples/primitives.pl" will demonstrate how each works.
 
 =head1 DESCRIPTION
 
@@ -96,11 +98,11 @@ Contains a hash of every font found in the system in the format:
 
 =over 6
 
-# 'FaceName' => {
-#     'path' => 'Path To Font',
-#     'font' => 'File Name of Font'
-# },
-# ...
+ # 'FaceName' => {
+ #     'path' => 'Path To Font',
+ #     'font' => 'File Name of Font'
+ # },
+ # ...
 
 =back
 
@@ -567,10 +569,6 @@ Framebuffer device name.  If this is not defined, then it tries the following de
       *  /dev/fb0 - 31
       *  /dev/graphics/fb0 - 31
 
-    FreeBSD
-
-      *  /dev/ttyv0 - F
-
 If none of these work, then the module goes into emulation mode.
 
 You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
@@ -886,8 +884,7 @@ sub new {
         @_                                    # Pull in the overrides
     };
     if ($self->{'GARBAGE'}) {                 # This is for weird framebuffer formats (like an Atari ST).  The module doesn't support these
-        my $garbage = {
-
+        my $garbage = { # Not used in the module, and only populated if the GARBAGE key is TRUE
             'PIXEL_TYPES'     => ['Packed Pixels', 'Planes', 'Interleaved Planes', 'Text', 'VGA Planes',],
             'PIXEL_TYPES_AUX' => {
                 'Packed Pixels'      => ['',],
@@ -1015,30 +1012,17 @@ sub new {
         };
         $self = { %{$self}, %{$garbage} };
     } ## end if ($self->{'GARBAGE'})
-    if ($os =~ /FreeBSD/i) {    # MAYBE this will eventually work on FreeBSD if I can figure this monster out.
-        unless (defined($self->{'FB_DEVICE'})) {    # We scan for all 16 possible devices at both possible locations
-            my $prefix = 'dev/ttyv';
-            foreach my $dev (0 .. 15) {
-                my $device = hex($dev);
-                if (-e "$prefix$device") {
-                    $self->{'FB_DEVICE'} = "$prefix$device";
-                    last;
-                }
-            } ## end foreach my $dev (0 .. 15)
-        } ## end unless (defined($self->{'FB_DEVICE'...}))
-    } elsif ($os =~ /Linux/i) {
-        unless (defined($self->{'FB_DEVICE'})) {    # We scan for all 32 possible devices at both possible locations
-            foreach my $dev (0 .. 31) {
-                foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb)) {
-                    if (-e "$prefix$dev") {
-                        $self->{'FB_DEVICE'} = "$prefix$dev";
-                        last;
-                    }
-                } ## end foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb))
-                last if (defined($self->{'FB_DEVICE'}));
-            } ## end foreach my $dev (0 .. 31)
-        } ## end unless (defined($self->{'FB_DEVICE'...}))
-    } ## end elsif ($os =~ /Linux/i)
+	unless (defined($self->{'FB_DEVICE'})) {    # We scan for all 32 possible devices at both possible locations
+		foreach my $dev (0 .. 31) {
+			foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb)) {
+				if (-e "$prefix$dev") {
+					$self->{'FB_DEVICE'} = "$prefix$dev";
+					last;
+				}
+			} ## end foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb))
+			last if (defined($self->{'FB_DEVICE'}));
+		} ## end foreach my $dev (0 .. 31)
+	} ## end unless (defined($self->{'FB_DEVICE'...}))
     $self->{'CONSOLE'} = 1;
     eval {
         $self->{'CONSOLE'} = _slurp('/sys/class/tty/tty0/active');
@@ -1229,7 +1213,6 @@ sub new {
         $self->{'fscreeninfo'}->{'accel'}    = $self->{'ACCEL_TYPES'}->[$self->{'fscreeninfo'}->{'accel'}];
 
         if ($self->{'BITS'} == 32 && $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'} == 0) {
-
             # The video driver doesn't use the alpha channel, but we do, so force it.
             $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'} = 8;
             $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
@@ -1428,9 +1411,7 @@ sub _color_order {
     my $go = $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'};
     my $bo = $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'};
 
-    if ($ro < $go && $go < $bo) {
-        $self->{'COLOR_ORDER'} = RGB;
-    } elsif ($bo < $go && $go < $ro) {
+    } if ($bo < $go && $go < $ro) {
         $self->{'COLOR_ORDER'} = BGR;
     } elsif ($go < $ro && $ro < $bo) {
         $self->{'COLOR_ORDER'} = GRB;
@@ -1441,8 +1422,6 @@ sub _color_order {
     } elsif ($ro < $bo && $bo < $go) {
         $self->{'COLOR_ORDER'} = RBG;
     } else {
-
-        # UNKNOWN - default to RGB
         $self->{'COLOR_ORDER'} = RGB;
     }
 } ## end sub _color_order
@@ -1551,6 +1530,7 @@ This is automatically displayed when this module is initialized, and the variabl
  $fb->splash();
 
 =back
+
 =cut
 
 =head2 get_font_list
@@ -1669,6 +1649,7 @@ Sets or returns the drawing mode, depending on how it is called.
                                    # useful, but here for completeness)
 
 =back
+
 =cut
 
 sub draw_mode {
@@ -2293,6 +2274,7 @@ $pixel is a hash reference in the form:
  }
 
 =back
+
 =cut
 
 sub pixel {
@@ -4285,6 +4267,7 @@ Even if you are in 16 bit color mode, use 8 bit values.  They will be automatica
  });
 
 =back
+
 =cut
 
 sub set_color {
@@ -4382,6 +4365,7 @@ The same rules as set_color apply.
  });
 
 =back
+
 =cut
 
 sub set_b_color {
@@ -4660,7 +4644,7 @@ sub replace_color {
     my ($old, $new);
     unless (exists($params->{'old'}->{'raw'}) && exists($params->{'new'}->{'raw'})) {
         if ($self->{'BITS'} == 32) {
-            if ($color_order == BGR) {
+            if ($color_order == BGR) { # Most modern cards are BGR so this is first for speed
                 $old = (defined($old_a)) ? chr($old_b) . chr($old_g) . chr($old_r) . chr($old_a) : chr($old_b) . chr($old_g) . chr($old_r);
                 $new = chr($new_b) . chr($new_g) . chr($new_r) . chr($new_a);
             } elsif ($color_order == BRG) {
@@ -5601,6 +5585,7 @@ Turns off clipping, and resets the clipping values to the full size of the scree
  $fb->clip_reset();
 
 =back
+
 =cut
 
 sub clip_reset {
@@ -5642,6 +5627,7 @@ Sets the clipping rectangle starting at the top left point x,y and ending at bot
  });
 
 =back
+
 =cut
 
 sub clip_set {
@@ -5675,6 +5661,7 @@ Sets the clipping rectangle to point x,y,width,height
  });
 
 =back
+
 =cut
 
 sub clip_rset {
@@ -5920,10 +5907,10 @@ sub ttf_print {
             $font->transform('matrix' => $matrix);
             my $bbox = $font->bounding_box('string' => $text, 'canon' => 1, 'size' => $TTF_h, 'sizew' => $sizew);
             my ($left, $miny, $right, $maxy) = _transformed_bounds($bbox, $matrix);
-            my ($top, $bottom) = (-$maxy, -$miny);
-            ($TTF_pw, $TTF_ph) = ($right - $left, $bottom - $top);
-            $params->{'pwidth'}  = $TTF_pw;
-            $params->{'pheight'} = $TTF_ph;
+            my ($top, $bottom)               = (-$maxy, -$miny);
+            ($TTF_pw, $TTF_ph)               = ($right - $left, $bottom - $top);
+            $params->{'pwidth'}              = $TTF_pw;
+            $params->{'pheight'}             = $TTF_ph;
         };
         warn __LINE__ . " $@\n", Imager->errstr() if ($@ && $self->{'SHOW_ERRORS'});
     } else {
