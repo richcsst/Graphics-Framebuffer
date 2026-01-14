@@ -5178,33 +5178,7 @@ sub blit_write {
     } ## end else [ if ($self->{'ACCELERATED'...})]
 } ## end sub blit_write
 
-BEGIN {
-    require Devel::Peek;
-    $Devel::Peek::pv_limit = 20;
-}
 sub _blit_adjust_for_clipping {
-    my ($s, $p) = @_;
-
-    warn "____ IN _____________________________________________________________________________\n\n";
-    warn "SELF:                                             PARAMS:\n";
-    warn "  x_clip:$s->{X_CLIP}  y_clip:$s->{Y_CLIP}  xx_clip:$s->{XX_CLIP}  yy_clip:$s->{YY_CLIP}    x:$p->{x}  y:$p->{y}  width:$p->{width}  height:$p->{height}\n\n";
-    warn "IMAGE:\n";
-    Devel::Peek::Dump $p->{image};
-    warn "\n";
-
-    my $rv = _p_blit_adjust_for_clipping(@_);
-
-    warn "____ OUT ____________________________________________________________________________\n\n";
-    warn "SELF:                                             PARAMS:\n";
-    warn "  x_clip:$s->{X_CLIP}  y_clip:$s->{Y_CLIP}  xx_clip:$s->{XX_CLIP}  yy_clip:$s->{YY_CLIP}    x:$rv->{x}  y:$rv->{y}  width:$rv->{width}  height:$rv->{height}\n\n";
-    warn "IMAGE:\n";
-    Devel::Peek::Dump $rv->{image};
-    warn "\n";
-
-    return $rv;
-}
-
-sub _p_blit_adjust_for_clipping {
     # Chops up the blit image to stay within the clipping (and screen) boundaries
     # This prevents nasty crashes
     my ($self, $pparams) = @_;
