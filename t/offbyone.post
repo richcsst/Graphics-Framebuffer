@@ -1,0 +1,28 @@
+____ IN _____________________________________________________________________________
+
+SELF:                                             PARAMS:
+  x_clip:0  y_clip:0  xx_clip:1279  yy_clip:1023    x:0  y:0  width:1280  height:1024
+
+IMAGE:
+SV = PV(0x1687fd8) at 0x169d790
+  REFCNT = 1
+  FLAGS = (POK,IsCOW,pPOK)
+  PV = 0x7fe305826028 "\377\377\377\377\0\0"...\0
+  CUR = 5242880
+  LEN = 5242888
+  COW_REFCNT = 0
+
+____ OUT ____________________________________________________________________________
+
+SELF:                                             PARAMS:
+  x_clip:0  y_clip:0  xx_clip:1279  yy_clip:1023    x:0  y:0  width:1280  height:1024
+
+IMAGE:
+SV = PV(0x1688458) at 0x169d850
+  REFCNT = 1
+  FLAGS = (POK,IsCOW,pPOK)
+  PV = 0x7fe305826028 "\377\377\377\377\0\0"...\0
+  CUR = 5242880
+  LEN = 5242888
+  COW_REFCNT = 1
+

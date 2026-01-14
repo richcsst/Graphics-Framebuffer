@@ -5220,19 +5220,19 @@ sub _p_blit_adjust_for_clipping {
     %{$params} = %{$pparams};
 
     # First fix the vertical errors
-    my $XX = $params->{'x'} + $params->{'width'};
-    my $YY = $params->{'y'} + $params->{'height'};
+    my $XX = $params->{'x'} + $params->{'width'}  - 1;
+    my $YY = $params->{'y'} + $params->{'height'} - 1;
     return (undef) if ($YY < $yclip || $params->{'height'} < 1 || $XX < $xclip || $params->{'x'} > $xxclip);
     if ($params->{'y'} < $yclip) {    # Top
         $params->{'image'} = substr($params->{'image'}, ($yclip - $params->{'y'}) * ($params->{'width'} * $bytes));
         $params->{'height'} -= ($yclip - $params->{'y'});
         $params->{'y'} = $yclip;
     }
-    $YY = $params->{'y'} + $params->{'height'};
+    $YY = $params->{'y'} + $params->{'height'} - 1;
     return (undef) if ($params->{'height'} < 1);
     if ($YY > $yyclip) {              # Bottom
         $params->{'image'}  = substr($params->{'image'}, 0, ($yyclip - $params->{'y'}) * ($params->{'width'} * $bytes));
-        $params->{'height'} = $yyclip - $params->{'y'};
+        $params->{'height'} = $yyclip - $params->{'y'} + 1;
     }
 
     # Now we fix the horizontal errors
@@ -5248,11 +5248,11 @@ sub _p_blit_adjust_for_clipping {
         $params->{'width'} = $w;
         $params->{'x'}     = $xclip;
     } ## end if ($params->{'x'} < $xclip)
-    $XX = $params->{'x'} + $params->{'width'};
+    $XX = $params->{'x'} + $params->{'width'} - 1;
     if ($XX > $xxclip) {    # Right
         my $line = $params->{'width'} * $bytes;
         my $new  = '';
-        my $w    = $xxclip - $params->{'x'};
+        my $w    = $xxclip - $params->{'x'} + 1;
         foreach my $yl (0 .. ($params->{'height'} - 1)) {
             $new .= substr($params->{'image'}, $line * $yl, $w * $bytes);
         }

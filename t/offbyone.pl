@@ -58,7 +58,7 @@ With the hook in place, one test is run - a full screen blit read from
 an emulated framebuffer directly followed by a blit write to the live
 framebuffer.
 
-A copy of my result is in t/offbyone.pre.
+A copy of my results are in t/offbyone.pre and t/offbyone.post.
 
 =head1 Conclusions
 
@@ -71,6 +71,9 @@ exiting image is in a new location as indicated by the inner PV and it
 has lost the IsCOW flag, altogether meaning either copy-on-write was
 triggered or this is now an entirely new SV (or both).
 
-Further after the patch applied. (next commit)
+After patching, the size of the image coming out is correct. Notice also
+that the inner PV is the same and the COW_REFCNT has increased, so the
+image was copied by pointer only. It didn't have to do a full bitwise
+copy.
 
 =cut
