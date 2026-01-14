@@ -1243,6 +1243,39 @@ void c_blit_read(char *framebuffer,
     }
 }
 
+void c_blit_read_new(char *framebuffer,
+                     short screen_width,
+                     short screen_height,
+                     unsigned int bytes_per_line,
+                     short xoffset,
+                     short yoffset,
+                     char *blit_data,
+                     short x,
+                     short y,
+                     short w,
+                     short h,
+                     unsigned char bytes_per_pixel,
+                     unsigned char draw_mode,
+                     unsigned char alpha,
+                     unsigned int bcolor,
+                     short x_clip,
+                     short y_clip,
+                     short xx_clip,
+                     short yy_clip) {
+    unsigned int bline = w * bytes_per_pixel;
+    short yend = y + h - 1;
+    short xx = (xoffset + x) * bytes_per_pixel;
+    char *fb_idx = framebuffer + (bytes_per_line * (y + yoffset)) + xx;
+    char *blit_idx = blit_data;
+    short line;
+
+    for ( line = y ; line <= yend ; line++ ) {
+        memcpy(blit_idx, fb_idx, bline);
+        blit_idx += bline;
+        fb_idx += bytes_per_line;
+    }
+}
+
 /* Blits a rectangle of graphics to the screen using the specified draw mode */
 void c_blit_write(char *framebuffer,
                   short screen_width,

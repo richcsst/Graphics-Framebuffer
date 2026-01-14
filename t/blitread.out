@@ -1,0 +1,14 @@
+LIVE FB:
+         Rate c-orig  p-new p-orig  c-new
+c-orig 1.12/s     --   -15%   -16%   -17%
+p-new  1.32/s    18%     --    -1%    -2%
+p-orig 1.33/s    19%     1%     --    -1%
+c-new  1.35/s    20%     2%     1%     --
+
+FAKE FB:
+        Rate c-orig p-orig  p-new  c-new
+c-orig 263/s     --   -11%   -32%   -58%
+p-orig 294/s    12%     --   -24%   -53%
+p-new  385/s    46%    31%     --   -38%
+c-new  625/s   137%   112%    63%     --
+

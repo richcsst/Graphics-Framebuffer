@@ -5005,6 +5005,135 @@ sub blit_read {
     return ({ 'x' => $x, 'y' => $y, 'width' => $w, 'height' => $h, 'image' => $scrn });
 } ## end sub blit_read
 
+sub blit_read_force_perl {
+    my ($self, $params) = @_;
+
+    my $x     = int($params->{'x'} || $self->{'X_CLIP'});
+    my $y     = int($params->{'y'} || $self->{'Y_CLIP'});
+    my $clipw = $self->{'W_CLIP'};
+    my $cliph = $self->{'H_CLIP'};
+    my $w     = int($params->{'width'}  || $clipw);
+    my $h     = int($params->{'height'} || $cliph);
+    my $buf;
+
+    $x = 0                           if ($x < 0);
+    $y = 0                           if ($y < 0);
+    $w = $self->{'XX_CLIP'} - $x + 1 if ($w > ($clipw));
+    $h = $self->{'YY_CLIP'} - $y + 1 if ($h > ($cliph));
+
+    my $W    = $w * $self->{'BYTES'};
+    my $scrn = '';
+    if (0 && $h > 1 && $self->{'ACCELERATED'} == SOFTWARE) {
+        $scrn = chr(0) x ($W * $h);
+        c_blit_read($self->{'SCREEN'}, $self->{'XRES'}, $self->{'YRES'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $scrn, $x, $y, $w, $h, $self->{'BYTES'}, $draw_mode, $self->{'COLOR_ALPHA'}, $self->{'RAW_BACKGROUND_COLOR'}, $self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'});
+    } else {
+        my $yend = $y + $h;
+        my $XX   = ($self->{'XOFFSET'} + $x) * $self->{'BYTES'};
+        foreach my $line ($y .. ($yend - 1)) {
+            my $index = ($self->{'BYTES_PER_LINE'} * ($line + $self->{'YOFFSET'})) + $XX;
+            $scrn .= substr($self->{'SCREEN'}, $index, $W);
+        }
+    } ## end else [ if ($h > 1 && $self->{...})]
+    return ({ 'x' => $x, 'y' => $y, 'width' => $w, 'height' => $h, 'image' => $scrn });
+} ## end sub blit_read
+
+sub blit_read_force_c {
+    my ($self, $params) = @_;
+
+    my $x     = int($params->{'x'} || $self->{'X_CLIP'});
+    my $y     = int($params->{'y'} || $self->{'Y_CLIP'});
+    my $clipw = $self->{'W_CLIP'};
+    my $cliph = $self->{'H_CLIP'};
+    my $w     = int($params->{'width'}  || $clipw);
+    my $h     = int($params->{'height'} || $cliph);
+    my $buf;
+
+    $x = 0                           if ($x < 0);
+    $y = 0                           if ($y < 0);
+    $w = $self->{'XX_CLIP'} - $x + 1 if ($w > ($clipw));
+    $h = $self->{'YY_CLIP'} - $y + 1 if ($h > ($cliph));
+
+    my $W    = $w * $self->{'BYTES'};
+    my $scrn = '';
+    if (1 || $h > 1 && $self->{'ACCELERATED'} == SOFTWARE) {
+        $scrn = chr(0) x ($W * $h);
+        c_blit_read($self->{'SCREEN'}, $self->{'XRES'}, $self->{'YRES'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $scrn, $x, $y, $w, $h, $self->{'BYTES'}, $draw_mode, $self->{'COLOR_ALPHA'}, $self->{'RAW_BACKGROUND_COLOR'}, $self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'});
+    } else {
+        my $yend = $y + $h;
+        my $XX   = ($self->{'XOFFSET'} + $x) * $self->{'BYTES'};
+        foreach my $line ($y .. ($yend - 1)) {
+            my $index = ($self->{'BYTES_PER_LINE'} * ($line + $self->{'YOFFSET'})) + $XX;
+            $scrn .= substr($self->{'SCREEN'}, $index, $W);
+        }
+    } ## end else [ if ($h > 1 && $self->{...})]
+    return ({ 'x' => $x, 'y' => $y, 'width' => $w, 'height' => $h, 'image' => $scrn });
+} ## end sub blit_read
+
+sub blit_read_force_perl_new {
+    my ($self, $params) = @_;
+
+    my $x     = int($params->{'x'} || $self->{'X_CLIP'});
+    my $y     = int($params->{'y'} || $self->{'Y_CLIP'});
+    my $clipw = $self->{'W_CLIP'};
+    my $cliph = $self->{'H_CLIP'};
+    my $w     = int($params->{'width'}  || $clipw);
+    my $h     = int($params->{'height'} || $cliph);
+    my $buf;
+
+    $x = 0                           if ($x < 0);
+    $y = 0                           if ($y < 0);
+    $w = $self->{'XX_CLIP'} - $x + 1 if ($w > ($clipw));
+    $h = $self->{'YY_CLIP'} - $y + 1 if ($h > ($cliph));
+
+    my $W    = $w * $self->{'BYTES'};
+    my $scrn = '';
+    if (0 && $h > 1 && $self->{'ACCELERATED'} == SOFTWARE) {
+        $scrn = chr(0) x ($W * $h);
+        c_blit_read($self->{'SCREEN'}, $self->{'XRES'}, $self->{'YRES'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $scrn, $x, $y, $w, $h, $self->{'BYTES'}, $draw_mode, $self->{'COLOR_ALPHA'}, $self->{'RAW_BACKGROUND_COLOR'}, $self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'});
+    } else {
+        my $fb  = $self->{'SCREEN'};
+        my $bpl = $self->{'BYTES_PER_LINE'};
+        my $XX  = ($self->{'XOFFSET'} + $x) * $self->{'BYTES'};
+        my $end = $bpl * ($y + $h - 1 + $self->{'YOFFSET'}) + $XX;
+        for (my $idx = $bpl * ($y + $self->{'YOFFSET'}) + $XX ; $idx <= $end ; $idx += $bpl) {
+            $scrn .= substr($fb,  $idx, $W);
+        }
+    } ## end else [ if ($h > 1 && $self->{...})]
+    return ({ 'x' => $x, 'y' => $y, 'width' => $w, 'height' => $h, 'image' => $scrn });
+} ## end sub blit_read
+
+sub blit_read_force_c_new {
+    my ($self, $params) = @_;
+
+    my $x     = int($params->{'x'} || $self->{'X_CLIP'});
+    my $y     = int($params->{'y'} || $self->{'Y_CLIP'});
+    my $clipw = $self->{'W_CLIP'};
+    my $cliph = $self->{'H_CLIP'};
+    my $w     = int($params->{'width'}  || $clipw);
+    my $h     = int($params->{'height'} || $cliph);
+    my $buf;
+
+    $x = 0                           if ($x < 0);
+    $y = 0                           if ($y < 0);
+    $w = $self->{'XX_CLIP'} - $x + 1 if ($w > ($clipw));
+    $h = $self->{'YY_CLIP'} - $y + 1 if ($h > ($cliph));
+
+    my $W    = $w * $self->{'BYTES'};
+    my $scrn = '';
+    if (1 || $h > 1 && $self->{'ACCELERATED'} == SOFTWARE) {
+        $scrn = chr(0) x ($W * $h);
+        c_blit_read_new($self->{'SCREEN'}, $self->{'XRES'}, $self->{'YRES'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $scrn, $x, $y, $w, $h, $self->{'BYTES'}, $draw_mode, $self->{'COLOR_ALPHA'}, $self->{'RAW_BACKGROUND_COLOR'}, $self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'});
+    } else {
+        my $yend = $y + $h;
+        my $XX   = ($self->{'XOFFSET'} + $x) * $self->{'BYTES'};
+        foreach my $line ($y .. ($yend - 1)) {
+            my $index = ($self->{'BYTES_PER_LINE'} * ($line + $self->{'YOFFSET'})) + $XX;
+            $scrn .= substr($self->{'SCREEN'}, $index, $W);
+        }
+    } ## end else [ if ($h > 1 && $self->{...})]
+    return ({ 'x' => $x, 'y' => $y, 'width' => $w, 'height' => $h, 'image' => $scrn });
+} ## end sub blit_read
+
 =head2 blit_write
 
 Writes a previously read block of screen data at x,y,width,height.
