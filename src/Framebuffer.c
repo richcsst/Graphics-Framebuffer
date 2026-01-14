@@ -1266,8 +1266,8 @@ void c_blit_write(char *framebuffer,
                   short yy_clip) {
     short fb_x = xoffset + x;
     short fb_y = yoffset + y;
-    short xx = x + w;
-    short yy = y + h;
+    short xx = x + w - 1;
+    short yy = y + h - 1;
     unsigned int bline = (unsigned int)w * (unsigned int)bytes_per_pixel;
 
     /* Fastest is unclipped normal mode (keep original memcpy path) */
