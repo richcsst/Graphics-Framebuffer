@@ -13,6 +13,9 @@
 
    I am NOT a C programmer and this code likely proves that, but this code works
    and that's good enough for me.
+
+   Also note, portions of this code (which I initially wrote) has been
+   optimized by GitHub AI for both speed and reduction of complexity.
 */
 
 #include <fcntl.h>
@@ -840,7 +843,7 @@ void c_plot(char *framebuffer,
             *((uint16_t *)p) = res16;
         } break;
 
-        case 8: {
+        case 8: { /* Not supported yet, but here is the code if it ever is */
             uint8_t fb = *p;
             uint8_t col8 = (uint8_t)color;
             uint8_t res8 = fb;
