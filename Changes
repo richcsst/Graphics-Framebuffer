@@ -1,5 +1,10 @@
 Change log for Graphics::Framebuffer
 
+6.85   January 19, 2026
+
+       Minor blitting bugs fixed, thanks to snakpak.
+	   Documentation updated for Linux specificity.
+
 6.84   January 17, 2026
 
        Github user "snakpak" made changes to the C code for better
