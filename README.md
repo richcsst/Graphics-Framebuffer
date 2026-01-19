@@ -1,10 +1,10 @@
 # Graphics-Framebuffer
 
-[![Graphics::Framebuffer Logo](GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+![Graphics::Framebuffer Logo](GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
 ### Windows Incompatibility
 
-![Windows Incompatible](Win-No.png?raw=true "Windows Incompatible")
+![Windows Incompatible](Win-No.png?raw=true "Windows Incompatible") ![Linux Logo](Linux.png?raw=true "Linux Only")
 
 Note, this module does NOT work (natively) in Microsoft Windows.  It will only function in "emulation" mode, and you will not see any screen output.  See the documentation on emulation mode for more details.
 
