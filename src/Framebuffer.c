@@ -14,7 +14,7 @@
    I am NOT a C programmer and this code likely proves that, but this code works
    and that's good enough for me.
 
-   Also note, portions of this code (which I initially wrote) has been
+   Also note, portions of this code (which I initially wrote) have been
    optimized by GitHub AI for both speed and reduction of complexity.
 */
 
