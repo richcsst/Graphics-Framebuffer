@@ -12,7 +12,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
 ## PREREQUISITES
 
-This module was developed for Linux and only Linux.
+This module was developed for Linux and only Linux; not because of some fanatical appreciation for Linux, but because of how it accesses a Linux framebuffer.  If you know how to get it to work on Windows, Darwin, or even FreeBSD, then let me know how to do it.  Meanwwhile, it's Linux only.
 
 This module REQUIRES access to the video framebuffer, usually "/dev/fb0".  You must be using a video device and driver that exposes this device to software.  Video cards with their proprietary drivers are not likely to work.  However, most open-sourced drivers, seem to work fine.  VirtualBox drivers work too.  You must also have the appropriate permissions to write to this device (usually membership with group "video").
 
