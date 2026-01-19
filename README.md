@@ -124,6 +124,8 @@ You can also look for information at:
 
 * **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
 
+* **Mario Roy's Multiprocessing Examples** - https://github.com/marioroy/mce-examples 
+
 ## LICENSE AND COPYRIGHT
 
 Copyright © 2013-2025 Richard Kelsch
