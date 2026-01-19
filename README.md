@@ -2,7 +2,7 @@
 
 ![Graphics::Framebuffer Logo](GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
-### Windows Incompatibility
+### Windows Incompatibility, Linux Only
 
 ![Windows Incompatible](Win-No.png?raw=true "Windows Incompatible") ![Linux Logo](Linux.png?raw=true "Linux Only")
 
