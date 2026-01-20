@@ -7625,7 +7625,7 @@ Try using 'polygon' to draw complex shapes instead of a series of plot or line c
 
 Does your device have more than one core?  Well, how about using threads (or MCE)?  Just make sure you do it according to the examples in the "examples" directory.  Yes, I know this can be too advanced for the average coder, but the option is there.
 
-Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heaviy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time (and memory).
+Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heavy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time (and memory).
 
 =item B< Ask For Help >
 
