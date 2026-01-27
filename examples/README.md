@@ -13,7 +13,7 @@ Also note, to exit these just use CTRL-C
 
 * **screensaver.pl** - Not very fancy.  I just blanks the screen and plasters the current time in random places.
 
-* **slideshow.pl** - Pass it a specific image path and it will show all of the images in that path, including those in nested directories.
+* **slideshow.pl** - Pass it a specific image path and it will show all of the images in that path, including those in nested directories.  Add an empty file called ".nomedia" to skip the contents of that directory.
 
 * **template.pl** - Use a copy of this to create a script skeleton and base your script on this.  You don't have to, but it helps to learn.
 
