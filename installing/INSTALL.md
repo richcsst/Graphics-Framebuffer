@@ -108,7 +108,9 @@ Using the EFI install means no need to fiddle with Grub.  VirtualBox already has
 install Graphics::Framebuffer
 ```
 
-*  ```git clone https://github.com/richcsst/Graphics-Framebuffer.git```
+* From the GitHub repository
+
+  ```git clone https://github.com/richcsst/Graphics-Framebuffer.git```
 
 ```
        perl Makefile.PL
