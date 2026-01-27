@@ -40,6 +40,7 @@ Debian distributions use "apt" utility to manage packages.  Debian distributions
 *  Xubuntu
 *  Mint
 *  Raspian
+*  Zorin OS
 
 RedHat distributions use the "yum" utility to manage packages.  RedHat distributions are typically:
 
