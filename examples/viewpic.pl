@@ -39,7 +39,7 @@ our $f = Graphics::Framebuffer->new(
     'SPLASH'           => FALSE,
     'SHOW_ERRORS'      => FALSE,
     'RESET'            => 1 - $noclear,
-    'IGNORE_X_WINDOWS' => $ignore_x,
+    'IGNORE_X_WINDOWS' => $ignore_x, # I still don't understand why anyone would want to use this
 	'DIAGNOSTICS'      => FALSE,
 );
 
