@@ -42,7 +42,7 @@ Debian distributions use "apt" utility to manage packages.  Debian distributions
 *  Raspian
 *  Zorin OS
 
-RedHat distributions use the "yum" utility to manage packages.  RedHat distributions are typically:
+RedHat distributions use the "yum" or "dnf" utility to manage packages.  RedHat distributions are typically:
 
 *  RedHat
 *  Fedora
