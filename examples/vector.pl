@@ -4,6 +4,7 @@
 # Virtual resolution is ALWAYS 3840 x 2160
 # it will be converted to the actual resolution when drawn
 # The commands are a subset of the actual GFB capabilites
+# Pixel sizes are depreciated, so the sample USA flag will look weird.
 
 use strict;
 
