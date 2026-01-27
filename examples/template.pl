@@ -6,11 +6,11 @@ use strict;
 #               # Seriously, leave warnings off for live code.
 
 BEGIN {
-    our $VERSION = '0.01';    # Increment this as you develop the code.
+    our $VERSION = '0.02';    # Increment this as you develop the code.
 }
 
-use Graphics::Framebuffer;    # There are things to import, if you want, but they
-                              # are usually not needed.
+use Graphics::Framebuffer;    # There are things to import, if you want, but
+                              # they are usually not needed.
 
 ## Initialize any global variables here ######################################
 # $FB is your framebuffer object.  See the documentation, if you want to pass
@@ -21,7 +21,7 @@ our $FB = Graphics::Framebuffer->new('SPLASH' => 0);    # The splash screen is
 
 ##############################################################################
 
-$FB->cls('OFF');                                        # Turn off the console cursor
+$FB->cls('OFF');                                 # Turn off the console cursor
 
 # You can optionally set graphics mode here, but remember to turn on text mode
 # before exiting.
