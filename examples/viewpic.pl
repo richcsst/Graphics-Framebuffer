@@ -11,7 +11,7 @@ use Time::HiRes qw(sleep time alarm);
 use Getopt::Long;
 
 BEGIN {
-    our $VERSION = '1.04';
+    our $VERSION = '1.05';
 }
 
 # use Data::Dumper::Simple;$Data::Dumper::Sortkeys=1;
