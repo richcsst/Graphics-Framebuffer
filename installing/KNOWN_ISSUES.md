@@ -2,7 +2,7 @@
 
 -----
 
-Avoid 16 bit mode if at all possible.  16 bit processing is a hack, a kludge.  It is a slower than 24/32 bit color operations.  It also may have problems.  The best way to avoid any speed or bug issues, is to avoid 16 bit mode all together and use 24 or 32 bit mode.
+Avoid 16 bit mode if at all possible.  16 bit processing is a hack, a kludge.  It is slower than 24/32 bit color operations.  It also may have problems.  The best way to avoid any speed or bug issues, is to avoid 16 bit mode all together and use 24 or 32 bit mode.
 
 Note:  The Raspberry Pi typically defaults to 16 bit color mode.  Please change its settings to use 24/32 bit mode.
 
