@@ -87,6 +87,16 @@ my $cmd = {
             }
         );
     },
+    'DOT' => sub {
+        $F->circle(
+            {
+                'x'      => shift(@_) * $xf,
+                'y'      => shift(@_) * $yf,
+                'radius' => abs(shift(@_)),
+                'filled' => 1,
+            }
+        );
+    },
     'LINE' => sub {
         $F->line(
             {
