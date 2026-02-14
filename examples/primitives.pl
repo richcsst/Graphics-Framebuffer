@@ -137,7 +137,7 @@ my $DORKSMILE;
 # Pre-load the images
 
 foreach my $file (@files) {
-    next if ($file =~ /^\.+/ || $file =~ /Test/i || -d "$images_path/$file"); # Ignore the test pattern and directories
+    next if ($file =~ /^\.+/ || $file =~ /usa\.gif|Test/i || -d "$images_path/$file"); # Ignore the test pattern and directories
 	if ($file =~ /\.gif$/i) {
 		print_it($F, "Loading Animation > $file", '00FFFFFF', undef, 1);
 		my $image;

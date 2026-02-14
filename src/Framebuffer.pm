@@ -4842,19 +4842,15 @@ sub play_animation {
     my ($self, $image, $rate) = @_;
     $rate ||= 1;
 
-    ReadMode 4;
-    foreach my $frame (0 .. (scalar(@{$image}) - 1)) {
-        my $begin = time;
-        $self->blit_write($image->[$frame]);
+	foreach my $frame (0 .. (scalar(@{$image}) - 1)) {
+		my $begin = time;
+		$self->blit_write($image->[$frame]);
 
-        my $delay = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) * $rate) - (time - $begin);
-        if ($delay > 0) {
-            sleep $delay;
-        }
-        my $key = uc(ReadKey(-1));
-        last if ($key eq 'Q');
-    } ## end foreach my $frame (0 .. (scalar...))
-    ReadMode 0;
+		my $delay = (($image->[$frame]->{'tags'}->{'gif_delay'} * .01) * $rate) - (time - $begin);
+		if ($delay > 0) {
+			sleep $delay;
+		}
+	} ## end foreach my $frame (0 .. (scalar...))
 } ## end sub play_animation
 
 =head2 acceleration
