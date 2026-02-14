@@ -1,6 +1,11 @@
 Change log for Graphics::Framebuffer
 
-6.07   February 14, 2026
+6.88   February 14, 2026
+
+       Removed the Q to escape for play_animation
+	   Improved the examples/vector.pl
+
+6.87   February 14, 2026
 
        Added forced buffer flushing.
 	   Splash coloring for Perl and Acceleration modes changed.
