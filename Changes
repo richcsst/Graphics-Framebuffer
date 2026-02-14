@@ -1,5 +1,10 @@
 Change log for Graphics::Framebuffer
 
+6.07   February 14, 2026
+
+       Added forced buffer flushing.
+	   Splash coloring for Perl and Acceleration modes changed.
+
 6.86   January 26, 2026
 
        Bugs corrected in the C code by snakpak.
