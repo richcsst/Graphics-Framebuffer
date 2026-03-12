@@ -1,6 +1,6 @@
 # Graphics::Framebuffer Installation Help
 
-[![Graphics::Framebuffer Logo](../../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+[![Graphics::Framebuffer Logo](../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
 # Graphics-Framebuffer Prerequisite Installation
 
