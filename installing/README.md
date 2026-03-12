@@ -1,3 +1,7 @@
+# Graphics::Framebuffer Installation Help
+
+[![Graphics::Framebuffer Logo](../../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+
 # Graphics-Framebuffer Prerequisite Installation
 
 Graphics::Framebuffer needs other Perl modules and OS libraries to function.  These scripts will help satisfy the requirements.
