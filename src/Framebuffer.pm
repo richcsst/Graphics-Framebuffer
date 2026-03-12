@@ -2457,8 +2457,6 @@ Draws a line, in the global foreground color, from point x,y at an angle of 'ang
 
 =back
 
-* This is not affected by the Acceleration setting
-
 =cut
 
 sub angle_line {
@@ -2734,7 +2732,7 @@ Draws a Bezier curve, based on a list of control points.
          'coordinates' => [
              x0,y0,
              x1,y1,
-             ...              # As many as needed
+             ...              # As many as needed, there MUST be an even number of elements
          ],
          'points'     => 100, # Number of total points plotted for curve
                               # The higher the number, the smoother the curve.
