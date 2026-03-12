@@ -615,13 +615,13 @@ Set to 1 to disable X-Windows/Wayland check. Default is 0.
 
 * B<FONT_PATH>
 
-Overrides the default font path for TrueType/Type1 fonts
+Overrides the default font path (I</usr/share/fonts/truetype/freefont>) for TrueType/Type1 fonts.
 
 If 'ttf_print' is not displaying any text, then this may need to be overridden.
 
 * B<FONT_FACE>
 
-Overrides the default font filename for TrueType/Type 1 fonts.
+Overrides the default font filename (I<FreeSans.ttf>) for TrueType/Type 1 fonts.
 
 If 'ttf_print' is not displaying any text, then this may need to be overridden.
 
