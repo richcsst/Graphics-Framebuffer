@@ -28,7 +28,7 @@ case $yn in
                             libmath-gradient-perl \
                             libmath-bezier-perl \
                             libfile-map-perl \
-                            libtest-most-perl \
+                            libtest-more-perl \
                             libterm-readkey-perl \
                             libsys-cpu-perl;;
 esac
