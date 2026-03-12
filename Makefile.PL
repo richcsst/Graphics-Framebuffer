@@ -226,7 +226,6 @@ my $mm = WriteMakefile(
         'Imager'             => '0.80',
         'Inline'             => '0.53',
         'Inline::C'          => '0.53',
-        'Pod::Usage'         => '0',
     },
     dist  => {COMPRESS => 'gzip -9f', SUFFIX => 'gz',},
     clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *.inl *log *bak *old'},
