@@ -1405,7 +1405,6 @@ sub _fix_mapping {    # File::Map SHOULD make this obsolete
 } ## end sub _fix_mapping
 
 sub _color_order {
-
     # Determine the color order the video card uses
     my $self = shift;
 
@@ -1870,7 +1869,6 @@ You can add an optional parameter to turn the console cursor on or off too.
 =cut
 
 sub clear_screen {
-
     # Fills the entire screen with the background color fast #
     my ($self, $cursor) = @_;
     $cursor ||= '';
@@ -2840,7 +2838,6 @@ Draws an arc/pie/poly arc of a circle at point x,y.
 =cut
 
 sub draw_arc {
-
     # This isn't exactly the fastest routine out there, hence the "granularity" parameter, but it is pretty neat.  Drawing lines between points smooths and compensates for high granularity settings.
     my ($self, $params) = @_;
 
@@ -3269,7 +3266,6 @@ Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled e
 =cut
 
 sub ellipse {
-
     # The routine even works properly for XOR mode when filled ellipses are drawn as well.  This was solved by drawing only if the X or Y position changed.
     my ($self, $params) = @_;
 
@@ -3830,7 +3826,6 @@ sub polygon {
 } ## end sub polygon
 
 sub _point_in_polygon {
-
     # Does point x,y fall inside the polygon described in coordinates?  Not yet used.
     my ($self, $params) = @_;
 
@@ -5618,7 +5613,6 @@ Turns off clipping, and resets the clipping values to the full size of the scree
 =cut
 
 sub clip_reset {
-
     # Clipping is not really turned off.  It's just set to the screen borders.  To turn off clipping for real is asking for crashes.
     my $self = shift;
 
@@ -6184,7 +6178,6 @@ sub ttf_paragraph {
 } ## end sub ttf_paragraph
 
 sub _gather_fonts {
-
     # Gather in and find all the fonts
     my ($self, $path) = @_;
 
@@ -6711,7 +6704,6 @@ sub screen_dump {
 ### Bitmap conversion routines ###
 
 sub _convert_16_to_24 {
-
     # Convert 16 bit bitmap to 24 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6745,7 +6737,6 @@ sub _convert_16_to_24 {
 } ## end sub _convert_16_to_24
 
 sub _convert_8_to_32 {
-
     # Convert 8 bit bitmap to 32 bit bitmap
     my ($self, $img, $color_order, $pallette) = @_;
 
@@ -6761,7 +6752,6 @@ sub _convert_8_to_32 {
 } ## end sub _convert_8_to_32
 
 sub _convert_8_to_24 {
-
     # Convert 8 bit bitmap to 24 bit bitmap
     my ($self, $img, $color_order, $pallette) = @_;
 
@@ -6777,7 +6767,6 @@ sub _convert_8_to_24 {
 } ## end sub _convert_8_to_24
 
 sub _convert_8_to_16 {
-
     # Convert 8 bit bitmap to 16 bit bitmap
     my ($self, $img, $color_order, $pallette) = @_;
 
@@ -6793,7 +6782,6 @@ sub _convert_8_to_16 {
 } ## end sub _convert_8_to_16
 
 sub _convert_16_to_32 {
-
     # Convert 16 bit bitmap to 32 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6827,7 +6815,6 @@ sub _convert_16_to_32 {
 } ## end sub _convert_16_to_32
 
 sub _convert_24_to_16 {
-
     # Convert 24 bit bitmap to 16 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6862,7 +6849,6 @@ sub _convert_24_to_16 {
 } ## end sub _convert_24_to_16
 
 sub _convert_32_to_16 {
-
     # Convert 32 bit bitmap to a 16 bit bitmap
     my ($self, $img, $color_order) = @_;
 
@@ -6897,7 +6883,6 @@ sub _convert_32_to_16 {
 } ## end sub _convert_32_to_16
 
 sub _convert_32_to_24 {
-
     # Convert a 32 bit bitmap to a 24 bit bitmap.
     my ($self, $img, $color_order) = @_;
 
@@ -6932,7 +6917,6 @@ sub _convert_32_to_24 {
 } ## end sub _convert_32_to_24
 
 sub _convert_24_to_32 {
-
     # Convert a 24 bit bitmap to a 32 bit bipmap
     my ($self, $img, $color_order) = @_;
 
