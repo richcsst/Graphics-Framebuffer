@@ -20,6 +20,7 @@ sudo apt install -y build-essential \
 echo "OS prerequisites installed.  Now for the Perl prerequisites."
 echo "It is recommended you answer YES to the next question:"
 
+read -p "Do you wish to install the packaged/system Perl module prerequisites?" yn
 case $yn in
     [Yy]* ) 
         sudo apt install -y libimager-perl \
