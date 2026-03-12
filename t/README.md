@@ -1,4 +1,4 @@
-# GRAPHICS::FRAMEBUFFER TESTS
+# Graphics::Framebuffer Tests
 
 [![Graphics::Framebuffer Logo](../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
