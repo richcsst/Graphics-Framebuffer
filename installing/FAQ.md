@@ -1,5 +1,7 @@
 # Graphics::Framebuffer Module Frequently Asked Questions
 
+[![Graphics::Framebuffer Logo](../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+
 ## Does GFB play video?
 
    No, it will only play animated GIFs that fit in memory.
