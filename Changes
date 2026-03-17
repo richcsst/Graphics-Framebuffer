@@ -1,5 +1,9 @@
 Change log for Graphics::Framebuffer
 
+6.90   March 17, 2026
+
+       Documentation improvements
+
 6.89   March 12, 2026
 
        Fixed bugs in the Debian install script.
