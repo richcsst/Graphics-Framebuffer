@@ -384,7 +384,7 @@ use Time::HiRes qw(sleep time);                                     # The time a
 use Math::Bezier;                                                   # Bezier curve calculations done here.
 use Math::Gradient qw( gradient array_gradient multi_gradient );    # Awesome gradient calculation module
 use List::Util     qw(min max);                                     # min and max are very handy!
-use File::Map ':map';                                               # Absolutely necessary to map the screen to a string.
+use File::Map qw/:map :extra/;                                               # Absolutely necessary to map the screen to a string.
 use Term::ReadKey;
 use Imager;                                                         # This is used for TrueType font printing, image loading.
 use Imager::Matrix2d;
@@ -1034,6 +1034,7 @@ sub new {
     $has_X = TRUE if (defined($ENV{'DISPLAY'}) && $self->{'IGNORE_X_WINDOWS'} == FALSE);
     if ((!$has_X) && defined($self->{'FB_DEVICE'}) && (-e $self->{'FB_DEVICE'}) && open($self->{'FB'}, '+<', $self->{'FB_DEVICE'})) {    # Can we open the framebuffer device??
         binmode($self->{'FB'});                                                                                                          # We have to be in binary mode first
+        select($self->{'FB'});
         $| = 1;
         if ($self->{'ACCELERATED'}) {                                                                                                    # Pull in the C structure for the Framebuffer
             (                                                                                                                            # These need to be accurate to give accurate output
@@ -2659,6 +2660,7 @@ sub _flush_screen {
     }
     select($self->{'FB'}) if (defined($self->{'FB'}));
     $| = 1;
+    sync $self->{'SCREEN'}, TRUE;
 } ## end sub _flush_screen
 
 sub _adj_plot {
