@@ -112,15 +112,15 @@ or
 
 You can also look for information at:
 
-* **MetaCPAN** - https://metacpan.org/pod/Graphics::Framebuffer
+* **MetaCPAN** - [https://metacpan.org/pod/Graphics::Framebuffer](https://metacpan.org/pod/Graphics::Framebuffer)
 
-* **YouTube** - https://www.youtube.com/channel/UCxhjUfniyPze02GU4sWBJrw
+* **YouTube** - [https://www.youtube.com/channel/UCxhjUfniyPze02GU4sWBJrw](https://www.youtube.com/watch?v=X8RpFBq6F9I)
 
-* **GitHub** - https://github.com/richcsst/Graphics-Framebuffer
+* **GitHub** - [https://github.com/richcsst/Graphics-Framebuffer](https://github.com/richcsst/Graphics-Framebuffer)
 
 * **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
 
-* **Mario Roy's Multiprocessing Examples** - https://github.com/marioroy/mce-examples 
+* **Mario Roy's Multiprocessing Examples** - [https://github.com/marioroy/mce-examples](https://github.com/marioroy/mce-examples)
 
 ## LICENSE AND COPYRIGHT
 
@@ -132,4 +132,4 @@ See http://dev.perl.org/licenses/ for more information.
 
 ## OTHER GITHUB PROJECTS
 
-* **GitHub** Repositories - https://github.com/richcsst
+* **GitHub** Repositories - [https://github.com/richcsst](https://github.com/richcsst)
