@@ -30,9 +30,9 @@ examples/text_mode.pl
 examples/vector.pl
 examples/vector-usa.gfb
 examples/viewpic.pl
-SuperMe.jpg
-GFB.png
-pink.jpg
+pics/SuperMe.jpg
+pics/GFB.png
+pics/pink.jpg
 ignore.txt
 installing/detect.sh
 installing/FAQ.md
@@ -53,7 +53,7 @@ src/Framebuffer.pm
 src/metadata.txt
 src/README.md
 t/01-primitives.t
-Win-No.png
-Linux.png
+pics/Win-No.png
+pics/Linux.png
 LICENSE
 
