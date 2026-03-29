@@ -20,6 +20,7 @@ use Term::ANSIColor;
 
 # use Data::Dumper::Simple;$Data::Dumper::Terse=TRUE;$Data::Dumper::Indent=TRUE;$Data::Dumper::Useqq=TRUE;$Data::Dumper::Deparse=TRUE;$Data::Dumper::Quotekeys=TRUE;$Data::Dumper::Trailingcomma=TRUE;$Data::Dumper::Sortkeys=TRUE;$Data::Dumper::Purity=TRUE;$Data::Dumper::Deparse=TRUE;
 
+my $VERSION = '2.00';
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 $COLS = 80 if ($COLS < 80);
 $ROWS = 25 if ($ROWS < 25);
@@ -30,6 +31,9 @@ my $line = '-' x $pad . ' Graphics::Framebuffer ' . '-' x $pad;
 if (-e 'Makefile') { # We need a clean slate;
 	exec('make veryclean;reset;perl Makefile.PL');
 }
+my $FORCE_VIDEO_FAIL = FALSE;
+
+$FORCE_VIDEO_FAIL = TRUE if (scalar(@ARGV) && $ARGV[0] eq 'force');
 
 my $blink = "\e[5m";
 
@@ -68,7 +72,7 @@ my $user = _username_for_tests();
 
 print colored(['bright_yellow'], ' Is '), colored(['cyan'], $user), colored(['bright_yellow'],' a member of '), colored(['green'], 'video'), '? ... ';
 
-if (_user_in_group($user, 'video')) {
+if (! $FORCE_VIDEO_FAIL && _user_in_group($user, 'video')) {
 	print colored(['bright_green'], 'Yes'), "\n";
 } else {
 	print colored(['bright_red'], 'No'), "\n";

@@ -1,6 +1,6 @@
 # Graphics::Framebuffer MCE Demos
 
-[![Graphics::Framebuffer Logo](../../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+[![Graphics::Framebuffer Logo](../../pics/GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
 Mario Roy has some excellent examples using alternate multiprocessing methods, instead of threads.  Clone his repository and copy the files in the "framebuffer" directory into this directory and run them.
 

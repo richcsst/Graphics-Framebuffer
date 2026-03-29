@@ -1,6 +1,6 @@
 # Graphics::Framebuffer Images For Examples
 
-[![Graphics::Framebuffer Logo](../../GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+[![Graphics::Framebuffer Logo](../../pics/GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
 ## IMPORTANT
 

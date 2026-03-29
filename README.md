@@ -1,16 +1,16 @@
 # Graphics::Framebuffer
 
-[![Graphics::Framebuffer Logo](GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
+[![Graphics::Framebuffer Logo](pics/GFB.png?raw=true "Graphics::Framebuffer")](https://youtu.be/qU5IFmtHmUo)
 
 ### Windows Incompatibility, Linux Only
 
-![Windows Incompatible](Win-No.png?raw=true "Windows Incompatible") ![Linux Logo](Linux.png?raw=true "Linux Only")
+![Windows Incompatible](pics/Win-No.png?raw=true "Windows Incompatible") ![Linux Logo](pics/Linux.png?raw=true "Linux Only")
 
 Note, this module does NOT work (natively) in Microsoft Windows.  It will only function in "emulation" mode, and you will not see any screen output.  See the documentation on emulation mode for more details.
 
 Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux distribution installed.
 
-![Divider](pink.jpg?raw=true "Divider")
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 ## PREREQUISITES
 
