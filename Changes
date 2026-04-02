@@ -1,5 +1,17 @@
 Change log for Graphics::Framebuffer
 
+6.94   April 01, 2026
+
+       So many opportunities for a joke here.  However, these are real.
+
+       Fixed bug in "examples/vector-usa.txt".
+
+       "examples/primitives.pl" Coded to check for the Virtualbox framebuffer
+	   ID and it turns on forced flushing if found.  This seems to mostly
+	   overcome the new VirtualBox weirdness.
+
+	   Added sanity checks to Makefile.PL
+
 6.93   March 29, 2026
 
        New images and installation assistance.

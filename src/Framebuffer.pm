@@ -384,14 +384,14 @@ use Time::HiRes qw(sleep time);                                     # The time a
 use Math::Bezier;                                                   # Bezier curve calculations done here.
 use Math::Gradient qw( gradient array_gradient multi_gradient );    # Awesome gradient calculation module
 use List::Util     qw(min max);                                     # min and max are very handy!
-use File::Map qw/:map :extra/;                                               # Absolutely necessary to map the screen to a string.
+use File::Map      qw/:map :extra/;                                 # Absolutely necessary to map the screen to a string.
 use Term::ReadKey;
 use Imager;                                                         # This is used for TrueType font printing, image loading.
 use Imager::Matrix2d;
 use Imager::Fill;                                                   # For hatch fills
 use Imager::Fountain;                                               #
 use Imager::Font::Wrap;
-use Graphics::Framebuffer::Mouse;                                   # The mouse handler
+use Graphics::Framebuffer::Mouse;                                   # The mouse handler (useless)
 use Graphics::Framebuffer::Splash;                                  # The splash code is here
 
 Imager->preload;                                                    # The Imager documentation says to do this, but doesn't give much of an explanation why.
@@ -723,6 +723,8 @@ sub new {
         'HATCHES' => [@HATCHES],    # Pull in hatches from Imager
         'FFMPEG'  => $FFMPEG,       # Location of FFMPEG binary or undef.
         'OS'      => $os,           # Name of the operating system (helps with dump debugging)
+
+		'LAST_FLUSHED' => time,
 
         # Set up the user defined graphics primitives and attributes default values
         'Imager-Has-TrueType'  => $Imager::formats{'tt'}  || 0,    # If you installed Imager properly, all of these should have valid values.  However, only one is needed for font operation.
@@ -1194,16 +1196,16 @@ sub new {
             }
         } ## end if ($self->{'fscreeninfo'...})
 
-        $self->{'GPU'}                       = $self->{'fscreeninfo'}->{'id'};                                                                                                                  # The name of the GPU or video driver
-        $self->{'VXRES'}                     = $self->{'vscreeninfo'}->{'xres_virtual'};                                                                                                        # The virtual width of the screen
-        $self->{'VYRES'}                     = $self->{'vscreeninfo'}->{'yres_virtual'};                                                                                                        # The virtual height of the screen
-        $self->{'XRES'}                      = $self->{'vscreeninfo'}->{'xres'};                                                                                                                # The physical width of the screen
-        $self->{'YRES'}                      = $self->{'vscreeninfo'}->{'yres'};                                                                                                                # The physical height of the screen
-        $self->{'XOFFSET'}                   = $self->{'vscreeninfo'}->{'xoffset'} || 0;                                                                                                        # The horizontal offset of the screen from the beginning of the virtual screen
-        $self->{'YOFFSET'}                   = $self->{'vscreeninfo'}->{'yoffset'} || 0;                                                                                                        # The vertical offset of the screen from the beginning of the virtual screen
-        $self->{'BITS'}                      = $self->{'vscreeninfo'}->{'bits_per_pixel'};                                                                                                      # The bits per pixel of the screen
-        $self->{'BYTES'}                     = $self->{'BITS'} / 8;                                                                                                                             # The number of bytes per pixel
-        $self->{'BYTES_PER_LINE'}            = $self->{'fscreeninfo'}->{'line_length'};                                                                                                         # The length of a single scan line in bytes
+        $self->{'GPU'}                       = $self->{'fscreeninfo'}->{'id'};              # The name of the GPU or video driver
+        $self->{'VXRES'}                     = $self->{'vscreeninfo'}->{'xres_virtual'};    # The virtual width of the screen
+        $self->{'VYRES'}                     = $self->{'vscreeninfo'}->{'yres_virtual'};    # The virtual height of the screen
+        $self->{'XRES'}                      = $self->{'vscreeninfo'}->{'xres'};            # The physical width of the screen
+        $self->{'YRES'}                      = $self->{'vscreeninfo'}->{'yres'};            # The physical height of the screen
+        $self->{'XOFFSET'}                   = $self->{'vscreeninfo'}->{'xoffset'} || 0;    # The horizontal offset of the screen from the beginning of the virtual screen
+        $self->{'YOFFSET'}                   = $self->{'vscreeninfo'}->{'yoffset'} || 0;    # The vertical offset of the screen from the beginning of the virtual screen
+        $self->{'BITS'}                      = $self->{'vscreeninfo'}->{'bits_per_pixel'};  # The bits per pixel of the screen
+        $self->{'BYTES'}                     = $self->{'BITS'} / 8;                         # The number of bytes per pixel
+        $self->{'BYTES_PER_LINE'}            = $self->{'fscreeninfo'}->{'line_length'};     # The length of a single scan line in bytes
         $self->{'PIXELS'}                    = (($self->{'XOFFSET'} + $self->{'VXRES'}) * ($self->{'YOFFSET'} + $self->{'VYRES'}));
         $self->{'SIZE'}                      = $self->{'PIXELS'} * $self->{'BYTES'};
         $self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES_PER_LINE'} * $self->{'VYRES'} if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
@@ -1214,7 +1216,6 @@ sub new {
         $self->{'fscreeninfo'}->{'accel'}    = $self->{'ACCEL_TYPES'}->[$self->{'fscreeninfo'}->{'accel'}];
 
         if ($self->{'BITS'} == 32 && $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'} == 0) {
-
             # The video driver doesn't use the alpha channel, but we do, so force it.
             $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'} = 8;
             $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
@@ -1372,6 +1373,7 @@ to F9.  One of them is set aside for X-Windows/Wayland.
         }
     } ## end foreach my $font (qw(FreeSans Ubuntu-R Arial Oxygen-Sans Garuda LiberationSans-Regular Loma Helvetica))
     $self->_flush_screen();
+    $self->{'IS_VBOX'} = ($self->{'GPU'} =~ /vmwgfxdrmfb/i) ? TRUE : FALSE;
     unless ($self->{'RESET'}) {    # This is to restore the screen as it was when script started
         $self->{'START_SCREEN'} = '' . $self->{'SCREEN'};    # Force Perl to copy the string, not the reference
     }
@@ -2242,7 +2244,7 @@ sub plot {
     } ## end else [ if ($self->{'ACCELERATED'...})]
     $self->{'X'} = $x;
     $self->{'Y'} = $y;
-    $| = 1;
+    $self->_flush_screen() if ($self->{'IS_VBOX'});
 } ## end sub plot
 
 =head2 setpixel
@@ -2519,7 +2521,7 @@ sub drawto {
 
     if ($self->{'ACCELERATED'}) {
         c_line($self->{'SCREEN'}, $start_x, $start_y, $x_end, $y_end, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $self->{'COLOR_ALPHA'}, $self->{'DRAW_MODE'}, $self->{'BYTES'}, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $antialiased,);
-        $| = 1;
+		$self->_flush_screen() if ($self->{'IS_VBOX'});
     } else {
         my $width;
         my $height;
@@ -2654,13 +2656,17 @@ sub _flush_screen {
     # Since the framebuffer is mappeed as a string device, Perl buffers the output, and this must be flushed.
     my $self = shift;
 
-    unless ($self->{'DEVICE'} eq 'EMULATED') {
-        select(STDERR);
-        $| = 1;
-    }
-    select($self->{'FB'}) if (defined($self->{'FB'}));
-    $| = 1;
-    sync $self->{'SCREEN'}, TRUE;
+    if ($self->{'LAST_FLUSHED'} <= time) {
+		if ($self->{'DEVICE'} eq 'EMULATED') {
+			select(STDERR);
+			$| = 1;
+		} else {
+			select($self->{'FB'}) if (defined($self->{'FB'}));
+			$| = 1;
+			sync $self->{'SCREEN'}, TRUE;
+		}
+		$self->{'LAST_FLUSHED'} = time + (1/15);
+	}
 } ## end sub _flush_screen
 
 sub _adj_plot {
@@ -4595,7 +4601,7 @@ sub fill {
             $self->blit_write($saved);
         } else {
             c_fill($self->{'SCREEN'}, $x, $y, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $color_alpha, $self->{'DRAW_MODE'}, $bytes, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'},);
-            $| = 1;
+			$self->_flush_screen() if ($self->{'IS_VBOX'});
         }
     } ## end else
 } ## end sub fill
@@ -4995,7 +5001,7 @@ sub blit_read {
             $scrn .= substr($fb,  $idx, $W);
         }
     } ## end else [ if ($h > 1 && $self->{...})]
-    $| = 1;
+    $self->_flush_screen() if ($self->{'IS_VBOX'});
     return ({ 'x' => $x, 'y' => $y, 'width' => $w, 'height' => $h, 'image' => $scrn });
 } ## end sub blit_read
 
@@ -5170,7 +5176,7 @@ sub blit_write {
             $self->_fix_mapping();
         }
     } ## end else [ if ($self->{'ACCELERATED'...})]
-    $| = 1;
+    $self->_flush_screen() if ($self->{'IS_VBOX'});
 } ## end sub blit_write
 
 sub _blit_adjust_for_clipping {
@@ -5397,7 +5403,7 @@ sub blit_transform {
         warn __LINE__ . " $@\n", Imager->errstr() if ($@ && $self->{'SHOW_ERRORS'});
 
         $data = $self->_convert_24_to_16($data, RGB) if ($self->{'BITS'} == 16);
-        $| = 1;
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
         return (
             {
                 'x'      => $params->{'merge'}->{'dest_blit_data'}->{'x'},
@@ -5435,7 +5441,7 @@ sub blit_transform {
                 $new = "$image";
             }
         } ## end else [ if ($self->{'ACCELERATED'...})]
-        $| = 1;
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
         return (
             {
                 'x'      => $params->{'blit_data'}->{'x'},
@@ -5475,7 +5481,7 @@ sub blit_transform {
                 $data = $self->{'RAW_BACKGROUND_COLOR'} x (($wh**2) * $bytes);
 
                 c_rotate($image, $data, $width, $height, $wh, $degrees, $bytes, $bits);
-                $| = 1;
+                $self->_flush_screen() if ($self->{'IS_VBOX'});
                 return (
                     {
                         'x'      => $params->{'blit_data'}->{'x'},
@@ -5519,7 +5525,7 @@ sub blit_transform {
             };
             warn __LINE__ . " $@\n", Imager->errstr() if ($@ && $self->{'SHOW_ERRORS'});
         } ## end else
-        $| = 1;
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
         return (
             {
                 'x'      => $params->{'blit_data'}->{'x'},
@@ -5564,7 +5570,7 @@ sub blit_transform {
         };
         warn __LINE__ . " $@\n", Imager->errstr() if ($@ && $self->{'SHOW_ERRORS'});
         $data = $self->_convert_24_to_16($data, $self->{'COLOR_ORDER'}) if ($self->{'BITS'} == 16);
-        $| = 1;
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
         return (
             {
                 'x'      => $params->{'blit_data'}->{'x'},
@@ -5586,7 +5592,7 @@ sub blit_transform {
         if ($params->{'center'} == CENTER_Y || $params->{'center'} == CENTER_XY) {
             $y = $self->{'Y_CLIP'} + int(($YY - $height) / 2);
         }
-        $| = 1;
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
         return (
             {
                 'x'      => $x,
@@ -5762,7 +5768,7 @@ sub monochrome {
     }
     if ($self->{'ACCELERATED'}) {
         c_monochrome($params->{'image'}, $size, $color_order, $inc, $params->{'bits'});
-        $| = 1;
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
         return ($params->{'image'});
     } else {
         for (my $byte = 0; $byte < length($params->{'image'}); $byte += $inc) {
@@ -5798,7 +5804,7 @@ sub monochrome {
             } ## end else [ if ($inc == 2) ]
         } ## end for (my $byte = 0; $byte...)
     } ## end else [ if ($self->{'ACCELERATED'...})]
-    $| = 1;
+    $self->_flush_screen() if ($self->{'IS_VBOX'});
     return ($params->{'image'});
 } ## end sub monochrome
 
