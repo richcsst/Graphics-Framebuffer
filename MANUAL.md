@@ -78,77 +78,79 @@ The following are hash keys to the main object variable.  For example, if you us
 
 NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.
 
-> \* **FONTS**
->
-> List of system fonts
->
-> Contains a hash of every font found in the system in the format:
+* **FONTS**
 
->     # 'FaceName' => {
->     #     'path' => 'Path To Font',
->     #     'font' => 'File Name of Font'
->     # },
->     # ...
+List of system fonts
 
-> \* **Imager-Has-TrueType**
->
-> If your installation of Imager has TrueType font capability, then this will be 1
->
-> \* **Imager-Has-Type1**
->
-> If your installation of Imager has Adobe Type 1 font capability, then this will be 1
->
-> \* **Imager-Has-Freetype2**
->
-> If your installation of Imager has the FreeType2 library rendering capability, then this will be 1
->
-> \* **Imager-Image-Types**
->
-> An anonymous array of supported image file types.
->
-> \* **HATCHES**
->
-> An anomyous array of hatch names for hatch fills.
->
-> This is also exported as @HATCHES
->
-> \* **X\_CLIP**
->
-> The top left-hand corner X location of the clipping region
->
-> \* **Y\_CLIP**
->
-> The top left-hand corner Y location of the clipping region
->
-> \* **XX\_CLIP**
->
-> The bottom right-hand corner X location of the clipping region
->
-> \* **YY\_CLIP**
->
-> The bottom right-hand corner Y location of the clipping region.
->
-> \* **CLIPPED**
->
-> If this is true, then the clipping region is smaller than the full screen
->
-> If false, then the clipping region is the screen dimensions.
->
-> \* **DRAW\_MODE**
->
-> The current drawing mode.  This is a numeric value corresponding to the constants described in the method 'draw\_mode'
->
-> \* **RAW\_FOREGROUND\_COLOR**
->
-> The current foreground color encoded as a string.
->
-> \* **RAW\_BACKGROUND\_COLOR**
->
-> The current background color encoded as a string.
->
-> \* **ACCELERATED**
->
-> Indicates if C code or hardware acceleration is being used.
+Contains a hash of every font found in the system in the format:
+
+```perl
+     'FaceName' => {
+         'path' => 'Path To Font',
+         'font' => 'File Name of Font'
+     },
+     # ...
+```
+
+* **Imager-Has-TrueType**
+
+If your installation of Imager has TrueType font capability, then this will be 1
+
+* **Imager-Has-Type1**
+
+If your installation of Imager has Adobe Type 1 font capability, then this will be 1
+
+* **Imager-Has-Freetype2**
+
+If your installation of Imager has the FreeType2 library rendering capability, then this will be 1
+
+* **Imager-Image-Types**
+
+An anonymous array of supported image file types.
+
+* **HATCHES**
+
+An anomyous array of hatch names for hatch fills.
+
+This is also exported as @HATCHES
+
+* **X\_CLIP**
+
+The top left-hand corner X location of the clipping region
+
+* **Y\_CLIP**
+
+The top left-hand corner Y location of the clipping region
+
+* **XX\_CLIP**
+
+The bottom right-hand corner X location of the clipping region
+
+* **YY\_CLIP**
+
+The bottom right-hand corner Y location of the clipping region.
+
+* **CLIPPED**
+
+If this is true, then the clipping region is smaller than the full screen
+
+If false, then the clipping region is the screen dimensions.
+
+* **DRAW\_MODE**
+
+The current drawing mode.  This is a numeric value corresponding to the constants described in the method 'draw\_mode'
+
+* **RAW\_FOREGROUND\_COLOR**
+
+The current foreground color encoded as a string.
+
+* **RAW\_BACKGROUND\_COLOR**
+
+The current background color encoded as a string.
+
+* **ACCELERATED**
+
+Indicates if C code or hardware acceleration is being used.
 
 - **Possible Values**
 
@@ -168,73 +170,73 @@ The value of the constant is in parenthesis:
 
 Boolean constants
 
-> \* **TRUE**  ( 1 )
->
-> \* **FALSE** ( 0 )
+* **TRUE**  ( 1 )
+
+* **FALSE** ( 0 )
 
 Draw mode constants
 
-> \* **NORMAL\_MODE**   ( 0  )
->
-> \* **XOR\_MODE**      ( 1  )
->
-> \* **OR\_MODE**       ( 2  )
->
-> \* **AND\_MODE**      ( 3  )
->
-> \* **MASK\_MODE**     ( 4  )
->
-> \* **UNMASK\_MODE**   ( 5  )
->
-> \* **ALPHA\_MODE**    ( 6  )
->
-> \* **ADD\_MODE**      ( 7  )
->
-> \* **SUBTRACT\_MODE** ( 8  )
->
-> \* **MULTIPLY\_MODE** ( 9  )
->
-> \* **DIVIDE\_MODE**   ( 10 )
+* **NORMAL\_MODE**   ( 0  )
+
+* **XOR\_MODE**      ( 1  )
+
+* **OR\_MODE**       ( 2  )
+
+* **AND\_MODE**      ( 3  )
+
+* **MASK\_MODE**     ( 4  )
+
+* **UNMASK\_MODE**   ( 5  )
+
+* **ALPHA\_MODE**    ( 6  )
+
+* **ADD\_MODE**      ( 7  )
+
+* **SUBTRACT\_MODE** ( 8  )
+
+* **MULTIPLY\_MODE** ( 9  )
+
+* **DIVIDE\_MODE**   ( 10 )
 
 Draw Arc constants
 
-> \* **ARC**      ( 0 )
->
-> \* **PIE**      ( 1 )
->
-> \* **POLY\_ARC** ( 2 )
+* **ARC**      ( 0 )
+
+* **PIE**      ( 1 )
+
+* **POLY\_ARC** ( 2 )
 
 Virtual framebuffer color mode constants
 
-> \* **RGB** ( 0 )
->
-> \* **RBG** ( 1 )
->
-> \* **BGR** ( 2 )
->
-> \* **BRG** ( 3 )
->
-> \* **GBR** ( 4 )
->
-> \* **GRB** ( 5 )
+* **RGB** ( 0 )
+
+* **RBG** ( 1 )
+
+* **BGR** ( 2 )
+
+* **BRG** ( 3 )
+
+* **GBR** ( 4 )
+
+* **GRB** ( 5 )
 
 Text rendering centering constants
 
-> \* **CENTER\_NONE** ( 0 )
->
-> \* **CENTER\_X**    ( 1 )
->
-> \* **CENTER\_Y**    ( 2 )
->
-> \* **CENTER\_XY**   ( 3 )
+* **CENTER\_NONE** ( 0 )
+
+* **CENTER\_X**    ( 1 )
+
+* **CENTER\_Y**    ( 2 )
+
+* **CENTER\_XY**   ( 3 )
 
 Acceleration method constants
 
-> \* **PERL**     ( 0 )
->
-> \* **SOFTWARE** ( 1 )
->
-> \* **HARDWARE** ( 2 )
+* **PERL**     ( 0 )
+
+* **SOFTWARE** ( 1 )
+
+* **HARDWARE** ( 2 )
 
 # METHODS
 
@@ -267,133 +269,139 @@ With the exception of "new" and some other methods that only expect one paramete
 
 This instantiates the framebuffer object
 
->     my $fb = Graphics::Framebuffer->new(parameter => value);
+```perl
+my $fb = Graphics::Framebuffer->new(parameter => value);
+```
 
 ### PARAMETERS
 
-> \* **FB\_DEVICE**
->
-> Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
->
->     Linux
->
->       *  /dev/fb0 - 31
->       *  /dev/graphics/fb0 - 31
->
-> If none of these work, then the module goes into emulation mode.
->
-> You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
->
-> Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
->
-> \* **FOREGROUND**
->
-> Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
->
->     { # This is the default value
->       'red'   => 255,
->       'green' => 255,
->       'blue'  => 255,
->       'alpha' => 255
->     }
->
-> \* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.
->
-> \* **BACKGROUND**
->
-> Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
->
->     { # This is the default value
->       'red'   => 0,
->       'green' => 0,
->       'blue'  => 0,
->       'alpha' => 0
->     }
->
-> \* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.
->
-> \* **SPLASH**
->
-> The splash screen is or is not displayed
->
-> A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
-> A zero value turns it off
->
-> \* **IGNORE\_X\_WINDOWS**
->
-> Bypasses the X-Windows/Wayland check and loads anyway (dangerous).
-> Set to 1 to disable X-Windows/Wayland check. Default is 0.
->
-> \* **FONT\_PATH**
->
-> Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
->
-> If 'ttf\_print' is not displaying any text, then this may need to be overridden.
->
-> \* **FONT\_FACE**
->
-> Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
->
-> If 'ttf\_print' is not displaying any text, then this may need to be overridden.
->
-> \* **SHOW\_ERRORS**
->
-> Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
->
-> This is helpful for troubleshooting.
->
-> \* **DIAGNOSTICS**
->
-> If true, it shows images as they load, and displays benchmark informtion in the loading process.
->
-> \* **RESET** \[0 or 1 (default)\]
->
-> When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
->
-> Also, when the object is destroyed, it is assumed you are exiting your script.  This causes Graphics::Framebuffer to execute "exec('reset')" as its method of exiting instead of having you use "exit".
->
-> You can disable this behavior by setting this to 0.
+* **FB\_DEVICE**
+
+Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
+
+#### Linux
+
+-  /dev/fb0 - 31
+-  /dev/graphics/fb0 - 31
+
+If none of these work, then the module goes into emulation mode.
+
+You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
+
+Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
+
+* **FOREGROUND**
+
+Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
+
+```perl
+{ # This is the default value
+    'red'   => 255,
+    'green' => 255,
+    'blue'  => 255,
+    'alpha' => 255
+}
+```
+
+* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.
+
+* **BACKGROUND**
+
+Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
+
+```perl
+{ # This is the default value
+    'red'   => 0,
+    'green' => 0,
+    'blue'  => 0,
+    'alpha' => 0
+}
+```
+
+* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.
+
+* **SPLASH**
+
+The splash screen is or is not displayed
+
+A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
+A zero value turns it off
+
+* **IGNORE\_X\_WINDOWS**
+
+Bypasses the X-Windows/Wayland check and loads anyway (dangerous).
+Set to 1 to disable X-Windows/Wayland check. Default is 0.
+
+* **FONT\_PATH**
+
+Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
+
+If 'ttf\_print' is not displaying any text, then this may need to be overridden.
+
+* **FONT\_FACE**
+
+Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
+
+If 'ttf\_print' is not displaying any text, then this may need to be overridden.
+
+* **SHOW\_ERRORS**
+
+Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
+
+This is helpful for troubleshooting.
+
+* **DIAGNOSTICS**
+
+If true, it shows images as they load, and displays benchmark informtion in the loading process.
+
+* **RESET** \[0 or 1 (default)\]
+
+When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
+
+Also, when the object is destroyed, it is assumed you are exiting your script.  This causes Graphics::Framebuffer to execute "exec('reset')" as its method of exiting instead of having you use "exit".
+
+You can disable this behavior by setting this to 0.
 
 ### EMULATION MODE OPTIONS
 
-> The options here only apply to emulation mode.
->
-> Emulation mode can be used as a secondary off-screen drawing surface, if you are clever.
+The options here only apply to emulation mode.
 
-> \* **FB\_DEVICE** => 'EMULATED'
->
-> Sets this object to be in emulation mode.
->
-> Emulation mode special variables for "new" method:
->
-> \* **VXRES**
->
-> Width of the emulation framebuffer in pixels.  Default is 640.
->
-> \* **VYRES**
->
-> Height of the emulation framebuffer in pixels.  Default is 480.
->
-> \* **BITS**
->
-> Number of bits per pixel in the emulation framebuffer.  Default is 32.
->
-> \* **BYTES**
->
-> Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
->
-> \* **COLOR\_ORDER**
->
-> Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
->
->     'RGB'  for Red-Green-Blue (the default)
->     'RBG'  for Red-Blue-Green
->     'GRB'  for Green-Red-Blue
->     'GBR'  for Green-Blue-Red
->     'BRG'  for Blue-Red-Green
->     'BGR'  for Blue-Green-Red (Many video cards are this)
->
-> Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
+Emulation mode can be used as a secondary off-screen drawing surface, if you are clever.
+
+* **FB\_DEVICE** => 'EMULATED'
+
+Sets this object to be in emulation mode.
+
+Emulation mode special variables for "new" method:
+
+* **VXRES**
+
+Width of the emulation framebuffer in pixels.  Default is 640.
+
+* **VYRES**
+
+Height of the emulation framebuffer in pixels.  Default is 480.
+
+* **BITS**
+
+Number of bits per pixel in the emulation framebuffer.  Default is 32.
+
+* **BYTES**
+
+Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
+
+* **COLOR\_ORDER**
+
+Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
+
+-  'RGB'  for Red-Green-Blue (the default)
+-  'RBG'  for Red-Blue-Green
+-  'GRB'  for Green-Red-Blue
+-  'GBR'  for Green-Blue-Red
+-  'BRG'  for Blue-Red-Green
+-  'BGR'  for Blue-Green-Red (Many video cards are this)
+
+Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
 
 ## text\_mode
 
@@ -411,23 +419,27 @@ Returns the size and nature of the framebuffer in X,Y pixel values.
 
 It also returns the bits per pixel.
 
->     my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
+```perl
+my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
+```
 
 When called in a scalar context, it returns a hash reference:
 
->     {
->         'width'          => pixel width of physical screen,
->         'height'         => pixel height of physical screen,
->         'bits_per_pixel' => bits per pixel (16, 24, or 32),
->         'bytes_per_line' => Number of bytes per scan line,
->         'top_clip'       => top edge of clipping rectangle (Y),
->         'left_clip'      => left edge of clipping rectangle (X),
->         'bottom_clip'    => bottom edge of clipping rectangle (YY),
->         'right_clip'     => right edge of clipping rectangle (XX),
->         'width_clip'     => width of clipping rectangle,
->         'height_clip'    => height of clipping rectangle,
->         'color_order'    => RGB, BGR, etc,
->     }
+```perl
+{
+    'width'          => pixel width of physical screen,
+    'height'         => pixel height of physical screen,
+    'bits_per_pixel' => bits per pixel (16, 24, or 32),
+    'bytes_per_line' => Number of bytes per scan line,
+    'top_clip'       => top edge of clipping rectangle (Y),
+    'left_clip'      => left edge of clipping rectangle (X),
+    'bottom_clip'    => bottom edge of clipping rectangle (YY),
+    'right_clip'     => right edge of clipping rectangle (XX),
+    'width_clip'     => width of clipping rectangle,
+    'height_clip'    => height of clipping rectangle,
+    'color_order'    => RGB, BGR, etc,
+}
+```
 
 ## splash
 
@@ -435,28 +447,36 @@ Displays the Splash screen.  It automatically scales and positions to the clippi
 
 This is automatically displayed when this module is initialized, and the variable 'SPLASH' is true (which is the default).
 
->     $fb->splash();
+```perl
+$fb->splash();
+```
 
 ## get\_font\_list
 
 Returns an anonymous hash containing the font face names as keys and another anonymous hash assigned as the values for each key. This second hash contains the path to the font and the font's file name.
 
->     'face name' => {
->          'path' => 'path to font',
->          'font' => 'file name of font'
->     },
->     ... The rest of the system fonts here
+```perl
+'face name' => {
+    'path' => 'path to font',
+    'font' => 'file name of font'
+},
+# ... The rest of the system fonts here
+```
 
 You may also pass in a face name and it will return that face's information:
 
->     my $font_info = $fb->get_font_list('DejaVuSerif');
+```perl
+my $font_info = $fb->get_font_list('DejaVuSerif');
+```
 
 Would return something like:
 
->     {
->         'font' => 'dejavuserif.ttf',
->         'path' => '/usr/share/fonts/truetype/'
->     }
+```perl
+{
+    'font' => 'dejavuserif.ttf',
+    'path' => '/usr/share/fonts/truetype/'
+}
+```
 
 When passing a name, it will return a hash reference (if only one match), or an array reference of hashes of fonts matching that name.  Passing in "Arial" would return the font information for "Arial Black", "Arial Narrow", and "Arial Rounded" (if they are installed on your system).
 
@@ -464,123 +484,147 @@ When passing a name, it will return a hash reference (if only one match), or an 
 
 Sets or returns the drawing mode, depending on how it is called.
 
->     my $draw_mode = $fb->draw_mode(); # Returns the current
->                                       # Drawing mode.
->
->     # Modes explained.  These settings are global
->
->                                       # When you draw it...
->
->     $fb->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
->                                       # pixel. Imager assisted drawing
->                                       # (acceleration) only works in this mode.
->
->     $fb->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
->                                       # screen pixel.
->
->     $fb->draw_mode(OR_MODE);          # Does a bitwise OR with the new pixel and
->                                       # screen pixel.  This has the benefit of
->                                       # not writing pure black to the screen
->                                       # (usually the background)
->
->     $fb->draw_mode(AND_MODE);         # Does a bitwise AND with the new pixel and
->                                       # screen pixel.
->
->     $fb->draw_mode(MASK_MODE);        # If pixels in the source are equal to the
->                                       # global background color, then they are
->                                       # not drawn (transparent).
->
->     $fb->draw_mode(UNMASK_MODE);      # Draws the new pixel on screen areas only
->                                       # equal to the background color.
->
->     $fb->draw_mode(ALPHA_MODE);       # Draws the new pixel on the screen using
->                                       # the alpha channel value as a transparency
->                                       # value.  This means the new pixel will not
->                                       # be opague.
->
->     $fb->draw_mode(ADD_MODE);         # Draws the new pixel on the screen by
->                                       # mathematically adding its pixel value to
->                                       # the existing pixel value
->
->     $fb->draw_mode(SUBTRACT_MODE);    # Draws the new pixel on the screen by
->                                       # mathematically subtracting the new pixel
->                                       # value from the existing value
->
->     $fb->draw_mode(MULTIPLY_MODE);    # Draws the new pixel on the screen by
->                                       # mathematically multiplying it with the
->                                       # existing pixel value (usually not too
->                                       # useful, but here for completeness)
->
->     $fb->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
->                                       # mathematically dividing it with the
->                                       # existing pixel value (usually not too
->                                       # useful, but here for completeness)
+```perl
+my $draw_mode = $fb->draw_mode(); # Returns the current
+                                  # Drawing mode.
+
+# Modes explained.  These settings are global
+
+                                  # When you draw it...
+
+$fb->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
+                                  # pixel. Imager assisted drawing
+                                  # (acceleration) only works in this mode.
+
+$fb->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
+                                  # screen pixel.
+
+$fb->draw_mode(OR_MODE);          # Does a bitwise OR with the new pixel and
+                                  # screen pixel.  This has the benefit of
+                                  # not writing pure black to the screen
+                                  # (usually the background)
+
+$fb->draw_mode(AND_MODE);         # Does a bitwise AND with the new pixel and
+                                  # screen pixel.
+
+$fb->draw_mode(MASK_MODE);        # If pixels in the source are equal to the
+                                  # global background color, then they are
+                                  # not drawn (transparent).
+
+$fb->draw_mode(UNMASK_MODE);      # Draws the new pixel on screen areas only
+                                  # equal to the background color.
+
+$fb->draw_mode(ALPHA_MODE);       # Draws the new pixel on the screen using
+                                  # the alpha channel value as a transparency
+                                  # value.  This means the new pixel will not
+                                  # be opague.
+
+$fb->draw_mode(ADD_MODE);         # Draws the new pixel on the screen by
+                                  # mathematically adding its pixel value to
+                                  # the existing pixel value
+
+$fb->draw_mode(SUBTRACT_MODE);    # Draws the new pixel on the screen by
+                                  # mathematically subtracting the new pixel
+                                  # value from the existing value
+
+$fb->draw_mode(MULTIPLY_MODE);    # Draws the new pixel on the screen by
+                                  # mathematically multiplying it with the
+                                  # existing pixel value (usually not too
+                                  # useful, but here for completeness)
+
+$fb->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
+                                  # mathematically dividing it with the
+                                  # existing pixel value (usually not too
+                                  # useful, but here for completeness)
+```
 
 ## normal\_mode
 
 This is an alias to draw\_mode(NORMAL\_MODE)
 
->     $fb->normal_mode();
+```perl
+$fb->normal_mode();
+```
 
 ## xor\_mode
 
 This is an alias to draw\_mode(XOR\_MODE)
 
->     $fb->xor_mode();
+```perl
+$fb->xor_mode();
+```
 
 ## or\_mode
 
 This is an alias to draw\_mode(OR\_MODE)
 
->     $fb->or_mode();
+```perl
+$fb->or_mode();
+```
 
 ## alpha\_mode
 
 This is an alias to draw\_mode(ALPHA\_MODE)
 
->     $fb->alpha_mode();
+```perl
+$fb->alpha_mode();
+```
 
 ## and\_mode
 
 This is an alias to draw\_mode(AND\_MODE)
 
->     $fb->and_mode();
+```perl
+$fb->and_mode();
+```
 
 ## mask\_mode
 
 This is an alias to draw\_mode(MASK\_MODE)
 
->     $fb->mask_mode();
+```perl
+$fb->mask_mode();
+```
 
 ## unmask\_mode
 
 This is an alias to draw\_mode(UNMASK\_MODE)
 
->     $fb->unmask_mode();
+```perl
+$fb->unmask_mode();
+```
 
 ## add\_mode
 
 This is an alias to draw\_mode(ADD\_MODE)
 
->     $fb->add_mode();
+```perl
+$fb->add_mode();
+```
 
 ## subtract\_mode
 
 This is an alias to draw\_mode(SUBTRACT\_MODE)
 
->     $fb->subtract_mode();
+```perl
+$fb->subtract_mode();
+```
 
 ## multiply\_mode
 
 This is an alias to draw\_mode(MULTIPLY\_MODE)
 
->     $fb->multiply_mode();
+```perl
+$fb->multiply_mode();
+```
 
 ## divide\_mode
 
 This is an alias to draw\_mode(DIVIDE\_MODE)
 
->     $fb->divide_mode();
+```perl
+$fb->divide_mode();
+```
 
 ## clear\_screen
 
@@ -588,9 +632,11 @@ Fills the entire screen with the background color
 
 You can add an optional parameter to turn the console cursor on or off too.
 
->     $fb->clear_screen();      # Leave cursor as is.
->     $fb->clear_screen('OFF'); # Turn cursor OFF (Does nothing with emulated framebuffer mode).
->     $fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
+```perl
+$fb->clear_screen();      # Leave cursor as is.
+$fb->clear_screen('OFF'); # Turn cursor OFF (Does nothing with emulated framebuffer mode).
+$fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
+```
 
 ## cls
 
@@ -600,18 +646,22 @@ This is an alias to 'clear\_screen'
 
 Resets the plot point at 0,0.  Resets clipping to the current screen size.  Resets the global color to whatever 'FOREGROUND' is set to, and the global background color to whatever 'BACKGROUND' is set to, and resets the drawing mode to NORMAL.
 
->     $fb->attribute_reset();
+```perl
+$fb->attribute_reset();
+```
 
 ## plot
 
 Set a single pixel in the set foreground color at position x,y with the given pixel size (or default).  Clipping applies.
 
->     $fb->plot(
->         {
->             'x'          => 20,
->             'y'          => 30,
->         }
->     );
+```perl
+$fb->plot(
+    {
+        'x'          => 20,
+        'y'          => 30,
+    }
+);
+```
 
 ## setpixel
 
@@ -625,18 +675,20 @@ An alias to plot.
 
 Returns the color of the pixel at coordinate x,y, if it lies within the clipping region.  It returns undefined if outside of the clipping region.
 
->     my $pixel = $fb->pixel({'x' => 20,'y' => 25});
->
-> $pixel is a hash reference in the form:
->
->     {
->        'red'   => integer value, # 0 - 255
->        'green' => integer value, # 0 - 255
->        'blue'  => integer value, # 0 - 255
->        'alpha' => integer value, # 0 - 255
->        'hex'   => hexadecimal string of the values from 00000000 to FFFFFFFF
->        'raw'   => 16/24/32bit encoded string (depending on screen mode)
->     }
+```perl
+my $pixel = $fb->pixel({'x' => 20,'y' => 25});
+
+$pixel is a hash reference in the form:
+
+{
+    'red'   => integer value, # 0 - 255
+    'green' => integer value, # 0 - 255
+    'blue'  => integer value, # 0 - 255
+    'alpha' => integer value, # 0 - 255
+    'hex'   => hexadecimal string of the values from 00000000 to FFFFFFFF
+    'raw'   => 16/24/32bit encoded string (depending on screen mode)
+}
+```
 
 ## getpixel
 
@@ -650,56 +702,70 @@ Alias for 'pixel'.
 
 Returns the last plotted position
 
->     my $last_plot = $fb->last_plot();
->
-> This returns an anonymous hash reference in the form:
->
->     {
->         'x' => x position,
->         'y' => y position
->     }
+```perl
+my $last_plot = $fb->last_plot();
+```
+
+This returns an anonymous hash reference in the form:
+
+```perl
+{
+    'x' => x position,
+    'y' => y position
+}
+```
 
 Or, if you want a simple array returned:
 
->     my ($x,$y) = $fb->last_plot();
->
-> This returns the position as a two element array:
->
->     ( x position, y position )
+```perl
+my ($x,$y) = $fb->last_plot();
+```
+
+This returns the position as a two element array:
+
+```perl
+( x position, y position )
+```
 
 ## line
 
 Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping applies.
 
->     $fb->line({
->        'x'           => 50,
->        'y'           => 60,
->        'xx'          => 100,
->        'yy'          => 332
->        'antialiased' => TRUE # Antialiasing is slower
->     });
+```perl
+$fb->line({
+    'x'           => 50,
+    'y'           => 60,
+    'xx'          => 100,
+    'yy'          => 332
+    'antialiased' => TRUE # Antialiasing is slower
+});
+```
 
 ## angle\_line
 
 Draws a line, in the global foreground color, from point x,y at an angle of 'angle', of length 'radius'.  Clipping applies.
 
->     $fb->angle_line({
->        'x'           => 50,
->        'y'           => 60,
->        'radius'      => 50,
->        'angle'       => 30.3, # Compass coordinates (0-360)
->        'antialiased' => FALSE
->     });
+```perl
+$fb->angle_line({
+    'x'           => 50,
+    'y'           => 60,
+    'radius'      => 50,
+    'angle'       => 30.3, # Compass coordinates (0-360)
+    'antialiased' => FALSE
+});
+```
 
 ## drawto
 
 Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
 
->     $fb->drawto({
->        'x'           => 50,
->        'y'           => 60,
->        'antialiased' => TRUE
->     });
+```perl
+$fb->drawto({
+    'x'           => 50,
+    'y'           => 60,
+    'antialiased' => TRUE
+});
+```
 
 \* Antialiased lines are not accelerated
 
@@ -707,27 +773,29 @@ Draws a line, in the foreground color, from the last plotted position to the pos
 
 Draws a Bezier curve, based on a list of control points.
 
->     $fb->bezier(
->         {
->             'coordinates' => [
->                 x0,y0,
->                 x1,y1,
->                 ...              # As many as needed, there MUST be an even number of elements
->             ],
->             'points'     => 100, # Number of total points plotted for curve
->                                  # The higher the number, the smoother the curve.
->             'closed'     => 1,   # optional, close it and make it a full shape.
->             'filled'     => 1    # Results may vary, optional
->             'gradient' => {
->                  'direction' => 'horizontal', # or vertical
->                  'colors'    => { # 2 to any number of transitions allowed
->                      'red'   => [255,255,0], # Red to yellow to cyan
->                      'green' => [0,255,255],
->                      'blue'  => [0,0,255]
->                  }
->              }
->         }
->     );
+```perl
+$fb->bezier(
+    {
+        'coordinates' => [
+            x0,y0,
+            x1,y1,
+            # ...              # As many as needed, there MUST be an even number of elements
+        ],
+        'points'     => 100, # Number of total points plotted for curve
+                             # The higher the number, the smoother the curve.
+        'closed'     => 1,   # optional, close it and make it a full shape.
+        'filled'     => 1    # Results may vary, optional
+        'gradient' => {
+            'direction' => 'horizontal', # or vertical
+            'colors'    => { # 2 to any number of transitions allowed
+                'red'   => [255,255,0], # Red to yellow to cyan
+                'green' => [0,255,255],
+                'blue'  => [0,0,255]
+            }
+        }
+    }
+);
+```
 
 \* This is not affected by the Acceleration setting
 
@@ -739,41 +807,43 @@ DISCONTINUED, use 'bezier' instead (now just an alias to 'bezier')
 
 Draws an arc/pie/poly arc of a circle at point x,y.
 
->     x             = x of center of circle
->     y             = y of center of circle
->     radius        = radius of circle
->
->     start_degrees = starting point, in degrees, of arc
->
->     end_degrees   = ending point, in degrees, of arc
->
->     granularity   = This is used for accuracy in drawing
->                     the arc.  The smaller the number, the
->                     more accurate the arc is drawn, but it
->                     is also slower.  Values between 0.1
->                     and 0.01 are usually good.  Valid values
->                     are any positive floating point number
->                     down to 0.0001.  Anything smaller than
->                     that is just silly.
->
->     mode          = Specifies the drawing mode.
->                      0 > arc only
->                      1 > Filled pie section
->                          Can have gradients, textures, and hatches
->                      2 > Poly arc.  Draws a line from x,y to the
->                          beginning and ending arc position.
->
->     $fb->draw_arc({
->        'x'             => 100,
->        'y'             => 100,
->        'radius'        => 100,
->        'start_degrees' => -40, # Compass coordinates
->        'end_degrees'   => 80,
->        'granularity   => .05,
->        'mode'          => 2    # The object hash has 'ARC', 'PIE',
->                                # and 'POLY_ARC' as a means of filling
->                                # this value.
->     });
+```perl
+# x             = x of center of circle
+# y             = y of center of circle
+# radius        = radius of circle
+
+# start_degrees = starting point, in degrees, of arc
+
+# end_degrees   = ending point, in degrees, of arc
+
+# granularity   = This is used for accuracy in drawing
+#                 the arc.  The smaller the number, the
+#                 more accurate the arc is drawn, but it
+#                 is also slower.  Values between 0.1
+#                 and 0.01 are usually good.  Valid values
+#                 are any positive floating point number
+#                 down to 0.0001.  Anything smaller than
+#                 that is just silly.
+
+# mode          = Specifies the drawing mode.
+#                   0 > arc only
+#                   1 > Filled pie section
+#                       Can have gradients, textures, and hatches
+#                   2 > Poly arc.  Draws a line from x,y to the
+#                       beginning and ending arc position.
+
+$fb->draw_arc({
+    'x'             => 100,
+    'y'             => 100,
+    'radius'        => 100,
+    'start_degrees' => -40, # Compass coordinates
+    'end_degrees'   => 80,
+    'granularity   => .05,
+    'mode'          => 2    # The object hash has 'ARC', 'PIE',
+                            # and 'POLY_ARC' as a means of filling
+                            # this value.
+});
+```
 
 \* Only PIE is affected by the acceleration setting.
 
@@ -781,32 +851,34 @@ Draws an arc/pie/poly arc of a circle at point x,y.
 
 Draws an arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
->     x             = x of center of circle
->
->     y             = y of center of circle
->
->     radius        = radius of circle
->
->     start_degrees = starting point, in degrees, of arc
->
->     end_degrees   = ending point, in degrees, of arc
->
->     granularity   = This is used for accuracy in drawing
->                     the arc.  The smaller the number, the
->                     more accurate the arc is drawn, but it
->                     is also slower.  Values between 0.1
->                     and 0.01 are usually good.  Valid values
->                     are any positive floating point number
->                     down to 0.0001.
->
->     $fb->arc({
->        'x'             => 100,
->        'y'             => 100,
->        'radius'        => 100,
->        'start_degrees' => -40,
->        'end_degrees'   => 80,
->        'granularity    => .05,
->     });
+```perl
+# x             = x of center of circle
+
+# y             = y of center of circle
+
+# radius        = radius of circle
+
+# start_degrees = starting point, in degrees, of arc
+
+# end_degrees   = ending point, in degrees, of arc
+
+# granularity   = This is used for accuracy in drawing
+#                 the arc.  The smaller the number, the
+#                 more accurate the arc is drawn, but it
+#                 is also slower.  Values between 0.1
+#                 and 0.01 are usually good.  Valid values
+#                 are any positive floating point number
+#                 down to 0.0001.
+
+$fb->arc({
+    'x'             => 100,
+    'y'             => 100,
+    'radius'        => 100,
+    'start_degrees' => -40,
+    'end_degrees'   => 80,
+    'granularity    => .05,
+});
+```
 
 \* This is not affected by the Acceleration setting
 
