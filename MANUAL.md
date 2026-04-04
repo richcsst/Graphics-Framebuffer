@@ -88,9 +88,9 @@ The following are hash keys to the main object variable.  For example, if you us
 
 * **FONTS**
 
-List of system fonts
+   List of system fonts
 
-Contains a hash of every font found in the system in the format:
+   Contains a hash of every font found in the system in the format:
 
 ```perl
 'FaceName' => {
@@ -102,63 +102,63 @@ Contains a hash of every font found in the system in the format:
 
 * **Imager-Has-TrueType**
 
-If your installation of Imager has TrueType font capability, then this will be 1
+   If your installation of Imager has TrueType font capability, then this will be 1
 
 * **Imager-Has-Type1**
 
-If your installation of Imager has Adobe Type 1 font capability, then this will be 1
+   If your installation of Imager has Adobe Type 1 font capability, then this will be 1
 
 * **Imager-Has-Freetype2**
 
-If your installation of Imager has the FreeType2 library rendering capability, then this will be 1
+   If your installation of Imager has the FreeType2 library rendering capability, then this will be 1
 
 * **Imager-Image-Types**
 
-An anonymous array of supported image file types.
+   An anonymous array of supported image file types.
 
 * **HATCHES**
 
-An anomyous array of hatch names for hatch fills.
+   An anomyous array of hatch names for hatch fills.
 
-This is also exported as @HATCHES
+   This is also exported as @HATCHES
 
 * **X\_CLIP**
 
-The top left-hand corner X location of the clipping region
+   The top left-hand corner X location of the clipping region
 
 * **Y\_CLIP**
 
-The top left-hand corner Y location of the clipping region
+   The top left-hand corner Y location of the clipping region
 
 * **XX\_CLIP**
 
-The bottom right-hand corner X location of the clipping region
+   The bottom right-hand corner X location of the clipping region
 
 * **YY\_CLIP**
 
-The bottom right-hand corner Y location of the clipping region.
+   The bottom right-hand corner Y location of the clipping region.
 
 * **CLIPPED**
 
-If this is true, then the clipping region is smaller than the full screen
+   If this is true, then the clipping region is smaller than the full screen
 
-If false, then the clipping region is the screen dimensions.
+   If false, then the clipping region is the screen dimensions.
 
 * **DRAW\_MODE**
 
-The current drawing mode.  This is a numeric value corresponding to the constants described in the method 'draw\_mode'
+   The current drawing mode.  This is a numeric value corresponding to the constants described in the method 'draw\_mode'
 
 * **RAW\_FOREGROUND\_COLOR**
 
-The current foreground color encoded as a string.
+   The current foreground color encoded as a string.
 
 * **RAW\_BACKGROUND\_COLOR**
 
-The current background color encoded as a string.
+   The current background color encoded as a string.
 
 * **ACCELERATED**
 
-Indicates if C code or hardware acceleration is being used.
+   Indicates if C code or hardware acceleration is being used.
 
    - **Possible Values**
   
@@ -166,116 +166,116 @@ Indicates if C code or hardware acceleration is being used.
      - 1 = Some functions accelerated by compiled C code (Default)
      - 2 = All of #1 plus additional functions accelerated by hardware (currently not supported, and likely never will)
 
-Many of the parameters you pass to the "new" method are also special variables.
+   Many of the parameters you pass to the "new" method are also special variables.
 
 # CONSTANTS
 
-The following constants can be used in the various methods.  Each method example will have the possible constants to use for that method.
+   The following constants can be used in the various methods.  Each method example will have the possible constants to use for that method.
 
-The value of the constant is in parenthesis:
+   The value of the constant is in parenthesis:
 
 **CONSTANT** (value)
 
-Boolean constants
+   Boolean constants
 
-* **TRUE**  ( 1 )
+   * **TRUE**  ( 1 )
 
-* **FALSE** ( 0 )
+   * **FALSE** ( 0 )
 
-Draw mode constants
+   Draw mode constants
 
-* **NORMAL\_MODE**   ( 0  )
+   * **NORMAL\_MODE**   ( 0  )
 
-* **XOR\_MODE**      ( 1  )
+   * **XOR\_MODE**      ( 1  )
 
-* **OR\_MODE**       ( 2  )
+   * **OR\_MODE**       ( 2  )
 
-* **AND\_MODE**      ( 3  )
+   * **AND\_MODE**      ( 3  )
 
-* **MASK\_MODE**     ( 4  )
+   * **MASK\_MODE**     ( 4  )
 
-* **UNMASK\_MODE**   ( 5  )
+   * **UNMASK\_MODE**   ( 5  )
 
-* **ALPHA\_MODE**    ( 6  )
+   * **ALPHA\_MODE**    ( 6  )
 
-* **ADD\_MODE**      ( 7  )
+   * **ADD\_MODE**      ( 7  )
 
-* **SUBTRACT\_MODE** ( 8  )
+   * **SUBTRACT\_MODE** ( 8  )
 
-* **MULTIPLY\_MODE** ( 9  )
+   * **MULTIPLY\_MODE** ( 9  )
 
-* **DIVIDE\_MODE**   ( 10 )
+   * **DIVIDE\_MODE**   ( 10 )
 
-Draw Arc constants
+   Draw Arc constants
 
-* **ARC**       ( 0 )
+   * **ARC**       ( 0 )
 
-* **PIE**       ( 1 )
+   * **PIE**       ( 1 )
 
-* **POLY\_ARC** ( 2 )
+   * **POLY\_ARC** ( 2 )
 
-Virtual framebuffer color mode constants
+   Virtual framebuffer color mode constants
 
-* **RGB** ( 0 )
+   * **RGB** ( 0 )
 
-* **RBG** ( 1 )
+   * **RBG** ( 1 )
 
-* **BGR** ( 2 )
+   * **BGR** ( 2 )
 
-* **BRG** ( 3 )
+   * **BRG** ( 3 )
 
-* **GBR** ( 4 )
+   * **GBR** ( 4 )
 
-* **GRB** ( 5 )
+   * **GRB** ( 5 )
 
-Text rendering centering constants
+   Text rendering centering constants
 
-* **CENTER\_NONE** ( 0 )
+   * **CENTER\_NONE** ( 0 )
 
-* **CENTER\_X**    ( 1 )
+   * **CENTER\_X**    ( 1 )
 
-* **CENTER\_Y**    ( 2 )
+   * **CENTER\_Y**    ( 2 )
 
-* **CENTER\_XY**   ( 3 )
+   * **CENTER\_XY**   ( 3 )
 
-Acceleration method constants
+   Acceleration method constants
 
-* **PERL**     ( 0 )
+   * **PERL**     ( 0 )
 
-* **SOFTWARE** ( 1 )
+   * **SOFTWARE** ( 1 )
 
-* **HARDWARE** ( 2 )
+   * **HARDWARE** ( 2 )
 
-# METHODS
+   # METHODS
 
-The following are names you can search to get to the desired method (sorted alphabetically):
+   The following are names you can search to get to the desired method (sorted alphabetically):
 
-- [acceleration](#acceleration), [active\_console](#active_console), [add\_mode](#add_mode), [alpha\_mode](#alpha_mode), [and\_mode](#and_mode), [angle\_line](angle_line), [arc](#arc), [attribute\_reset](#attribute_reset)
-- [bezier](#bezier), [blit\_copy](#blit_copy), [blit\_mode](#blit_mode), [blit\_read](#blit_read), [blit\_transform](#blit_transform), [blit\_write](#blit_write), [box](#box)
-- [circle](#circle), [clear\_screen](#clean_screen), [clip\_off](#clip_off), [clip\_reset](#clip_reset), [clip\_rset](#clip_rset), [clip\_set](#clip_set), [cls](#cls)
-- [divide\_mode](#divide_mode), [draw\_arc](#draw_arc), [draw\_mode](#draw_mode), [drawto](#drawto)
-- [ellipse](#ellipse)
-- [fill](#fill), [filled\_pie](#filled_pie)
-- [get\_face\_name](#get_face_name), [get\_font\_list](#get_font_list), [getpixel](#getpixel), [get\_pixel](#get_pixel), [graphics\_mode](#graphics_mode)
-- [hardware](#hardware)
-- [last\_plot](#last_plot), [line](#line), [load\_image](#load_image)
-- [mask\_mode](#mask_mode), [monochrome](#monochrome), [multiply\_mode](#multiply_mode)
-- [new](#new), [normal\_mode](#normal_mode)
-- [or\_mode](#or_mode)
-- [perl](#perl), [pixel](#pixel), [play\_animation](#play_animation), [plot](#plot), [poly\_arc](#poly_arc), [polygon](#polygon)
-- [rbox](#rbox), [rounded\_box](#rounded_box), [replace\_color](#replace_color), [RGB565\_to\_RGB888](#rgb565_to_rgb888), [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888), [RGB888\_to\_RGB565](#rgb888_to_rgb565), [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888), [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565), [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888)
-- [screen\_dimensions](#screen_dimensions), [screen\_dump](#screen_dump), [set\_b\_color](#set_b_color), [setbcolor](#setcolor), [set\_background\_color](#set_background_color), [setcolor](#setcolor), [set\_color](#set_color), [set\_foreground\_color](#set_foreground_color), [setpixel](#setpixel), [set\_pixel](#set_pixel), [software](#software), [subtract\_mode](#subtract_mode)
-- [text\_mode](#text_mode), [ttf\_paragraph](#ttf_paragraph), [ttf\_print](#ttf_print)
-- [unmask\_mode](#unmask_mode)
-- [vsync](#vsync)
-- [wait\_for\_console](#wait_for_console), [which\_console](#which_console)
-- [xor\_mode](#xor_mode)
+   - [acceleration](#acceleration), [active\_console](#active_console), [add\_mode](#add_mode), [alpha\_mode](#alpha_mode), [and\_mode](#and_mode), [angle\_line](angle_line), [arc](#arc), [attribute\_reset](#attribute_reset)
+   - [bezier](#bezier), [blit\_copy](#blit_copy), [blit\_mode](#blit_mode), [blit\_read](#blit_read), [blit\_transform](#blit_transform), [blit\_write](#blit_write), [box](#box)
+   - [circle](#circle), [clear\_screen](#clean_screen), [clip\_off](#clip_off), [clip\_reset](#clip_reset), [clip\_rset](#clip_rset), [clip\_set](#clip_set), [cls](#cls)
+   - [divide\_mode](#divide_mode), [draw\_arc](#draw_arc), [draw\_mode](#draw_mode), [drawto](#drawto)
+   - [ellipse](#ellipse)
+   - [fill](#fill), [filled\_pie](#filled_pie)
+   - [get\_face\_name](#get_face_name), [get\_font\_list](#get_font_list), [getpixel](#getpixel), [get\_pixel](#get_pixel), [graphics\_mode](#graphics_mode)
+   - [hardware](#hardware)
+   - [last\_plot](#last_plot), [line](#line), [load\_image](#load_image)
+   - [mask\_mode](#mask_mode), [monochrome](#monochrome), [multiply\_mode](#multiply_mode)
+   - [new](#new), [normal\_mode](#normal_mode)
+   - [or\_mode](#or_mode)
+   - [perl](#perl), [pixel](#pixel), [play\_animation](#play_animation), [plot](#plot), [poly\_arc](#poly_arc), [polygon](#polygon)
+   - [rbox](#rbox), [rounded\_box](#rounded_box), [replace\_color](#replace_color), [RGB565\_to\_RGB888](#rgb565_to_rgb888), [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888), [RGB888\_to\_RGB565](#rgb888_to_rgb565), [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888), [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565), [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888)
+   - [screen\_dimensions](#screen_dimensions), [screen\_dump](#screen_dump), [set\_b\_color](#set_b_color), [setbcolor](#setcolor), [set\_background\_color](#set_background_color), [setcolor](#setcolor), [set\_color](#set_color), [set\_foreground\_color](#set_foreground_color), [setpixel](#setpixel), [set\_pixel](#set_pixel), [software](#software), [subtract\_mode](#subtract_mode)
+   - [text\_mode](#text_mode), [ttf\_paragraph](#ttf_paragraph), [ttf\_print](#ttf_print)
+   - [unmask\_mode](#unmask_mode)
+   - [vsync](#vsync)
+   - [wait\_for\_console](#wait_for_console), [which\_console](#which_console)
+   - [xor\_mode](#xor_mode)
 
-With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
+   With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
 
 ## **new**
 
-This instantiates the framebuffer object
+   This instantiates the framebuffer object
 
 ```perl
 my $fb = Graphics::Framebuffer->new(parameter => value);
@@ -283,22 +283,22 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
 ### PARAMETERS
 
-* **FB\_DEVICE**
+   * **FB\_DEVICE**
 
-Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
+   Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
 
--  /dev/fb0 - 31
--  /dev/graphics/fb0 - 31
+   -  /dev/fb0 - 31
+   -  /dev/graphics/fb0 - 31
 
-If none of these work, then the module goes into emulation mode.
+   If none of these work, then the module goes into emulation mode.
 
-You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
+   You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
 
-Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
+   Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
 
 * **FOREGROUND**
 
-Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
+   Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
 
 ```perl
 { # This is the default value
@@ -309,11 +309,11 @@ Sets the default (global) foreground color for when 'attribute\_reset' is called
 }
 ```
 
-* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.
+   * Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.
 
 * **BACKGROUND**
 
-Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
+   Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
 
 ```perl
 { # This is the default value
@@ -324,112 +324,112 @@ Sets the default (global) background color for when 'attribute\_reset' is called
 }
 ```
 
-* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.
+   * Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.
 
 * **SPLASH**
 
-The splash screen is or is not displayed
+   The splash screen is or is not displayed
 
-A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
-A zero value turns it off
+   A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
+   A zero value turns it off
 
 * **IGNORE\_X\_WINDOWS**
 
-Bypasses the **X-Windows/Wayland** check and loads anyway (dangerous).
-Set to 1 to disable X-Windows/Wayland check. Default is 0.
+   Bypasses the **X-Windows/Wayland** check and loads anyway (dangerous).
+   Set to 1 to disable X-Windows/Wayland check. Default is 0.
 
 * **FONT\_PATH**
 
-Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
+   Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
 
-If 'ttf\_print' is not displaying any text, then this may need to be overridden.
+   If 'ttf\_print' is not displaying any text, then this may need to be overridden.
 
 * **FONT\_FACE**
 
-Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
+   Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
 
-If 'ttf\_print' is not displaying any text, then this may need to be overridden.
+   If 'ttf\_print' is not displaying any text, then this may need to be overridden.
 
 * **SHOW\_ERRORS**
 
-Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
+   Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
 
-This is helpful for troubleshooting.
+   This is helpful for troubleshooting.
 
 * **DIAGNOSTICS**
 
-If true, it shows images as they load, and displays benchmark informtion in the loading process.
+   If true, it shows images as they load, and displays benchmark informtion in the loading process.
 
 * **RESET** \[0 or 1 (default)\]
 
-When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
+   When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
 
-Also, when the object is destroyed, it is assumed you are exiting your script.  This causes Graphics::Framebuffer to execute "exec('reset')" as its method of exiting instead of having you use "exit".
+   Also, when the object is destroyed, it is assumed you are exiting your script.  This causes Graphics::Framebuffer to execute "exec('reset')" as its method of exiting instead of having you use "exit".
 
-You can disable this behavior by setting this to 0.
+   You can disable this behavior by setting this to 0.
 
 ### EMULATION MODE OPTIONS
 
-The options here only apply to emulation mode.
+   The options here only apply to emulation mode.
 
-Emulation mode can be used as a secondary off-screen drawing surface, if you are clever.
+   Emulation mode can be used as a secondary off-screen drawing surface, if you are clever.
 
 * **FB\_DEVICE** => 'EMULATED'
 
-Sets this object to be in emulation mode.
+   Sets this object to be in emulation mode.
 
-Emulation mode special variables for "new" method:
+   Emulation mode special variables for "new" method:
 
 * **VXRES**
 
-Width of the emulation framebuffer in pixels.  Default is 640.
+   Width of the emulation framebuffer in pixels.  Default is 640.
 
 * **VYRES**
 
-Height of the emulation framebuffer in pixels.  Default is 480.
+   Height of the emulation framebuffer in pixels.  Default is 480.
 
 * **BITS**
 
-Number of bits per pixel in the emulation framebuffer.  Default is 32.
+   Number of bits per pixel in the emulation framebuffer.  Default is 32.
 
 * **BYTES**
 
-Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
+   Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
 
 * **COLOR\_ORDER**
 
-Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
+   Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
 
--  'RGB'  for Red-Green-Blue (the default)
--  'RBG'  for Red-Blue-Green
--  'GRB'  for Green-Red-Blue
--  'GBR'  for Green-Blue-Red
--  'BRG'  for Blue-Red-Green
--  'BGR'  for Blue-Green-Red (Many video cards are this)
+   -  'RGB'  for Red-Green-Blue (the default)
+   -  'RBG'  for Red-Blue-Green
+   -  'GRB'  for Green-Red-Blue
+   -  'GBR'  for Green-Blue-Red
+   -  'BRG'  for Blue-Red-Green
+   -  'BGR'  for Blue-Green-Red (Many video cards are this)
 
-Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
+   Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
 
 ## text\_mode
 
-Sets the TTY into text mode, where text can interfere with the display
+   Sets the TTY into text mode, where text can interfere with the display
 
 ## graphics\_mode
 
-Sets the TTY in exclusive graphics mode, where text and cursor cannot interfere with the display.  Please remember, you must call text\_mode before exiting, else your console will not show any text!
+   Sets the TTY in exclusive graphics mode, where text and cursor cannot interfere with the display.  Please remember, you must call text\_mode before exiting, else your console will not show any text!
 
 ## screen\_dimensions
 
-When called in an array/list context:
+   When called in an array/list context:
 
-Returns the size and nature of the framebuffer in X,Y pixel values.
+   Returns the size and nature of the framebuffer in X,Y pixel values.
 
-It also returns the bits per pixel.
+   It also returns the bits per pixel.
 
 ```perl
 my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
 ```
 
-When called in a scalar context, it returns a hash reference:
+   When called in a scalar context, it returns a hash reference:
 
 ```perl
 {
@@ -449,9 +449,9 @@ When called in a scalar context, it returns a hash reference:
 
 ## splash
 
-Displays the Splash screen.  It automatically scales and positions to the clipping region.
+   Displays the Splash screen.  It automatically scales and positions to the clipping region.
 
-This is automatically displayed when this module is initialized, and the variable 'SPLASH' is true (which is the default).
+   This is automatically displayed when this module is initialized, and the variable 'SPLASH' is true (which is the default).
 
 ```perl
 $fb->splash();
@@ -459,7 +459,7 @@ $fb->splash();
 
 ## get\_font\_list
 
-Returns an anonymous hash containing the font face names as keys and another anonymous hash assigned as the values for each key. This second hash contains the path to the font and the font's file name.
+   Returns an anonymous hash containing the font face names as keys and another anonymous hash assigned as the values for each key. This second hash contains the path to the font and the font's file name.
 
 ```perl
 'face name' => {
@@ -469,13 +469,13 @@ Returns an anonymous hash containing the font face names as keys and another ano
 # ... The rest of the system fonts here
 ```
 
-You may also pass in a face name and it will return that face's information:
+   You may also pass in a face name and it will return that face's information:
 
 ```perl
 my $font_info = $fb->get_font_list('DejaVuSerif');
 ```
 
-Would return something like:
+   Would return something like:
 
 ```perl
 {
@@ -484,11 +484,11 @@ Would return something like:
 }
 ```
 
-When passing a name, it will return a hash reference (if only one match), or an array reference of hashes of fonts matching that name.  Passing in "Arial" would return the font information for "Arial Black", "Arial Narrow", and "Arial Rounded" (if they are installed on your system).
+   When passing a name, it will return a hash reference (if only one match), or an array reference of hashes of fonts matching that name.  Passing in "Arial" would return the font information for "Arial Black", "Arial Narrow", and "Arial Rounded" (if they are installed on your system).
 
 ## draw\_mode
 
-Sets or returns the drawing mode, depending on how it is called.
+   Sets or returns the drawing mode, depending on how it is called.
 
 ```perl
 my $draw_mode = $fb->draw_mode(); # Returns the current
@@ -546,7 +546,7 @@ $fb->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
 
 ## normal\_mode
 
-This is an alias to draw\_mode(NORMAL\_MODE)
+   This is an alias to draw\_mode(NORMAL\_MODE)
 
 ```perl
 $fb->normal_mode();
@@ -554,7 +554,7 @@ $fb->normal_mode();
 
 ## xor\_mode
 
-This is an alias to draw\_mode(XOR\_MODE)
+   This is an alias to draw\_mode(XOR\_MODE)
 
 ```perl
 $fb->xor_mode();
@@ -562,7 +562,7 @@ $fb->xor_mode();
 
 ## or\_mode
 
-This is an alias to draw\_mode(OR\_MODE)
+   This is an alias to draw\_mode(OR\_MODE)
 
 ```perl
 $fb->or_mode();
@@ -570,7 +570,7 @@ $fb->or_mode();
 
 ## alpha\_mode
 
-This is an alias to draw\_mode(ALPHA\_MODE)
+   This is an alias to draw\_mode(ALPHA\_MODE)
 
 ```perl
 $fb->alpha_mode();
@@ -578,7 +578,7 @@ $fb->alpha_mode();
 
 ## and\_mode
 
-This is an alias to draw\_mode(AND\_MODE)
+   This is an alias to draw\_mode(AND\_MODE)
 
 ```perl
 $fb->and_mode();
@@ -586,7 +586,7 @@ $fb->and_mode();
 
 ## mask\_mode
 
-This is an alias to draw\_mode(MASK\_MODE)
+   This is an alias to draw\_mode(MASK\_MODE)
 
 ```perl
 $fb->mask_mode();
@@ -594,7 +594,7 @@ $fb->mask_mode();
 
 ## unmask\_mode
 
-This is an alias to draw\_mode(UNMASK\_MODE)
+   This is an alias to draw\_mode(UNMASK\_MODE)
 
 ```perl
 $fb->unmask_mode();
@@ -602,7 +602,7 @@ $fb->unmask_mode();
 
 ## add\_mode
 
-This is an alias to draw\_mode(ADD\_MODE)
+   This is an alias to draw\_mode(ADD\_MODE)
 
 ```perl
 $fb->add_mode();
@@ -610,7 +610,7 @@ $fb->add_mode();
 
 ## subtract\_mode
 
-This is an alias to draw\_mode(SUBTRACT\_MODE)
+   This is an alias to draw\_mode(SUBTRACT\_MODE)
 
 ```perl
 $fb->subtract_mode();
@@ -618,7 +618,7 @@ $fb->subtract_mode();
 
 ## multiply\_mode
 
-This is an alias to draw\_mode(MULTIPLY\_MODE)
+   This is an alias to draw\_mode(MULTIPLY\_MODE)
 
 ```perl
 $fb->multiply_mode();
@@ -626,7 +626,7 @@ $fb->multiply_mode();
 
 ## divide\_mode
 
-This is an alias to draw\_mode(DIVIDE\_MODE)
+   This is an alias to draw\_mode(DIVIDE\_MODE)
 
 ```perl
 $fb->divide_mode();
@@ -634,9 +634,9 @@ $fb->divide_mode();
 
 ## clear\_screen
 
-Fills the entire screen with the background color
+   Fills the entire screen with the background color
 
-You can add an optional parameter to turn the console cursor on or off too.
+   You can add an optional parameter to turn the console cursor on or off too.
 
 ```perl
 $fb->clear_screen();      # Leave cursor as is.
@@ -646,11 +646,11 @@ $fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuff
 
 ## cls
 
-This is an alias to 'clear\_screen'
+   This is an alias to 'clear\_screen'
 
 ## attribute\_reset
 
-Resets the plot point at 0,0.  Resets clipping to the current screen size.  Resets the global color to whatever 'FOREGROUND' is set to, and the global background color to whatever 'BACKGROUND' is set to, and resets the drawing mode to NORMAL.
+   Resets the plot point at 0,0.  Resets clipping to the current screen size.  Resets the global color to whatever 'FOREGROUND' is set to, and the global background color to whatever 'BACKGROUND' is set to, and resets the drawing mode to NORMAL.
 
 ```perl
 $fb->attribute_reset();
@@ -658,7 +658,7 @@ $fb->attribute_reset();
 
 ## plot
 
-Set a single pixel in the set foreground color at position x,y with the given pixel size (or default).  Clipping applies.
+   Set a single pixel in the set foreground color at position x,y with the given pixel size (or default).  Clipping applies.
 
 ```perl
 $fb->plot(
@@ -671,15 +671,15 @@ $fb->plot(
 
 ## setpixel
 
-An alias to plot.
+   An alias to plot.
 
 ## set\_pixel
 
-An alias to plot.
+   An alias to plot.
 
 ## pixel
 
-Returns the color of the pixel at coordinate x,y, if it lies within the clipping region.  It returns undefined if outside of the clipping region.
+   Returns the color of the pixel at coordinate x,y, if it lies within the clipping region.  It returns undefined if outside of the clipping region.
 
 ```perl
 my $pixel = $fb->pixel({'x' => 20,'y' => 25});
@@ -698,21 +698,21 @@ $pixel is a hash reference in the form:
 
 ## getpixel
 
-Alias for 'pixel'.
+   Alias for 'pixel'.
 
 ## get\_pixel
 
-Alias for 'pixel'.
+   Alias for 'pixel'.
 
 ## last\_plot
 
-Returns the last plotted position
+   Returns the last plotted position
 
 ```perl
 my $last_plot = $fb->last_plot();
 ```
 
-This returns an anonymous hash reference in the form:
+   This returns an anonymous hash reference in the form:
 
 ```perl
 {
@@ -721,13 +721,13 @@ This returns an anonymous hash reference in the form:
 }
 ```
 
-Or, if you want a simple array returned:
+   Or, if you want a simple array returned:
 
 ```perl
 my ($x,$y) = $fb->last_plot();
 ```
 
-This returns the position as a two element array:
+   This returns the position as a two element array:
 
 ```perl
 ( x position, y position )
@@ -735,7 +735,7 @@ This returns the position as a two element array:
 
 ## line
 
-Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping applies.
+   Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping applies.
 
 ```perl
 $fb->line({
@@ -749,7 +749,7 @@ $fb->line({
 
 ## angle\_line
 
-Draws a line, in the global foreground color, from point x,y at an angle of 'angle', of length 'radius'.  Clipping applies.
+   Draws a line, in the global foreground color, from point x,y at an angle of 'angle', of length 'radius'.  Clipping applies.
 
 ```perl
 $fb->angle_line({
@@ -763,7 +763,7 @@ $fb->angle_line({
 
 ## drawto
 
-Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
+   Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
 
 ```perl
 $fb->drawto({
@@ -773,11 +773,11 @@ $fb->drawto({
 });
 ```
 
-*\* Antialiased lines are not accelerated.*
+   *\* Antialiased lines are not accelerated.*
 
 ## bezier
 
-Draws a Bezier curve, based on a list of control points.
+   Draws a Bezier curve, based on a list of control points.
 
 ```perl
 $fb->bezier(
@@ -803,15 +803,15 @@ $fb->bezier(
 );
 ```
 
-*\* This is not affected by the Acceleration setting.*
+   *\* This is not affected by the Acceleration setting.*
 
 ## cubic\_bezier
 
-*DISCONTINUED, use 'bezier' instead (now just an alias to 'bezier')* *
+   *DISCONTINUED, use 'bezier' instead (now just an alias to 'bezier').*
 
 ## draw\_arc
 
-Draws an arc/pie/poly arc of a circle at point x,y.
+   Draws an arc/pie/poly arc of a circle at point x,y.
 
 ```perl
 # x             = x of center of circle
@@ -851,11 +851,11 @@ $fb->draw_arc({
 });
 ```
 
-*\* Only PIE is affected by the acceleration setting.*
+   *\* Only PIE is affected by the acceleration setting.*
 
 ## arc
 
-Draws an arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
+   Draws an arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
 ```perl
 # x             = x of center of circle
@@ -886,11 +886,11 @@ $fb->arc({
 });
 ```
 
-*\* This is not affected by the Acceleration setting.*
+   *\* This is not affected by the Acceleration setting.*
 
 ## filled\_pie
 
-Draws a filled pie wedge at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
+   Draws a filled pie wedge at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
 ```perl
 # x             = x of center of circle
@@ -937,11 +937,11 @@ $fb->filled_pie({
 });
 ```
 
-*\* This is affected by the Acceleration setting.*
+   *\* This is affected by the Acceleration setting.*
 
 ## poly\_arc
 
-Draws a poly arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
+   Draws a poly arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
 ```perl
 # x             = x of center of circle
@@ -972,11 +972,11 @@ $fb->poly_arc({
 });
 ```
 
-*\* This is not affected by the Acceleration setting.*
+   *\* This is not affected by the Acceleration setting.*
 
 ## ellipse
 
-Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled ellipse or outline is drawn based on the value of $filled.  The optional factor value varies from the default 1 to change the look and nature of the output.
+   Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled ellipse or outline is drawn based on the value of $filled.  The optional factor value varies from the default 1 to change the look and nature of the output.
 
 ```perl
 $fb->ellipse({
@@ -1008,13 +1008,13 @@ $fb->ellipse({
 });
 ```
 
-*\* This is not affected by the Acceleration setting.*
+   *\* This is not affected by the Acceleration setting.*
 
-*\*\* Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
+   *\*\* Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
 
 ## circle
 
-Draws a circle at point x,y, with radius 'radius'.  It can be an outline, solid filled, or gradient filled.  Outlined circles can have any pixel size.
+   Draws a circle at point x,y, with radius 'radius'.  It can be an outline, solid filled, or gradient filled.  Outlined circles can have any pixel size.
 
 ```perl
 $fb->circle({
@@ -1041,13 +1041,13 @@ $fb->circle({
 });
 ```
 
-*\* This is affected by the Acceleration setting.*
+   *\* This is affected by the Acceleration setting.*
 
 ## polygon
 
-Creates a polygon drawn in the foreground color value.  The parameter 'coordinates' is a reference to an array of x,y values.  The last x,y combination is connected automatically with the first to close the polygon.  All x,y values are absolute, not relative.
+   Creates a polygon drawn in the foreground color value.  The parameter 'coordinates' is a reference to an array of x,y values.  The last x,y combination is connected automatically with the first to close the polygon.  All x,y values are absolute, not relative.
 
-It is up to you to make sure the coordinates are "sane".  Weird things can result from twisted or complex filled polygons.
+   It is up to you to make sure the coordinates are "sane".  Weird things can result from twisted or complex filled polygons.
 
 ```perl
 $fb->polygon({
@@ -1080,11 +1080,11 @@ $fb->polygon({
 });
 ```
 
-*\* Filled polygons are affected by the acceleration setting.*
+   *\* Filled polygons are affected by the acceleration setting.*
 
 ## box
 
-Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 0, or as a filled block, if 'filled' is 1.  You may also add a gradient or texture.
+   Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 0, or as a filled block, if 'filled' is 1.  You may also add a gradient or texture.
 
 ```perl
 $fb->box({
@@ -1118,7 +1118,7 @@ $fb->box({
 
 ## rbox
 
-Draws a box at point x,y with the width 'width' and height 'height'.  It draws a frame if 'filled' is 0 or a filled box if 'filled' is 1. Filled boxes draw faster than frames. Gradients or textures are also allowed.
+   Draws a box at point x,y with the width 'width' and height 'height'.  It draws a frame if 'filled' is 0 or a filled box if 'filled' is 1. Filled boxes draw faster than frames. Gradients or textures are also allowed.
 
 ```perl
 $fb->rbox({
@@ -1152,13 +1152,13 @@ $fb->rbox({
 
 ## rounded\_box
 
-This is an alias to rbox
+   This is an alias to rbox
 
 ## set\_color
 
-Sets the drawing color in red, green, and blue, absolute 8 bit values.
+   Sets the drawing color in red, green, and blue, absolute 8 bit values.
 
-Even if you are in 16 bit color mode, use 8 bit values.  They will be automatically scaled.
+   Even if you are in 16 bit color mode, use 8 bit values.  They will be automatically scaled.
 
 ```perl
 $fb->set_color({
@@ -1171,17 +1171,17 @@ $fb->set_color({
 
 ## setcolor
 
-This is an alias to 'set\_color'
+   This is an alias to 'set\_color'
 
 ## set\_foreground\_color
 
-This is an alias to 'set\_color'
+   This is an alias to 'set\_color'
 
 ## set\_b\_color
 
-Sets the background color in red, green, and blue values.
+   Sets the background color in red, green, and blue values.
 
-The same rules as set\_color apply.
+   The same rules as set\_color apply.
 
 ```perl
 $fb->set_b_color({
@@ -1194,27 +1194,27 @@ $fb->set_b_color({
 
 ## setbcolor
 
-This is an alias to 'set\_b\_color'
+   This is an alias to 'set\_b\_color'
 
 ## set\_background\_color
 
-This is an alias to 'set\_b\_color'
+   This is an alias to 'set\_b\_color'
 
 ## fill
 
-Does a flood fill starting at point x,y.  It samples the color at that point and determines that color to be the "background" color, and proceeds to fill in, with the current foreground color, until the "background" color is replaced with the new color.
+   Does a flood fill starting at point x,y.  It samples the color at that point and determines that color to be the "background" color, and proceeds to fill in, with the current foreground color, until the "background" color is replaced with the new color.
 
-NOTE:  The accelerated version of this routine may (and it is a small may) have issues.  If you find any issues, then temporarily turn off C-acceleration when calling this method.
+   *NOTE:  The accelerated version of this routine may (and it is a small may) have issues.  If you find any issues, then temporarily turn off C-acceleration when calling this method.*
 
 ```perl
 $fb->fill({'x' => 334, 'y' => 23});
 ```
 
-*\* This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
+   *\* This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
 
 ## replace\_color
 
-This replaces one color with another inside the clipping region.  Sort of like a fill without boundary checking.
+   This replaces one color with another inside the clipping region.  Sort of like a fill without boundary checking.
 
 ```perl
 $fb->replace_color({
@@ -1244,11 +1244,11 @@ $fb->replace_color({
 # Encoded color strings are 4 bytes wide for 32 bit, 3 bytes for 24 bit and 2 bytes for 16 bit color.
 ```
 
-*\* This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
+   *\* This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
 
 ## blit\_copy
 
-Copies a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It copies in the current drawing mode.
+   Copies a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It copies in the current drawing mode.
 
 ```perl
 $fb->blit_copy({
@@ -1263,9 +1263,9 @@ $fb->blit_copy({
 
 ## blit\_move
 
-Moves a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It moves in the current drawing mode.  It differs from "blit\_copy" in that it removes the graphic from the original location (via XOR).
+   Moves a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It moves in the current drawing mode.  It differs from "blit\_copy" in that it removes the graphic from the original location (via XOR).
 
-It also returns the data moved like "blit\_read"
+   It also returns the data moved like "blit\_read"
 
 ```perl
 $fb->blit_move({
@@ -1281,7 +1281,7 @@ $fb->blit_move({
 
 ## play\_animation
 
-Plays an animation sequence loaded from "load\_image"
+   Plays an animation sequence loaded from "load\_image"
 
 ```perl
 my $animation = $fb->load_image(
@@ -1294,19 +1294,19 @@ my $animation = $fb->load_image(
 $fb->play_animation($animation,$rate_multiplier);
 ```
 
-The animation is played at the speed described by the file's metadata multiplied by "rate\_multiplier".
+   The animation is played at the speed described by the file's metadata multiplied by "rate\_multiplier".
 
-You need to enclose this in a loop if you wish it to play more than once.
+   You need to enclose this in a loop if you wish it to play more than once.
 
 ## acceleration
 
-Enables/Disables all Imager or C language acceleration.
+   Enables/Disables all Imager or C language acceleration.
 
-GFB uses the Imager library to do some drawing.  In some cases, these may not function as they should on some systems.  This method allows you to toggle this acceleration on or off.
+   GFB uses the Imager library to do some drawing.  In some cases, these may not function as they should on some systems.  This method allows you to toggle this acceleration on or off.
 
-When acceleration is off, the underlying (slower) Perl algorithms are used.  It is advisable to leave acceleration on for those methods which it functions correctly, and only shut it off when calling the problem ones.
+   When acceleration is off, the underlying (slower) Perl algorithms are used.  It is advisable to leave acceleration on for those methods which it functions correctly, and only shut it off when calling the problem ones.
 
-When called without parameters, it returns the current setting.
+   When called without parameters, it returns the current setting.
 
 ```perl
 $fb->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
@@ -1323,27 +1323,27 @@ my $accel = $fb->acceleration('english'); # Get current acceleration state in an
                                           # "HARDWARE" = HARDWARE = 2
 ```
 
-*\* The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
+   *\* The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
 
 ## perl
 
-This is an alias to "acceleration(PERL)"
+   This is an alias to "acceleration(PERL)"
 
 ## software
 
-This is an alias to "acceleration(SOFTWARE)"
+   This is an alias to "acceleration(SOFTWARE)"
 
 ## hardware
 
-This is an alias to "acceleration(HARDWARE)"
+   This is an alias to "acceleration(HARDWARE)"
 
-*Hardware acceleration is not implemented.*
+   *Hardware acceleration is not implemented.*
 
 ## blit\_read
 
-Reads in a square portion of screen data at x,y,width,height, and returns a hash reference with information about the block, including the raw data as a string, ready to be used with 'blit\_write'.
+   Reads in a square portion of screen data at x,y,width,height, and returns a hash reference with information about the block, including the raw data as a string, ready to be used with 'blit\_write'.
 
-Passing no parameters automatically grabs the clipping region (the whole screen if clipping is off).
+   Passing no parameters automatically grabs the clipping region (the whole screen if clipping is off).
 
 ```perl
 my $blit_data = $fb->blit_read({
@@ -1354,7 +1354,7 @@ my $blit_data = $fb->blit_read({
 });
 ```
 
-Returns:
+   Returns:
 
 ```perl
 {
@@ -1366,13 +1366,13 @@ Returns:
 }
 ```
 
-All you have to do is change X and Y, and just pass it to "blit\_write" and it will paste it there.
+   All you have to do is change X and Y, and just pass it to "blit\_write" and it will paste it there.
 
 ## blit\_write
 
-Writes a previously read block of screen data at x,y,width,height.
+   Writes a previously read block of screen data at x,y,width,height.
 
-It takes a hash reference.  It draws in the current drawing mode.
+   It takes a hash reference.  It draws in the current drawing mode.
 
 ```perl
 $fb->blit_write({
@@ -1386,33 +1386,33 @@ $fb->blit_write({
 
 ## blit\_transform
 
-This performs transformations on your blit objects.
+   This performs transformations on your blit objects.
 
-You can only have one of "rotate", "scale", "merge", "flip", or make "monochrome".  You may use only one transformation per call.
+   You can only have one of "rotate", "scale", "merge", "flip", or make "monochrome".  You may use only one transformation per call.
 
 * **blit\_data** (mandatory)
 
-Used by all transformations.  It's the image data to process, in the format that "blit\_write" uses.  See the example below.
+   Used by all transformations.  It's the image data to process, in the format that "blit\_write" uses.  See the example below.
 
 * **flip**
 
-Flips the image either "horizontally, "vertically, or "both"
+   Flips the image either "horizontally, "vertically, or "both"
 
 * **merge**
 
-Merges one image on top of the other.  "blit\_data" is the top image, and "dest\_blit\_data" is the background image.  This takes into account alpha data values for each pixel (if in 32 bit mode).
+   Merges one image on top of the other.  "blit\_data" is the top image, and "dest\_blit\_data" is the background image.  This takes into account alpha data values for each pixel (if in 32 bit mode).
 
-This is very usefull in 32 bit mode due to its alpha channel capabilities.
+   This is very usefull in 32 bit mode due to its alpha channel capabilities.
 
 * **rotate**
 
-Rotates the "blit\_data" image an arbitrary degree.  Positive degree values are counterclockwise and negative degree values are clockwise.
+   Rotates the "blit\_data" image an arbitrary degree.  Positive degree values are counterclockwise and negative degree values are clockwise.
 
-Two types of rotate methods are available, an extrememly fast, but visually slightly less appealing method, and a slower, but looks better, method.  Seriously though, the fast method looks pretty darn good anyway.  I recommend "fast".
+   Two types of rotate methods are available, an extrememly fast, but visually slightly less appealing method, and a slower, but looks better, method.  Seriously though, the fast method looks pretty darn good anyway.  I recommend "fast".
 
 * **scale**
 
-Scales the image to "width" x "height".  This is the same as how scale works in "load\_image".  The "type" value tells it how to scale (see the example).
+   Scales the image to "width" x "height".  This is the same as how scale works in "load\_image".  The "type" value tells it how to scale (see the example).
 
 ```perl
 $fb->blit_transform(
@@ -1462,7 +1462,7 @@ $fb->blit_transform(
 );
 ```
 
-It returns the transformed image in the same format the other BLIT methods use.  Note, the width and height may be changed!  So always use the returned data as the correct new data.
+   It returns the transformed image in the same format the other BLIT methods use.  Note, the width and height may be changed!  So always use the returned data as the correct new data.
 
 ```perl
 {
@@ -1474,11 +1474,11 @@ It returns the transformed image in the same format the other BLIT methods use. 
 }
 ```
 
-*\* Rotate and Flip are affected by the acceleration setting.*
+   *\* Rotate and Flip are affected by the acceleration setting.*
 
 ## clip\_reset
 
-Turns off clipping, and resets the clipping values to the full size of the screen.
+   Turns off clipping, and resets the clipping values to the full size of the screen.
 
 ```perl
 $fb->clip_reset();
@@ -1486,11 +1486,11 @@ $fb->clip_reset();
 
 ## clip\_off
 
-This is an alias to 'clip\_reset'
+   This is an alias to 'clip\_reset'
 
 ## clip\_set
 
-Sets the clipping rectangle starting at the top left point x,y and ending at bottom right point xx,yy.
+   Sets the clipping rectangle starting at the top left point x,y and ending at bottom right point xx,yy.
 
 ```perl
 $fb->clip_set({
@@ -1503,7 +1503,7 @@ $fb->clip_set({
 
 ## clip\_rset
 
-Sets the clipping rectangle to point x,y,width,height
+   Sets the clipping rectangle to point x,y,width,height
 
 ```perl
 $fb->clip_rset({
@@ -1516,13 +1516,13 @@ $fb->clip_rset({
 
 ## monochrome
 
-Removes all color information from an image, and leaves everything in greyscale.
+   Removes all color information from an image, and leaves everything in greyscale.
 
-It applies the following formula to calculate greyscale:
+   It applies the following formula to calculate greyscale:
 
-* grey_color = (red * 0.2126) + (green * 0.7155) + (blue * 0.0722)
+   * grey_color = (red * 0.2126) + (green * 0.7155) + (blue * 0.0722)
 
-Expects two parameters, 'image' and 'bits'.  The parameter 'image' is a string containing the image data.  The parameter 'bits' is how many bits per pixel make up the image.  Valid values are 16, 24, and 32 only.
+   Expects two parameters, 'image' and 'bits'.  The parameter 'image' is a string containing the image data.  The parameter 'bits' is how many bits per pixel make up the image.  Valid values are 16, 24, and 32 only.
 
 ```perl
 $fb->monochrome({
@@ -1531,7 +1531,7 @@ $fb->monochrome({
 });
 ```
 
-It returns 'image' back, but now in greyscale (still the same RGB format though).
+   It returns 'image' back, but now in greyscale (still the same RGB format though).
 
 ```perl
 {
@@ -1539,19 +1539,19 @@ It returns 'image' back, but now in greyscale (still the same RGB format though)
 }
 ```
 
-*\* You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
+   *\* You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
 
 ## ttf\_print
 
-Prints TrueType text on the screen at point x,y in the rectangle width,height, using the color 'color', and the face 'face' (using the Imager library as its engine).
+   Prints TrueType text on the screen at point x,y in the rectangle width,height, using the color 'color', and the face 'face' (using the Imager library as its engine).
 
-*Note, 'y' is the baseline position, not the top left of the bounding box.  This is a change from before!!!*
+   *Note, 'y' is the baseline position, not the top left of the bounding box.*
 
-This is best called twice, first in bounding box mode, and then in normal mode.
+   This is best called twice, first in bounding box mode, and then in normal mode.
 
-Bounding box mode gets the actual values needed to display the text.
+   Bounding box mode gets the actual values needed to display the text.
 
-If draw mode is "normal", then mask mode is automatically used for best output.
+   If draw mode is "normal", then mask mode is automatically used for best output.
 
 ```perl
 my $bounding_box = $fb->ttf_print({
@@ -1571,7 +1571,7 @@ my $bounding_box = $fb->ttf_print({
 $fb->ttf_print($bounding_box);
 ```
 
-Here's a shortcut:
+   Here's a shortcut:
 
 ```perl
 $fb->ttf_print(
@@ -1592,19 +1592,19 @@ $fb->ttf_print(
 );
 ```
 
-*\* Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
+   *\* Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
 
 ## ttf\_paragraph
 
-Very similar to an ordinary Perl "print", but uses TTF fonts instead.  It will automatically wrap text like a terminal.
+   Very similar to an ordinary Perl "print", but uses TTF fonts instead.  It will automatically wrap text like a terminal.
 
-This uses no bounding boxes, and is only needed to be called once.  It uses a very simple wrapping model.
+   This uses no bounding boxes, and is only needed to be called once.  It uses a very simple wrapping model.
 
-It uses the clipping rectangle.  All text will be fit and wrapped within the clipping rectangle.
+   It uses the clipping rectangle.  All text will be fit and wrapped within the clipping rectangle.
 
-Text is started at "x" and wrapped to "x" for each line, no indentation.
+   Text is started at "x" and wrapped to "x" for each line, no indentation.
 
-*\* This does _NOT_ scroll text.  It merely truncates what doesn't fit.  It returns where in the text string it last printed before truncation.  It's also quite slow.*
+   *\* This does _NOT_ scroll text.  It merely truncates what doesn't fit.  It returns where in the text string it last printed before truncation.  It's also quite slow.*
 
 ```perl
 $fb->ttf_paragraph(
@@ -1636,7 +1636,7 @@ $fb->ttf_paragraph(
 
 ## get\_face\_name
 
-Returns the TrueType face name based on the parameters passed.
+   Returns the TrueType face name based on the parameters passed.
 
 ```perl
 my $face_name = $fb->get_face_name({
@@ -1647,11 +1647,11 @@ my $face_name = $fb->get_face_name({
 
 ## load\_image
 
-Loads an image at point x,y\[,width,height\].  To display it, pass it to blit\_write.
+   Loads an image at point x,y\[,width,height\].  To display it, pass it to blit\_write.
 
-If you give centering options, the position to display the image is part of what is returned, and is ready for blitting.
+   If you give centering options, the position to display the image is part of what is returned, and is ready for blitting.
 
-If 'width' and/or 'height' is given, the image is resized.  Note, resizing is CPU intensive.  Nevertheless, this is done by the Imager library (compiled C) so it is relatively fast.
+   If 'width' and/or 'height' is given, the image is resized.  Note, resizing is CPU intensive.  Nevertheless, this is done by the Imager library (compiled C) so it is relatively fast.
 
 ```perl
 $fb->blit_write(
@@ -1737,7 +1737,7 @@ If a single image is loaded, it returns a reference to an anonymous hash, of the
 }
 ```
 
-If the image has multiple frames, then a reference to an array of hashes is returned:
+   If the image has multiple frames, then a reference to an array of hashes is returned:
 
 ```perl
 # NOTE:  X and Y positions can change frame to frame, so use them for each
@@ -1769,7 +1769,7 @@ If the image has multiple frames, then a reference to an array of hashes is retu
 
 ## screen\_dump
 
-Dumps the screen to a file given in 'file' in the format given in 'format'
+   Dumps the screen to a file given in 'file' in the format given in 'format'
 
 Formats can be (they are case-insensitive):
 
@@ -1816,7 +1816,7 @@ $fb->screen_dump(
 
 ## RGB565\_to\_RGB888
 
-Convert a 16 bit color value to a 24 bit color value.  This requires the color to be a two byte packed string.
+   Convert a 16 bit color value to a 24 bit color value.  This requires the color to be a two byte packed string.
 
 ```perl
 my $color24 = $fb->RGB565_to_RGB888(
@@ -1828,7 +1828,7 @@ my $color24 = $fb->RGB565_to_RGB888(
 
 ## RGB565\_to\_RGB8888
 
-Convert a 16 bit color value to a 32 bit color value.  This requires the color to be a two byte packed string.  The alpha value is either a value passed in or the default 255.
+   Convert a 16 bit color value to a 32 bit color value.  This requires the color to be a two byte packed string.  The alpha value is either a value passed in or the default 255.
 
 ```perl
 my $color32 = $fb->RGB565_to_RGB8888(
@@ -1841,7 +1841,7 @@ my $color32 = $fb->RGB565_to_RGB8888(
 
 ## RGB888\_to\_RGB565
 
-Convert 24 bit color value to a 16 bit color value.  This requires a three byte packed string.
+   Convert 24 bit color value to a 16 bit color value.  This requires a three byte packed string.
 
 ```perl
 my $color16 = $fb->RGB888_to_RGB565(
@@ -1851,11 +1851,11 @@ my $color16 = $fb->RGB888_to_RGB565(
 );
 ```
 
-This simply does a bitshift, nothing more.
+   This simply does a bitshift, nothing more.
 
 ## RGBA8888\_to\_RGB565
 
-Convert 32 bit color value to a 16 bit color value.  This requires a four byte packed string.
+   Convert 32 bit color value to a 16 bit color value.  This requires a four byte packed string.
 
 ```perl
 my $color16 = $fb->RGB8888_to_RGB565(
@@ -1865,11 +1865,11 @@ my $color16 = $fb->RGB8888_to_RGB565(
 );
 ```
 
-This simply does a bitshift, nothing more
+   This simply does a bitshift, nothing more
 
 ## RGB888\_to\_RGBA8888
 
-Convert 24 bit color value to a 32 bit color value.  This requires a three byte packed string.  The alpha value is either a value passed in or the default 255.
+   Convert 24 bit color value to a 32 bit color value.  This requires a three byte packed string.  The alpha value is either a value passed in or the default 255.
 
 ```perl
 my $color32 = $fb->RGB888_to_RGBA8888(
@@ -1880,11 +1880,11 @@ my $color32 = $fb->RGB888_to_RGBA8888(
 );
 ```
 
-This just simply adds an alpha value.  No actual color conversion is done.
+   This just simply adds an alpha value.  No actual color conversion is done.
 
 ## RGBA8888\_to\_RGB888
 
-Convert 32 bit color value to a 24 bit color value.  This requires a four byte packed string.
+   Convert 32 bit color value to a 24 bit color value.  This requires a four byte packed string.
 
 ```perl
 my $color24 = $fb->RGBA8888_to_RGB888(
@@ -1894,19 +1894,19 @@ my $color24 = $fb->RGBA8888_to_RGB888(
 );
 ```
 
-This just removes the alpha value.  No color conversion is actually done.
+   This just removes the alpha value.  No color conversion is actually done.
 
 ## vsync
 
-Waits for vertical sync
+   Waits for vertical sync
 
-Waits for the vertical blank before returning
+   Waits for the vertical blank before returning
 
-*\* Not all framebuffer drivers have this capability and ignore this call.  Results may vary, as this cannot be emulated.  The only way to know is to just test it.*
+   *\* Not all framebuffer drivers have this capability and ignore this call.  Results may vary, as this cannot be emulated.  The only way to know is to just test it.*
 
 ## which\_console
 
-Returns the active console and the expected console
+   Returns the active console and the expected console
 
 ```perl
 my ($active_console, $expected_console) = $fb->which_console();
@@ -1914,7 +1914,7 @@ my ($active_console, $expected_console) = $fb->which_console();
 
 ## active\_console
 
-Indicates if the current console is the expected console.  It returns true or false.
+   Indicates if the current console is the expected console.  It returns true or false.
 
 ```perl
 if ($self->active_console()) {
@@ -1924,23 +1924,23 @@ if ($self->active_console()) {
 
 ## wait\_for\_console
 
-Blocks actions until the expected console is active.  The expected console is determined at the time the module is initialized.
+   Blocks actions until the expected console is active.  The expected console is determined at the time the module is initialized.
 
-Due to speed considerations, YOU must do use this to do blocking, if desired.  If you expect to be changing active consoles, then you will need to use this.  However, if you do not plan to do ever change consoles when running this module, then don't use this feature, as your results will be faster.
+   Due to speed considerations, YOU must do use this to do blocking, if desired.  If you expect to be changing active consoles, then you will need to use this.  However, if you do not plan to do ever change consoles when running this module, then don't use this feature, as your results will be faster.
 
-If a TRUE or FALSE is passed to this, then you can enable or disable blocking for subsequent calls.
+   If a TRUE or FALSE is passed to this, then you can enable or disable blocking for subsequent calls.
 
 ## initialize\_mouse
 
-Turns on/off the mouse handler.
+   Turns on/off the mouse handler.
 
-Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.
+   *\* Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
 
 ```perl
 # $fb->initialize\_mouse(1);  # Turn on the mouse handler
 ```
 
-or
+   or
 
 ```perl
 $fb->initialize\_mouse(0);  # Turn off the mouse handler
@@ -1948,29 +1948,29 @@ $fb->initialize\_mouse(0);  # Turn off the mouse handler
 
 ## poll\_mouse
 
-The mouse handler.  The "initialize\_mouse" routine sets this as the "alarm" routine to handle mouse events.
+   The mouse handler.  The "initialize\_mouse" routine sets this as the "alarm" routine to handle mouse events.
 
-An alarm handler just works, but can possibly block if used as ... an alarm handler.
+   An alarm handler just works, but can possibly block if used as ... an alarm handler.
 
-I suggest running it in a thread instead, using your own code.
+   I suggest running it in a thread instead, using your own code.
 
 ## get\_mouse
 
-Returns the mouse coordinates.
+   Returns the mouse coordinates.
 
-Return as an array:
+   Return as an array:
 
 ```perl
 my ($mouseb, $mousex, $mousey) =  $fb->get_mouse();
 ```
 
-Return as a hash reference:
+   Return as a hash reference:
 
 ```perl
 my $mouse = $fb->get_mouse();
 ```
 
-Returns
+   Returns
 
 ```perl
 {
@@ -1985,7 +1985,7 @@ Returns
 
 ## set\_mouse
 
-Sets the mouse position
+   Sets the mouse position
 
 ```perl
 $fb->set_mouse(
@@ -1996,103 +1996,103 @@ $fb->set_mouse(
 );
 ```
 
-*\* NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
+   *\* NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
 
 # USAGE HINTS
 
 ## GRADIENTS
 
-Gradients can have any number (actually 2 or greater) of color key points (transitions).  Vertical gradients cannot have more key points than the object is high.  Horizontal gradients cannot have more key points that the object is wide.  Just keep your gradients "sane" and things will go just fine.
+   Gradients can have any number (actually 2 or greater) of color key points (transitions).  Vertical gradients cannot have more key points than the object is high.  Horizontal gradients cannot have more key points that the object is wide.  Just keep your gradients "sane" and things will go just fine.
 
-Make sure the number of color key points matches for each primary color (red, green, and blue);
+   Make sure the number of color key points matches for each primary color (red, green, and blue);
 
 ## PERL OPTIMIZATION
 
-This module is highly CPU dependent.  So the more optimized your Perl installation is, the faster it will run.
+   This module is highly CPU dependent.  So the more optimized your Perl installation is, the faster it will run.
 
 ## THREADS
 
-The module (using the 'threads' module) canNOT have separate threads calling the same object.  You WILL crash. However, you can instantiate an object for each thread to use on the same framebuffer, and it will work just fine.
+   The module (using the 'threads' module) canNOT have separate threads calling the same object.  You WILL crash. However, you can instantiate an object for each thread to use on the same framebuffer, and it will work just fine.
 
-See the "examples/multiprocessing" directory for "threads\_primitives.pl" as an example of a threading script that uses this module.
+   See the "examples/multiprocessing" directory for "threads\_primitives.pl" as an example of a threading script that uses this module.
 
 ## FORKS
 
-For unthreaded Perl, Install the modules **forks** and **forks::shared** and you will have the same features as **threads** and **threads::shared** (and perhaps better performance for unthreaded perls).
+   For unthreaded Perl, Install the modules **forks** and **forks::shared** and you will have the same features as **threads** and **threads::shared** (and perhaps better performance for unthreaded perls).
 
 ## MCE
 
-Mario Roy has tested **Graphics::Framebuffer** with various methods to use the **MCE** modules for multiprocessing, and creating a single shared library.  See the "README" file for more.  I highly recommend this for multiprocessing, as it should save on memory.
+   Mario Roy has tested **Graphics::Framebuffer** with various methods to use the **MCE** modules for multiprocessing, and creating a single shared library.  See the "README" file for more.  I highly recommend this for multiprocessing, as it should save on memory.
 
 ## BLITTING
 
-Use "blit\_read" and "blit\_write" to save portions of the screen instead of redrawing everything.  It will speed up response tremendously.
+   Use "blit\_read" and "blit\_write" to save portions of the screen instead of redrawing everything.  It will speed up response tremendously.
 
 ## SPRITES
 
-Someone asked me about sprites.  Well, that's what blitting is for.  You'll have to do your own collision detection.  Use **MASK\_MODE** and **UNMASK\_MODE** for drawing, and **XOR\_MODE** for removing.
+   Someone asked me about sprites.  Well, that's what blitting is for.  You'll have to do your own collision detection.  Use **MASK\_MODE** and **UNMASK\_MODE** for drawing, and **XOR\_MODE** for removing.
 
-Most framebuffer drivers do not have access to GPU features.  It's just a memory map of the framebuffer.
+   Most framebuffer drivers do not have access to GPU features.  It's just a memory map of the framebuffer.
 
-Listen folks, this library does everything in software, so your results will vary depending on CPU speed and screen resolution, as well as blit resolution.
+   Listen folks, this library does everything in software (as is typical for the framebuffer), so your results will vary depending on CPU speed and screen resolution, as well as blit resolution.
 
 ## HORIZONTAL "MAGIC"
 
-Horizontal lines and filled boxes draw very fast, even in Perl mode, seriously.  Learn to exploit them.
+   Horizontal lines and filled boxes draw very fast, even in Perl mode, seriously.  Learn to exploit them.
 
 ## PIXEL SIZE
 
-Pixel sizes over 1 utilize a filled "box" or "circle" (negative numbers for circle) to do the drawing.  This is why the larger the "pixel", the slower the draw.
+   Pixel sizes over 1 utilize a filled "box" or "circle" (negative numbers for circle) to do the drawing.  This is why the larger the "pixel", the slower the draw.
 
 ## MULTIPLE "HEADS" (monitors)
 
-As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
+   As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
 
 ## MAKING WINDOWS
 
-So, you want to be able to manage some sort of windows...
+   So, you want to be able to manage some sort of windows...
 
-You just instantiate a new instance of the module per "Window" and give it its own clipping region.  This region is your drawing space for your window.
+   You just instantiate a new instance of the module per "Window" and give it its own clipping region.  This region is your drawing space for your window.
 
-It is up to you to actually decorate (draw) the windows.
+   It is up to you to actually decorate (draw) the windows.
 
-Nothing is preventing you from writing your own window handler, although I recommend just using X-Windows (and a different module) for that anyway.
+   Nothing is preventing you from writing your own window handler, although I recommend just using X-Windows (and a different module) for that anyway.
 
 ## RUNNING IN MICROSOFT WINDOWS
 
-It doesn't work natively, (other than in emulation mode) and likely never will.  However...
+   It doesn't work natively, (other than in emulation mode) and likely never will.  However...
 
-You can run Linux inside VirtualBox and it works fine.  Put it in full screen mode, and voila, it's "running in Windows" in an indirect kinda-sorta way.  Make sure you install the VirtualBox extensions, as it has the correct video driver for framebuffer access.  It's as close as you'll ever get to get it running in MS Windows.  Seriously...
+   You can run Linux inside VirtualBox and it works fine.  Put it in full screen mode, and voila, it's "running in Windows" in an indirect kinda-sorta way.  Make sure you install the VirtualBox extensions, as it has the correct video driver for framebuffer access.  It's as close as you'll ever get to get it running in MS Windows.  Seriously...
 
-This isn't a design choice, nor preference, nor some anti-Windows ego trip.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
+   This isn't a design choice, nor preference, nor some anti-Windows ego trip.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
 
-*\* However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.*
+   *\* However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.*
 
 # TROUBLESHOOTING
 
-Ok, you've installed the module, but can't seem to get it to work properly.  Here  are some things you can try:
+   Ok, you've installed the module, but can't seem to get it to work properly.  Here  are some things you can try:
 
-*\* make sure you turn on the **SHOW\_ERRORS** parameter when calling **new** to create the object.  This helps with troubleshooting (but turn it back off for normal use).*
+   *\* make sure you turn on the **SHOW\_ERRORS** parameter when calling **new** to create the object.  This helps with troubleshooting (but turn it back off for normal use).*
 
-- **You Have To Run From The Console**
+   - **You Have To Run From The Console**
 
-    A console window doesn't count as "the console".  You cannot use this module from within X-Windows/Wayland.  It won't work, and likely will only go into emulation mode if you do, or maybe crash, or even corrupt your X-Windows/Wayland screen.
+       A console window doesn't count as "the console".  You cannot use this module from within X-Windows/Wayland.  It won't work, and likely will only go into emulation mode if you do, or maybe crash, or even corrupt your X-Windows/Wayland screen.
 
-    If you want to run your program within X-Windows/Wayland, then you have the wrong module.  Use SDL, QT, or GTK or something similar.
+       If you want to run your program within X-Windows/Wayland, then you have the wrong module.  Use SDL, QT, or GTK or something similar.
 
-    You MUST have a framebuffer based video driver for this to work.  The device ("/dev/fb0" for example) must exist.
+       You MUST have a framebuffer based video driver for this to work.  The device ("/dev/fb0" for example) must exist.
 
-    If it does exist, but is not "/dev/fb0", then you can define it in the **new** method with the **FB\_DEVICE** parameter, although the module is pretty good at finding it automatically.
+       If it does exist, but is not "/dev/fb0", then you can define it in the **new** method with the **FB\_DEVICE** parameter, although the module is pretty good at finding it automatically.
 
-    *\* It may be possible to get a framebuffer device with a proprietary driver by forcing Grub to go into a VESA VGA mode for the console (worked for me with NVidia).*
+       *\* It may be possible to get a framebuffer device with a proprietary driver by forcing Grub to go into a VESA VGA mode for the console (worked for me with NVidia).*
 
-- **It's Crashing**
+   - **It's Crashing**
 
-    Ok, segfaults suck.  Believe me, I had plenty in the early days of writing this module.  There is hope for you.
+       Ok, segfaults suck.  Believe me, I had plenty in the early days of writing this module.  There is hope for you.
 
-    This is almost always caused by the module incorrectly calculating the framebuffer memory size, and it's guessing too large or small a memory footprint, and the system doesn't like it.
+       This is almost always caused by the module incorrectly calculating the framebuffer memory size, and it's guessing too large or small a memory footprint, and the system doesn't like it.
 
-    Try running the "primitives.pl" in the "examples" directory in the following way (assuming your screen is larger than 640x480):
+       Try running the "primitives.pl" in the "examples" directory in the following way (assuming your screen is larger than 640x480):
 
 ```bash
 perl examples/primitives.pl --x=640 --y=480
@@ -2114,13 +2114,13 @@ $fb->_flush_screen();
 
    Why?  You see, the framebuffer is actually a file.  Therefore, file operations must be used to access it.  File operations are buffered.  Therefore buffers need to be flushed instead of cached for the framebuffer device.  This module actually maps this file to a variable and even more weirdness results.  Normally turning off buffering in Perl is easy, but on rare occasions it can be stubborn.  Therefore, this command was made to force it to flush, if it isn't already.
 
-- **It Just Plain Isn't Working**
+   - **It Just Plain Isn't Working**
 
-   Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous items).
+      Well, either your system doesn't have a framebuffer driver, or perhaps the module is getting confusing data back from it and can't properly initialize (see the previous items).
 
-   First, make sure your system has a framebuffer by seeing if `/dev/fb0` (actually "fb" then any number) exists.  If you don't see any "fb0" - "fb31" files inside "/dev" (or "/dev/fb/"), then you don't have a framebuffer driver running.  You need to fix that first.  Sometimes you have to manually load the driver with "modprobe -a drivername" (replacing "drivername" with the actual driver name).
+      First, make sure your system has a framebuffer by seeing if `/dev/fb0` (actually "fb" then any number) exists.  If you don't see any "fb0" - "fb31" files inside "/dev" (or "/dev/fb/"), then you don't have a framebuffer driver running.  You need to fix that first.  Sometimes you have to manually load the driver with "modprobe -a drivername" (replacing "drivername" with the actual driver name).
 
-   Second, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "**video**" group.  Let's say the account is called "username", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint/RedHat/Fedora) environment you would use this to add "username" (your account name) to the "video" group:
+      Second, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "**video**" group.  Let's say the account is called "username", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint/RedHat/Fedora) environment you would use this to add "username" (your account name) to the "video" group:
 
 ```bash
 sudo usermod -a -G video username
@@ -2128,41 +2128,41 @@ sudo usermod -a -G video username
 
    Once that is run (changing "username" to whatever your username is), log out, then log back in, and it should work.
 
-- **The Text Cursor Is Messing Things Up**
+   - **The Text Cursor Is Messing Things Up**
 
-   It is?  Well then turn it off.  Use the $fb->cls('OFF') method to do it.  Use $fb->cls('ON') to turn it back on.
+      It is?  Well then turn it off.  Use the $fb->cls('OFF') method to do it.  Use $fb->cls('ON') to turn it back on.
 
-   If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
+      If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
 
-   *\* UPDATE:  The new default behavior is to do this for you via the **RESET** parameter when creating the object.  See the **new** method documentation above for more information.*
+      *\* UPDATE:  The new default behavior is to do this for you via the **RESET** parameter when creating the object.  See the **new** method documentation above for more information.*
 
-- **TrueType Printing isn't working**
+   - **TrueType Printing isn't working**
 
-   This is likely caused by the Imager library either being unable to locate the font file, or when it was compiled, it couldn't find the FreeType development libraries, and was thus compiled without TrueType text support.
+      This is likely caused by the Imager library either being unable to locate the font file, or when it was compiled, it couldn't find the FreeType development libraries, and was thus compiled without TrueType text support.
 
-   See the INSTALLATION instructions (above) on getting Imager properly compiled.  If you have a package based Perl installation, then installing the Imager (usually "libimager-perl") package will always work.  If you already installed Imager via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install "libfreetype6-dev" and then re-install Imager via CPAN with a forced install.  If you don't want the package version but still want the CPAN version, then still uninstall what is there, then go an make sure the TrueType and FreeType development libraries are installed on your system, along with PNG, JPEG, and GIF development libraries.  Now you can go to CPAN and install Imager.
+      See the INSTALLATION instructions (above) on getting Imager properly compiled.  If you have a package based Perl installation, then installing the Imager (usually "libimager-perl") package will always work.  If you already installed Imager via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install "libfreetype6-dev" and then re-install Imager via CPAN with a forced install.  If you don't want the package version but still want the CPAN version, then still uninstall what is there, then go an make sure the TrueType and FreeType development libraries are installed on your system, along with PNG, JPEG, and GIF development libraries.  Now you can go to CPAN and install Imager.
 
-- **It's Too Slow**
+   - **It's Too Slow**
 
-   Ok, it does say a PERL graphics library in the description, if I am not mistaken.  This means Perl is doing most of the work.  This also means it is only as fast as your system and its CPU, as it does not use your GPU at all.
+      Ok, it does say a PERL graphics library in the description, if I am not mistaken.  This means Perl is doing most of the work.  This also means it is only as fast as your system and its CPU, as it does not use your GPU at all.
 
-   First, check to make sure the C acceleration routines are compiling properly.  Call the "acceleration" method without parameters.  It SHOULD return 1 and not 0 if C is properly compiling.  If it's not, then you need to make sure "Inline::C" is properly installed in your Perl environment.  _THIS WILL BE THE BIGGEST HELP TO YOU, IF YOU GET THIS SOLVED FIRST_.
+      First, check to make sure the C acceleration routines are compiling properly.  Call the "acceleration" method without parameters.  It SHOULD return 1 and not 0 if C is properly compiling.  If it's not, then you need to make sure "Inline::C" is properly installed in your Perl environment.  _THIS WILL BE THE BIGGEST HELP TO YOU, IF YOU GET THIS SOLVED FIRST_.
 
-   Second, (and this is very advanced) you could try recompiling Perl with optimizations specific to your hardware.  That can help, but this is very advanced and you should know what you are doing before attempting this.  Keep in mind that if you do this, then ALL of the modules installed via your distribution packager won't work, and will have to be reinstalled via CPAN for the new perl.  Try using **perlbrew** to do this simply for you.
+      Second, (and this is very advanced) you could try recompiling Perl with optimizations specific to your hardware.  That can help, but this is very advanced and you should know what you are doing before attempting this.  Keep in mind that if you do this, then ALL of the modules installed via your distribution packager won't work, and will have to be reinstalled via CPAN for the new perl.  Try using **perlbrew** to do this simply for you.
 
-   You can also try simplifying your drawing to exploit the speed of horizontal lines.  Horizonal line drawing is incredibly fast, even for very slow systems.
+      You can also try simplifying your drawing to exploit the speed of horizontal lines.  Horizonal line drawing is incredibly fast, even for very slow systems.
 
-   Only use pixel sizes of 1.  Anything larger requires a box to be drawn at the pixel size you asked for.  Pixel sizes of 1 only use plot to draw, (so no boxes) so it is much faster.
+      Only use pixel sizes of 1.  Anything larger requires a box to be drawn at the pixel size you asked for.  Pixel sizes of 1 only use plot to draw, (so no boxes) so it is much faster.
 
-   Try using 'polygon' to draw complex shapes instead of a series of plot or line commands.
+      Try using 'polygon' to draw complex shapes instead of a series of plot or line commands.
 
-   Does your device have more than one core?  Well, how about using threads (or MCE)?  Just make sure you do it according to the examples in the "examples" directory.  Yes, I know this can be too advanced for the average coder, but the option is there.
+      Does your device have more than one core?  Well, how about using threads (or MCE)?  Just make sure you do it according to the examples in the "examples" directory.  Yes, I know this can be too advanced for the average coder, but the option is there.
 
-   Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heavy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time (and memory).
+      Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heavy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time (and memory).
 
-- **Ask For Help**
+   - **Ask For Help**
 
-   If none of these ideas work, then send me an email, and I may be able to get it functioning for you.  Please run the `dump.pl` script inside the "examples" directory inside this module's package:
+      If none of these ideas work, then send me an email, and I may be able to get it functioning for you.  Please run the `dump.pl` script inside the "examples" directory inside this module's package:
 
 ```bash
 perl dump.pl
@@ -2182,57 +2182,57 @@ perl dump.pl
 
 # AUTHOR
 
-Richard Kelsch <rich@rk-internet.com>
+   Richard Kelsch <rich@rk-internet.com>
 
 # COPYRIGHT
 
-Copyright © 2003-2026 Richard Kelsch, All Rights Reserved.
+   Copyright © 2003-2026 Richard Kelsch, All Rights Reserved.
 
-This program is free software; you can redistribute it and/or modify it under the GNU software license.
+   This program is free software; you can redistribute it and/or modify it under the GNU software license.
 
 # LICENSE
 
-This program is free software; you can redistribute it and/or modify it under the terms of the the Artistic License (2.0). You may obtain a copy of the full license at:
+   This program is free software; you can redistribute it and/or modify it under the terms of the the Artistic License (2.0). You may obtain a copy of the full license at:
 
-[https://perlfoundation.org/artistic-license-20.html](https://perlfoundation.org/artistic-license-20.html)
+   [https://perlfoundation.org/artistic-license-20.html](https://perlfoundation.org/artistic-license-20.html)
 
-Any use, modification, and distribution of the Standard or Modified Versions is governed by this Artistic License. By using, modifying or distributing the Package, you accept this license. Do not use, modify, or distribute the Package, if you do not accept this license.
+   Any use, modification, and distribution of the Standard or Modified Versions is governed by this Artistic License. By using, modifying or distributing the Package, you accept this license. Do not use, modify, or distribute the Package, if you do not accept this license.
 
-If your Modified Version has been derived from a Modified Version made by someone other than you, you are nevertheless required to ensure that your Modified Version complies with the requirements of this license.
+   If your Modified Version has been derived from a Modified Version made by someone other than you, you are nevertheless required to ensure that your Modified Version complies with the requirements of this license.
 
-This license does not grant you the right to use any trademark, service mark, tradename, or logo of the Copyright Holder.
+   This license does not grant you the right to use any trademark, service mark, tradename, or logo of the Copyright Holder.
 
-This license includes the non-exclusive, worldwide, free-of-charge patent license to make, have made, use, offer to sell, sell, import and otherwise transfer the Package with respect to any patent claims licensable by the Copyright Holder that are necessarily infringed by the Package. If you institute patent litigation (including a cross-claim or counterclaim) against any party alleging that the Package constitutes direct or contributory patent infringement, then this Artistic License to you shall terminate on the date that such litigation is filed.
+   This license includes the non-exclusive, worldwide, free-of-charge patent license to make, have made, use, offer to sell, sell, import and otherwise transfer the Package with respect to any patent claims licensable by the Copyright Holder that are necessarily infringed by the Package. If you institute patent litigation (including a cross-claim or counterclaim) against any party alleging that the Package constitutes direct or contributory patent infringement, then this Artistic License to you shall terminate on the date that such litigation is filed.
 
-Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # VERSION
 
-Version 6.94 (Apr 01, 2026)
+   Version 6.94 (Apr 01, 2026)
 
 # THANKS
 
-My thanks go out to those using this module and submitting helpful patches and suggestions for improvement, as well as those who asked for help.  Your requests for help actually gave me ideas.
+   My thanks go out to those using this module and submitting helpful patches and suggestions for improvement, as well as those who asked for help.  Your requests for help actually gave me ideas.
 
-Thank you Mario Roy for showing how to use MCE to multiprocess instead of threads.  Very handy.  Look for the "get\_mce\_demos" in the "examples" directory.  NOTE: I do not support MCE bug issues.
+   Thank you Mario Roy for showing how to use MCE to multiprocess instead of threads.  Very handy.  Look for the "get\_mce\_demos" in the "examples" directory.  NOTE: I do not support MCE bug issues.
 
 # TELL ME ABOUT YOUR PROJECT
 
-I'd love to know if you are using this library in your project.  So send me an email, with pictures and/or a URL (if you have one) showing what it is.  If you have a YouTube video, then that would be cool to see too.
+   I'd love to know if you are using this library in your project.  So send me an email, with pictures and/or a URL (if you have one) showing what it is.  If you have a YouTube video, then that would be cool to see too.
 
-If project has a specific need that the module does not support (or support easy), then suggest a feature to me.
+   If project has a specific need that the module does not support (or support easy), then suggest a feature to me.
 
 # YOUTUBE
 
-There is a YouTube channel with demonstrations of the module's capabilities.  Eventually it will have examples of output from a variety of different types of hardware.
+   There is a YouTube channel with demonstrations of the module's capabilities.  Eventually it will have examples of output from a variety of different types of hardware.
 
-[YouTube Graphics::Framebuffer Channel](https://www.youtube.com/@richardkelsch3640)
+   [YouTube Graphics::Framebuffer Channel](https://www.youtube.com/@richardkelsch3640)
 
 # GITHUB
 
-[GitHub Graphics::Framebuffer](https://github.com/richcsst/Graphics-Framebuffer)
+   [GitHub Graphics::Framebuffer](https://github.com/richcsst/Graphics-Framebuffer)
 
-Clone
+   Clone
 
 ```bash
 git clone https://github.com/richcsst/Graphics-Framebuffer.git
