@@ -1088,27 +1088,27 @@ $fb->box({
     'y'          => 50,
     'xx'         => 70,
     'yy'         => 100,
-    'radius'     => 0, # if rounded, optional
-    'filled'     => 1, # optional
+    'radius'     => 0,                # if rounded, optional
+    'filled'     => 1,                # optional
 
     ## Only one of the following, "filled" must be set
 
-    'gradient'    => {  # optional
-        'direction' => 'horizontal', # or vertical
-        'colors'    => { # 2 to any number of transitions allowed, and all colors must have the same number of transitions
-            'red'   => [255,255,0], # Red to yellow to cyan
+    'gradient'    => {                # optional
+        'direction' => 'horizontal',  # or vertical
+        'colors'    => {              # 2 to any number of transitions allowed, and all colors must have the same number of transitions
+            'red'   => [255,255,0],   # Red to yellow to cyan
             'green' => [0,255,255],
             'blue'  => [0,0,255],
             'alpha' => [255,255,255], # Yes, even alpha transparency can vary
         }
     },
-    'texture'     => { # Same as what blit_read or load_image returns
+    'texture'     => {                # Same as what blit_read or load_image returns
         'width'  => 320,
         'height' => 240,
         'image'  => $raw_image_data
     },
-    'hatch'      => 'hatchname' # The exported array @HATCHES contains
-                                # the names of all the hatches
+    'hatch'      => 'hatchname'       # The exported array @HATCHES contains
+                                      # the names of all the hatches
 });
 ```
 
@@ -1122,27 +1122,27 @@ $fb->rbox({
     'y'          => 100,
     'width'      => 200,
     'height'     => 150,
-    'radius'     => 0, # if rounded, optional
-    'filled'     => 0, # optional
+    'radius'     => 0,               # if rounded, optional
+    'filled'     => 0,               # optional
 
     ## Only one of the following, "filled" must be set
 
     'gradient'    => {  # optional
         'direction' => 'horizontal', # or vertical
-        'colors'    => { # 2 to any number of transitions allowed
-            'red'   => [255,255,0], # Red to yellow to cyan
+        'colors'    => {             # 2 to any number of transitions allowed
+            'red'   => [255,255,0],  # Red to yellow to cyan
             'green' => [0,255,255],
             'blue'  => [0,0,255],
             'alpha' => [255,255,255],
         }
     },
-    'texture'     => { # Same as what blit_read or load_image returns
+    'texture'     => {               # Same as what blit_read or load_image returns
         'width'  => 320,
         'height' => 240,
         'image'  => $raw_image_data
     },
-    'hatch'      => 'hatchname' # The exported array @HATCHES contains
-                                # the names of all the hatches
+    'hatch'      => 'hatchname'      # The exported array @HATCHES contains
+                                     # the names of all the hatches
 });
 ```
 
