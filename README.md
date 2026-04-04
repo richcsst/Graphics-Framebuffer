@@ -122,6 +122,8 @@ You can also look for information at:
 
 * **Mario Roy's Multiprocessing Examples** - [https://github.com/marioroy/mce-examples](https://github.com/marioroy/mce-examples)
 
+* **Manual** - [https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md)
+
 ## LICENSE AND COPYRIGHT
 
 Copyright © 2013-2026 Richard Kelsch
