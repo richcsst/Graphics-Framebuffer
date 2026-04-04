@@ -1,4 +1,4 @@
-# NAME
+# Graphics::Framebuffer Manual
 
 Graphics::Framebuffer - A Simple Framebuffer Graphics Library
 
