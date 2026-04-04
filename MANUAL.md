@@ -82,7 +82,7 @@ Originally everything was done in Perl, and the module's speed was mostly accept
 
 # SPECIAL VARIABLES
 
-The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are ```$fb->{VARIABLE\_NAME}```.
+The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are ```$fb->{VARIABLE_NAME}```.
 
 *\* NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
 
