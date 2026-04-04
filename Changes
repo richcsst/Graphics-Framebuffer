@@ -1,5 +1,12 @@
 Change log for Graphics::Framebuffer
 
+6.95   April 04, 2026
+
+       Implemented a searchable manual in GitHub markdown format.  I suggest
+	   simply reading it online on GitHub, or you can view it with:
+	   
+	       pandoc MANUAL.md | lynx -stdin
+
 6.94   April 01, 2026
 
        So many opportunities for a joke here.  However, these are real.

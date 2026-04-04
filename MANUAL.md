@@ -2208,7 +2208,7 @@ perl dump.pl
 
 # VERSION
 
-   Version 6.94 (Apr 01, 2026)
+   Version 6.95 (Apr 05, 2026)
 
 # THANKS
 
