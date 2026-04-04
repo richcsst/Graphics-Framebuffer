@@ -66,7 +66,7 @@ Make sure you have read/write access to the framebuffer device.  Usually this ju
 
 Read the file "installing/INSTALL" and follow its instructions.
 
-When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux/FreeBSD console outside of X-Windows.
+When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux console outside of X-Windows.
 
 If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows.
 
@@ -74,7 +74,7 @@ If you are in X-Windows, and don't know how to get to a console, then just hit C
 
 How many Perl modules actually tell you how they work?  Well, I will tell you how this one works.
 
-The framebuffer is simply a special file that is mapped to the screen on Unix style systems like Linux or FreeBSD.  How the driver does this can be different.  Some may actually directly map the display memory to this file, and some install a second copy of the display to normal memory and copy it to the display on every vertical blank, usually with a fast DMA transfer.
+The framebuffer is simply a special file that is mapped to the screen on Unix style systems like Linux.  How the driver does this can be different.  Some may actually directly map the display memory to this file, and some install a second copy of the display to normal memory and copy it to the display on every vertical blank, usually with a fast DMA transfer.
 
 This module maps that file to a string, and that ends up making the string exactly the same size as the physical display.  Plotting is simply a matter of calculating where in the string that pixel is and modifying it, via "substr" (never using "=" directly).  It's that simple.
 
@@ -566,10 +566,8 @@ This instantiates the framebuffer object
 
 Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
 
-    Linux
-
-      *  /dev/fb0 - 31
-      *  /dev/graphics/fb0 - 31
+   *  /dev/fb0 - 31
+   *  /dev/graphics/fb0 - 31
 
 If none of these work, then the module goes into emulation mode.
 
