@@ -281,6 +281,8 @@ The following are hash keys to the main object variable.  For example, if you us
 my $fb = Graphics::Framebuffer->new(parameter => value);
 ```
 
+*\* The parameters are usually optional.*
+
 ### PARAMETERS
 
    * **FB\_DEVICE**
