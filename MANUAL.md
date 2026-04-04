@@ -40,11 +40,13 @@ While reading this man page will describe how each method works, looking at the 
 
 A (mostly) Perl graphics library for exclusive use in a Linux console framebuffer environment.  It is written for simplicity, without the need for complex API's and drivers with "surfaces" and such.
 
-Back in the old days, computers drew graphics this way, and it was simple and easy to do.  I was writing a console based media playing program, and was not satisfied with the limited abilities offered by the nCurses library, and I did not want the overhead of the X-Windows environment to get in the way.  My intention was to create a mobile media server.  In case you are wondering, that project has been quite successful, and I am still making improvements to it.  I may even include it in the "examples" directory on future versions.
+Back in the old days, computers drew graphics this way, and it was simple and easy to do.  I was writing a console based media playing program, and was not satisfied with the limited abilities offered by the nCurses library, and I did not want the overhead of the X-Windows environment to get in the way.  My intention was to create a mobile media server.  In case you are wondering, that project has been quite successful, and I am still making improvements to it.  I may even include it in the ```examples``` directory on future versions.
 
-There are places where Perl just won't cut it.  So I use the Imager library to take up the slack, or my own C code.  Imager is just used to load images,, save images, merge, rotate, and draw TrueType/Type1 text.  I am also incorporating compiled C to further assist with speed.  That is being implemented step by step, but "acceleration" will always be optional, and pure Perl routines always available for those systems without a C compiler or "Inline:C" available.
+There are places where Perl just won't cut it.  So I use the **Imager** library to take up the slack, or my own C code.  **Imager** is just used to load images,, save images, merge, rotate, and draw TrueType/Type1 text.  I am also incorporating compiled C to further assist with speed.  That is being implemented step by step, but "acceleration" will always be optional, and pure Perl routines always available for those systems without a C compiler or ```Inline:C``` available.
 
 I cannot guarantee this will work on your video card, but I have successfully tested it on NVidia GeForce, AMD Radeon, Matrox, Raspberry PI, Odroid XU3/XU4, and VirtualBox displays.  However, you MUST remember, your video driver MUST be framebuffer based.  The proprietary Nvidia and AMD drivers (with DRM) will NOT work with this module. You must use the open source video drivers, such as Nouveau, to be able to use this library (with output to see).  Also, it is not going to work from within X-Windows, so don't even try it, it will either crash X, or make a mess on the screen.  This is a console only graphics library.
+
+* \* NVidia or AMD may or may not have support in other versions.  You may have to specifically enable framebuffer support.*
 
 I _highly recommend_ that you use a 32/24 bit graphics mode instead of 16 bit.  Normally one might think that 16 bits are less and should be faster... WRONG.  This module uses the **Imager** module to do complex tasks and this module only works in 32/24 bit modes.  This means in order to do things on a 16 bit framebuffer, GFB must run a conversion to 16 bit on EVERY complex operation, slowing things down.  Also, CPUs today hate 16 bit accessing and prefer 32 bit, hence faster.  If you have no choice but to use 16 bit mode, then now you know it can be slower.
 
@@ -60,7 +62,7 @@ Make sure you have read/write access to the framebuffer device.  Usually this ju
 
 # INSTALLATION
 
-Read the file "installing/INSTALL" and follow its instructions.
+Read the file ```installing/INSTALL``` and follow its instructions.
 
 When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux/FreeBSD console outside of X-Windows.
 
@@ -80,9 +82,9 @@ Originally everything was done in Perl, and the module's speed was mostly accept
 
 # SPECIAL VARIABLES
 
-The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are $fb->{VARIABLE\_NAME}.
+The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are ```$fb->{VARIABLE\_NAME}```.
 
-NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.
+*\* NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
 
 * **FONTS**
 
@@ -333,7 +335,7 @@ A zero value turns it off
 
 * **IGNORE\_X\_WINDOWS**
 
-Bypasses the X-Windows/Wayland check and loads anyway (dangerous).
+Bypasses the **X-Windows/Wayland** check and loads anyway (dangerous).
 Set to 1 to disable X-Windows/Wayland check. Default is 0.
 
 * **FONT\_PATH**
