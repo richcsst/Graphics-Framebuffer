@@ -206,9 +206,9 @@ Draw mode constants
 
 Draw Arc constants
 
-* **ARC**      ( 0 )
+* **ARC**       ( 0 )
 
-* **PIE**      ( 1 )
+* **PIE**       ( 1 )
 
 * **POLY\_ARC** ( 2 )
 
