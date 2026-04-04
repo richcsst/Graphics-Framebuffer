@@ -246,7 +246,7 @@ Acceleration method constants
 
 The following are names you can search to get to the desired method (sorted alphabetically):
 
-- [acceleration](#acceleration), **active\_console**, **add\_mode**, **alpha\_mode**, **and\_mode**, **angle\_line**, **arc**, **attribute\_reset**
+- [acceleration](#acceleration), [active\_console](#active_console), **add\_mode**, **alpha\_mode**, **and\_mode**, **angle\_line**, **arc**, **attribute\_reset**
 - **bezier**, **blit\_copy**, **blit\_mode**, **blit\_read**, **blit\_transform**, **blit\_write**, **box**
 - **circle**, **clear\_screen**, **clip\_off**, **clip\_reset**, **clip\_rset**, **clip\_set**, **cls**
 - **divide\_mode**, **draw\_arc**, **draw\_mode**, **drawto**
