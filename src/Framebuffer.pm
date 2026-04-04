@@ -70,6 +70,16 @@ When you install this module, please do it within a console, not a console windo
 
 If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows.
 
+=head1 MANUAL LOCATION
+
+It is HIGHLY recommended that you read the "MANUAL.md" file instead of the Perl POD in this module.  It is searchable.  You can either read it directly on GitHub:
+
+ L<https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md>
+
+or via the command:
+
+ pandoc MANUAL.md | lynx -stdin
+
 =head1 OPERATIONAL THEORY
 
 How many Perl modules actually tell you how they work?  Well, I will tell you how this one works.
