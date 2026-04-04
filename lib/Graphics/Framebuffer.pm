@@ -21,6 +21,7 @@ Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked
 Drawing is this simple
 
  $fb->cls('OFF'); # Clear screen and turn off the console cursor
+ $fb->graphics_mode();
 
  $fb->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
  $fb->plot({'x' => 28, 'y' => 79});
@@ -30,6 +31,7 @@ Drawing is this simple
  $fb->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
  # ... and many many more
 
+ $fb->text_mode();
  $fb->cls('ON'); # Clear screen and turn on the console cursor
 
 Methods requiring parameters require a hash (or anonymous hash) reference passed to the method (for speed).  All parameters have easy to understand english names, all lower case, to understand exactly what the method is doing.

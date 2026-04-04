@@ -1,4 +1,3 @@
-MANUAL.pod
 AUTHOR.md
 Changes
 examples/dump.pl
@@ -53,7 +52,7 @@ src/Framebuffer.c
 src/Framebuffer.pm
 src/metadata.txt
 src/README.md
-t/01-primitives.t
+t/01-splash.t
 pics/Win-No.png
 pics/Linux.png
 LICENSE
