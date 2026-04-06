@@ -114,6 +114,8 @@ or
 
 You can also look for information at:
 
+* **Manual** - [https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md)
+
 * **MetaCPAN** - [https://metacpan.org/pod/Graphics::Framebuffer](https://metacpan.org/pod/Graphics::Framebuffer)
 
 * **YouTube** - [https://www.youtube.com/channel/UCxhjUfniyPze02GU4sWBJrw](https://www.youtube.com/watch?v=X8RpFBq6F9I)
@@ -123,8 +125,6 @@ You can also look for information at:
 * **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
 
 * **Mario Roy's Multiprocessing Examples** - [https://github.com/marioroy/mce-examples](https://github.com/marioroy/mce-examples)
-
-* **Manual** - [https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md)
 
 ## LICENSE AND COPYRIGHT
 
