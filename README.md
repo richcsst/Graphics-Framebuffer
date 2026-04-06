@@ -18,6 +18,8 @@ This module was developed for Linux and only Linux; not because of some fanatica
 
 This module REQUIRES access to the video framebuffer, usually ```/dev/fb0```.  You must be using a video device and driver that exposes this device to software.  Video cards with their proprietary drivers are not likely to work.  However, most open-sourced drivers, seem to work fine.  VirtualBox drivers work too.  You must also have the appropriate permissions to write to this device (usually membership with group ```video```).
 
+You may be able to edit the kernel configuration forcing a framebuffer, and compile it in or as a module.
+
 Sometimes you can force a VESA framebuffer console driver to be loaded by adding a video mode to the grub command line.  You can do this with some proprietary video drivers that don't have their own framebuffer drivers.
 
 ### ATTENTION CPAN TESTERS!  Please make sure the above is noted before testing (and marking a fail)
