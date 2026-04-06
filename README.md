@@ -114,7 +114,7 @@ or
 
 You can also look for information at:
 
-* **Manual** - [https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md) - A separate indexed manual written in GitHub markdown.  The module POD stil exists, but this is easier to read.
+* **Manual** - [https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md) - A separate indexed manual written in GitHub markdown.  The module POD still exists, but this is easier to read.
 
 * **MetaCPAN** - [https://metacpan.org/pod/Graphics::Framebuffer](https://metacpan.org/pod/Graphics::Framebuffer)
 
