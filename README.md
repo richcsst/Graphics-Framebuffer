@@ -134,6 +134,6 @@ This program is free software; you can redistribute it and/or modify it under th
 
 See [http://dev.perl.org/licenses/](http://dev.perl.org/licenses/) for more information.
 
-## OTHER GITHUB PROJECTS
+## OTHER OF MY GITHUB PROJECTS
 
 * **GitHub** Repositories - [https://github.com/richcsst](https://github.com/richcsst)
