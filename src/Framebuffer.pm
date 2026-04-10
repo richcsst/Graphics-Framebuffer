@@ -390,8 +390,8 @@ use threads ('yield', 'stringify', 'stack_size' => 131076, 'exit' => 'threads_on
 use threads::shared;
 ##THREADS##
 
-use POSIX       ();
 use POSIX       qw(modf);
+use IO::Handle;
 use Time::HiRes qw(sleep time);                                     # The time accuracy has to be milliseconds on many routines
 use Math::Bezier;                                                   # Bezier curve calculations done here.
 use Math::Gradient qw( gradient array_gradient multi_gradient );    # Awesome gradient calculation module
@@ -495,6 +495,7 @@ sub DESTROY {    # Always clean up after yourself before exiting
     unlink('/tmp/output.gif') if (-e '/tmp/output.gif');
     _reset()                  if ($self->{'RESET'});       # Exit by calling 'reset' first
 } ## end sub DESTROY
+#
 
 # use Inline 'info', 'noclean', 'noisy'; # Only needed for debugging
 
@@ -734,7 +735,7 @@ sub new {
         'FFMPEG'  => $FFMPEG,       # Location of FFMPEG binary or undef.
         'OS'      => $os,           # Name of the operating system (helps with dump debugging)
 
-		'LAST_FLUSHED' => time,
+        'LAST_FLUSHED' => time,
 
         # Set up the user defined graphics primitives and attributes default values
         'Imager-Has-TrueType'  => $Imager::formats{'tt'}  || 0,    # If you installed Imager properly, all of these should have valid values.  However, only one is needed for font operation.
@@ -1047,6 +1048,7 @@ sub new {
     if ((!$has_X) && defined($self->{'FB_DEVICE'}) && (-e $self->{'FB_DEVICE'}) && open($self->{'FB'}, '+<', $self->{'FB_DEVICE'})) {    # Can we open the framebuffer device??
         binmode($self->{'FB'});                                                                                                          # We have to be in binary mode first
         select($self->{'FB'});
+		$self->{'FB'}->autoflush(TRUE);
         $| = 1;
         if ($self->{'ACCELERATED'}) {                                                                                                    # Pull in the C structure for the Framebuffer
             (                                                                                                                            # These need to be accurate to give accurate output
@@ -1366,6 +1368,8 @@ to F9.  One of them is set aside for X-Windows/Wayland.
 
         bless($self, $class);
     } ## end else [ if ((!$has_X) && defined...)]
+
+    $self->{'FB'}->autoflush(TRUE);
     $self->{'MIN_BYTES'} = max(3, $self->{'BYTES'});    # Helpful with Imager calls and avoids time wasting calculations
     $self->{'X_FACTOR'}  = 3840 / $self->{'XRES'};
     $self->{'Y_FACTOR'}  = 2160 / $self->{'YRES'};
@@ -1409,6 +1413,7 @@ sub _fix_mapping {    # File::Map SHOULD make this obsolete
         eval { close($self->{'FB'}); };
         open($self->{'FB'}, '+<', $self->{'FB_DEVICE'});
         binmode($self->{'FB'});
+		$self->{'FB'}->autoflush(TRUE);
         $self->_flush_screen();
     } ## end unless (defined($self->{'FB'...}))
     $self->{'MAP_ATTEMPTS'}++;
@@ -2531,7 +2536,7 @@ sub drawto {
 
     if ($self->{'ACCELERATED'}) {
         c_line($self->{'SCREEN'}, $start_x, $start_y, $x_end, $y_end, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $self->{'COLOR_ALPHA'}, $self->{'DRAW_MODE'}, $self->{'BYTES'}, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'}, $antialiased,);
-		$self->_flush_screen() if ($self->{'IS_VBOX'});
+        $self->_flush_screen() if ($self->{'IS_VBOX'});
     } else {
         my $width;
         my $height;
@@ -2667,16 +2672,16 @@ sub _flush_screen {
     my $self = shift;
 
     if ($self->{'LAST_FLUSHED'} <= time) {
-		if ($self->{'DEVICE'} eq 'EMULATED') {
-			select(STDERR);
-			$| = 1;
-		} else {
-			select($self->{'FB'}) if (defined($self->{'FB'}));
-			$| = 1;
-			sync $self->{'SCREEN'}, TRUE;
-		}
-		$self->{'LAST_FLUSHED'} = time + (1/15);
-	}
+        if ($self->{'DEVICE'} eq 'EMULATED') {
+            select(STDERR);
+            $| = 1;
+        } else {
+            select($self->{'FB'}) if (defined($self->{'FB'}));
+            $| = 1;
+            $self->{'FB'}->flush();
+        }
+        $self->{'LAST_FLUSHED'} = time + (1/15);
+    }
 } ## end sub _flush_screen
 
 sub _adj_plot {
@@ -4611,7 +4616,7 @@ sub fill {
             $self->blit_write($saved);
         } else {
             c_fill($self->{'SCREEN'}, $x, $y, $x_clip, $y_clip, $xx_clip, $yy_clip, $self->{'INT_RAW_FOREGROUND_COLOR'}, $self->{'INT_RAW_BACKGROUND_COLOR'}, $color_alpha, $self->{'DRAW_MODE'}, $bytes, $self->{'BITS'}, $self->{'BYTES_PER_LINE'}, $self->{'XOFFSET'}, $self->{'YOFFSET'},);
-			$self->_flush_screen() if ($self->{'IS_VBOX'});
+            $self->_flush_screen() if ($self->{'IS_VBOX'});
         }
     } ## end else
 } ## end sub fill
