@@ -1725,6 +1725,7 @@ $fb->blit_write(
             }
       )
 );
+```
 
 If a single image is loaded, it returns a reference to an anonymous hash, of the format:
 
