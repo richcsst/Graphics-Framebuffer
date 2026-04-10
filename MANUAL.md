@@ -846,7 +846,7 @@ $fb->draw_arc({
     'radius'        => 100,
     'start_degrees' => -40, # Compass coordinates
     'end_degrees'   => 80,
-    'granularity   => .05,
+    'granularity'   => .05,
     'mode'          => 2    # The object hash has 'ARC', 'PIE',
                             # and 'POLY_ARC' as a means of filling
                             # this value.
