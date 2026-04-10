@@ -46,7 +46,7 @@ There are places where Perl just won't cut it.  So I use the **Imager** library 
 
 I cannot guarantee this will work on your video card, but I have successfully tested it on NVidia GeForce, AMD Radeon, Matrox, Raspberry PI, Odroid XU3/XU4, and VirtualBox displays.  However, you MUST remember, your video driver MUST be framebuffer based.  The proprietary Nvidia and AMD drivers (with DRM) will NOT work with this module. You must use the open source video drivers, such as Nouveau, to be able to use this library (with output to see).  Also, it is not going to work from within X-Windows, so don't even try it, it will either crash X, or make a mess on the screen.  This is a console only graphics library.
 
-* \* NVidia or AMD may or may not have support in other versions.  You may have to specifically enable framebuffer support.*
+* *NVidia or AMD may or may not have support in other versions.  You may have to specifically enable framebuffer support.*
 
 I _highly recommend_ that you use a 32/24 bit graphics mode instead of 16 bit.  Normally one might think that 16 bits are less and should be faster... WRONG.  This module uses the **Imager** module to do complex tasks and this module only works in 32/24 bit modes.  This means in order to do things on a 16 bit framebuffer, GFB must run a conversion to 16 bit on EVERY complex operation, slowing things down.  Also, CPUs today hate 16 bit accessing and prefer 32 bit, hence faster.  If you have no choice but to use 16 bit mode, then now you know it can be slower.
 
