@@ -1587,9 +1587,9 @@ $fb->ttf_print(
         'face'         => 'Arial.ttf',                 # Optional
         'bounding_box' => TRUE,
         'rotate'       => 45,    # optonal
-         'center'       => CENTER_X,
-         'antialias'    => 1,
-         'shadow'       => shadow size
+        'center'       => CENTER_X,
+        'antialias'    => 1,
+        'shadow'       => shadow size
      })
 );
 ```
