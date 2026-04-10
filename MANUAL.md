@@ -246,7 +246,9 @@ The following are hash keys to the main object variable.  For example, if you us
 
    * **HARDWARE** ( 2 )
 
-   # METHODS
+# METHODS
+
+   With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
 
    The following are names you can search to get to the desired method (sorted alphabetically):
 
@@ -270,8 +272,6 @@ The following are hash keys to the main object variable.  For example, if you us
    - [vsync](#vsync)
    - [wait\_for\_console](#wait_for_console), [which\_console](#which_console)
    - [xor\_mode](#xor_mode)
-
-   With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
 
 ## **new**
 
