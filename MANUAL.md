@@ -235,86 +235,86 @@ $fb->{VARIABLE_NAME}
    * Instantiation
      - [new](#new) - Create the Graphics::Framebuffer object
    * Image Handling
-     - [load\_image](#load_image) - Load an image or animation
-     - [play\_animation](#play_animation)
-     - [screen\_dump](#screen_dump)
+     - [load\_image](#load_image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
+     - [play\_animation](#play_animation) - Play an animated GIF already loaded.
+     - [screen\_dump](#screen_dump) - Dump the framebuffer to disk.
    * Clipping
-     - [clip\_off](#clip_off)
-     - [clip\_reset](#clip_reset)
-     - [clip\_rset](#clip_rset)
-     - [clip\_set](#clip_set)
+     - [clip\_off](#clip_off) - Turn off clipping
+     - [clip\_reset](#clip_reset) - Turn off clipping
+     - [clip\_rset](#clip_rset) - Set clipping rectangle using relative height and width.
+     - [clip\_set](#clip_set) - Set clipping using specific coordinates.
    * Settings & Control
-     - [acceleration](#acceleration)
-     - [active\_console](#active_console)
-     - [attribute\_reset](#attribute_reset)
-     - [clear\_screen](#clear_screen)
-     - [cls](#cls)
-     - [graphics\_mode](#graphics_mode)
-     - [hardware](#hardware)
-     - [perl](#perl)
-     - [replace\_color](#replace_color)
-     - [screen\_dimension](#screen_dimensions)
-     - [setbcolor](#setbcolor)
-     - [set\_b\_color](#set_b_color)
-     - [set\_background\_color](#set_background_color)
-     - [setcolor](#setcolor)
-     - [set\_color](#set_color)
-     - [set\_foreground\_color](#set_foreground_color)
-     - [software](#software)
-     - [text\_mode](#text_mode)
-     - [vsync](#vsync)
-     - [wait\_for\_console](#wait_for_console)
-     - [which\_console](#which_console)
+     - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
+     - [active\_console](#active_console) - Get the current active console.
+     - [attribute\_reset](#attribute_reset) - Reset the attributes to the global defaults.
+     - [clear\_screen](#clear_screen) - Clear the screen.
+     - [cls](#cls) - Clear the screen.
+     - [graphics\_mode](#graphics_mode) - Turn on console graphics mode.
+     - [hardware](#hardware) - Set to hardware acceleration mode.
+     - [perl](#perl) - Set to Perl only acceleration mode.
+     - [replace\_color](#replace_color) - Replace a specific color in the clipping region.
+     - [screen\_dimension](#screen_dimensions) - Return the screen dimensions.
+     - [setbcolor](#setbcolor) - Set the background color.
+     - [set\_b\_color](#set_b_color) - Set the background color.
+     - [set\_background\_color](#set_background_color) - Set the background color.
+     - [setcolor](#setcolor) - Set the foreground color.
+     - [set\_color](#set_color) - Set the foreground color.
+     - [set\_foreground\_color](#set_foreground_color) - Set the foreground color.
+     - [software](#software) - Set to Software (C accelerated) drawing.
+     - [text\_mode](#text_mode) - Set the console to text mode.
+     - [vsync](#vsync) - Block drawing until the vertical sync.
+     - [wait\_for\_console](#wait_for_console) - Blocking if not the correct console.
+     - [which\_console](#which_console) - Returnsd the current console.
    * Primitives
-     - [bezier](#bezier)
-     - [boxx](#box)
-     - [circle](#circle)
-     - [draw\_arc](#draw_arc)
-     - [draw\_to](#draw_to)
-     - [ellipse](#ellipse)
-     - [fill](#fill)
-     - [filled\_pie](#filled_pie)
-     - [getpixel](#getpixel)
-     - [get\_pixel](#get_pixel)
-     - [last\_plot](#last_plot)
-     - [line](#line)
-     - [pixel](#pixel)
-     - [plot](#plot)
-     - [poly\_arc](#poly_arc)
-     - [polygon](#polygon)
-     - [rounded\_box](#rounded_box)
-     - [rbox](#rbox)
-     - [setpixel](#setpixel)
-     - [set\_pixel](#set_pixel)
+     - [bezier](#bezier) - Draw bezier curved lines.
+     - [boxx](#box) - Draw a box.
+     - [circle](#circle) - Draw a circle.
+     - [draw\_arc](#draw_arc) - Draw an arc.
+     - [draw\_to](#draw_to) - Draw a line from the last plotted position.
+     - [ellipse](#ellipse) - Draw an ellipse.
+     - [fill](#fill) - Flood fill.
+     - [filled\_pie](#filled_pie) - Draw a filled pie.
+     - [getpixel](#getpixel) - Return the last plotted pixel coordinate.
+     - [get\_pixel](#get_pixel) - Return the last plotted pixel coordinate.
+     - [last\_plot](#last_plot) - Return the last plotted pixel coordinate.
+     - [line](#line) - Draw a line at the specific coordinates.
+     - [pixel](#pixel) - Plots a pixel.
+     - [plot](#plot) - Plots a pixel.
+     - [poly\_arc](#poly_arc) - Draw a polygon with an arc.
+     - [polygon](#polygon) - Draw a polygon.
+     - [rounded\_box](#rounded_box) - Draw a box with rounded corners.
+     - [rbox](#rbox) - Draw a box with rounded corners.
+     - [setpixel](#setpixel) - Plots a pixel.
+     - [set\_pixel](#set_pixel) - Plots a pixel.
    * Blitting
-     - [blit\_copy](#blit_copy)
-     - [blit\_move](#blit_move)
-     - [blit\_read](#blit_read)
-     - [blit\_transform](#blit_transform)
-     - [blit\_write](#blit_write)
+     - [blit\_copy](#blit_copy) - Copy a screen region to a new location leaving the original location untouched.
+     - [blit\_move](#blit_move) - Move a screen region from one location to another, removing the original.
+     - [blit\_read](#blit_read) - Reads in a screen region to a variable.
+     - [blit\_transform](#blit_transform) - Transform a blit variable.
+     - [blit\_write](#blit_write) - Writes a blit variable to a screen location.
    * Text Drawing
-     - [get\_face\_name](#get_face_name)
-     - [get\_font\_list](#get_font_list)
-     - [ttf\_paragraph](#ttf_paragraph)
-     - [ttf\_print](#ttf_print)
+     - [get\_face\_name](#get_face_name) - Get the face name of a font file name.
+     - [get\_font\_list](#get_font_list) - Get a list of fonts including their attributes.
+     - [ttf\_paragraph](#ttf_paragraph) - Print a paragraph.
+     - [ttf\_print](#ttf_print) - Print text.
    * Drawing Modes
-     - [add\_mode](#add_mode)
-     - [and\_mode](#add_mode)
-     - [alpha\_mode](#alpha_mode)
-     - [mask\_mode](#mask_mode)
-     - [multiply\_mode](#multiply_mode)
-     - [normal\_mode](#normal_mode)
-     - [or\_mode](#or_mode)
-     - [unmask\_mode](#unmask_mode)
-     - [xo\_mode](#xor_mode)
+     - [add\_mode](#add_mode) - Draw in ADD mode.
+     - [and\_mode](#add_mode) - Draw in AND mode.
+     - [alpha\_mode](#alpha_mode) - Draw using alpha blending.
+     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image.
+     - [multiply\_mode](#multiply_mode) - Draw using multiply mode.
+     - [normal\_mode](#normal_mode) - Draw using normal mode.
+     - [or\_mode](#or_mode) - Draw using OR mode.
+     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination.
+     - [xor\_mode](#xor_mode) - Draw using XOR mode.
    * Conversion
-     - [monochrome](#monochrome)
-     - [RGB565\_to\_RGB888](#rgb565_to_rgb888)
-     - [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888)
-     - [RGB888\_to\_RGB565](#rgb888_to_rgb565)
-     - [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888)
-     - [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565)
-     - [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888)
+     - [monochrome](#monochrome) - Create a monochrome blit image variable from a color blit image variable.
+     - [RGB565\_to\_RGB888](#rgb565_to_rgb888) - Converts 16 bit blit variable to 24 bit blit variable.
+     - [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888) - Converts 16 bit blit variable to 32 bit blit variable.
+     - [RGB888\_to\_RGB565](#rgb888_to_rgb565) - Converts 24 bit blit variable to 16 bit blit variable.
+     - [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888) - Converts 24 bit blit variable to 32 bit blit variable.
+     - [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565) - Converts 32 bit blit variable to 16 bit blit variable.
+     - [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888) - Converts 32 bit blit variable to 24 bit blit variable.
 
 ## **new**
 
