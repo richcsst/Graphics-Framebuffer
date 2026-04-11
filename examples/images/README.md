@@ -40,14 +40,6 @@ project without their written permission and/or license.
 
 [![Atari](Atari.jpg?raw=true "Atari logo in 3d perspective")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/Atari.jpg)
 
-## Dragonslair
-
-[![DragonsLair](DragonsLair.jpg?raw=true "Dragonslair")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/DragonsLair.jpg)
-
-## Dragonslair (second one)
-
-[![DragonsLair-](DragonsLair-.jpg?raw=true "Dragonslair")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/DragonsLair-.jpg)
-
 ## Lollipop Chainsaw
 
 [![Lollipop Chainsaw](LollipopChainsaw.jpg?raw=true "Lollipop Chainsaw")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/LollipopChainsaw.jpg)

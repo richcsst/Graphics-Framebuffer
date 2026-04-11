@@ -9777,7 +9777,7 @@ Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONT
 
 =head1 VERSION
 
-Version 6.96 (Apr 06, 2026)
+Version 6.96 (Apr 11, 2026)
 
 =head1 THANKS
 

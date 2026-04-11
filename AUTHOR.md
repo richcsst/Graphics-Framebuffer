@@ -1,6 +1,6 @@
 # Richard Kelsch
 
-![Author](pics/SuperMe.jpg?raw=true "Richard Kelsch")
+![Author](pics/author.jpg?raw=true "Richard Kelsch")
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
