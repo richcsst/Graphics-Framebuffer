@@ -230,10 +230,12 @@ $fb->{VARIABLE_NAME}
 
    With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
 
-   The following are names you can search to get to the desired method (sorted alphabetically):
+   The following are names you can search to get to the desired method:
+
+   ### Alphabetical
 
    - [acceleration](#acceleration), [active\_console](#active_console), [add\_mode](#add_mode), [alpha\_mode](#alpha_mode), [and\_mode](#and_mode), [angle\_line](angle_line), [arc](#arc), [attribute\_reset](#attribute_reset)
-   - [bezier](#bezier), [blit\_copy](#blit_copy), [blit\_mode](#blit_mode), [blit\_read](#blit_read), [blit\_transform](#blit_transform), [blit\_write](#blit_write), [box](#box)
+   - [bezier](#bezier), [blit\_copy](#blit_copy), [blit\_move](#blit_move), [blit\_read](#blit_read), [blit\_transform](#blit_transform), [blit\_write](#blit_write), [box](#box)
    - [circle](#circle), [clear\_screen](#clean_screen), [clip\_off](#clip_off), [clip\_reset](#clip_reset), [clip\_rset](#clip_rset), [clip\_set](#clip_set), [cls](#cls)
    - [divide\_mode](#divide_mode), [draw\_arc](#draw_arc), [draw\_mode](#draw_mode), [drawto](#drawto)
    - [ellipse](#ellipse)
@@ -252,6 +254,93 @@ $fb->{VARIABLE_NAME}
    - [vsync](#vsync)
    - [wait\_for\_console](#wait_for_console), [which\_console](#which_console)
    - [xor\_mode](#xor_mode)
+
+   ### Category
+
+   * Instantiation
+     - [new](#new)
+   * Image Handling
+     - [load\_image](#load_image)
+     - [play\_animation](#play_animation)
+     - [screen\_dump](#screen_dump)
+   * Clipping
+     - [clip\_off](#clip_off)
+     - [clip\_on](#clip_on)
+     - [clip\_reset](#clip_reset)
+     - [clip\_rset](#clip_rset)
+     - [clip\_set](#clip_set)
+   * Settings & Control
+     - [acceleration](#acceleration)
+     - [active\_console](#active_console)
+     - [attribute\_reset](#attribute_reset)
+     - [clear\_screen](#clear_screen)
+     - [cls](#cls)
+     - [graphics\_mode](#graphics_mode)
+     - [hardware](#hardware)
+     - [perl](#perl)
+     - [replace\_color](#replace_color)
+     - [screen\_dimension](#screen_dimensions)
+     - [setbcolor](#setbcolor)
+     - [set\_b\_color](#set_b_color)
+     - [set\_background\_color](#set_background_color)
+     - [setcolor](#setcolor)
+     - [set\_color](#set_color)
+     - [set\_foreground\_color](#set_foreground_color)
+     - [software](#software)
+     - [text\_mode](#text_mode)
+     - [vsync](#vsync)
+     - [wait\_for\_console](#wait_for_console)
+     - [which\_console](#which_console)
+   * Primitives
+     - [bezier](#bezier)
+     - [boxx](#box)
+     - [circle](#circle)
+     - [draw\_arc](#draw_arc)
+     - [draw\_to](#draw_to)
+     - [ellipse](#ellipse)
+     - [fill](#fill)
+     - [filled\_pie](#filled_pie)
+     - [getpixel](#getpixel)
+     - [get\_pixel](#get_pixel)
+     - [last\_plot](#last_plot)
+     - [line](#line)
+     - [pixel](#pixel)
+     - [plot](#plot)
+     - [poly\_arc](#poly_arc)
+     - [polygon](#polygon)
+     - [rounded\_box](#rounded_box)
+     - [rbox](#rbox)
+     - [setpixel](#setpixel)
+     - [set\_pixel](#set_pixel)
+   * Blitting
+     - [blit\_copy](#blit_copy)
+     - [blit\_move](#blit_move)
+     - [blit\_read](#blit_read)
+     - [blit\_transform](#blit_transform)
+     - [blit\_write](#blit_write)
+   * Text Drawing
+     - [get\_face\_name](#get_face_name)
+     - [get\_font\_list](#get_font_list)
+     - [ttf\_paragraph](#ttf_paragraph)
+     - [ttf\_print](#ttf_print)
+   * Drawing Modes
+     - [add\_mode](#add_mode)
+     - [and\_mode](#add_mode)
+     - [alpha\_mode](#alpha_mode)
+     - [mask\_mode](#mask_mode)
+     - [multiply\_mode](#multiply_mode)
+     - [normal\_mode](#normal_mode)
+     - [or\_mode](#or_mode)
+     - [unmask\_mode](#unmask_mode)
+     - [xo\_mode](#xor_mode)
+   * Conversion
+     - [monochrome](#monochrome)
+     - [RGB565\_to\_RGB888](#rgb565_to_rgb888)
+     - [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888)
+     - [RGB888\_to\_RGB565](#rgb888_to_rgb565)
+     - [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888)
+     - [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565)
+     - [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888)
 
 ## **new**
 
