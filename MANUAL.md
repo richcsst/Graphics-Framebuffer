@@ -267,20 +267,20 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    * **FB\_DEVICE**
 
-   Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
+      Framebuffer device name.  If this is not defined, then it tries the following devices in the following order:
 
-   -  /dev/fb0 - 31
-   -  /dev/graphics/fb0 - 31
+      -  /dev/fb0 - 31
+      -  /dev/graphics/fb0 - 31
 
-   If none of these work, then the module goes into emulation mode.
+      If none of these work, then the module goes into emulation mode.
 
-   You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
+      You really only need to define this if there is more than one framebuffer device in your system, and you want a specific one (else it always chooses the first it finds).  If you have only one framebuffer device, then you likely do not need to define this.
 
-   Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
+      Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
 
    * **FOREGROUND**
 
-   Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
+      Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
 
 ```perl
 { # This is the default value
@@ -295,7 +295,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    * **BACKGROUND**
 
-   Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
+      Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
 
 ```perl
 { # This is the default value
@@ -310,45 +310,45 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    * **SPLASH**
 
-   The splash screen is or is not displayed
+      The splash screen is or is not displayed
 
-   A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
-   A zero value turns it off
+      A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
+      A zero value turns it off
 
    * **IGNORE\_X\_WINDOWS**
 
-   Bypasses the **X-Windows/Wayland** check and loads anyway (dangerous).
-   Set to 1 to disable X-Windows/Wayland check. Default is 0.
+      Bypasses the **X-Windows/Wayland** check and loads anyway (dangerous).
+      Set to 1 to disable X-Windows/Wayland check. Default is 0.
 
    * **FONT\_PATH**
 
-   Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
+      Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
 
-   If 'ttf\_print' is not displaying any text, then this may need to be overridden.
+      If 'ttf\_print' is not displaying any text, then this may need to be overridden.
 
    * **FONT\_FACE**
 
-   Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
+      Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
 
-   If 'ttf\_print' is not displaying any text, then this may need to be overridden.
+      If 'ttf\_print' is not displaying any text, then this may need to be overridden.
 
    * **SHOW\_ERRORS**
 
-   Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
+      Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
 
-   This is helpful for troubleshooting.
+      This is helpful for troubleshooting.
 
    * **DIAGNOSTICS**
 
-   If true, it shows images as they load, and displays benchmark informtion in the loading process.
+      If true, it shows images as they load, and displays benchmark informtion in the loading process.
 
    * **RESET** \[0 or 1 (default)\]
 
-   When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
+      When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
 
-   Also, when the object is destroyed, it is assumed you are exiting your script.  This causes Graphics::Framebuffer to execute "exec('reset')" as its method of exiting instead of having you use "exit".
+      Also, when the object is destroyed, it is assumed you are exiting your script.  This causes Graphics::Framebuffer to execute "exec('reset')" as its method of exiting instead of having you use "exit".
 
-   You can disable this behavior by setting this to 0.
+      You can disable this behavior by setting this to 0.
 
    ### EMULATION MODE OPTIONS
 
@@ -358,38 +358,38 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    * **FB\_DEVICE** => 'EMULATED'
 
-   Sets this object to be in emulation mode.
+      Sets this object to be in emulation mode.
 
-   Emulation mode special variables for "new" method:
+      Emulation mode special variables for "new" method:
 
    * **VXRES**
 
-   Width of the emulation framebuffer in pixels.  Default is 640.
+      Width of the emulation framebuffer in pixels.  Default is 640.
 
    * **VYRES**
 
-   Height of the emulation framebuffer in pixels.  Default is 480.
+      Height of the emulation framebuffer in pixels.  Default is 480.
 
    * **BITS**
 
-   Number of bits per pixel in the emulation framebuffer.  Default is 32.
+      Number of bits per pixel in the emulation framebuffer.  Default is 32.
 
    * **BYTES**
 
-   Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
+      Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
 
    * **COLOR\_ORDER**
 
-   Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
+      Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
 
-   -  'RGB'  for Red-Green-Blue (the default)
-   -  'RBG'  for Red-Blue-Green
-   -  'GRB'  for Green-Red-Blue
-   -  'GBR'  for Green-Blue-Red
-   -  'BRG'  for Blue-Red-Green
-   -  'BGR'  for Blue-Green-Red (Many video cards are this)
+      -  'RGB'  for Red-Green-Blue (the default)
+      -  'RBG'  for Red-Blue-Green
+      -  'GRB'  for Green-Red-Blue
+      -  'GBR'  for Green-Blue-Red
+      -  'BRG'  for Blue-Red-Green
+      -  'BGR'  for Blue-Green-Red (Many video cards are this)
 
-   Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
+      Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
    
 ## text\_mode
 
