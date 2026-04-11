@@ -62,7 +62,7 @@ Make sure you have read/write access to the framebuffer device.  Usually this ju
 
 # INSTALLATION
 
-Read the file ```installing/INSTALL``` and follow its instructions.
+Read the file ```installing/INSTALL.md``` and follow its instructions.
 
 When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux console outside of X-Windows.
 
