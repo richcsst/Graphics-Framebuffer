@@ -267,7 +267,7 @@ $fb->{VARIABLE_NAME}
      - [which\_console](#which_console) - Returnsd the current console.
    * Primitives
      - [bezier](#bezier) - Draw bezier curved lines.
-     - [boxx](#box) - Draw a box.
+     - [box](#box) - Draw a box.
      - [circle](#circle) - Draw a circle.
      - [draw\_arc](#draw_arc) - Draw an arc.
      - [draw\_to](#draw_to) - Draw a line from the last plotted position.
