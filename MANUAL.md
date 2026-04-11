@@ -324,7 +324,7 @@ $fb->{VARIABLE_NAME}
 my $fb = Graphics::Framebuffer->new(parameter => value);
 ```
 
-*\* The parameters are usually optional.*
+   *\* The parameters are usually optional.*
 
    ### PARAMETERS
 
@@ -354,7 +354,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 }
 ```
 
-   * Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.
+   *\* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.*
 
    * **BACKGROUND**
 
@@ -369,7 +369,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 }
 ```
 
-   * Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.
+   *\* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.*
 
    * **SPLASH**
 
