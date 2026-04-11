@@ -93,7 +93,7 @@ $fb->{VARIABLE_NAME}
 
    List of system fonts
 
-   Contains a hash of every font found in the system in the format:
+   Contains a list of hashes of every font found in the system in the format:
 
 ```perl
 'FaceName' => {
