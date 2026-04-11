@@ -240,7 +240,6 @@ $fb->{VARIABLE_NAME}
      - [screen\_dump](#screen_dump)
    * Clipping
      - [clip\_off](#clip_off)
-     - [clip\_on](#clip_on)
      - [clip\_reset](#clip_reset)
      - [clip\_rset](#clip_rset)
      - [clip\_set](#clip_set)
