@@ -177,54 +177,54 @@ $fb->{VARIABLE_NAME}
 
    The value of the constant is in parenthesis:
 
-**CONSTANT** (value)
+**CONSTANT** ( *value* )
 
    Boolean constants
 
-   * **TRUE**  ( 1 )
-   * **FALSE** ( 0 )
+   * **TRUE**  ( *1* )
+   * **FALSE** ( *0* )
 
    Draw mode constants
 
-   * **NORMAL\_MODE**   ( 0  )
-   * **XOR\_MODE**      ( 1  )
-   * **OR\_MODE**       ( 2  )
-   * **AND\_MODE**      ( 3  )
-   * **MASK\_MODE**     ( 4  )
-   * **UNMASK\_MODE**   ( 5  )
-   * **ALPHA\_MODE**    ( 6  )
-   * **ADD\_MODE**      ( 7  )
-   * **SUBTRACT\_MODE** ( 8  )
-   * **MULTIPLY\_MODE** ( 9  )
-   * **DIVIDE\_MODE**   ( 10 )
+   * **NORMAL\_MODE**   ( *0*  )
+   * **XOR\_MODE**      ( *1*  )
+   * **OR\_MODE**       ( *2*  )
+   * **AND\_MODE**      ( *3*  )
+   * **MASK\_MODE**     ( *4*  )
+   * **UNMASK\_MODE**   ( *5*  )
+   * **ALPHA\_MODE**    ( *6*  )
+   * **ADD\_MODE**      ( *7*  )
+   * **SUBTRACT\_MODE** ( *8*  )
+   * **MULTIPLY\_MODE** ( *9*  )
+   * **DIVIDE\_MODE**   ( *10* )
 
    Draw Arc constants
 
-   * **ARC**       ( 0 )
-   * **PIE**       ( 1 )
-   * **POLY\_ARC** ( 2 )
+   * **ARC**       ( *0* )
+   * **PIE**       ( *1* )
+   * **POLY\_ARC** ( *2* )
 
    Virtual framebuffer color mode constants
 
-   * **RGB** ( 0 )
-   * **RBG** ( 1 )
-   * **BGR** ( 2 )
-   * **BRG** ( 3 )
-   * **GBR** ( 4 )
-   * **GRB** ( 5 )
+   * **RGB** ( *0* )
+   * **RBG** ( *1* )
+   * **BGR** ( *2* )
+   * **BRG** ( *3* )
+   * **GBR** ( *4* )
+   * **GRB** ( *5* )
 
    Text rendering centering constants
 
-   * **CENTER\_NONE** ( 0 )
-   * **CENTER\_X**    ( 1 )
-   * **CENTER\_Y**    ( 2 )
-   * **CENTER\_XY**   ( 3 )
+   * **CENTER\_NONE** ( *0* )
+   * **CENTER\_X**    ( *1* )
+   * **CENTER\_Y**    ( *2* )
+   * **CENTER\_XY**   ( *3* )
 
    Acceleration method constants
 
-   * **PERL**     ( 0 )
-   * **SOFTWARE** ( 1 )
-   * **HARDWARE** ( 2 )
+   * **PERL**     ( *0* )
+   * **SOFTWARE** ( *1* )
+   * **HARDWARE** ( *2* )
 
 # METHODS
 
