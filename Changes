@@ -1,5 +1,9 @@
 Change log for Graphics::Framebuffer
 
+6.96   April 11, 2026
+
+       Updates to the manual.
+
 6.95   April 04, 2026
 
        Implemented a searchable manual in GitHub markdown format.  I suggest
