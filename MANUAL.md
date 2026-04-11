@@ -177,7 +177,7 @@ $fb->{VARIABLE_NAME}
 
    The value of the constant is in parenthesis:
 
-**CONSTANT** ( *value* )
+**CONSTANT** ( *defined value* )
 
    Boolean constants
 
