@@ -263,7 +263,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
 *\* The parameters are usually optional.*
 
-### PARAMETERS
+   ### PARAMETERS
 
    * **FB\_DEVICE**
 
@@ -278,7 +278,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    Use "EMULATED" instead of an actual framebuffer device, and it will open a memory only or "emulated" framebuffer.  You can use this mode to have multiple "layers" for loading and manipulating images, but a single main framebuffer for displaying them.
 
-* **FOREGROUND**
+   * **FOREGROUND**
 
    Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
 
@@ -293,7 +293,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    * Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.
 
-* **BACKGROUND**
+   * **BACKGROUND**
 
    Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
 
@@ -308,41 +308,41 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    * Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.
 
-* **SPLASH**
+   * **SPLASH**
 
    The splash screen is or is not displayed
 
    A value other than zero turns on the splash screen, and the value is the wait time to show it (default 2 seconds)
    A zero value turns it off
 
-* **IGNORE\_X\_WINDOWS**
+   * **IGNORE\_X\_WINDOWS**
 
    Bypasses the **X-Windows/Wayland** check and loads anyway (dangerous).
    Set to 1 to disable X-Windows/Wayland check. Default is 0.
 
-* **FONT\_PATH**
+   * **FONT\_PATH**
 
    Overrides the default font path (_/usr/share/fonts/truetype/freefont_) for TrueType/Type1 fonts.
 
    If 'ttf\_print' is not displaying any text, then this may need to be overridden.
 
-* **FONT\_FACE**
+   * **FONT\_FACE**
 
    Overrides the default font filename (_FreeSans.ttf_) for TrueType/Type 1 fonts.
 
    If 'ttf\_print' is not displaying any text, then this may need to be overridden.
 
-* **SHOW\_ERRORS**
+   * **SHOW\_ERRORS**
 
    Normally this module is completely silent and does not display errors or warnings (to the best of its ability).  This is to prevent corruption of the graphics.  However, you can enable error reporting by setting this to 1.
 
    This is helpful for troubleshooting.
 
-* **DIAGNOSTICS**
+   * **DIAGNOSTICS**
 
    If true, it shows images as they load, and displays benchmark informtion in the loading process.
 
-* **RESET** \[0 or 1 (default)\]
+   * **RESET** \[0 or 1 (default)\]
 
    When the object is created, it automatically creates a simple signal handler for **INT** and **QUIT** to run **exec('reset')** as a clean way of exiting your script and restoring the screen to defaults.
 
@@ -350,35 +350,35 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    You can disable this behavior by setting this to 0.
 
-### EMULATION MODE OPTIONS
+   ### EMULATION MODE OPTIONS
 
    The options here only apply to emulation mode.
 
    Emulation mode can be used as a secondary off-screen drawing surface, if you are clever.
 
-* **FB\_DEVICE** => 'EMULATED'
+   * **FB\_DEVICE** => 'EMULATED'
 
    Sets this object to be in emulation mode.
 
    Emulation mode special variables for "new" method:
 
-* **VXRES**
+   * **VXRES**
 
    Width of the emulation framebuffer in pixels.  Default is 640.
 
-* **VYRES**
+   * **VYRES**
 
    Height of the emulation framebuffer in pixels.  Default is 480.
 
-* **BITS**
+   * **BITS**
 
    Number of bits per pixel in the emulation framebuffer.  Default is 32.
 
-* **BYTES**
+   * **BYTES**
 
    Number of bytes per pixel in the emulation framebuffer.  It's best to keep it BITS/8.  Default is 4.
 
-* **COLOR\_ORDER**
+   * **COLOR\_ORDER**
 
    Defines the colorspace for the graphics routines to draw in.  The possible (and only accepted) string values are:
 
@@ -390,7 +390,7 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
    -  'BGR'  for Blue-Green-Red (Many video cards are this)
 
    Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
-
+   
 ## text\_mode
 
    Sets the TTY into text mode, where text can interfere with the display
