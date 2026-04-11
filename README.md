@@ -104,13 +104,13 @@ There is a script template in the ```examples``` directory in this package.  You
 
 ## SUPPORT AND DOCUMENTATION
 
-After installing, you can find documentation for this module with the 'perldoc' command.
+After installing, you can find documentation for this module with the 'perl-doc' command.
 
-`perldoc Graphics::Framebuffer` *(You may have to install 'perldoc', but this usually works.)*
+`perldoc Graphics::Framebuffer` *(You may have to install 'perl-doc', but this usually works.)*
 
 or
 
-`man Graphics::Framebuffer` *(Installing 'perldoc' usually enables Perl module man pages)*
+`man Graphics::Framebuffer` *(Installing 'perl-doc' usually enables Perl module man pages)*
 
 You can also look for information at:
 
