@@ -62,11 +62,11 @@ Make sure you have read/write access to the framebuffer device.  Usually this ju
 
 # INSTALLATION
 
-Read the file ```installing/INSTALL.md``` and follow its instructions.
+Read the file [installing/INSTALL.md](installing/INSTALL.md) and follow its instructions.
 
 When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux console outside of X-Windows.
 
-If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows.
+If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows, ALT-F1 works in the latest Ubuntu and Zorin-OS.
 
 # OPERATIONAL THEORY
 
