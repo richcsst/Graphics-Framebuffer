@@ -2003,7 +2003,7 @@ $fb->set_mouse(
 
 ## MCE
 
-   Mario Roy has tested **Graphics::Framebuffer** with various methods to use the **MCE** modules for multiprocessing, and creating a single shared library.  See the "README" file for more.  I highly recommend this for multiprocessing, as it should save on memory.
+   Mario Roy has tested **Graphics::Framebuffer** with various methods to use the **MCE** modules for multiprocessing, and creating a single shared library.  See the [examples/multiprocessing/MCE-README.md](examples/multiprocessing/MCE-README.md) file for more.  I highly recommend this for multiprocessing, as it should save on memory.
 
 ## BLITTING
 
@@ -2149,7 +2149,7 @@ perl dump.pl
 
    I am not one of those arrogant ogres that spout "RTFM" every time someone asks for help (although it helps if you do read the manual).  I actually will help you.  Please be patient, as I do have other responsibilities that may delay a response, but a response will come.
 
-   *\*\* Making the subject of your email "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
+   *\*\* Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
 
 # AUTHOR
 
