@@ -233,9 +233,9 @@ $fb->{VARIABLE_NAME}
    The following are names you can search to get to the desired method:
 
    * Instantiation
-     - [new](#new)
+     - [new](#new) - Create the Graphics::Framebuffer object
    * Image Handling
-     - [load\_image](#load_image)
+     - [load\_image](#load_image) - Load an image or animation
      - [play\_animation](#play_animation)
      - [screen\_dump](#screen_dump)
    * Clipping
