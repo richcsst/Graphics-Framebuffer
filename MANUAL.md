@@ -232,31 +232,6 @@ $fb->{VARIABLE_NAME}
 
    The following are names you can search to get to the desired method:
 
-   ### Alphabetical
-
-   - [acceleration](#acceleration), [active\_console](#active_console), [add\_mode](#add_mode), [alpha\_mode](#alpha_mode), [and\_mode](#and_mode), [angle\_line](angle_line), [arc](#arc), [attribute\_reset](#attribute_reset)
-   - [bezier](#bezier), [blit\_copy](#blit_copy), [blit\_move](#blit_move), [blit\_read](#blit_read), [blit\_transform](#blit_transform), [blit\_write](#blit_write), [box](#box)
-   - [circle](#circle), [clear\_screen](#clean_screen), [clip\_off](#clip_off), [clip\_reset](#clip_reset), [clip\_rset](#clip_rset), [clip\_set](#clip_set), [cls](#cls)
-   - [divide\_mode](#divide_mode), [draw\_arc](#draw_arc), [draw\_mode](#draw_mode), [drawto](#drawto)
-   - [ellipse](#ellipse)
-   - [fill](#fill), [filled\_pie](#filled_pie)
-   - [get\_face\_name](#get_face_name), [get\_font\_list](#get_font_list), [getpixel](#getpixel), [get\_pixel](#get_pixel), [graphics\_mode](#graphics_mode)
-   - [hardware](#hardware)
-   - [last\_plot](#last_plot), [line](#line), [load\_image](#load_image)
-   - [mask\_mode](#mask_mode), [monochrome](#monochrome), [multiply\_mode](#multiply_mode)
-   - [new](#new), [normal\_mode](#normal_mode)
-   - [or\_mode](#or_mode)
-   - [perl](#perl), [pixel](#pixel), [play\_animation](#play_animation), [plot](#plot), [poly\_arc](#poly_arc), [polygon](#polygon)
-   - [rbox](#rbox), [rounded\_box](#rounded_box), [replace\_color](#replace_color), [RGB565\_to\_RGB888](#rgb565_to_rgb888), [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888), [RGB888\_to\_RGB565](#rgb888_to_rgb565), [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888), [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565), [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888)
-   - [screen\_dimensions](#screen_dimensions), [screen\_dump](#screen_dump), [set\_b\_color](#set_b_color), [setbcolor](#setcolor), [set\_background\_color](#set_background_color), [setcolor](#setcolor), [set\_color](#set_color), [set\_foreground\_color](#set_foreground_color), [setpixel](#setpixel), [set\_pixel](#set_pixel), [software](#software), [subtract\_mode](#subtract_mode)
-   - [text\_mode](#text_mode), [ttf\_paragraph](#ttf_paragraph), [ttf\_print](#ttf_print)
-   - [unmask\_mode](#unmask_mode)
-   - [vsync](#vsync)
-   - [wait\_for\_console](#wait_for_console), [which\_console](#which_console)
-   - [xor\_mode](#xor_mode)
-
-   ### Category
-
    * Instantiation
      - [new](#new)
    * Image Handling
