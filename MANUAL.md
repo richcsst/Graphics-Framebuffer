@@ -2029,16 +2029,6 @@ $fb->set_mouse(
 
    As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
 
-## MAKING WINDOWS
-
-   So, you want to be able to manage some sort of windows...
-
-   You just instantiate a new instance of the module per "Window" and give it its own clipping region.  This region is your drawing space for your window.
-
-   It is up to you to actually decorate (draw) the windows.
-
-   Nothing is preventing you from writing your own window handler, although I recommend just using X-Windows (and a different module) for that anyway.
-
 ## RUNNING IN MICROSOFT WINDOWS
 
    It doesn't work natively, (other than in emulation mode) and likely never will.  However...
