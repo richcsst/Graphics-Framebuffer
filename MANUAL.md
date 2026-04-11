@@ -82,7 +82,10 @@ Originally everything was done in Perl, and the module's speed was mostly accept
 
 # SPECIAL VARIABLES
 
-The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are ```$fb->{VARIABLE_NAME}```.
+The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are:
+```perl
+$fb->{VARIABLE_NAME}
+```
 
 *\* NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
 
@@ -97,7 +100,7 @@ The following are hash keys to the main object variable.  For example, if you us
     'path' => 'Path To Font',
     'font' => 'File Name of Font'
 },
-# ...
+# ... all of the fonts in an array list
 ```
 
 * **Imager-Has-TrueType**
