@@ -9,27 +9,27 @@ Graphics::Framebuffer - A Simple Framebuffer Graphics Library
 Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked for, and I have the means to test it)
 
 ```perl
-use Graphics::Framebuffer;
+ use Graphics::Framebuffer;
 
-our $fb = Graphics::Framebuffer->new();
+ our $fb = Graphics::Framebuffer->new();
 ```
 
 Drawing is this simple
 
 ```perl
-$fb->cls('OFF'); # Clear screen and turn off the console cursor
-$fb->graphics_mode();
+ $fb->cls('OFF'); # Clear screen and turn off the console cursor
+ $fb->graphics_mode();
 
-$fb->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
-$fb->plot({'x' => 28, 'y' => 79});
-$fb->drawto({'x' => 405,'y' => 681});
-$fb->circle({'x' => 200, 'y' => 200, 'radius' => 100, 'filled' => 1});
-$fb->polygon({'coordinates' => [20,20,  53,3,  233,620]});
-$fb->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
-# ... and many many more
+ $fb->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
+ $fb->plot({'x' => 28, 'y' => 79});
+ $fb->drawto({'x' => 405,'y' => 681});
+ $fb->circle({'x' => 200, 'y' => 200, 'radius' => 100, 'filled' => 1});
+ $fb->polygon({'coordinates' => [20,20,  53,3,  233,620]});
+ $fb->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
+ # ... and many many more
 
-$fb->text_mode();
-$fb->cls('ON'); # Clear screen and turn on the console cursor
+ $fb->text_mode();
+ $fb->cls('ON'); # Clear screen and turn on the console cursor
 ```
 
 Methods requiring parameters require a hash (or anonymous hash) reference passed to the method (for speed).  All parameters have easy to understand english names, all lower case, to understand exactly what the method is doing.
