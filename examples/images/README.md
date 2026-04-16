@@ -62,7 +62,7 @@
 
 ## Heavenly Sword
 
-[![Heavenly Sword](HeavenlySword.png?raw=true "Heavenly Sword")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/HeavenlySword.png)
+[![Heavenly Sword](HeavenlySword.jpg?raw=true "Heavenly Sword")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/HeavenlySword.jpg)
 
 ![Divider](../../pics/pink.jpg?raw=true "Divider")
 
