@@ -1,93 +1,94 @@
 # Graphics::Framebuffer Manual
 
-Graphics::Framebuffer - A Simple Framebuffer Graphics Library
+   Graphics::Framebuffer - A Simple Framebuffer Graphics Library
 
 [![Graphics::Framebuffer Logo](pics/GFB.png?raw=true "Graphics::Framebuffer Click For Demo Video")](https://www.youtube.com/watch?v=X8RpFBq6F9I)
 
 # SYNOPSIS
 
-Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked for, and I have the means to test it)
+   Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked for, and I have the means to test it)
 
-```perl
- use Graphics::Framebuffer;
+   ```perl
+    use Graphics::Framebuffer;
 
- our $fb = Graphics::Framebuffer->new();
-```
+    our $fb = Graphics::Framebuffer->new();
+   ```
 
 Drawing is this simple
 
-```perl
- $fb->cls('OFF'); # Clear screen and turn off the console cursor
- $fb->graphics_mode();
+   ```perl
+    $fb->cls('OFF'); # Clear screen and turn off the console cursor
+    $fb->graphics_mode();
 
- $fb->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
- $fb->plot({'x' => 28, 'y' => 79});
- $fb->drawto({'x' => 405,'y' => 681});
- $fb->circle({'x' => 200, 'y' => 200, 'radius' => 100, 'filled' => 1});
- $fb->polygon({'coordinates' => [20,20,  53,3,  233,620]});
- $fb->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
- # ... and many many more
+    $fb->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
+    $fb->plot({'x' => 28, 'y' => 79});
+    $fb->drawto({'x' => 405,'y' => 681});
+    $fb->circle({'x' => 200, 'y' => 200, 'radius' => 100, 'filled' => 1});
+    $fb->polygon({'coordinates' => [20,20,  53,3,  233,620]});
+    $fb->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
+    # ... and many many more
 
- $fb->text_mode();
- $fb->cls('ON'); # Clear screen and turn on the console cursor
-```
+    $fb->text_mode();
+    $fb->cls('ON'); # Clear screen and turn on the console cursor
+   ```
 
-Methods requiring parameters require a hash (or anonymous hash) reference passed to the method (for speed).  All parameters have easy to understand english names, all lower case, to understand exactly what the method is doing.
+   Methods requiring parameters require a hash (or anonymous hash) reference passed to the method (for speed).  All parameters have easy to understand english names, all lower case, to understand exactly what the method is doing.
 
-While reading this man page will describe how each method works, looking at the source code of "examples/primitives.pl" will demonstrate how each works.
+   While reading this man page will describe how each method works, looking at the source code of "examples/primitives.pl" will demonstrate how each works.
 
 # DESCRIPTION
 
-A (mostly) Perl graphics library for exclusive use in a Linux console framebuffer environment.  It is written for simplicity, without the need for complex API's and drivers with "surfaces" and such.
+   A (mostly) Perl graphics library for exclusive use in a Linux console framebuffer environment.  It is written for simplicity, without the need for complex API's and drivers with "surfaces" and such.
 
-Back in the old days, computers drew graphics this way, and it was simple and easy to do.  I was writing a console based media playing program, and was not satisfied with the limited abilities offered by the nCurses library, and I did not want the overhead of the X-Windows environment to get in the way.  My intention was to create a mobile media server.
+   Back in the old days, computers drew graphics this way, and it was simple and easy to do.  I was writing a console based media playing program, and was not satisfied with the limited abilities offered by the nCurses library, and I did not want the overhead of the X-Windows environment to get in the way.  My intention was to create a mobile media server.
 
-There are places where Perl just won't cut it.  So I use the **Imager** library to take up the slack, or my own C code.  **Imager** is just used to load images,, save images, merge, rotate, and draw TrueType/Type1 text.  I am also incorporating compiled C to further assist with speed.  That is being implemented step by step, but "acceleration" will always be optional, and pure Perl routines always available for those systems without a C compiler or ```Inline:C``` available.
+   There are places where Perl just won't cut it.  So I use the **Imager** library to take up the slack, or my own C code.  **Imager** is just used to load images,, save images, merge, rotate, and draw TrueType/Type1 text.  I am also incorporating compiled C to further assist with speed.  That is being implemented step by step, but "acceleration" will always be optional, and pure Perl routines always available for those systems without a C compiler or ```Inline:C``` available.
 
-I cannot guarantee this will work on your video card, but I have successfully tested it on NVidia GeForce, AMD Radeon, Matrox, Raspberry PI, Odroid XU3/XU4, and VirtualBox displays.  However, you MUST remember, your video driver MUST be framebuffer based.  The proprietary Nvidia and AMD drivers (with DRM) will NOT work with this module unless you specifically enable the framebuffer. You must use the open source video drivers, such as Nouveau, to be able to use this library (with output to see).  Also, it is not going to work from within X-Windows, so don't even try it, it will either crash X, or make a mess on the screen.  This is a console only graphics library.
+   I cannot guarantee this will work on your video card, but I have successfully tested it on NVidia GeForce, AMD Radeon, Matrox, Raspberry PI, Odroid XU3/XU4, and VirtualBox displays.  However, you MUST remember, your video driver MUST be framebuffer based.  The proprietary Nvidia and AMD drivers (with DRM) will NOT work with this module unless you specifically enable the framebuffer. You must use the open source video drivers, such as Nouveau, to be able to use this library (with output to see).  Also, it is not going to work from within X-Windows, so don't even try it, it will either crash X, or make a mess on the screen.  This is a console only graphics library.
 
-* *NVidia or AMD may or may not have support in other versions.  You may have to specifically enable framebuffer support.*
+   * *NVidia or AMD may or may not have support in other versions.  You may have to specifically enable framebuffer support.*
 
-I _highly recommend_ that you use a 32/24 bit graphics mode instead of 16 bit.  Normally one might think that 16 bits are less and should be faster... WRONG.  This module uses the **Imager** module to do complex tasks and this module only works in 32/24 bit modes.  This means in order to do things on a 16 bit framebuffer, GFB must run a conversion to 16 bit on EVERY complex operation, slowing things down.  Also, CPUs today hate 16 bit accessing and prefer 32 bit, hence faster.  If you have no choice but to use 16 bit mode, then now you know it can be slower.
+   I _highly recommend_ that you use a 32/24 bit graphics mode instead of 16 bit.  Normally one might think that 16 bits are less and should be faster... WRONG.  This module uses the **Imager** module to do complex tasks and this module only works in 32/24 bit modes.  This means in order to do things on a 16 bit framebuffer, GFB must run a conversion to 16 bit on EVERY complex operation, slowing things down.  Also, CPUs today hate 16 bit accessing and prefer 32 bit, hence faster.  If you have no choice but to use 16 bit mode, then now you know it can be slower.
 
 NOTE:
 
-If a framebuffer is not available, the module will go into emulation mode and open a pseudo-screen in the object's hash variable 'SCREEN'
+   If a framebuffer is not available, the module will go into emulation mode and open a pseudo-screen in the object's hash variable 'SCREEN'
 
-You can write this to a file, whatever.  It defaults to a 640x480x32 RGB graphics 'buffer'.  However, you can change that by passing parameters to the 'new' method.
+   You can write this to a file, whatever.  It defaults to a 640x480x32 RGB graphics 'buffer'.  However, you can change that by passing parameters to the 'new' method.
 
-You will not be able to see the output directly when in emulation mode.  I mainly created this mode so that you could install this module (on systems without a framebuffer) and test code you may be writing to be used on other devices that have accessible framebuffer devices.  Nevertheless, I have learned that people use emulation mode as an offscreen drawing surface, and blit from one to the other.  Which is pretty clever.
+   You will not be able to see the output directly when in emulation mode.  I mainly created this mode so that you could install this module (on systems without a framebuffer) and test code you may be writing to be used on other devices that have accessible framebuffer devices.  Nevertheless, I have learned that people use emulation mode as an offscreen drawing surface, and blit from one to the other.  Which is pretty clever.
 
-Make sure you have read/write access to the framebuffer device.  Usually this just means adding your account to the "video" group (make sure you log out and log in again after doing that).  Alternately, you can just run your script as root.  Although I don't recommend it.
+   Make sure you have read/write access to the framebuffer device.  Usually this just means adding your account to the "video" group (make sure you log out and log in again after doing that).  Alternately, you can just run your script as root.  Although I don't recommend it.
 
 # INSTALLATION
 
-Read the file [installing/INSTALL.md](installing/INSTALL.md) and follow its instructions.
+   Read the file [installing/INSTALL.md](installing/INSTALL.md) and follow its instructions.
 
-When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux console outside of X-Windows.
+   When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux console outside of X-Windows.
 
-If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows, ALT-F1 works in the latest Ubuntu and Zorin-OS.
+   If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows, ALT-F1 works in the latest Ubuntu and Zorin-OS.
 
 # OPERATIONAL THEORY
 
-How many Perl modules actually tell you how they work?  Well, I will tell you how this one works.
+   How many Perl modules actually tell you how they work?  Well, I will tell you how this one works.
 
-The framebuffer is simply a special file that is mapped to the screen on Unix style systems like Linux.  How the driver does this can be different.  Some may actually directly map the display memory to this file, and some install a second copy of the display to normal memory and copy it to the display on every vertical blank, usually with a fast DMA transfer.
+   The framebuffer is simply a special file that is mapped to the screen on Unix style systems like Linux.  How the driver does this can be different.  Some may actually directly map the display memory to this file, and some install a second copy of the display to normal memory and copy it to the display on every vertical blank, usually with a fast DMA transfer.
 
-This module maps that file to a string, and that ends up making the string exactly the same size as the physical display.  Plotting is simply a matter of calculating where in the string that pixel is and modifying it, via "substr" (never using "=" directly).  It's that simple.
+   This module maps that file to a string, and that ends up making the string exactly the same size as the physical display.  Plotting is simply a matter of calculating where in the string that pixel is and modifying it, via "substr" (never using "=" directly).  It's that simple.
 
-Drawing lines etc. requires some algorithmic magic though, but they all call the plot routine to do their eventual magic.
+   Drawing lines etc. requires some algorithmic magic though, but they all call the plot routine to do their eventual magic.
 
-Originally everything was done in Perl, and the module's speed was mostly acceptable, unless you had a really slow system.  It still can run in pure Perl, if you turn off the acceleration feature, although I do not recommend it, if you want speed.
+   Originally everything was done in Perl, and the module's speed was mostly acceptable, unless you had a really slow system.  It still can run in pure Perl, if you turn off the acceleration feature, although I do not recommend it, if you want speed.
 
 # SPECIAL VARIABLES
 
-The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are:
-```perl
-$fb->{VARIABLE_NAME}
-```
+   The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are:
 
-*\* NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
+   ```perl
+   $fb->{VARIABLE_NAME}
+   ```
+
+   *\* NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
 
 * **FONTS**
 
@@ -95,13 +96,13 @@ $fb->{VARIABLE_NAME}
 
    Contains a list of hashes of every font found in the system in the format:
 
-```perl
-'FaceName' => {
-    'path' => 'Path To Font',
-    'font' => 'File Name of Font'
-},
-# ... all of the fonts in an array list
-```
+   ```perl
+   'FaceName' => {
+       'path' => 'Path To Font',
+       'font' => 'File Name of Font'
+   },
+   # ... all of the fonts in an array list
+   ```
 
 * **Imager-Has-TrueType**
 
@@ -234,10 +235,6 @@ $fb->{VARIABLE_NAME}
 
    * Instantiation
      - [new](#new) - Create the Graphics::Framebuffer object
-   * Image Handling
-     - [load\_image](#load_image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
-     - [play\_animation](#play_animation) - Play an animated GIF already loaded.
-     - [screen\_dump](#screen_dump) - Dump the framebuffer to disk.
    * Clipping
      - [clip\_off](#clip_off) - Turn off clipping
      - [clip\_reset](#clip_reset) - Turn off clipping
@@ -286,6 +283,20 @@ $fb->{VARIABLE_NAME}
      - [rbox](#rbox) - Draw a box with rounded corners.
      - [setpixel](#setpixel) - Plots a pixel.
      - [set\_pixel](#set_pixel) - Plots a pixel.
+   * Drawing Modes
+     - [add\_mode](#add_mode) - Draw in ADD mode.
+     - [and\_mode](#add_mode) - Draw in AND mode.
+     - [alpha\_mode](#alpha_mode) - Draw using alpha blending.
+     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image.
+     - [multiply\_mode](#multiply_mode) - Draw using multiply mode.
+     - [normal\_mode](#normal_mode) - Draw using normal mode.
+     - [or\_mode](#or_mode) - Draw using OR mode.
+     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination.
+     - [xor\_mode](#xor_mode) - Draw using XOR mode.
+   * Image Handling
+     - [load\_image](#load_image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
+     - [play\_animation](#play_animation) - Play an animated GIF already loaded.
+     - [screen\_dump](#screen_dump) - Dump the framebuffer to disk.
    * Blitting
      - [blit\_copy](#blit_copy) - Copy a screen region to a new location leaving the original location untouched.
      - [blit\_move](#blit_move) - Move a screen region from one location to another, removing the original.
@@ -297,16 +308,6 @@ $fb->{VARIABLE_NAME}
      - [get\_font\_list](#get_font_list) - Get a list of fonts including their attributes.
      - [ttf\_paragraph](#ttf_paragraph) - Print a paragraph.
      - [ttf\_print](#ttf_print) - Print text.
-   * Drawing Modes
-     - [add\_mode](#add_mode) - Draw in ADD mode.
-     - [and\_mode](#add_mode) - Draw in AND mode.
-     - [alpha\_mode](#alpha_mode) - Draw using alpha blending.
-     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image.
-     - [multiply\_mode](#multiply_mode) - Draw using multiply mode.
-     - [normal\_mode](#normal_mode) - Draw using normal mode.
-     - [or\_mode](#or_mode) - Draw using OR mode.
-     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination.
-     - [xor\_mode](#xor_mode) - Draw using XOR mode.
    * Conversion
      - [monochrome](#monochrome) - Create a monochrome blit image variable from a color blit image variable.
      - [RGB565\_to\_RGB888](#rgb565_to_rgb888) - Converts 16 bit blit variable to 24 bit blit variable.
@@ -320,9 +321,9 @@ $fb->{VARIABLE_NAME}
 
    This instantiates the framebuffer object
 
-```perl
-my $fb = Graphics::Framebuffer->new(parameter => value);
-```
+   ```perl
+   my $fb = Graphics::Framebuffer->new(parameter => value);
+   ```
 
    *\* The parameters are usually optional.*
 
@@ -345,31 +346,31 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
       Sets the default (global) foreground color for when 'attribute\_reset' is called.  It is in the same format as "set\_color" expects:
 
-```perl
-{ # This is the default value
-    'red'   => 255,
-    'green' => 255,
-    'blue'  => 255,
-    'alpha' => 255
-}
-```
+      ```perl
+      { # This is the default value
+          'red'   => 255,
+          'green' => 255,
+          'blue'  => 255,
+          'alpha' => 255
+      }
+      ```
 
-   *\* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.*
+      *\* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.*
 
    * **BACKGROUND**
 
       Sets the default (global) background color for when 'attribute\_reset' is called.  It is in the same format as "set\_b\_color" expects:
 
-```perl
-{ # This is the default value
-    'red'   => 0,
-    'green' => 0,
-    'blue'  => 0,
-    'alpha' => 0
-}
-```
+      ```perl
+      { # This is the default value
+          'red'   => 0,
+          'green' => 0,
+          'blue'  => 0,
+          'alpha' => 0
+      }
+      ```
 
-   *\* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.*
+      *\* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.*
 
    * **SPLASH**
 
@@ -470,27 +471,27 @@ my $fb = Graphics::Framebuffer->new(parameter => value);
 
    It also returns the bits per pixel.
 
-```perl
-my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
-```
+   ```perl
+   my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
+   ```
 
    When called in a scalar context, it returns a hash reference:
 
-```perl
-{
-    'width'          => pixel width of physical screen,
-    'height'         => pixel height of physical screen,
-    'bits_per_pixel' => bits per pixel (16, 24, or 32),
-    'bytes_per_line' => Number of bytes per scan line,
-    'top_clip'       => top edge of clipping rectangle (Y),
-    'left_clip'      => left edge of clipping rectangle (X),
-    'bottom_clip'    => bottom edge of clipping rectangle (YY),
-    'right_clip'     => right edge of clipping rectangle (XX),
-    'width_clip'     => width of clipping rectangle,
-    'height_clip'    => height of clipping rectangle,
-    'color_order'    => RGB, BGR, etc,
-}
-```
+   ```perl
+   {
+       'width'          => pixel width of physical screen,
+       'height'         => pixel height of physical screen,
+       'bits_per_pixel' => bits per pixel (16, 24, or 32),
+       'bytes_per_line' => Number of bytes per scan line,
+       'top_clip'       => top edge of clipping rectangle (Y),
+       'left_clip'      => left edge of clipping rectangle (X),
+       'bottom_clip'    => bottom edge of clipping rectangle (YY),
+       'right_clip'     => right edge of clipping rectangle (XX),
+       'width_clip'     => width of clipping rectangle,
+       'height_clip'    => height of clipping rectangle,
+       'color_order'    => RGB, BGR, etc,
+   }
+   ```
 
 ## splash
 
@@ -498,36 +499,36 @@ my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
 
    This is automatically displayed when this module is initialized, and the variable 'SPLASH' is true (which is the default).
 
-```perl
-$fb->splash();
-```
+   ```perl
+   $fb->splash();
+   ```
 
 ## get\_font\_list
 
    Returns an anonymous hash containing the font face names as keys and another anonymous hash assigned as the values for each key. This second hash contains the path to the font and the font's file name.
 
-```perl
-'face name' => {
-    'path' => 'path to font',
-    'font' => 'file name of font'
-},
-# ... The rest of the system fonts here
-```
+   ```perl
+   'face name' => {
+       'path' => 'path to font',
+       'font' => 'file name of font'
+   },
+   # ... The rest of the system fonts here
+   ```
 
    You may also pass in a face name and it will return that face's information:
 
-```perl
-my $font_info = $fb->get_font_list('DejaVuSerif');
-```
+   ```perl
+   my $font_info = $fb->get_font_list('DejaVuSerif');
+   ```
 
    Would return something like:
 
-```perl
-{
-    'font' => 'dejavuserif.ttf',
-    'path' => '/usr/share/fonts/truetype/'
-}
-```
+   ```perl
+   {
+       'font' => 'dejavuserif.ttf',
+       'path' => '/usr/share/fonts/truetype/'
+   }
+   ```
 
    When passing a name, it will return a hash reference (if only one match), or an array reference of hashes of fonts matching that name.  Passing in "Arial" would return the font information for "Arial Black", "Arial Narrow", and "Arial Rounded" (if they are installed on your system).
 
@@ -535,147 +536,147 @@ my $font_info = $fb->get_font_list('DejaVuSerif');
 
    Sets or returns the drawing mode, depending on how it is called.
 
-```perl
-my $draw_mode = $fb->draw_mode(); # Returns the current
-                                  # Drawing mode.
+   ```perl
+   my $draw_mode = $fb->draw_mode(); # Returns the current
+                                     # Drawing mode.
 
-# Modes explained.  These settings are global
+   # Modes explained.  These settings are global
 
-                                  # When you draw it...
+                                     # When you draw it...
 
-$fb->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
-                                  # pixel. Imager assisted drawing
-                                  # (acceleration) only works in this mode.
+   $fb->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
+                                     # pixel. Imager assisted drawing
+                                     # (acceleration) only works in this mode.
 
-$fb->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
-                                  # screen pixel.
+   $fb->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
+                                     # screen pixel.
 
-$fb->draw_mode(OR_MODE);          # Does a bitwise OR with the new pixel and
-                                  # screen pixel.  This has the benefit of
-                                  # not writing pure black to the screen
-                                  # (usually the background)
+   $fb->draw_mode(OR_MODE);          # Does a bitwise OR with the new pixel and
+                                     # screen pixel.  This has the benefit of
+                                     # not writing pure black to the screen
+                                     # (usually the background)
 
-$fb->draw_mode(AND_MODE);         # Does a bitwise AND with the new pixel and
-                                  # screen pixel.
+   $fb->draw_mode(AND_MODE);         # Does a bitwise AND with the new pixel and
+                                     # screen pixel.
 
-$fb->draw_mode(MASK_MODE);        # If pixels in the source are equal to the
-                                  # global background color, then they are
-                                  # not drawn (transparent).
+   $fb->draw_mode(MASK_MODE);        # If pixels in the source are equal to the
+                                     # global background color, then they are
+                                     # not drawn (transparent).
 
-$fb->draw_mode(UNMASK_MODE);      # Draws the new pixel on screen areas only
-                                  # equal to the background color.
+   $fb->draw_mode(UNMASK_MODE);      # Draws the new pixel on screen areas only
+                                     # equal to the background color.
 
-$fb->draw_mode(ALPHA_MODE);       # Draws the new pixel on the screen using
-                                  # the alpha channel value as a transparency
-                                  # value.  This means the new pixel will not
-                                  # be opague.
+   $fb->draw_mode(ALPHA_MODE);       # Draws the new pixel on the screen using
+                                     # the alpha channel value as a transparency
+                                     # value.  This means the new pixel will not
+                                     # be opague.
 
-$fb->draw_mode(ADD_MODE);         # Draws the new pixel on the screen by
-                                  # mathematically adding its pixel value to
-                                  # the existing pixel value
+   $fb->draw_mode(ADD_MODE);         # Draws the new pixel on the screen by
+                                     # mathematically adding its pixel value to
+                                     # the existing pixel value
 
-$fb->draw_mode(SUBTRACT_MODE);    # Draws the new pixel on the screen by
-                                  # mathematically subtracting the new pixel
-                                  # value from the existing value
+   $fb->draw_mode(SUBTRACT_MODE);    # Draws the new pixel on the screen by
+                                     # mathematically subtracting the new pixel
+                                     # value from the existing value
 
-$fb->draw_mode(MULTIPLY_MODE);    # Draws the new pixel on the screen by
-                                  # mathematically multiplying it with the
-                                  # existing pixel value (usually not too
-                                  # useful, but here for completeness)
+   $fb->draw_mode(MULTIPLY_MODE);    # Draws the new pixel on the screen by
+                                     # mathematically multiplying it with the
+                                     # existing pixel value (usually not too
+                                     # useful, but here for completeness)
 
-$fb->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
-                                  # mathematically dividing it with the
-                                  # existing pixel value (usually not too
-                                  # useful, but here for completeness)
-```
+   $fb->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
+                                     # mathematically dividing it with the
+                                     # existing pixel value (usually not too
+                                     # useful, but here for completeness)
+   ```
 
 ## normal\_mode
 
    This is an alias to draw\_mode(NORMAL\_MODE)
 
-```perl
-$fb->normal_mode();
-```
+   ```perl
+   $fb->normal_mode();
+   ```
 
 ## xor\_mode
 
    This is an alias to draw\_mode(XOR\_MODE)
 
-```perl
-$fb->xor_mode();
-```
+   ```perl
+   $fb->xor_mode();
+   ```
 
 ## or\_mode
 
    This is an alias to draw\_mode(OR\_MODE)
 
-```perl
-$fb->or_mode();
-```
+   ```perl
+   $fb->or_mode();
+   ```
 
 ## alpha\_mode
 
    This is an alias to draw\_mode(ALPHA\_MODE)
 
-```perl
-$fb->alpha_mode();
-```
+   ```perl
+   $fb->alpha_mode();
+   ```
 
 ## and\_mode
 
    This is an alias to draw\_mode(AND\_MODE)
 
-```perl
-$fb->and_mode();
-```
+   ```perl
+   $fb->and_mode();
+   ```
 
 ## mask\_mode
 
    This is an alias to draw\_mode(MASK\_MODE)
 
-```perl
-$fb->mask_mode();
-```
+   ```perl
+   $fb->mask_mode();
+   ```
 
 ## unmask\_mode
 
    This is an alias to draw\_mode(UNMASK\_MODE)
 
-```perl
-$fb->unmask_mode();
-```
+   ```perl
+   $fb->unmask_mode();
+   ```
 
 ## add\_mode
 
    This is an alias to draw\_mode(ADD\_MODE)
 
-```perl
-$fb->add_mode();
-```
+   ```perl
+   $fb->add_mode();
+   ```
 
 ## subtract\_mode
 
    This is an alias to draw\_mode(SUBTRACT\_MODE)
 
-```perl
-$fb->subtract_mode();
-```
+   ```perl
+   $fb->subtract_mode();
+   ```
 
 ## multiply\_mode
 
    This is an alias to draw\_mode(MULTIPLY\_MODE)
 
-```perl
-$fb->multiply_mode();
-```
+   ```perl
+   $fb->multiply_mode();
+   ```
 
 ## divide\_mode
 
    This is an alias to draw\_mode(DIVIDE\_MODE)
 
-```perl
-$fb->divide_mode();
-```
+   ```perl
+   $fb->divide_mode();
+   ```
 
 ## clear\_screen
 
@@ -683,11 +684,11 @@ $fb->divide_mode();
 
    You can add an optional parameter to turn the console cursor on or off too.
 
-```perl
-$fb->clear_screen();      # Leave cursor as is.
-$fb->clear_screen('OFF'); # Turn cursor OFF (Does nothing with emulated framebuffer mode).
-$fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
-```
+   ```perl
+   $fb->clear_screen();      # Leave cursor as is.
+   $fb->clear_screen('OFF'); # Turn cursor OFF (Does nothing with emulated framebuffer mode).
+   $fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
+   ```
 
 ## cls
 
@@ -697,22 +698,22 @@ $fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuff
 
    Resets the plot point at 0,0.  Resets clipping to the current screen size.  Resets the global color to whatever 'FOREGROUND' is set to, and the global background color to whatever 'BACKGROUND' is set to, and resets the drawing mode to NORMAL.
 
-```perl
-$fb->attribute_reset();
-```
+   ```perl
+   $fb->attribute_reset();
+   ```
 
 ## plot
 
    Set a single pixel in the set foreground color at position x,y with the given pixel size (or default).  Clipping applies.
 
-```perl
-$fb->plot(
-    {
-        'x'          => 20,
-        'y'          => 30,
-    }
-);
-```
+   ```perl
+   $fb->plot(
+       {
+           'x'          => 20,
+           'y'          => 30,
+       }
+   );
+   ```
 
 ## setpixel
 
@@ -726,20 +727,20 @@ $fb->plot(
 
    Returns the color of the pixel at coordinate x,y, if it lies within the clipping region.  It returns undefined if outside of the clipping region.
 
-```perl
-my $pixel = $fb->pixel({'x' => 20,'y' => 25});
+   ```perl
+   my $pixel = $fb->pixel({'x' => 20,'y' => 25});
 
-$pixel is a hash reference in the form:
+   $pixel is a hash reference in the form:
 
-{
-    'red'   => integer value, # 0 - 255
-    'green' => integer value, # 0 - 255
-    'blue'  => integer value, # 0 - 255
-    'alpha' => integer value, # 0 - 255
-    'hex'   => hexadecimal string of the values from 00000000 to FFFFFFFF
-    'raw'   => 16/24/32bit encoded string (depending on screen mode)
-}
-```
+   {
+       'red'   => integer value, # 0 - 255
+       'green' => integer value, # 0 - 255
+       'blue'  => integer value, # 0 - 255
+       'alpha' => integer value, # 0 - 255
+       'hex'   => hexadecimal string of the values from 00000000 to FFFFFFFF
+       'raw'   => 16/24/32bit encoded string (depending on screen mode)
+   }
+   ```
 
 ## getpixel
 
@@ -753,70 +754,70 @@ $pixel is a hash reference in the form:
 
    Returns the last plotted position
 
-```perl
-my $last_plot = $fb->last_plot();
-```
+   ```perl
+   my $last_plot = $fb->last_plot();
+   ```
 
    This returns an anonymous hash reference in the form:
 
-```perl
-{
-    'x' => x position,
-    'y' => y position
-}
-```
+   ```perl
+   {
+       'x' => x position,
+       'y' => y position
+   }
+   ```
 
    Or, if you want a simple array returned:
 
-```perl
-my ($x,$y) = $fb->last_plot();
-```
+   ```perl
+   my ($x,$y) = $fb->last_plot();
+   ```
 
    This returns the position as a two element array:
 
-```perl
-( x position, y position )
-```
+   ```perl
+   ( x position, y position )
+   ```
 
 ## line
 
    Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping applies.
 
-```perl
-$fb->line({
-    'x'           => 50,
-    'y'           => 60,
-    'xx'          => 100,
-    'yy'          => 332
-    'antialiased' => TRUE # Antialiasing is slower
-});
-```
+   ```perl
+   $fb->line({
+       'x'           => 50,
+       'y'           => 60,
+       'xx'          => 100,
+       'yy'          => 332
+       'antialiased' => TRUE # Antialiasing is slower
+   });
+   ```
 
 ## angle\_line
 
    Draws a line, in the global foreground color, from point x,y at an angle of 'angle', of length 'radius'.  Clipping applies.
 
-```perl
-$fb->angle_line({
-    'x'           => 50,
-    'y'           => 60,
-    'radius'      => 50,
-    'angle'       => 30.3, # Compass coordinates (0-360)
-    'antialiased' => FALSE
-});
-```
+   ```perl
+   $fb->angle_line({
+       'x'           => 50,
+       'y'           => 60,
+       'radius'      => 50,
+       'angle'       => 30.3, # Compass coordinates (0-360)
+       'antialiased' => FALSE
+   });
+   ```
 
 ## drawto
 
    Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
 
-```perl
-$fb->drawto({
-    'x'           => 50,
-    'y'           => 60,
-    'antialiased' => TRUE
-});
-```
+   ```perl
+   $fb->drawto({
+       'x'           => 50,
+       'y'           => 60,
+       'antialiased' => TRUE
+   });
+   ```
 
    *\* Antialiased lines are not accelerated.*
 
@@ -824,29 +825,29 @@ $fb->drawto({
 
    Draws a Bezier curve, based on a list of control points.
 
-```perl
-$fb->bezier(
-    {
-        'coordinates' => [
-            x0,y0,
-            x1,y1,
-            # ...              # As many as needed, there MUST be an even number of elements
-        ],
-        'points'     => 100, # Number of total points plotted for curve
-                             # The higher the number, the smoother the curve.
-        'closed'     => 1,   # optional, close it and make it a full shape.
-        'filled'     => 1    # Results may vary, optional
-        'gradient' => {
-            'direction' => 'horizontal', # or vertical
-            'colors'    => { # 2 to any number of transitions allowed
-                'red'   => [255,255,0], # Red to yellow to cyan
-                'green' => [0,255,255],
-                'blue'  => [0,0,255]
-            }
-        }
-    }
-);
-```
+   ```perl
+   $fb->bezier(
+       {
+           'coordinates' => [
+               x0,y0,
+               x1,y1,
+               # ...              # As many as needed, there MUST be an even number of elements
+           ],
+           'points'     => 100, # Number of total points plotted for curve
+                                # The higher the number, the smoother the curve.
+           'closed'     => 1,   # optional, close it and make it a full shape.
+           'filled'     => 1    # Results may vary, optional
+           'gradient' => {
+               'direction' => 'horizontal', # or vertical
+               'colors'    => { # 2 to any number of transitions allowed
+                   'red'   => [255,255,0], # Red to yellow to cyan
+                   'green' => [0,255,255],
+                   'blue'  => [0,0,255]
+               }
+           }
+       }
+   );
+   ```
 
    *\* This is not affected by the Acceleration setting.*
 
@@ -858,43 +859,43 @@ $fb->bezier(
 
    Draws an arc/pie/poly arc of a circle at point x,y.
 
-```perl
-# x             = x of center of circle
-# y             = y of center of circle
-# radius        = radius of circle
+   ```perl
+   # x             = x of center of circle
+   # y             = y of center of circle
+   # radius        = radius of circle
 
-# start_degrees = starting point, in degrees, of arc
+   # start_degrees = starting point, in degrees, of arc
 
-# end_degrees   = ending point, in degrees, of arc
+   # end_degrees   = ending point, in degrees, of arc
 
-# granularity   = This is used for accuracy in drawing
-#                 the arc.  The smaller the number, the
-#                 more accurate the arc is drawn, but it
-#                 is also slower.  Values between 0.1
-#                 and 0.01 are usually good.  Valid values
-#                 are any positive floating point number
-#                 down to 0.0001.  Anything smaller than
-#                 that is just silly.
+   # granularity   = This is used for accuracy in drawing
+   #                 the arc.  The smaller the number, the
+   #                 more accurate the arc is drawn, but it
+   #                 is also slower.  Values between 0.1
+   #                 and 0.01 are usually good.  Valid values
+   #                 are any positive floating point number
+   #                 down to 0.0001.  Anything smaller than
+   #                 that is just silly.
 
-# mode          = Specifies the drawing mode.
-#                   0 > arc only
-#                   1 > Filled pie section
-#                       Can have gradients, textures, and hatches
-#                   2 > Poly arc.  Draws a line from x,y to the
-#                       beginning and ending arc position.
+   # mode          = Specifies the drawing mode.
+   #                   0 > arc only
+   #                   1 > Filled pie section
+   #                       Can have gradients, textures, and hatches
+   #                   2 > Poly arc.  Draws a line from x,y to the
+   #                       beginning and ending arc position.
 
-$fb->draw_arc({
-    'x'             => 100,
-    'y'             => 100,
-    'radius'        => 100,
-    'start_degrees' => -40, # Compass coordinates
-    'end_degrees'   => 80,
-    'granularity'   => .05,
-    'mode'          => 2    # The object hash has 'ARC', 'PIE',
-                            # and 'POLY_ARC' as a means of filling
-                            # this value.
-});
-```
+   $fb->draw_arc({
+       'x'             => 100,
+       'y'             => 100,
+       'radius'        => 100,
+       'start_degrees' => -40, # Compass coordinates
+       'end_degrees'   => 80,
+       'granularity'   => .05,
+       'mode'          => 2    # The object hash has 'ARC', 'PIE',
+                               # and 'POLY_ARC' as a means of filling
+                               # this value.
+   });
+   ```
 
    *\* Only PIE is affected by the acceleration setting.*
 
@@ -902,34 +903,34 @@ $fb->draw_arc({
 
    Draws an arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
-```perl
-# x             = x of center of circle
+   ```perl
+   # x             = x of center of circle
 
-# y             = y of center of circle
+   # y             = y of center of circle
 
-# radius        = radius of circle
+   # radius        = radius of circle
 
-# start_degrees = starting point, in degrees, of arc
+   # start_degrees = starting point, in degrees, of arc
 
-# end_degrees   = ending point, in degrees, of arc
+   # end_degrees   = ending point, in degrees, of arc
 
-# granularity   = This is used for accuracy in drawing
-#                 the arc.  The smaller the number, the
-#                 more accurate the arc is drawn, but it
-#                 is also slower.  Values between 0.1
-#                 and 0.01 are usually good.  Valid values
-#                 are any positive floating point number
-#                 down to 0.0001.
+   # granularity   = This is used for accuracy in drawing
+   #                 the arc.  The smaller the number, the
+   #                 more accurate the arc is drawn, but it
+   #                 is also slower.  Values between 0.1
+   #                 and 0.01 are usually good.  Valid values
+   #                 are any positive floating point number
+   #                 down to 0.0001.
 
-$fb->arc({
-    'x'             => 100,
-    'y'             => 100,
-    'radius'        => 100,
-    'start_degrees' => -40,
-    'end_degrees'   => 80,
-    'granularity    => .05,
-});
-```
+   $fb->arc({
+       'x'             => 100,
+       'y'             => 100,
+       'radius'        => 100,
+       'start_degrees' => -40,
+       'end_degrees'   => 80,
+       'granularity    => .05,
+   });
+   ```
 
    *\* This is not affected by the Acceleration setting.*
 
@@ -937,50 +938,50 @@ $fb->arc({
 
    Draws a filled pie wedge at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
-```perl
-# x             = x of center of circle
+   ```perl
+   # x             = x of center of circle
 
-# y             = y of center of circle
+   # y             = y of center of circle
 
-# radius        = radius of circle
+   # radius        = radius of circle
 
-# start_degrees = starting point, in degrees, of arc
+   # start_degrees = starting point, in degrees, of arc
 
-# end_degrees   = ending point, in degrees, of arc
+   # end_degrees   = ending point, in degrees, of arc
 
-# granularity   = This is used for accuracy in drawing
-#                 the arc.  The smaller the number, the
-#                 more accurate the arc is drawn, but it
-#                 is also slower.  Values between 0.1
-#                 and 0.01 are usually good.  Valid values
-#                 are any positive floating point number
-#                 down to 0.0001.
+   # granularity   = This is used for accuracy in drawing
+   #                 the arc.  The smaller the number, the
+   #                 more accurate the arc is drawn, but it
+   #                 is also slower.  Values between 0.1
+   #                 and 0.01 are usually good.  Valid values
+   #                 are any positive floating point number
+   #                 down to 0.0001.
 
-$fb->filled_pie({
-    'x'             => 100,
-    'y'             => 100,
-    'radius'        => 100,
-    'start_degrees' => -40,
-    'end_degrees'   => 80,
-    'granularity'   => .05,
-    'gradient'      => {  # optional
-        'direction' => 'horizontal', # or vertical
-        'colors'    => { # 2 to any number of transitions allowed
-            'red'   => [255,255,0], # Red to yellow to cyan
-            'green' => [0,255,255],
-            'blue'  => [0,0,255],
-            'alpha' => [255,255,255],
-        }
-    },
-    'texture'       => { # Same as what blit_read or load_image returns
-        'width'  => 320,
-        'height' => 240,
-        'image'  => $raw_image_data
-    },
-    'hatch'         => 'hatchname' # The exported array @HATCHES contains
-                                   # the names of all the hatches
-});
-```
+   $fb->filled_pie({
+       'x'             => 100,
+       'y'             => 100,
+       'radius'        => 100,
+       'start_degrees' => -40,
+       'end_degrees'   => 80,
+       'granularity'   => .05,
+       'gradient'      => {  # optional
+           'direction' => 'horizontal', # or vertical
+           'colors'    => { # 2 to any number of transitions allowed
+               'red'   => [255,255,0], # Red to yellow to cyan
+               'green' => [0,255,255],
+               'blue'  => [0,0,255],
+               'alpha' => [255,255,255],
+           }
+       },
+       'texture'       => { # Same as what blit_read or load_image returns
+           'width'  => 320,
+           'height' => 240,
+           'image'  => $raw_image_data
+       },
+       'hatch'         => 'hatchname' # The exported array @HATCHES contains
+                                      # the names of all the hatches
+   });
+   ```
 
    *\* This is affected by the Acceleration setting.*
 
@@ -988,34 +989,34 @@ $fb->filled_pie({
 
    Draws a poly arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
 
-```perl
-# x             = x of center of circle
+   ```perl
+   # x             = x of center of circle
 
-# y             = y of center of circle
+   # y             = y of center of circle
 
-# radius        = radius of circle
+   # radius        = radius of circle
 
-# start_degrees = starting point, in degrees, of arc
+   # start_degrees = starting point, in degrees, of arc
 
-# end_degrees   = ending point, in degrees, of arc
+   # end_degrees   = ending point, in degrees, of arc
 
-# granularity   = This is used for accuracy in drawing
-#                 the arc.  The smaller the number, the
-#                 more accurate the arc is drawn, but it
-#                 is also slower.  Values between 0.1
-#                 and 0.01 are usually good.  Valid values
-#                 are any positive floating point number
-#                 down to 0.0001.
+   # granularity   = This is used for accuracy in drawing
+   #                 the arc.  The smaller the number, the
+   #                 more accurate the arc is drawn, but it
+   #                 is also slower.  Values between 0.1
+   #                 and 0.01 are usually good.  Valid values
+   #                 are any positive floating point number
+   #                 down to 0.0001.
 
-$fb->poly_arc({
-    'x'             => 100,
-    'y'             => 100,
-    'radius'        => 100,
-    'start_degrees' => -40,
-    'end_degrees'   => 80,
-    'granularity'   => .05,
-});
-```
+   $fb->poly_arc({
+       'x'             => 100,
+       'y'             => 100,
+       'radius'        => 100,
+       'start_degrees' => -40,
+       'end_degrees'   => 80,
+       'granularity'   => .05,
+   });
+   ```
 
    *\* This is not affected by the Acceleration setting.*
 
@@ -1023,35 +1024,35 @@ $fb->poly_arc({
 
    Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled ellipse or outline is drawn based on the value of $filled.  The optional factor value varies from the default 1 to change the look and nature of the output.
 
-```perl
-$fb->ellipse({
-    'x'          => 200, # Horizontal center
-    'y'          => 250, # Vertical center
-    'xradius'    => 50,
-    'yradius'    => 100,
-    'factor'     => 1, # Anything other than 1 has funkiness
-    'filled'     => 1, # optional
+   ```perl
+   $fb->ellipse({
+       'x'          => 200, # Horizontal center
+       'y'          => 250, # Vertical center
+       'xradius'    => 50,
+       'yradius'    => 100,
+       'factor'     => 1, # Anything other than 1 has funkiness
+       'filled'     => 1, # optional
 
-    ## Only one of the following may be used
+       ## Only one of the following may be used
 
-    'gradient'   => {  # optional, but 'filled' must be set
-        'direction' => 'horizontal', # or vertical 90 degree directions only
-        'colors'    => { # 2 to any number of transitions allowed
-            'red'   => [255,255,0], # Red to yellow to cyan
-            'green' => [0,255,255],
-            'blue'  => [0,0,255],
-            'alpha' => [255,255,255],
-        }
-    }
-    'texture'    => {  # Same format blit_read or load_image uses.
-        'width'   => 320,
-        'height'  => 240,
-        'image'   => $raw_image_data
-    },
-    'hatch'      => 'hatchname' # The exported array @HATCHES contains
-                                # the names of all the hatches
-});
-```
+       'gradient'   => {  # optional, but 'filled' must be set
+           'direction' => 'horizontal', # or vertical 90 degree directions only
+           'colors'    => { # 2 to any number of transitions allowed
+               'red'   => [255,255,0], # Red to yellow to cyan
+               'green' => [0,255,255],
+               'blue'  => [0,0,255],
+               'alpha' => [255,255,255],
+           }
+       }
+       'texture'    => {  # Same format blit_read or load_image uses.
+           'width'   => 320,
+           'height'  => 240,
+           'image'   => $raw_image_data
+       },
+       'hatch'      => 'hatchname' # The exported array @HATCHES contains
+                                   # the names of all the hatches
+   });
+   ```
 
    *\* This is not affected by the Acceleration setting.*
 
@@ -1061,30 +1062,30 @@ $fb->ellipse({
 
    Draws a circle at point x,y, with radius 'radius'.  It can be an outline, solid filled, or gradient filled.  Outlined circles can have any pixel size.
 
-```perl
-$fb->circle({
-    'x'        => 300, # Horizontal center
-    'y'        => 300, # Vertical center
-    'radius'   => 100,
-    'filled'   => 1, # optional
-    'gradient' => {  # optional
-        'direction' => 'horizontal', # or vertical
-        'colors'    => { # 2 to any number of transitions allowed
-            'red'   => [255,255,0], # Red to yellow to cyan
-            'green' => [0,255,255],
-            'blue'  => [0,0,255],
-            'alpha' => [255,255,255],
-        }
-    },
-    'texture'  => { # Same as what blit_read or load_image returns
-        'width'  => 320,
-        'height' => 240,
-        'image'  => $raw_image_data
-    },
-    'hatch'      => 'hatchname' # The exported array @HATCHES contains
-                                # the names of all the hatches
-});
-```
+   ```perl
+   $fb->circle({
+       'x'        => 300, # Horizontal center
+       'y'        => 300, # Vertical center
+       'radius'   => 100,
+       'filled'   => 1, # optional
+       'gradient' => {  # optional
+           'direction' => 'horizontal', # or vertical
+           'colors'    => { # 2 to any number of transitions allowed
+               'red'   => [255,255,0], # Red to yellow to cyan
+               'green' => [0,255,255],
+               'blue'  => [0,0,255],
+               'alpha' => [255,255,255],
+           }
+       },
+       'texture'  => { # Same as what blit_read or load_image returns
+           'width'  => 320,
+           'height' => 240,
+           'image'  => $raw_image_data
+       },
+       'hatch'      => 'hatchname' # The exported array @HATCHES contains
+                                   # the names of all the hatches
+   });
+   ```
 
    *\* This is affected by the Acceleration setting.*
 
@@ -1094,36 +1095,36 @@ $fb->circle({
 
    It is up to you to make sure the coordinates are "sane".  Weird things can result from twisted or complex filled polygons.
 
-```perl
-$fb->polygon({
-    'coordinates' => [
-        5,5,
-        23,34,
-        70,7
-    ],
-    'antialiased' => 1, # optional only for non-filled
-    'filled'      => 1, # optional
+   ```perl
+   $fb->polygon({
+       'coordinates' => [
+           5,5,
+           23,34,
+           70,7
+       ],
+       'antialiased' => 1, # optional only for non-filled
+       'filled'      => 1, # optional
 
-    ## Only one of the following, "filled" must be set
+       ## Only one of the following, "filled" must be set
 
-    'gradient'    => {  # optional
-        'direction' => 'horizontal', # or vertical
-        'colors'    => { # 2 to any number of transitions allowed
-            'red'   => [255,255,0], # Red to yellow to cyan
-            'green' => [0,255,255],
-            'blue'  => [0,0,255],
-            'alpha' => [255,255,255],
-        }
-    },
-    'texture'     => { # Same as what blit_read or load_image returns
-        'width'  => 320,
-        'height' => 240,
-        'image'  => $raw_image_data
-    },
-    'hatch'      => 'hatchname' # The exported array @HATCHES contains
-                                # the names of all the hatches
-});
-```
+       'gradient'    => {  # optional
+           'direction' => 'horizontal', # or vertical
+           'colors'    => { # 2 to any number of transitions allowed
+               'red'   => [255,255,0], # Red to yellow to cyan
+               'green' => [0,255,255],
+               'blue'  => [0,0,255],
+               'alpha' => [255,255,255],
+           }
+       },
+       'texture'     => { # Same as what blit_read or load_image returns
+           'width'  => 320,
+           'height' => 240,
+           'image'  => $raw_image_data
+       },
+       'hatch'      => 'hatchname' # The exported array @HATCHES contains
+                                   # the names of all the hatches
+   });
+   ```
 
    *\* Filled polygons are affected by the acceleration setting.*
 
@@ -1131,69 +1132,69 @@ $fb->polygon({
 
    Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 0, or as a filled block, if 'filled' is 1.  You may also add a gradient or texture.
 
-```perl
-$fb->box({
-    'x'          => 20,
-    'y'          => 50,
-    'xx'         => 70,
-    'yy'         => 100,
-    'radius'     => 0,                # if rounded, optional
-    'filled'     => 1,                # optional
+   ```perl
+   $fb->box({
+       'x'          => 20,
+       'y'          => 50,
+       'xx'         => 70,
+       'yy'         => 100,
+       'radius'     => 0,                # if rounded, optional
+       'filled'     => 1,                # optional
 
-    ## Only one of the following, "filled" must be set
+       ## Only one of the following, "filled" must be set
 
-    'gradient'    => {                # optional
-        'direction' => 'horizontal',  # or vertical
-        'colors'    => {              # 2 to any number of transitions allowed, and all colors must have the same number of transitions
-            'red'   => [255,255,0],   # Red to yellow to cyan
-            'green' => [0,255,255],
-            'blue'  => [0,0,255],
-            'alpha' => [255,255,255], # Yes, even alpha transparency can vary
-        }
-    },
-    'texture'     => {                # Same as what blit_read or load_image returns
-        'width'  => 320,
-        'height' => 240,
-        'image'  => $raw_image_data
-    },
-    'hatch'      => 'hatchname'       # The exported array @HATCHES contains
-                                      # the names of all the hatches
-});
-```
+       'gradient'    => {                # optional
+           'direction' => 'horizontal',  # or vertical
+           'colors'    => {              # 2 to any number of transitions allowed, and all colors must have the same number of transitions
+               'red'   => [255,255,0],   # Red to yellow to cyan
+               'green' => [0,255,255],
+               'blue'  => [0,0,255],
+               'alpha' => [255,255,255], # Yes, even alpha transparency can vary
+           }
+       },
+       'texture'     => {                # Same as what blit_read or load_image returns
+           'width'  => 320,
+           'height' => 240,
+           'image'  => $raw_image_data
+       },
+       'hatch'      => 'hatchname'       # The exported array @HATCHES contains
+                                         # the names of all the hatches
+   });
+   ```
 
 ## rbox
 
    Draws a box at point x,y with the width 'width' and height 'height'.  It draws a frame if 'filled' is 0 or a filled box if 'filled' is 1. Filled boxes draw faster than frames. Gradients or textures are also allowed.
 
-```perl
-$fb->rbox({
-    'x'          => 100,
-    'y'          => 100,
-    'width'      => 200,
-    'height'     => 150,
-    'radius'     => 0,               # if rounded, optional
-    'filled'     => 0,               # optional
+   ```perl
+   $fb->rbox({
+       'x'          => 100,
+       'y'          => 100,
+       'width'      => 200,
+       'height'     => 150,
+       'radius'     => 0,               # if rounded, optional
+       'filled'     => 0,               # optional
 
-    ## Only one of the following, "filled" must be set
+       ## Only one of the following, "filled" must be set
 
-    'gradient'    => {  # optional
-        'direction' => 'horizontal', # or vertical
-        'colors'    => {             # 2 to any number of transitions allowed
-            'red'   => [255,255,0],  # Red to yellow to cyan
-            'green' => [0,255,255],
-            'blue'  => [0,0,255],
-            'alpha' => [255,255,255],
-        }
-    },
-    'texture'     => {               # Same as what blit_read or load_image returns
-        'width'  => 320,
-        'height' => 240,
-        'image'  => $raw_image_data
-    },
-    'hatch'      => 'hatchname'      # The exported array @HATCHES contains
-                                     # the names of all the hatches
-});
-```
+       'gradient'    => {  # optional
+           'direction' => 'horizontal', # or vertical
+           'colors'    => {             # 2 to any number of transitions allowed
+               'red'   => [255,255,0],  # Red to yellow to cyan
+               'green' => [0,255,255],
+               'blue'  => [0,0,255],
+               'alpha' => [255,255,255],
+           }
+       },
+       'texture'     => {               # Same as what blit_read or load_image returns
+           'width'  => 320,
+           'height' => 240,
+           'image'  => $raw_image_data
+       },
+       'hatch'      => 'hatchname'      # The exported array @HATCHES contains
+                                        # the names of all the hatches
+   });
+   ```
 
 ## rounded\_box
 
@@ -1205,14 +1206,14 @@ $fb->rbox({
 
    Even if you are in 16 bit color mode, use 8 bit values.  They will be automatically scaled.
 
-```perl
-$fb->set_color({
-    'red'   => 255,
-    'green' => 255,
-    'blue'  => 0,
-    'alpha' => 255
-});
-```
+   ```perl
+   $fb->set_color({
+       'red'   => 255,
+       'green' => 255,
+       'blue'  => 0,
+       'alpha' => 255
+   });
+   ```
 
 ## setcolor
 
@@ -1228,14 +1229,14 @@ $fb->set_color({
 
    The same rules as set\_color apply.
 
-```perl
-$fb->set_b_color({
-    'red'   => 0,
-    'green' => 0,
-    'blue'  => 255,
-    'alpha' => 255
-});
-```
+   ```perl
+    $fb->set_b_color({
+       'red'   => 0,
+       'green' => 0,
+       'blue'  => 255,
+       'alpha' => 255
+   });
+   ```
 
 ## setbcolor
 
@@ -1251,9 +1252,9 @@ $fb->set_b_color({
 
    *NOTE:  The accelerated version of this routine may (and it is a small may) have issues.  If you find any issues, then temporarily turn off C-acceleration when calling this method.*
 
-```perl
-$fb->fill({'x' => 334, 'y' => 23});
-```
+   ```perl
+   $fb->fill({'x' => 334, 'y' => 23});
+   ```
 
    *\* This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
 
@@ -1261,33 +1262,33 @@ $fb->fill({'x' => 334, 'y' => 23});
 
    This replaces one color with another inside the clipping region.  Sort of like a fill without boundary checking.
 
-```perl
-$fb->replace_color({
-    'old' => { # Changed as of 5.56
-        'red'   => 23,
-        'green' => 48,
-        'blue'  => 98
-        # alpha is ignored
-    },
-    'new' => {
-        'red'   => 255,
-        'green' => 255,
-        'blue'  => 0
-        # alpha is ignored
-    }
-});
+   ```perl
+   $fb->replace_color({
+       'old' => { # Changed as of 5.56
+           'red'   => 23,
+           'green' => 48,
+           'blue'  => 98
+           # alpha is ignored
+       },
+       'new' => {
+           'red'   => 255,
+           'green' => 255,
+           'blue'  => 0
+           # alpha is ignored
+       }
+   });
 
-$fb->replace_color({
-    'old' => {
-        'raw' => "raw encoded string of color",
-    },
-    'new' => {
-        'raw' => "raw encoded string of color",
-    }
-});
+   $fb->replace_color({
+       'old' => {
+           'raw' => "raw encoded string of color",
+       },
+       'new' => {
+           'raw' => "raw encoded string of color",
+       }
+   });
 
-# Encoded color strings are 4 bytes wide for 32 bit, 3 bytes for 24 bit and 2 bytes for 16 bit color.
-```
+   # Encoded color strings are 4 bytes wide for 32 bit, 3 bytes for 24 bit and 2 bytes for 16 bit color.
+   ```
 
    *\* This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
 
@@ -1295,16 +1296,16 @@ $fb->replace_color({
 
    Copies a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It copies in the current drawing mode.
 
-```perl
-$fb->blit_copy({
-    'x'      => 20,
-    'y'      => 20,
-    'width'  => 30,
-    'height' => 30,
-    'x_dest' => 200,
-    'y_dest' => 200
-});
-```
+   ```perl
+   $fb->blit_copy({
+       'x'      => 20,
+       'y'      => 20,
+       'width'  => 30,
+       'height' => 30,
+       'x_dest' => 200,
+       'y_dest' => 200
+   });
+   ```
 
 ## blit\_move
 
@@ -1312,32 +1313,32 @@ $fb->blit_copy({
 
    It also returns the data moved like "blit\_read"
 
-```perl
-$fb->blit_move({
-    'x'      => 20,
-    'y'      => 20,
-    'width'  => 30,
-    'height' => 30,
-    'x_dest' => 200,
-    'y_dest' => 200,
-    'image'  => $raw_image_data, # This is optional, but can speed things up
-});
-```
+   ```perl
+   $fb->blit_move({
+       'x'      => 20,
+       'y'      => 20,
+       'width'  => 30,
+       'height' => 30,
+       'x_dest' => 200,
+       'y_dest' => 200,
+       'image'  => $raw_image_data, # This is optional, but can speed things up
+   });
+   ```
 
 ## play\_animation
 
    Plays an animation sequence loaded from "load\_image"
 
-```perl
-my $animation = $fb->load_image(
-    {
-        'file'            => 'filename.gif',
-        'center'          => CENTER_XY,
-    }
-);
+   ```perl
+   my $animation = $fb->load_image(
+       {
+           'file'            => 'filename.gif',
+           'center'          => CENTER_XY,
+       }
+   );
 
-$fb->play_animation($animation,$rate_multiplier);
-```
+   $fb->play_animation($animation,$rate_multiplier);
+   ```
 
    The animation is played at the speed described by the file's metadata multiplied by "rate\_multiplier".
 
@@ -1353,20 +1354,20 @@ $fb->play_animation($animation,$rate_multiplier);
 
    When called without parameters, it returns the current setting.
 
-```perl
-$fb->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
+   ```perl
+   $fb->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
 
-$fb->acceleration(SOFTWARE); # Turn C (software) acceleration ON
+   $fb->acceleration(SOFTWARE); # Turn C (software) acceleration ON
 
-$fb->acceleration(PERL);     # Turn acceleration OFF, using Perl
+   $fb->acceleration(PERL);     # Turn acceleration OFF, using Perl
 
-my $accel = $fb->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
+   my $accel = $fb->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
 
-my $accel = $fb->acceleration('english'); # Get current acceleration state in an english string.
-                                          # "PERL"     = PERL     = 0
-                                          # "SOFTWARE" = SOFTWARE = 1
-                                          # "HARDWARE" = HARDWARE = 2
-```
+   my $accel = $fb->acceleration('english'); # Get current acceleration state in an english string.
+                                             # "PERL"     = PERL     = 0
+                                             # "SOFTWARE" = SOFTWARE = 1
+                                             # "HARDWARE" = HARDWARE = 2
+   ```
 
    *\* The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
 
@@ -1390,26 +1391,26 @@ my $accel = $fb->acceleration('english'); # Get current acceleration state in an
 
    Passing no parameters automatically grabs the clipping region (the whole screen if clipping is off).
 
-```perl
-my $blit_data = $fb->blit_read({
-    'x'      => 30,
-    'y'      => 50,
-    'width'  => 100,
-    'height' => 100
-});
-```
+   ```perl
+   my $blit_data = $fb->blit_read({
+       'x'      => 30,
+       'y'      => 50,
+       'width'  => 100,
+       'height' => 100
+   });
+   ```
 
    Returns:
 
-```perl
-{
-    'x'      => original X position,
-    'y'      => original Y position,
-    'width'  => width,
-    'height' => height,
-    'image'  => string of image data for the block
-}
-```
+   ```perl
+   {
+       'x'      => original X position,
+       'y'      => original Y position,
+       'width'  => width,
+       'height' => height,
+       'image'  => string of image data for the block
+   }
+   ```
 
    All you have to do is change X and Y, and just pass it to "blit\_write" and it will paste it there.
 
@@ -1419,15 +1420,15 @@ my $blit_data = $fb->blit_read({
 
    It takes a hash reference.  It draws in the current drawing mode.
 
-```perl
-$fb->blit_write({
-    'x'      => 0,
-    'y'      => 0,
-    'width'  => 100,
-    'height' => 100,
-    'image'  => $blit_data
-});
-```
+   ```perl
+   $fb->blit_write({
+       'x'      => 0,
+       'y'      => 0,
+       'width'  => 100,
+       'height' => 100,
+       'image'  => $blit_data
+   });
+   ```
 
 ## blit\_transform
 
@@ -1435,89 +1436,89 @@ $fb->blit_write({
 
    You can only have one of "rotate", "scale", "merge", "flip", or make "monochrome".  You may use only one transformation per call.
 
-* **blit\_data** (mandatory)
+   * **blit\_data** (mandatory)
 
-   Used by all transformations.  It's the image data to process, in the format that "blit\_write" uses.  See the example below.
+      Used by all transformations.  It's the image data to process, in the format that "blit\_write" uses.  See the example below.
 
-* **flip**
+   * **flip**
 
-   Flips the image either "horizontally, "vertically, or "both"
+      Flips the image either "horizontally, "vertically, or "both"
 
-* **merge**
+   * **merge**
 
-   Merges one image on top of the other.  "blit\_data" is the top image, and "dest\_blit\_data" is the background image.  This takes into account alpha data values for each pixel (if in 32 bit mode).
+      Merges one image on top of the other.  "blit\_data" is the top image, and "dest\_blit\_data" is the background image.  This takes into account alpha data values for each pixel (if in 32 bit mode).
 
-   This is very usefull in 32 bit mode due to its alpha channel capabilities.
+      This is very usefull in 32 bit mode due to its alpha channel capabilities.
 
-* **rotate**
+   * **rotate**
 
-   Rotates the "blit\_data" image an arbitrary degree.  Positive degree values are counterclockwise and negative degree values are clockwise.
+      Rotates the "blit\_data" image an arbitrary degree.  Positive degree values are counterclockwise and negative degree values are clockwise.
 
-   Two types of rotate methods are available, an extrememly fast, but visually slightly less appealing method, and a slower, but looks better, method.  Seriously though, the fast method looks pretty darn good anyway.  I recommend "fast".
+      Two types of rotate methods are available, an extrememly fast, but visually slightly less appealing method, and a slower, but looks better, method.  Seriously though, the fast method looks pretty darn good anyway.  I recommend "fast".
 
-* **scale**
+   * **scale**
 
-   Scales the image to "width" x "height".  This is the same as how scale works in "load\_image".  The "type" value tells it how to scale (see the example).
+      Scales the image to "width" x "height".  This is the same as how scale works in "load\_image".  The "type" value tells it how to scale (see the example).
 
-```perl
-$fb->blit_transform(
-    {
-        # blit_data is mandatory
-        'blit_data' => { # Same as what blit_read or load_image returns
-            'x'      => 0, # This is relative to the dimensions of "dest_blit_data" for "merge"
-            'y'      => 0, # ^^
-                'width'  => 300,
-                'height' => 200,
-                'image'  => $image_data
-        },
+   ```perl
+   $fb->blit_transform(
+       {
+           # blit_data is mandatory
+           'blit_data' => { # Same as what blit_read or load_image returns
+               'x'      => 0, # This is relative to the dimensions of "dest_blit_data" for "merge"
+               'y'      => 0, # ^^
+                   'width'  => 300,
+                   'height' => 200,
+                   'image'  => $image_data
+           },
 
-        'merge'  => {
-            'dest_blit_data' => { # MUST have same or greater dimensions as 'blit_data'
-                 'x'      => 0,
-                 'y'      => 0,
-                 'width'  => 300,
-                 'height' => 200,
-                 'image'  => $image_data
-             }
-         },
+           'merge'  => {
+               'dest_blit_data' => { # MUST have same or greater dimensions as 'blit_data'
+                    'x'      => 0,
+                    'y'      => 0,
+                    'width'  => 300,
+                    'height' => 200,
+                    'image'  => $image_data
+                }
+            },
 
-         'rotate' => {
-             'degrees' => 45, # 0-360 degrees. Negative numbers rotate clockwise.
-             'quality' => 'high', # "high" or "fast" are your choices, with "fast" being the default
-         },
+            'rotate' => {
+                'degrees' => 45, # 0-360 degrees. Negative numbers rotate clockwise.
+                'quality' => 'high', # "high" or "fast" are your choices, with "fast" being the default
+            },
 
-         'flip' => 'horizontal', # or "vertical" or "both"
+            'flip' => 'horizontal', # or "vertical" or "both"
 
-         'scale'  => {
-             'x'          => 0,
-             'y'          => 0,
-             'width'      => 500,
-             'height'     => 300,
-             'scale_type' => 'min' #  'min'     = The smaller of the two
-                                   #              sizes are used (default)
-                                   #  'max'     = The larger of the two
-                                   #              sizes are used
-                                   #  'nonprop' = Non-proportional sizing
-                                   #              The image is scaled to
-                                   #              width x height exactly.
-         },
+            'scale'  => {
+                'x'          => 0,
+                'y'          => 0,
+                'width'      => 500,
+                'height'     => 300,
+                'scale_type' => 'min' #  'min'     = The smaller of the two
+                                      #              sizes are used (default)
+                                      #  'max'     = The larger of the two
+                                      #              sizes are used
+                                      #  'nonprop' = Non-proportional sizing
+                                      #              The image is scaled to
+                                      #              width x height exactly.
+            },
 
-         'monochrome' => TRUE      # Makes the image data monochrome
-     }
-);
-```
+            'monochrome' => TRUE      # Makes the image data monochrome
+        }
+   );
+   ```
 
    It returns the transformed image in the same format the other BLIT methods use.  Note, the width and height may be changed!  So always use the returned data as the correct new data.
 
-```perl
-{
-    'x'      => 0,     # copied from "blit_data"
-    'y'      => 0,     # copied from "blit_data"
-    'width'  => 100,   # width of transformed image data
-    'height' => 100,   # height of transformed image data
-    'image'  => $image # image data
-}
-```
+   ```perl
+   {
+       'x'      => 0,     # copied from "blit_data"
+       'y'      => 0,     # copied from "blit_data"
+       'width'  => 100,   # width of transformed image data
+       'height' => 100,   # height of transformed image data
+       'image'  => $image # image data
+   }
+   ```
 
    *\* Rotate and Flip are affected by the acceleration setting.*
 
@@ -1525,9 +1526,9 @@ $fb->blit_transform(
 
    Turns off clipping, and resets the clipping values to the full size of the screen.
 
-```perl
-$fb->clip_reset();
-```
+   ```perl
+   $fb->clip_reset();
+   ```
 
 ## clip\_off
 
@@ -1537,27 +1538,27 @@ $fb->clip_reset();
 
    Sets the clipping rectangle starting at the top left point x,y and ending at bottom right point xx,yy.
 
-```perl
-$fb->clip_set({
-    'x'  => 10,
-    'y'  => 10,
-    'xx' => 300,
-    'yy' => 300
-});
-```
+   ```perl
+   $fb->clip_set({
+       'x'  => 10,
+       'y'  => 10,
+       'xx' => 300,
+       'yy' => 300
+   });
+   ```
 
 ## clip\_rset
 
    Sets the clipping rectangle to point x,y,width,height
 
-```perl
-$fb->clip_rset({
-    'x'      => 10,
-    'y'      => 10,
-    'width'  => 600,
-    'height' => 400
-});
-```
+   ```perl
+   $fb->clip_rset({
+       'x'      => 10,
+       'y'      => 10,
+       'width'  => 600,
+       'height' => 400
+   });
+   ```
 
 ## monochrome
 
@@ -1569,20 +1570,20 @@ $fb->clip_rset({
 
    Expects two parameters, 'image' and 'bits'.  The parameter 'image' is a string containing the image data.  The parameter 'bits' is how many bits per pixel make up the image.  Valid values are 16, 24, and 32 only.
 
-```perl
-$fb->monochrome({
-    'image' => "image data",
-    'bits'  => 32
-});
-```
+   ```perl
+   $fb->monochrome({
+       'image' => "image data",
+       'bits'  => 32
+   });
+   ```
 
    It returns 'image' back, but now in greyscale (still the same RGB format though).
 
-```perl
-{
-    'image' => "monochrome image data"
-}
-```
+   ```perl
+   {
+       'image' => "monochrome image data"
+   }
+   ```
 
    *\* You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
 
@@ -1598,44 +1599,44 @@ $fb->monochrome({
 
    If draw mode is "normal", then mask mode is automatically used for best output.
 
-```perl
-my $bounding_box = $fb->ttf_print({
-    'x'            => 20,
-    'y'            => 100, # baseline position
-    'height'       => 16,
-    'wscale'       => 1,   # Scales the width.  1 is normal
-    'color'        => 'FFFF00FF', # Hex value of color 00-FF (RRGGBBAA)
-    'text'         => 'Hello World!',
-    'font_path'    => '/usr/share/fonts/truetype', # Optional
-    'face'         => 'Arial.ttf',                 # Optional
-    'bounding_box' => TRUE,
-    'center'       => CENTER_X,
-    'antialias'    => TRUE
-});
+   ```perl
+   my $bounding_box = $fb->ttf_print({
+       'x'            => 20,
+       'y'            => 100, # baseline position
+       'height'       => 16,
+       'wscale'       => 1,   # Scales the width.  1 is normal
+       'color'        => 'FFFF00FF', # Hex value of color 00-FF (RRGGBBAA)
+       'text'         => 'Hello World!',
+       'font_path'    => '/usr/share/fonts/truetype', # Optional
+       'face'         => 'Arial.ttf',                 # Optional
+       'bounding_box' => TRUE,
+       'center'       => CENTER_X,
+       'antialias'    => TRUE
+   });
 
-$fb->ttf_print($bounding_box);
-```
+   $fb->ttf_print($bounding_box);
+   ```
 
    Here's a shortcut:
 
-```perl
-$fb->ttf_print(
-    $fb->ttf_print({
-        'x'            => 20,
-        'y'            => 100, # baseline position
-        'height'       => 16,
-        'color'        => 'FFFF00FF', # RRGGBBAA
-        'text'         => 'Hello World!',
-        'font_path'    => '/usr/share/fonts/truetype', # Optional
-        'face'         => 'Arial.ttf',                 # Optional
-        'bounding_box' => TRUE,
-        'rotate'       => 45,    # optonal
-        'center'       => CENTER_X,
-        'antialias'    => 1,
-        'shadow'       => shadow size
-     })
-);
-```
+   ```perl
+   $fb->ttf_print(
+       $fb->ttf_print({
+           'x'            => 20,
+           'y'            => 100, # baseline position
+           'height'       => 16,
+           'color'        => 'FFFF00FF', # RRGGBBAA
+           'text'         => 'Hello World!',
+           'font_path'    => '/usr/share/fonts/truetype', # Optional
+           'face'         => 'Arial.ttf',                 # Optional
+           'bounding_box' => TRUE,
+           'rotate'       => 45,    # optonal
+           'center'       => CENTER_X,
+           'antialias'    => 1,
+           'shadow'       => shadow size
+        })
+   );
+   ```
 
    *\* Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
 
@@ -1651,44 +1652,44 @@ $fb->ttf_print(
 
    *\* This does _NOT_ scroll text.  It merely truncates what doesn't fit.  It returns where in the text string it last printed before truncation.  It's also quite slow.*
 
-```perl
-$fb->ttf_paragraph(
-    {
-        'text'         => 'String to print',
+   ```perl
+   $fb->ttf_paragraph(
+       {
+           'text'         => 'String to print',
 
-        'x'            => 0,                  # Where to start printing
-        'y'            => 20,                 #
+           'x'            => 0,                  # Where to start printing
+           'y'            => 20,                 #
 
-        'size'         => 12,                 # Optional Font size, default is 16
+           'size'         => 12,                 # Optional Font size, default is 16
 
-        'color'        => 'FFFF00FF',         # RRGGBBAA
+           'color'        => 'FFFF00FF',         # RRGGBBAA in hex
 
-        'justify'      => 'justified'         # Optional justification, default
-                                              # is "left".  Posible values are:
-                                              #  "left", "right", "center", and
-                                              #  "justified"
+           'justify'      => 'justified'         # Optional justification, default
+                                                 # is "left".  Posible values are:
+                                                 #  "left", "right", "center", and
+                                                 #  "justified"
 
-        'line_spacing' => 5,                  # This adjusts the default line
-                                              # spacing by positive or negative
-                                              # amounts.  The default is 0.
+           'line_spacing' => 5,                  # This adjusts the default line
+                                                 # spacing by positive or negative
+                                                 # amounts.  The default is 0.
 
-        'face'         => 'Ariel',            # Optional, overrides the default
+           'face'         => 'Ariel',            # Optional, overrides the default
 
-        'font_path'    => '/usr/share/fonts', # Optional, else uses the default
-    }
-);
-```
+           'font_path'    => '/usr/share/fonts', # Optional, else uses the default
+       }
+   );
+   ```
 
 ## get\_face\_name
 
    Returns the TrueType face name based on the parameters passed.
 
-```perl
-my $face_name = $fb->get_face_name({
-    'font_path' => '/usr/share/fonts/TrueType/',
-    'face'      => 'FontFileName.ttf'
-});
-```
+   ```perl
+   my $face_name = $fb->get_face_name({
+       'font_path' => '/usr/share/fonts/TrueType/',
+       'face'      => 'FontFileName.ttf'
+   });
+   ```
 
 ## load\_image
 
@@ -1698,120 +1699,118 @@ my $face_name = $fb->get_face_name({
 
    If 'width' and/or 'height' is given, the image is resized.  Note, resizing is CPU intensive.  Nevertheless, this is done by the Imager library (compiled C) so it is relatively fast.
 
-```perl
-$fb->blit_write(
-    $fb->load_image(
-        {
-            'x'          => 0,     # Optional (only applies if CENTER_X or
-                                   # CENTER_XY is not used)
+   ```perl
+   my $image_data = $fb->load_image(
+       {
+           'x'          => 0,     # Optional (only applies if CENTER_X or
+                                  # CENTER_XY is not used)
 
-            'y'          => 0,     # Optional (only applies if CENTER_Y or
-                                   # CENTER_XY is not used)
+           'y'          => 0,     # Optional (only applies if CENTER_Y or
+                                  # CENTER_XY is not used)
 
-            'width'      => 1920,  # Optional. Resizes to this maximum width.
-                                   # It fits the image to this size.
+           'width'      => 1920,  # Optional. Resizes to this maximum width.
+                                  # It fits the image to this size.
 
-            'height'     => 1080,  # Optional. Resizes to this maximum height.
-                                   # It fits the image to this size
+           'height'     => 1080,  # Optional. Resizes to this maximum height.
+                                  # It fits the image to this size
 
-            'scale_type' => 'min', # Optional. Sets the type of scaling
-                                   #
-                                   #  'min'     = The smaller of the two sizes
-                                   #              are used (default)
-                                   #  'max'     = The larger of the two sizes
-                                   #              are used
-                                   #  'nonprop' = Non-proportional sizing
-                                   #              The image is scaled to
-                                   #              width x height exactly.
+           'scale_type' => 'min', # Optional. Sets the type of scaling
+                                  #
+                                  #  'min'     = The smaller of the two sizes
+                                  #              are used (default)
+                                  #  'max'     = The larger of the two sizes
+                                  #              are used
+                                  #  'nonprop' = Non-proportional sizing
+                                  #              The image is scaled to
+                                  #              width x height exactly.
 
-            'autolevels' => FALSE, # Optional.  It does a color correction.
-                                   # Sometimes this works well, and sometimes
-                                   # it looks quite ugly.  It depends on the
-                                   # image
+           'autolevels' => FALSE, # Optional.  It does a color correction.
+                                  # Sometimes this works well, and sometimes
+                                  # it looks quite ugly.  It depends on the
+                                  # image
 
-            'center'     => CENTER_XY, # Optional
-                                       # Three centering options are available
-                                       #  CENTER_X  = center horizontally
-                                       #  CENTER_Y  = center vertically
-                                       #  CENTER_XY = center horizontally and
-                                       #              vertically.  Placing it
-                                       #              right in the middle of
-                                       #              the screen.
+           'center'     => CENTER_XY, # Optional
+                                      # Three centering options are available
+                                      #  CENTER_X  = center horizontally
+                                      #  CENTER_Y  = center vertically
+                                      #  CENTER_XY = center horizontally and
+                                      #              vertically.  Placing it
+                                      #              right in the middle of
+                                      #              the screen.
 
-            'file'       => 'image.png', # Usually needs full path
+           'file'       => 'image.png', # Usually needs full path
 
-            'convertalpha' => TRUE, # Converts the color matching the global
-                                    # background color to have the same alpha
-                                    # channel value as the global background,
-                                    # which is beneficial for using 'merge'
-                                    # in 'blit_transform'.
+           'convertalpha' => TRUE, # Converts the color matching the global
+                                   # background color to have the same alpha
+                                   # channel value as the global background,
+                                   # which is beneficial for using 'merge'
+                                   # in 'blit_transform'.
 
-            'preserve_transparency' => FALSE,
-                                    # Preserve the transparency of GIFs for
-                                    # use with "mask_mode" playback.
-                                    # This can allow for slightly faster
-                                    # playback of animated GIFs on systems
-                                    # using the acceration features of this
-                                    # module.  However, not all animated
-                                    # GIFs look right when this is done.
-                                    # the safest setting is to not use this,
-                                    # and playback using normal_mode.
+           'preserve_transparency' => FALSE,
+                                   # Preserve the transparency of GIFs for
+                                   # use with "mask_mode" playback.
+                                   # This can allow for slightly faster
+                                   # playback of animated GIFs on systems
+                                   # using the acceration features of this
+                                   # module.  However, not all animated
+                                   # GIFs look right when this is done.
+                                   # the safest setting is to not use this,
+                                   # and playback using normal_mode.
 
-            'fpsmax' => 10,
-                                    # If the file is a video file, it will be
-                                    # converted to a GIF file.  This value
-                                    # determines the maximum number of frames
-                                    # per second allowed in the conversion.
-                                    # Note, the higher the number, the slower
-                                    # the conversion process.  This only works
-                                    # if "ffmpeg" is installed.
-            }
-      )
-);
-```
+           'fpsmax' => 10,
+                                   # If the file is a video file, it will be
+                                   # converted to a GIF file.  This value
+                                   # determines the maximum number of frames
+                                   # per second allowed in the conversion.
+                                   # Note, the higher the number, the slower
+                                   # the conversion process.  This only works
+                                   # if "ffmpeg" is installed.
+           }
+     );
+   ```
 
-If a single image is loaded, it returns a reference to an anonymous hash, of the format:
+   If a single image is loaded, it returns a reference to an anonymous hash, of the format:
 
-```perl
-{
-    'x'      => horizontal position calculated (or passed through),
-    'y'      => vertical position calculated (or passed through),
-    'width'  => Width of the image,
-    'height' => Height of the image,
-    'tags'   => The tags of the image (hashref)
-    'image'  => [raw image data]
-}
-```
+   ```perl
+   {
+       'x'      => horizontal position calculated (or passed through),
+       'y'      => vertical position calculated (or passed through),
+       'width'  => Width of the image,
+       'height' => Height of the image,
+       'tags'   => The tags of the image (hashref)
+       'image'  => [raw image data]
+   }
+   ```
 
    If the image has multiple frames, then a reference to an array of hashes is returned:
 
-```perl
-# NOTE:  X and Y positions can change frame to frame, so use them for each
-#        frame!  Also, X and Y are based upon what was originally passed
-#        through, else they reference 0,0 (but only if you didn't give an X,Y
-#        value initially).
+   ```perl
+   # NOTE:  X and Y positions can change frame to frame, so use them for each
+   #        frame!  Also, X and Y are based upon what was originally passed
+   #        through, else they reference 0,0 (but only if you didn't give an X,Y
+   #        value initially).
 
-# ALSO:  The tags may also specify offsets, and they will be taken into account.
+   # ALSO:  The tags may also specify offsets, and they will be taken into account.
 
-[
-    { # Frame 1
-        'x'      => horizontal position calculated (or passed through),
-        'y'      => vertical position calculated (or passed through),
-        'width'  => Width of the image,
-        'height' => Height of the image,
-        'tags'   => The tags of the image (hashref)
-        'image'  => [raw image data]
-    },
-    { # Frame 2 (and so on)
-        'x'      => horizontal position calculated (or passed through),
-        'y'      => vertical position calculated (or passed through),
-        'width'  => Width of the image,
-        'height' => Height of the image,
-        'tags'   => The tags of the image (hashref)
-        'image'  => [raw image data]
-    }
-]
-```
+   [
+       { # Frame 1
+           'x'      => horizontal position calculated (or passed through),
+           'y'      => vertical position calculated (or passed through),
+           'width'  => Width of the image,
+           'height' => Height of the image,
+           'tags'   => The tags of the image (hashref)
+           'image'  => [raw image data]
+       },
+       { # Frame 2 (and so on)
+           'x'      => horizontal position calculated (or passed through),
+           'y'      => vertical position calculated (or passed through),
+           'width'  => Width of the image,
+           'height' => Height of the image,
+           'tags'   => The tags of the image (hashref)
+           'image'  => [raw image data]
+       }
+   ]
+   ```
 
 ## screen\_dump
 
@@ -1843,59 +1842,59 @@ Formats can be (they are case-insensitive):
 
     The Tagged Image File Format.  Sort of an older version of PNG (but not the same, just similar in capability).  Sometimes used in FAX formats.
 
-```perl
-$fb->screen_dump(
-    {
-        'file'   => '/path/filename', # name of file to be written
-        'format' => 'jpeg',           # jpeg, gif, png, pnm, tga, or tiff
+   ```perl
+   $fb->screen_dump(
+       {
+           'file'   => '/path/filename', # name of file to be written
+           'format' => 'jpeg',           # jpeg, gif, png, pnm, tga, or tiff
 
-        # for JPEG formats only
-        'quality' => 75,              # quality of the JPEG file 1-100% (the
-                                      # higher the number, the better the
-                                      # quality, but the larger the file)
+           # for JPEG formats only
+           'quality' => 75,              # quality of the JPEG file 1-100% (the
+                                         # higher the number, the better the
+                                         # quality, but the larger the file)
 
-        # for GIF formats only
-        'dither'  => 'floyd',         # Can be "floyd", "jarvis" or "stucki"
-    }
-);
-```
+           # for GIF formats only
+           'dither'  => 'floyd',         # Can be "floyd", "jarvis" or "stucki"
+       }
+   );
+   ```
 
 ## RGB565\_to\_RGB888
 
    Convert a 16 bit color value to a 24 bit color value.  This requires the color to be a two byte packed string.
 
-```perl
-my $color24 = $fb->RGB565_to_RGB888(
-    {
-        'color' => $color16
-    }
-);
-```
+   ```perl
+   my $color24 = $fb->RGB565_to_RGB888(
+       {
+           'color' => $color16
+       }
+   );
+   ```
 
 ## RGB565\_to\_RGB8888
 
    Convert a 16 bit color value to a 32 bit color value.  This requires the color to be a two byte packed string.  The alpha value is either a value passed in or the default 255.
 
-```perl
-my $color32 = $fb->RGB565_to_RGB8888(
-    {
-        'color' => $color16, # Required
-        'alpha' => 128       # Optional
-    }
-);
-```
+   ```perl
+   my $color32 = $fb->RGB565_to_RGB8888(
+       {
+           'color' => $color16, # Required
+           'alpha' => 128       # Optional
+       }
+   );
+   ```
 
 ## RGB888\_to\_RGB565
 
    Convert 24 bit color value to a 16 bit color value.  This requires a three byte packed string.
 
-```perl
-my $color16 = $fb->RGB888_to_RGB565(
-    {
-        'color' => $color24
-    }
-);
-```
+   ```perl
+   my $color16 = $fb->RGB888_to_RGB565(
+       {
+           'color' => $color24
+       }
+   );
+   ```
 
    This simply does a bitshift, nothing more.
 
@@ -1903,13 +1902,13 @@ my $color16 = $fb->RGB888_to_RGB565(
 
    Convert 32 bit color value to a 16 bit color value.  This requires a four byte packed string.
 
-```perl
-my $color16 = $fb->RGB8888_to_RGB565(
-    {
-        'color' => $color32,
-    }
-);
-```
+   ```perl
+   my $color16 = $fb->RGB8888_to_RGB565(
+       {
+           'color' => $color32,
+       }
+   );
+   ```
 
    This simply does a bitshift, nothing more
 
@@ -1917,14 +1916,14 @@ my $color16 = $fb->RGB8888_to_RGB565(
 
    Convert 24 bit color value to a 32 bit color value.  This requires a three byte packed string.  The alpha value is either a value passed in or the default 255.
 
-```perl
-my $color32 = $fb->RGB888_to_RGBA8888(
-    {
-        'color' => $color24,
-        'alpha' => 64
-    }
-);
-```
+   ```perl
+   my $color32 = $fb->RGB888_to_RGBA8888(
+       {
+           'color' => $color24,
+           'alpha' => 64
+       }
+   );
+   ```
 
    This just simply adds an alpha value.  No actual color conversion is done.
 
@@ -1932,13 +1931,13 @@ my $color32 = $fb->RGB888_to_RGBA8888(
 
    Convert 32 bit color value to a 24 bit color value.  This requires a four byte packed string.
 
-```perl
-my $color24 = $fb->RGBA8888_to_RGB888(
-    {
-        'color' => $color32
-    }
-);
-```
+   ```perl
+   my $color24 = $fb->RGBA8888_to_RGB888(
+       {
+           'color' => $color32
+       }
+   );
+   ```
 
    This just removes the alpha value.  No color conversion is actually done.
 
@@ -1952,19 +1951,19 @@ my $color24 = $fb->RGBA8888_to_RGB888(
 
    Returns the active console and the expected console
 
-```perl
-my ($active_console, $expected_console) = $fb->which_console();
-```
+   ```perl
+   my ($active_console, $expected_console) = $fb->which_console();
+   ```
 
 ## active\_console
 
    Indicates if the current console is the expected console.  It returns true or false.
 
-```perl
-if ($self->active_console()) {
-    # Do something
-}
-```
+   ```perl
+   if ($self->active_console()) {
+       # Do something
+   }
+   ```
 
 ## wait\_for\_console
 
@@ -1980,15 +1979,15 @@ if ($self->active_console()) {
 
    *\* Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
 
-```perl
-# $fb->initialize\_mouse(1);  # Turn on the mouse handler
-```
+   ```perl
+   $fb->initialize\_mouse(1);  # Turn on the mouse handler
+   ```
 
    or
 
-```perl
-$fb->initialize\_mouse(0);  # Turn off the mouse handler
-```
+   ```perl
+   $fb->initialize\_mouse(0);  # Turn off the mouse handler
+   ```
 
 ## poll\_mouse
 
@@ -2004,41 +2003,41 @@ $fb->initialize\_mouse(0);  # Turn off the mouse handler
 
    Return as an array:
 
-```perl
-my ($mouseb, $mousex, $mousey) =  $fb->get_mouse();
-```
+   ```perl
+   my ($mouseb, $mousex, $mousey) =  $fb->get_mouse();
+   ```
 
    Return as a hash reference:
 
-```perl
-my $mouse = $fb->get_mouse();
-```
+   ```perl
+   my $mouse = $fb->get_mouse();
+   ```
 
    Returns
 
-```perl
-{
-    'button' => button value, # Button state according to bits
-                              #  Bit 0 = Left
-                              #  Bit 1 = Right
-                              # Other bits according to driver
-    'x'      => Mouse X coordinate,
-    'y'      => Mouse Y coordinate,
-}
-```
+   ```perl
+   {
+       'button' => button value, # Button state according to bits
+                                 #  Bit 0 = Left
+                                 #  Bit 1 = Right
+                                 # Other bits according to driver
+       'x'      => Mouse X coordinate,
+       'y'      => Mouse Y coordinate,
+   }
+   ```
 
 ## set\_mouse
 
    Sets the mouse position
 
-```perl
-$fb->set_mouse(
-    {
-        'x' => 0,
-        'y' => 0,
-    }
-);
-```
+   ```perl
+   $fb->set_mouse(
+       {
+           'x' => 0,
+           'y' => 0,
+       }
+   );
+   ```
 
    *\* NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
 
@@ -2084,10 +2083,6 @@ $fb->set_mouse(
 
    Horizontal lines and filled boxes draw very fast, even in Perl mode, seriously.  Learn to exploit them.
 
-## PIXEL SIZE
-
-   Pixel sizes over 1 utilize a filled "box" or "circle" (negative numbers for circle) to do the drawing.  This is why the larger the "pixel", the slower the draw.
-
 ## MULTIPLE "HEADS" (monitors)
 
    As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
@@ -2128,9 +2123,9 @@ $fb->set_mouse(
 
        Try running the "primitives.pl" in the "examples" directory in the following way (assuming your screen is larger than 640x480):
 
-```bash
-perl examples/primitives.pl --x=640 --y=480
-```
+   ```bash
+   perl examples/primitives.pl --x=640 --y=480
+   ```
 
    This forces the module to pretend it is rendering for a smaller resolution (by placing this screen in the middle of the actual one).  If it works fine, then try changing the "x" value back to your screen's actual width, but still make the "y" value slightly smaller.  Keep decreasing this "y" value until it works.
 
@@ -2140,9 +2135,9 @@ perl examples/primitives.pl --x=640 --y=480
 
    Yeah this can look weird.  This is likely because there's some buffering going on.  The module attempts to turn it off, but if, for some reason, it is buffering anyway, try adding the following to points in your code where displaying a full render is necessary:
 
-```perl
-$fb->_flush_screen();
-```
+   ```perl
+   $fb->_flush_screen();
+   ```
 
    This should force a full screen flush, but only use this if you really need it.
 
@@ -2156,9 +2151,9 @@ $fb->_flush_screen();
 
       Second, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "**video**" group.  Let's say the account is called "username", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint/RedHat/Fedora) environment you would use this to add "username" (your account name) to the "video" group:
 
-```bash
-sudo usermod -a -G video username
-```
+   ```bash
+   sudo usermod -a -G video username
+   ```
 
    Once that is run (changing "username" to whatever your username is), log out, then log back in, and it should work.
 
@@ -2198,9 +2193,9 @@ sudo usermod -a -G video username
 
       If none of these ideas work, then send me an email, and I may be able to get it functioning for you.  Please run the `dump.pl` script inside the "examples" directory inside this module's package:
 
-```bash
-perl dump.pl
-```
+   ```bash
+   perl dump.pl
+   ```
 
    Please include the dump file it creates (dump.log) **as a file attachment** to your email.  Please do _not_ include it inline as part of the message text.
 
@@ -2268,6 +2263,6 @@ perl dump.pl
 
    Clone
 
-```bash
-git clone https://github.com/richcsst/Graphics-Framebuffer.git
-```
+   ```bash
+   git clone https://github.com/richcsst/Graphics-Framebuffer.git
+   ```
