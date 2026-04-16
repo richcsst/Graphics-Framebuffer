@@ -40,7 +40,7 @@ While reading this man page will describe how each method works, looking at the 
 
 A (mostly) Perl graphics library for exclusive use in a Linux console framebuffer environment.  It is written for simplicity, without the need for complex API's and drivers with "surfaces" and such.
 
-Back in the old days, computers drew graphics this way, and it was simple and easy to do.  I was writing a console based media playing program, and was not satisfied with the limited abilities offered by the nCurses library, and I did not want the overhead of the X-Windows environment to get in the way.  My intention was to create a mobile media server.  In case you are wondering, that project has been quite successful, and I am still making improvements to it.  I may even include it in the ```examples``` directory on future versions.
+Back in the old days, computers drew graphics this way, and it was simple and easy to do.  I was writing a console based media playing program, and was not satisfied with the limited abilities offered by the nCurses library, and I did not want the overhead of the X-Windows environment to get in the way.  My intention was to create a mobile media server.
 
 There are places where Perl just won't cut it.  So I use the **Imager** library to take up the slack, or my own C code.  **Imager** is just used to load images,, save images, merge, rotate, and draw TrueType/Type1 text.  I am also incorporating compiled C to further assist with speed.  That is being implemented step by step, but "acceleration" will always be optional, and pure Perl routines always available for those systems without a C compiler or ```Inline:C``` available.
 
