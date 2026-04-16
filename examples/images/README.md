@@ -66,12 +66,6 @@
 
 ![Divider](../../pics/pink.jpg?raw=true "Divider")
 
-## Sonic Mania
-
-[![Sonic Mania](SonicMania.png?raw=true "Sonic Mania")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/SonicMania.png)
-
-![Divider](../../pics/pink.jpg?raw=true "Divider")
-
-# Duck Fire
+## Duck Fire
 
 [![Duck Fire](DuckFire.gif?raw=true "Duck Fire")](https://github.com/richcsst/Graphics-Framebuffer/blob/master/examples/images/DuckFire.gif)
