@@ -1070,10 +1070,10 @@ NOTE:
        'y'        => 300, # Vertical center
        'radius'   => 100,
 	   'colors'   => { # Highest intensity of desired color
-	       'red' => 255,
-		   'green' => 0,
-		   'blue'  => 128,
-		   'alpha' => 64, # OPTIONAL, else alpha is ignored
+           'red' => 255,
+           'green' => 0,
+           'blue'  => 128,
+           'alpha' => 64, # OPTIONAL, else alpha is ignored
 	   },
    });
    ```
