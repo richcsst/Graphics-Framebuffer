@@ -281,7 +281,7 @@ NOTE:
      - [wait\_for\_console](#wait-for-console) - Blocking if not the correct console.
      - [which\_console](#which-console) - Returnsd the current console.
    * Primitives
-     - [ball](#ball) - Draw pseudo 3D balls.
+     - [ball](#ball) - Draw pseudo 3D ball.
      - [bezier](#bezier) - Draw bezier curved lines.
      - [box](#box) - Draw a box.
      - [circle](#circle) - Draw a circle.
