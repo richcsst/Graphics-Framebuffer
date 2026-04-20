@@ -263,6 +263,7 @@ NOTE:
      - [wait\_for\_console](#wait_for_console) - Blocking if not the correct console.
      - [which\_console](#which_console) - Returnsd the current console.
    * Primitives
+     - [ball](#ball) - Draw pseudo 3D balls.
      - [bezier](#bezier) - Draw bezier curved lines.
      - [box](#box) - Draw a box.
      - [circle](#circle) - Draw a circle.
@@ -1057,6 +1058,25 @@ NOTE:
    *\* This is not affected by the Acceleration setting.*
 
    *\*\* Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
+
+## ball
+
+   Draws a filled circle resembling a 3D ball, similar to a Christmas tree globe.  It draws it at point x,y with radius 'radius' and the brightest color.  It ignores the current foreground color and uses its own color definition.
+   
+   ```perl
+   $fb->ball({
+       'x' => 300, #n Horizontal center
+       'x'        => 300, # Horizontal center
+       'y'        => 300, # Vertical center
+       'radius'   => 100,
+	   'colors'   => { # Highest intensity of desired color
+	       'red' => 255,
+		   'green' => 0,
+		   'blue'  => 128,
+		   'alpha' => 64, # OPTIONAL, else alpha is ignored
+	   },
+   });
+   ```
 
 ## circle
 
