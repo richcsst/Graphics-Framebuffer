@@ -4,6 +4,8 @@
 
 [![Graphics::Framebuffer Logo](pics/GFB.png?raw=true "Graphics::Framebuffer Click For Demo Video")](https://www.youtube.com/watch?v=X8RpFBq6F9I)
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 ## Contents
 
 * [Synopsis](#synopsis)
@@ -21,6 +23,8 @@
 * [Tell Me About Your Project](#tell-me-about-your-project)
 * [YouTube](#youtube)
 * [GitHub](#github)
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # SYNOPSIS
 
@@ -54,6 +58,8 @@ Drawing is this simple
 
    While reading this man page will describe how each method works, looking at the source code of "examples/primitives.pl" will demonstrate how each works.
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # DESCRIPTION
 
    A (mostly) Perl graphics library for exclusive use in a Linux console framebuffer environment.  It is written for simplicity, without the need for complex API's and drivers with "surfaces" and such.
@@ -78,6 +84,8 @@ NOTE:
 
    Make sure you have read/write access to the framebuffer device.  Usually this just means adding your account to the "video" group (make sure you log out and log in again after doing that).  Alternately, you can just run your script as root.  Although I don't recommend it.
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # INSTALLATION
 
    Read the file [installing/INSTALL.md](installing/INSTALL.md) and follow its instructions.
@@ -85,6 +93,8 @@ NOTE:
    When you install this module, please do it within a console, not a console window in X-Windows, but the actual Linux console outside of X-Windows.
 
    If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows, ALT-F1 works in the latest Ubuntu and Zorin-OS.
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # OPERATIONAL THEORY
 
@@ -97,6 +107,8 @@ NOTE:
    Drawing lines etc. requires some algorithmic magic though, but they all call the plot routine to do their eventual magic.
 
    Originally everything was done in Perl, and the module's speed was mostly acceptable, unless you had a really slow system.  It still can run in pure Perl, if you turn off the acceleration feature, although I do not recommend it, if you want speed.
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # SPECIAL VARIABLES
 
@@ -190,6 +202,8 @@ NOTE:
 
    Many of the parameters you pass to the "new" method are also special variables.
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # CONSTANTS
 
    The following constants can be used in the various methods.  Each method example will have the possible constants to use for that method.
@@ -244,6 +258,8 @@ NOTE:
    * **PERL**     ( *0* )
    * **SOFTWARE** ( *1* )
    * **HARDWARE** ( *2* )
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # METHODS
 
@@ -2079,6 +2095,8 @@ Formats can be (they are case-insensitive):
 
    *\* NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # USAGE HINTS
 
 ## GRADIENTS
@@ -2134,6 +2152,8 @@ Formats can be (they are case-insensitive):
    This isn't a design choice, nor preference, nor some anti-Windows ego trip.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
 
    *\* However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.*
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # TROUBLESHOOTING
 
@@ -2247,15 +2267,21 @@ Formats can be (they are case-insensitive):
 
    *\*\* Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # AUTHOR
 
    Richard Kelsch <rich@rk-internet.com>
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # COPYRIGHT
 
    Copyright © 2003-2026 Richard Kelsch, All Rights Reserved.
 
    This program is free software; you can redistribute it and/or modify it under the GNU software license.
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # LICENSE
 
@@ -2273,9 +2299,13 @@ Formats can be (they are case-insensitive):
 
    Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # VERSION
 
    Version 6.96 (Apr 06, 2026)
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # THANKS
 
@@ -2283,17 +2313,23 @@ Formats can be (they are case-insensitive):
 
    Thank you Mario Roy for showing how to use MCE to multiprocess instead of threads.  Very handy.  Look for the "get\_mce\_demos" in the "examples" directory.  NOTE: I do not support MCE bug issues.
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # TELL ME ABOUT YOUR PROJECT
 
    I'd love to know if you are using this library in your project.  So send me an email, with pictures and/or a URL (if you have one) showing what it is.  If you have a YouTube video, then that would be cool to see too.
 
    If project has a specific need that the module does not support (or support easy), then suggest a feature to me.
 
+![Divider](pics/pink.jpg?raw=true "Divider")
+
 # YOUTUBE
 
    There is a YouTube channel with demonstrations of the module's capabilities.  Eventually it will have examples of output from a variety of different types of hardware.
 
    [YouTube Graphics::Framebuffer Channel](https://www.youtube.com/@richardkelsch3640)
+
+![Divider](pics/pink.jpg?raw=true "Divider")
 
 # GITHUB
 
