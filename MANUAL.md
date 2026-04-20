@@ -9,8 +9,8 @@
 * [Synopsis](#synopsis)
 * [Description](#description)
 * [Installation](#installation)
-* [Operational Theory](#operational_theory)
-* [Special Variables](#special_variables)
+* [Operational Theory](#operational-theory)
+* [Special Variables](#special-variables)
 * [Methods](#methods)
 * [Troubleshooting](#troubleshooting)
 * [Author](#author)
@@ -18,7 +18,7 @@
 * [License](#license)
 * [Version](#version)
 * [Thanks](#thanks)
-* [Tell Me About Your Project](#tell_me_about_your_project)
+* [Tell Me About Your Project](#tell-me-about-your-project)
 * [YouTube](#youtube)
 * [GitHub](#github)
 
@@ -254,87 +254,87 @@ NOTE:
    * Instantiation
      - [new](#new) - Create the Graphics::Framebuffer object
    * Clipping
-     - [clip\_off](#clip_off) - Turn off clipping
-     - [clip\_reset](#clip_reset) - Turn off clipping
-     - [clip\_rset](#clip_rset) - Set clipping rectangle using relative height and width.
-     - [clip\_set](#clip_set) - Set clipping using specific coordinates.
+     - [clip\_off](#clip-off) - Turn off clipping
+     - [clip\_reset](#clip-reset) - Turn off clipping
+     - [clip\_rset](#clip-rset) - Set clipping rectangle using relative height and width.
+     - [clip\_set](#clip-set) - Set clipping using specific coordinates.
    * Settings & Control
      - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
-     - [active\_console](#active_console) - Get the current active console.
-     - [attribute\_reset](#attribute_reset) - Reset the attributes to the global defaults.
-     - [clear\_screen](#clear_screen) - Clear the screen.
+     - [active\_console](#active-console) - Get the current active console.
+     - [attribute\_reset](#attribute-reset) - Reset the attributes to the global defaults.
+     - [clear\_screen](#clear-screen) - Clear the screen.
      - [cls](#cls) - Clear the screen.
-     - [graphics\_mode](#graphics_mode) - Turn on console graphics mode.
+     - [graphics\_mode](#graphics-mode) - Turn on console graphics mode.
      - [hardware](#hardware) - Set to hardware acceleration mode.
      - [perl](#perl) - Set to Perl only acceleration mode.
-     - [replace\_color](#replace_color) - Replace a specific color in the clipping region.
-     - [screen\_dimension](#screen_dimensions) - Return the screen dimensions.
+     - [replace\_color](#replace-color) - Replace a specific color in the clipping region.
+     - [screen\_dimension](#screen-dimensions) - Return the screen dimensions.
      - [setbcolor](#setbcolor) - Set the background color.
-     - [set\_b\_color](#set_b_color) - Set the background color.
-     - [set\_background\_color](#set_background_color) - Set the background color.
+     - [set\_b\_color](#set-b-color) - Set the background color.
+     - [set\_background\_color](#set-background-color) - Set the background color.
      - [setcolor](#setcolor) - Set the foreground color.
-     - [set\_color](#set_color) - Set the foreground color.
-     - [set\_foreground\_color](#set_foreground_color) - Set the foreground color.
+     - [set\_color](#set-color) - Set the foreground color.
+     - [set\_foreground\_color](#set-foreground-color) - Set the foreground color.
      - [software](#software) - Set to Software (C accelerated) drawing.
-     - [text\_mode](#text_mode) - Set the console to text mode.
+     - [text\_mode](#text-mode) - Set the console to text mode.
      - [vsync](#vsync) - Block drawing until the vertical sync.
-     - [wait\_for\_console](#wait_for_console) - Blocking if not the correct console.
-     - [which\_console](#which_console) - Returnsd the current console.
+     - [wait\_for\_console](#wait-for-console) - Blocking if not the correct console.
+     - [which\_console](#which-console) - Returnsd the current console.
    * Primitives
      - [ball](#ball) - Draw pseudo 3D balls.
      - [bezier](#bezier) - Draw bezier curved lines.
      - [box](#box) - Draw a box.
      - [circle](#circle) - Draw a circle.
-     - [draw\_arc](#draw_arc) - Draw an arc.
-     - [draw\_to](#draw_to) - Draw a line from the last plotted position.
+     - [draw\_arc](#draw-arc) - Draw an arc.
+     - [draw\_to](#draw-to) - Draw a line from the last plotted position.
      - [ellipse](#ellipse) - Draw an ellipse.
      - [fill](#fill) - Flood fill.
-     - [filled\_pie](#filled_pie) - Draw a filled pie.
+     - [filled\_pie](#filled-pie) - Draw a filled pie.
      - [getpixel](#getpixel) - Return the last plotted pixel coordinate.
-     - [get\_pixel](#get_pixel) - Return the last plotted pixel coordinate.
-     - [last\_plot](#last_plot) - Return the last plotted pixel coordinate.
+     - [get\_pixel](#get-pixel) - Return the last plotted pixel coordinate.
+     - [last\_plot](#last-plot) - Return the last plotted pixel coordinate.
      - [line](#line) - Draw a line at the specific coordinates.
      - [pixel](#pixel) - Plots a pixel.
      - [plot](#plot) - Plots a pixel.
-     - [poly\_arc](#poly_arc) - Draw a polygon with an arc.
+     - [poly\_arc](#poly-arc) - Draw a polygon with an arc.
      - [polygon](#polygon) - Draw a polygon.
-     - [rounded\_box](#rounded_box) - Draw a box with rounded corners.
+     - [rounded\_box](#rounded-box) - Draw a box with rounded corners.
      - [rbox](#rbox) - Draw a box with rounded corners.
      - [setpixel](#setpixel) - Plots a pixel.
-     - [set\_pixel](#set_pixel) - Plots a pixel.
+     - [set\_pixel](#set-pixel) - Plots a pixel.
    * Drawing Modes
-     - [add\_mode](#add_mode) - Draw in ADD mode.
-     - [and\_mode](#add_mode) - Draw in AND mode.
-     - [alpha\_mode](#alpha_mode) - Draw using alpha blending.
-     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image.
-     - [multiply\_mode](#multiply_mode) - Draw using multiply mode.
-     - [normal\_mode](#normal_mode) - Draw using normal mode.
-     - [or\_mode](#or_mode) - Draw using OR mode.
-     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination.
-     - [xor\_mode](#xor_mode) - Draw using XOR mode.
+     - [add\_mode](#add-mode) - Draw in ADD mode.
+     - [and\_mode](#add-mode) - Draw in AND mode.
+     - [alpha\_mode](#alpha-mode) - Draw using alpha blending.
+     - [mask\_mode](#mask-mode) - Draw using color masking.  Draws only the non-background color of the source image.
+     - [multiply\_mode](#multiply-mode) - Draw using multiply mode.
+     - [normal\_mode](#normal-mode) - Draw using normal mode.
+     - [or\_mode](#or-mode) - Draw using OR mode.
+     - [unmask\_mode](#unmask-mode) - Draw using color masking.  Draws only on the background of the destination.
+     - [xor\_mode](#xor-mode) - Draw using XOR mode.
    * Image Handling
-     - [load\_image](#load_image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
-     - [play\_animation](#play_animation) - Play an animated GIF already loaded.
-     - [screen\_dump](#screen_dump) - Dump the framebuffer to disk.
+     - [load\_image](#load-image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
+     - [play\_animation](#play-animation) - Play an animated GIF already loaded.
+     - [screen\_dump](#screen-dump) - Dump the framebuffer to disk.
    * Blitting
-     - [blit\_copy](#blit_copy) - Copy a screen region to a new location leaving the original location untouched.
-     - [blit\_move](#blit_move) - Move a screen region from one location to another, removing the original.
-     - [blit\_read](#blit_read) - Reads in a screen region to a variable.
-     - [blit\_transform](#blit_transform) - Transform a blit variable.
-     - [blit\_write](#blit_write) - Writes a blit variable to a screen location.
+     - [blit\_copy](#blit-copy) - Copy a screen region to a new location leaving the original location untouched.
+     - [blit\_move](#blit-move) - Move a screen region from one location to another, removing the original.
+     - [blit\_read](#blit-read) - Reads in a screen region to a variable.
+     - [blit\_transform](#blit-transform) - Transform a blit variable.
+     - [blit\_write](#blit-write) - Writes a blit variable to a screen location.
    * Text Drawing
-     - [get\_face\_name](#get_face_name) - Get the face name of a font file name.
-     - [get\_font\_list](#get_font_list) - Get a list of fonts including their attributes.
-     - [ttf\_paragraph](#ttf_paragraph) - Print a paragraph.
-     - [ttf\_print](#ttf_print) - Print text.
+     - [get\_face\_name](#get-face-name) - Get the face name of a font file name.
+     - [get\_font\_list](#get-font-list) - Get a list of fonts including their attributes.
+     - [ttf\_paragraph](#ttf-paragraph) - Print a paragraph.
+     - [ttf\_print](#ttf-print) - Print text.
    * Conversion
      - [monochrome](#monochrome) - Create a monochrome blit image variable from a color blit image variable.
-     - [RGB565\_to\_RGB888](#rgb565_to_rgb888) - Converts 16 bit blit variable to 24 bit blit variable.
-     - [RGB565\_to\_RGBA8888](#rgb565_to_rgba8888) - Converts 16 bit blit variable to 32 bit blit variable.
-     - [RGB888\_to\_RGB565](#rgb888_to_rgb565) - Converts 24 bit blit variable to 16 bit blit variable.
-     - [RGB888\_to\_RGBA8888](#rgb888_to_rgba8888) - Converts 24 bit blit variable to 32 bit blit variable.
-     - [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565) - Converts 32 bit blit variable to 16 bit blit variable.
-     - [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888) - Converts 32 bit blit variable to 24 bit blit variable.
+     - [RGB565\_to\_RGB888](#rgb565-to-rgb888) - Converts 16 bit blit variable to 24 bit blit variable.
+     - [RGB565\_to\_RGBA8888](#rgb565-to-rgba8888) - Converts 16 bit blit variable to 32 bit blit variable.
+     - [RGB888\_to\_RGB565](#rgb888-to-rgb565) - Converts 24 bit blit variable to 16 bit blit variable.
+     - [RGB888\_to\_RGBA8888](#rgb888-to-rgba8888) - Converts 24 bit blit variable to 32 bit blit variable.
+     - [RGBA8888\_to\_RGB565](#rgba8888-to-rgb565) - Converts 32 bit blit variable to 16 bit blit variable.
+     - [RGBA8888\_to\_RGB888](#rgba8888-to-rgb888) - Converts 32 bit blit variable to 24 bit blit variable.
 
 ## **new**
 
