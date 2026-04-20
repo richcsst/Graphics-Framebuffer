@@ -2058,7 +2058,6 @@ sub plot {
                                 my $b = (($b2 * $A) + ($b1 * $invA)) >> 8;
                                 $c = pack('C3', $r, $g, $b);
                             } else {
-
                                 # 16-bit RGB565 path (optional): do channel-wise integer blend
                                 # Example skeleton using 5/6-bit channels; you can replace with existing helpers:
                                 my $p1 = unpack('v', $cur);
@@ -2102,7 +2101,6 @@ sub plot {
                                 $b = 255 if $b > 255;
                                 $c = pack('C3', $r, $g, $b);
                             } else {
-
                                 # 16-bit RGB565 add (saturate)
                                 my $p1 = unpack('v', $cur);
                                 my $p2 = unpack('v', $raw_foreground_color);
@@ -2163,7 +2161,6 @@ sub plot {
                                 $c = pack('v', $p);
                             } ## end else [ if ($bytes == 4) ]
                         } elsif ($draw_mode == MULTIPLY_MODE) {
-
                             # Per-channel multiply scaled back to 0..255
                             if ($bytes == 4) {
                                 my ($r1, $g1, $b1, $a1) = unpack('C4', $cur);
@@ -2181,7 +2178,6 @@ sub plot {
                                 my $b = ($b1 * $b2) >> 8;
                                 $c = pack('C3', $r, $g, $b);
                             } else {
-
                                 # 16-bit approximate multiply: expand to 8-bit, multiply, compress back
                                 my $p1 = unpack('v', $cur);
                                 my $p2 = unpack('v', $raw_foreground_color);
@@ -2679,6 +2675,7 @@ sub _flush_screen {
             select($self->{'FB'}) if (defined($self->{'FB'}));
             $| = 1;
             $self->{'FB'}->flush();
+			$self->vsync();
         }
         $self->{'LAST_FLUSHED'} = time + (1/15);
     }

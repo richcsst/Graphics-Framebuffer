@@ -350,11 +350,13 @@ foreach my $name (@order) {
                 $F->cls();
                 $F->acceleration(PERL);
                 $func{$name}->($name . ' -> Pure-Perl');
+                $F->_flush_screen();
             }
         } else {
             $F->cls();
             $F->acceleration(SOFTWARE);
             $func{$name}->($name . ' -> C Accelerated');
+            $F->_flush_screen();
         }
         sleep $delay unless($name =~ /Plot|Lines|Poly|Boxes|Circles|Ellipses|Arcs|Beziers|Pies/);
     }
