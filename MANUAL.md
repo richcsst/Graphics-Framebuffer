@@ -4,6 +4,24 @@
 
 [![Graphics::Framebuffer Logo](pics/GFB.png?raw=true "Graphics::Framebuffer Click For Demo Video")](https://www.youtube.com/watch?v=X8RpFBq6F9I)
 
+## Contents
+
+* [Synopsis](#synopsis)
+* [Description](#description)
+* [Installation](#installation)
+* [Operational Theory](#operational_theory)
+* [Special Variables](#special_variables)
+* [Methods](#methods)
+* [Troubleshooting](#troubleshooting)
+* [Author](#author)
+* [Copyright](#copyright)
+* [License](#license)
+* [Version](#version)
+* [Thanks](#thanks)
+* [Tell Me About Your Project](#tell_me_about_your_project)
+* [YouTube](#youtube)
+* [GitHub](#github)
+
 # SYNOPSIS
 
    Direct drawing for 32/24/16 bit framebuffers (others would be supported if asked for, and I have the means to test it)
