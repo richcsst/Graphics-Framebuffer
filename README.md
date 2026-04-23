@@ -143,7 +143,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
 ## LICENSE AND COPYRIGHT
 
-   Copyright © 2013-2026 Richard Kelsch
+   Copyright © 2003-2026 Richard Kelsch
 
    This program is free software; you can redistribute it and/or modify it under the terms of either: the GNU General Public License as published by the Free Software Foundation; or the Artistic License.
 
