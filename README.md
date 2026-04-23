@@ -135,7 +135,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    * **GitHub** - [GitHub - Graphics-Framebuffer](https://github.com/richcsst/Graphics-Framebuffer)
 
-   * **GitHub Clone** - [GitHub clone](https://github.com/richcsst/Graphics-Framebuffer.git)
+   * **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
 
    * **Mario Roy's Multiprocessing Examples** - [MCE Examples](https://github.com/marioroy/mce-examples)
 
