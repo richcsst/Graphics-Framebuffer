@@ -200,7 +200,7 @@ NOTE:
      - 1 = Some functions accelerated by compiled C code (Default)
      - 2 = All of #1 plus additional functions accelerated by hardware (currently not supported, and likely never will)
 
-* **IS_BVOX**
+* **IS_VBOX**
 
    A boolean value that indicates if running inside of VirtualBox.  Since VirtualBox version 7.2.6, it has an issue with poor framebuffer implementation and delayed updates a buffer flushing.  This allows your code to detect this environment and add
 manual flushing if affected.
