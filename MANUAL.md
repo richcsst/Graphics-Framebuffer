@@ -202,7 +202,7 @@ NOTE:
 
 * **IS_BVOX**
 
-   A boolean value that indicates if running inside of VirtualBox.  Since VirtualBox version 7.6.6, it has an issue with poor framebuffer implementation and delayed updates a buffer flushing.  This allows your code to detect this environment and add
+   A boolean value that indicates if running inside of VirtualBox.  Since VirtualBox version 7.2.6, it has an issue with poor framebuffer implementation and delayed updates a buffer flushing.  This allows your code to detect this environment and add
 manual flushing if affected.
 
 * **LAST_FLUSHED**
