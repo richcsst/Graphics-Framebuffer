@@ -317,7 +317,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [box](#box) - Draw a box.
      - [circle](#circle) - Draw a circle.
      - [draw\_arc](#draw-arc) - Draw an arc.
-     - [draw\_to](#draw-to) - Draw a line from the last plotted position.
+     - [drawto](#drawto) - Draw a line from the last plotted position.
      - [ellipse](#ellipse) - Draw an ellipse.
      - [fill](#fill) - Flood fill.
      - [filled\_pie](#filled-pie) - Draw a filled pie.
