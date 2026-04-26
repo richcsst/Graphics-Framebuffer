@@ -6,6 +6,8 @@
 
 Graphics::Framebuffer only works (for the moment) on Linux.  FreeBSD is planned for the future, but is not yet implemented.
 
+![Divider](../pics/pink.jpg?raw=true "Divider")
+
 ## DETERMINING IF YOUR SYSTEM HAS A FRAMEBUFFER FIRST
 
 You need to make sure your system has a Framebuffer driver installed.  The easiest way to find this out, is to look in the "/dev" directory and see if there are files in there called "fb" and end with a number between 0 and 31.  Most systems have "/dev/fb0", but there can be more.
@@ -20,13 +22,17 @@ If no such file exists, then you need to either learn how to enable it, or as a 
 
   * Raspberry PI Users!  Change the settings to use a 24/32 bit framebuffer.  The PI defaults to 16 bit color and this module is much faster using 24/32 bit color mode.  This module's 16 bit mode is a hack layered on top of the 24/32 bit routines, so more CPU time is involved in conversion, and will thus be slower in 16 bit mode.
 
+![Divider](../pics/pink.jpg?raw=true "Divider")
+
 ## MAKE SURE YOUR USER ACCOUNT HAS ACCESS TO THE VIDEO DEVICE
 
-```
+```bash
 sudo usermod -a -G video username
 ```
 
 Change "*username*" with the username of your account
+
+![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## DETERMINE YOUR DISTRIBUTION
 
@@ -90,7 +96,7 @@ Make sure NOTHING VirtualBox is running, not the GUI nor any virtual machine.  T
 
 Open the "vbox" definition file in you virtual machine directory in your favorite text editor.  You will see it is an XML file.  Look for the ```<ExtraData>``` section (usually near the beginning).  It is likely there are already items called ```ExtraDataItem``` listed in there.  Insert the following "ExtraDataItem" at the end of that list, before ```</ExtraData>```, so it looks something like this:
 
-```
+```xml
 <ExtraData>
     <ExtraDataItem name="VBoxInternal2/EfiGraphicsResolution" value="3840x2160"/>
 </ExtraData>
@@ -114,12 +120,14 @@ install Graphics::Framebuffer
 
   ```git clone https://github.com/richcsst/Graphics-Framebuffer.git```
 
-```
+```bash
        perl Makefile.PL
        make
        make test
 [sudo] make install
 ```
+
+![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## INSTALLING WITH PERLBREW (and installing Perlbrew)
 
@@ -127,19 +135,19 @@ install Graphics::Framebuffer
 
 If you do not want to use the package version of Perl, but would rather use a customized and more optimized version of Perl, then do the following:
 
-```
+```bash
 wget -O - https://install.perlbrew.pl | bash
 ```
 
 Append the following line to your " ~/.bash_profile " then log out and log in again:
 
-```
+```bash
 source ~/perl5/perlbrew/etc/bashrc
 ```
 
 Now to install Perlbrew (you can use higher or lower version numbers where applicable):
 
-```
+```bash
 perlbrew init
 perlbrew install-cpanm
 perlbrew install-patchperl
