@@ -103,7 +103,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    The scripts beginning with 'thread' requires ' *Sys::CPU* '.  It is not listed as a prerequisite for this module (as it isn't), but if you want to run the threaded scripts, then this is a required module.  It demonstrates how to use this module in a threaded environment.
 
-   Mario Roy's MCE test scripts have been added (well, a script to go get them) to demonstrate alternate multiprocessing methods of using Graphics::Framebuffer, even with Perls built without threads support.  You will need to have the modules ```MCE::Shared``` and ```MCE::Hobo``` installed.
+   Mario Roy's MCE test scripts have been added (well, a script to go get them) to demonstrate alternate multiprocessing methods of using **Graphics::Framebuffer**, even with Perl's built without threads support.  You will need to have the modules ```MCE::Shared``` and ```MCE::Hobo``` installed.  For some reason, only known to Mario Roy, the installation of ```MCE::Hobo``` can output a weird warning message.  Mario says to ignore it and continue.
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
