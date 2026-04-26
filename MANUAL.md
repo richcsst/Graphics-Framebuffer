@@ -33,25 +33,25 @@
    ```perl
     use Graphics::Framebuffer;
 
-    our $fb = Graphics::Framebuffer->new();
+    our $FB = Graphics::Framebuffer->new();
    ```
 
 Drawing is this simple
 
    ```perl
-    $fb->cls('OFF'); # Clear screen and turn off the console cursor
-    $fb->graphics_mode();
+    $FB->cls('OFF'); # Clear screen and turn off the console cursor
+    $FB->graphics_mode();
 
-    $fb->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
-    $fb->plot({'x' => 28, 'y' => 79});
-    $fb->drawto({'x' => 405,'y' => 681});
-    $fb->circle({'x' => 200, 'y' => 200, 'radius' => 100, 'filled' => 1});
-    $fb->polygon({'coordinates' => [20,20,  53,3,  233,620]});
-    $fb->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
+    $FB->set_color({'red' => 255, 'green' => 255, 'blue' => 255, 'alpha' => 255});
+    $FB->plot({'x' => 28, 'y' => 79});
+    $FB->drawto({'x' => 405,'y' => 681});
+    $FB->circle({'x' => 200, 'y' => 200, 'radius' => 100, 'filled' => 1});
+    $FB->polygon({'coordinates' => [20,20,  53,3,  233,620]});
+    $FB->box({'x' => 95, 'y' => 100, 'xx' => 400, 'yy' => 600, 'filled' => 1});
     # ... and many many more
 
-    $fb->text_mode();
-    $fb->cls('ON'); # Clear screen and turn on the console cursor
+    $FB->text_mode();
+    $FB->cls('ON'); # Clear screen and turn on the console cursor
    ```
 
    Methods requiring parameters require a hash (or anonymous hash) reference passed to the method (for speed).  All parameters have easy to understand english names, all lower case, to understand exactly what the method is doing.
@@ -112,10 +112,10 @@ NOTE:
 
 # SPECIAL VARIABLES
 
-   The following are hash keys to the main object variable.  For example, if you use the variable $fb as the object variable, then the following are:
+   The following are hash keys to the main object variable.  For example, if you use the variable $FB as the object variable, then the following are:
 
    ```perl
-   $fb->{VARIABLE_NAME}
+   $FB->{VARIABLE_NAME}
    ```
 
    \* *NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
@@ -372,7 +372,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This instantiates the framebuffer object
 
    ```perl
-   my $fb = Graphics::Framebuffer->new(parameter => value);
+   my $FB = Graphics::Framebuffer->new(parameter => value);
    ```
 
    \* *The parameters are usually optional.*
@@ -522,7 +522,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    It also returns the bits per pixel.
 
    ```perl
-   my ($width,$height,$bits_per_pixel) = $fb->screen_dimensions();
+   my ($width,$height,$bits_per_pixel) = $FB->screen_dimensions();
    ```
 
    When called in a scalar context, it returns a hash reference:
@@ -550,7 +550,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is automatically displayed when this module is initialized, and the variable 'SPLASH' is true (which is the default).
 
    ```perl
-   $fb->splash();
+   $FB->splash();
    ```
 
 ## get\_font\_list
@@ -568,7 +568,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    You may also pass in a face name and it will return that face's information:
 
    ```perl
-   my $font_info = $fb->get_font_list('DejaVuSerif');
+   my $font_info = $FB->get_font_list('DejaVuSerif');
    ```
 
    Would return something like:
@@ -587,54 +587,54 @@ Many of the parameters you pass to the "new" method are also special variables.
    Sets or returns the drawing mode, depending on how it is called.
 
    ```perl
-   my $draw_mode = $fb->draw_mode(); # Returns the current
+   my $draw_mode = $FB->draw_mode(); # Returns the current
                                      # Drawing mode.
 
    # Modes explained.  These settings are global
 
                                      # When you draw it...
 
-   $fb->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
+   $FB->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
                                      # pixel. Imager assisted drawing
                                      # (acceleration) only works in this mode.
 
-   $fb->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
+   $FB->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
                                      # screen pixel.
 
-   $fb->draw_mode(OR_MODE);          # Does a bitwise OR with the new pixel and
+   $FB->draw_mode(OR_MODE);          # Does a bitwise OR with the new pixel and
                                      # screen pixel.  This has the benefit of
                                      # not writing pure black to the screen
                                      # (usually the background)
 
-   $fb->draw_mode(AND_MODE);         # Does a bitwise AND with the new pixel and
+   $FB->draw_mode(AND_MODE);         # Does a bitwise AND with the new pixel and
                                      # screen pixel.
 
-   $fb->draw_mode(MASK_MODE);        # If pixels in the source are equal to the
+   $FB->draw_mode(MASK_MODE);        # If pixels in the source are equal to the
                                      # global background color, then they are
                                      # not drawn (transparent).
 
-   $fb->draw_mode(UNMASK_MODE);      # Draws the new pixel on screen areas only
+   $FB->draw_mode(UNMASK_MODE);      # Draws the new pixel on screen areas only
                                      # equal to the background color.
 
-   $fb->draw_mode(ALPHA_MODE);       # Draws the new pixel on the screen using
+   $FB->draw_mode(ALPHA_MODE);       # Draws the new pixel on the screen using
                                      # the alpha channel value as a transparency
                                      # value.  This means the new pixel will not
                                      # be opague.
 
-   $fb->draw_mode(ADD_MODE);         # Draws the new pixel on the screen by
+   $FB->draw_mode(ADD_MODE);         # Draws the new pixel on the screen by
                                      # mathematically adding its pixel value to
                                      # the existing pixel value
 
-   $fb->draw_mode(SUBTRACT_MODE);    # Draws the new pixel on the screen by
+   $FB->draw_mode(SUBTRACT_MODE);    # Draws the new pixel on the screen by
                                      # mathematically subtracting the new pixel
                                      # value from the existing value
 
-   $fb->draw_mode(MULTIPLY_MODE);    # Draws the new pixel on the screen by
+   $FB->draw_mode(MULTIPLY_MODE);    # Draws the new pixel on the screen by
                                      # mathematically multiplying it with the
                                      # existing pixel value (usually not too
                                      # useful, but here for completeness)
 
-   $fb->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
+   $FB->draw_mode(DIVIDE_MODE);      # Draws the new pixel on the screen by
                                      # mathematically dividing it with the
                                      # existing pixel value (usually not too
                                      # useful, but here for completeness)
@@ -645,7 +645,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(NORMAL\_MODE)
 
    ```perl
-   $fb->normal_mode();
+   $FB->normal_mode();
    ```
 
 ## xor\_mode
@@ -653,7 +653,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(XOR\_MODE)
 
    ```perl
-   $fb->xor_mode();
+   $FB->xor_mode();
    ```
 
 ## or\_mode
@@ -661,7 +661,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(OR\_MODE)
 
    ```perl
-   $fb->or_mode();
+   $FB->or_mode();
    ```
 
 ## alpha\_mode
@@ -669,7 +669,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(ALPHA\_MODE)
 
    ```perl
-   $fb->alpha_mode();
+   $FB->alpha_mode();
    ```
 
 ## and\_mode
@@ -677,7 +677,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(AND\_MODE)
 
    ```perl
-   $fb->and_mode();
+   $FB->and_mode();
    ```
 
 ## mask\_mode
@@ -685,7 +685,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(MASK\_MODE)
 
    ```perl
-   $fb->mask_mode();
+   $FB->mask_mode();
    ```
 
 ## unmask\_mode
@@ -693,7 +693,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(UNMASK\_MODE)
 
    ```perl
-   $fb->unmask_mode();
+   $FB->unmask_mode();
    ```
 
 ## add\_mode
@@ -701,7 +701,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(ADD\_MODE)
 
    ```perl
-   $fb->add_mode();
+   $FB->add_mode();
    ```
 
 ## subtract\_mode
@@ -709,7 +709,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(SUBTRACT\_MODE)
 
    ```perl
-   $fb->subtract_mode();
+   $FB->subtract_mode();
    ```
 
 ## multiply\_mode
@@ -717,7 +717,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(MULTIPLY\_MODE)
 
    ```perl
-   $fb->multiply_mode();
+   $FB->multiply_mode();
    ```
 
 ## divide\_mode
@@ -725,7 +725,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This is an alias to draw\_mode(DIVIDE\_MODE)
 
    ```perl
-   $fb->divide_mode();
+   $FB->divide_mode();
    ```
 
 ## clear\_screen
@@ -735,9 +735,9 @@ Many of the parameters you pass to the "new" method are also special variables.
    You can add an optional parameter to turn the console cursor on or off too.
 
    ```perl
-   $fb->clear_screen();      # Leave cursor as is.
-   $fb->clear_screen('OFF'); # Turn cursor OFF (Does nothing with emulated framebuffer mode).
-   $fb->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
+   $FB->clear_screen();      # Leave cursor as is.
+   $FB->clear_screen('OFF'); # Turn cursor OFF (Does nothing with emulated framebuffer mode).
+   $FB->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
    ```
 
 ## cls
@@ -749,7 +749,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Resets the plot point at 0,0.  Resets clipping to the current screen size.  Resets the global color to whatever 'FOREGROUND' is set to, and the global background color to whatever 'BACKGROUND' is set to, and resets the drawing mode to NORMAL.
 
    ```perl
-   $fb->attribute_reset();
+   $FB->attribute_reset();
    ```
 
 ## plot
@@ -757,7 +757,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Set a single pixel in the set foreground color at position x,y with the given pixel size (or default).  Clipping applies.
 
    ```perl
-   $fb->plot(
+   $FB->plot(
        {
            'x'          => 20,
            'y'          => 30,
@@ -778,7 +778,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Returns the color of the pixel at coordinate x,y, if it lies within the clipping region.  It returns undefined if outside of the clipping region.
 
    ```perl
-   my $pixel = $fb->pixel({'x' => 20,'y' => 25});
+   my $pixel = $FB->pixel({'x' => 20,'y' => 25});
 
    $pixel is a hash reference in the form:
 
@@ -805,7 +805,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Returns the last plotted position
 
    ```perl
-   my $last_plot = $fb->last_plot();
+   my $last_plot = $FB->last_plot();
    ```
 
    This returns an anonymous hash reference in the form:
@@ -820,7 +820,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Or, if you want a simple array returned:
 
    ```perl
-   my ($x,$y) = $fb->last_plot();
+   my ($x,$y) = $FB->last_plot();
    ```
 
    This returns the position as a two element array:
@@ -834,7 +834,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping applies.
 
    ```perl
-   $fb->line({
+   $FB->line({
        'x'           => 50,
        'y'           => 60,
        'xx'          => 100,
@@ -848,7 +848,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a line, in the global foreground color, from point x,y at an angle of 'angle', of length 'radius'.  Clipping applies.
 
    ```perl
-   $fb->angle_line({
+   $FB->angle_line({
        'x'           => 50,
        'y'           => 60,
        'radius'      => 50,
@@ -862,7 +862,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
 
    ```perl
-   $fb->drawto({
+   $FB->drawto({
        'x'           => 50,
        'y'           => 60,
        'antialiased' => TRUE
@@ -876,7 +876,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a Bezier curve, based on a list of control points.
 
    ```perl
-   $fb->bezier(
+   $FB->bezier(
        {
            'coordinates' => [
                x0,y0,
@@ -934,7 +934,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    #                   2 > Poly arc.  Draws a line from x,y to the
    #                       beginning and ending arc position.
 
-   $fb->draw_arc({
+   $FB->draw_arc({
        'x'             => 100,
        'y'             => 100,
        'radius'        => 100,
@@ -972,7 +972,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    #                 are any positive floating point number
    #                 down to 0.0001.
 
-   $fb->arc({
+   $FB->arc({
        'x'             => 100,
        'y'             => 100,
        'radius'        => 100,
@@ -1007,7 +1007,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    #                 are any positive floating point number
    #                 down to 0.0001.
 
-   $fb->filled_pie({
+   $FB->filled_pie({
        'x'             => 100,
        'y'             => 100,
        'radius'        => 100,
@@ -1058,7 +1058,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    #                 are any positive floating point number
    #                 down to 0.0001.
 
-   $fb->poly_arc({
+   $FB->poly_arc({
        'x'             => 100,
        'y'             => 100,
        'radius'        => 100,
@@ -1075,7 +1075,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draw an ellipse at center position x,y with XRadius, YRadius.  Either a filled ellipse or outline is drawn based on the value of $filled.  The optional factor value varies from the default 1 to change the look and nature of the output.
 
    ```perl
-   $fb->ellipse({
+   $FB->ellipse({
        'x'          => 200, # Horizontal center
        'y'          => 250, # Vertical center
        'xradius'    => 50,
@@ -1113,7 +1113,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a filled circle resembling a 3D ball, similar to a Christmas tree globe.  It draws it at point x,y with radius 'radius' and the brightest color.  It ignores the current foreground color and uses its own color definition.
    
    ```perl
-   $fb->ball({
+   $FB->ball({
        'x' => 300, #n Horizontal center
        'x'        => 300, # Horizontal center
        'y'        => 300, # Vertical center
@@ -1132,7 +1132,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a circle at point x,y, with radius 'radius'.  It can be an outline, solid filled, or gradient filled.  Outlined circles can have any pixel size.
 
    ```perl
-   $fb->circle({
+   $FB->circle({
        'x'        => 300, # Horizontal center
        'y'        => 300, # Vertical center
        'radius'   => 100,
@@ -1165,7 +1165,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    It is up to you to make sure the coordinates are "sane".  Weird things can result from twisted or complex filled polygons.
 
    ```perl
-   $fb->polygon({
+   $FB->polygon({
        'coordinates' => [
            5,5,
            23,34,
@@ -1202,7 +1202,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 0, or as a filled block, if 'filled' is 1.  You may also add a gradient or texture.
 
    ```perl
-   $fb->box({
+   $FB->box({
        'x'          => 20,
        'y'          => 50,
        'xx'         => 70,
@@ -1236,7 +1236,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Draws a box at point x,y with the width 'width' and height 'height'.  It draws a frame if 'filled' is 0 or a filled box if 'filled' is 1. Filled boxes draw faster than frames. Gradients or textures are also allowed.
 
    ```perl
-   $fb->rbox({
+   $FB->rbox({
        'x'          => 100,
        'y'          => 100,
        'width'      => 200,
@@ -1276,7 +1276,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Even if you are in 16 bit color mode, use 8 bit values.  They will be automatically scaled.
 
    ```perl
-   $fb->set_color({
+   $FB->set_color({
        'red'   => 255,
        'green' => 255,
        'blue'  => 0,
@@ -1299,7 +1299,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    The same rules as set\_color apply.
 
    ```perl
-    $fb->set_b_color({
+    $FB->set_b_color({
        'red'   => 0,
        'green' => 0,
        'blue'  => 255,
@@ -1322,7 +1322,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    *NOTE:  The accelerated version of this routine may (and it is a small may) have issues.  If you find any issues, then temporarily turn off C-acceleration when calling this method.*
 
    ```perl
-   $fb->fill({'x' => 334, 'y' => 23});
+   $FB->fill({'x' => 334, 'y' => 23});
    ```
 
    \* *This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
@@ -1332,7 +1332,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    This replaces one color with another inside the clipping region.  Sort of like a fill without boundary checking.
 
    ```perl
-   $fb->replace_color({
+   $FB->replace_color({
        'old' => { # Changed as of 5.56
            'red'   => 23,
            'green' => 48,
@@ -1347,7 +1347,7 @@ Many of the parameters you pass to the "new" method are also special variables.
        }
    });
 
-   $fb->replace_color({
+   $FB->replace_color({
        'old' => {
            'raw' => "raw encoded string of color",
        },
@@ -1366,7 +1366,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Copies a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It copies in the current drawing mode.
 
    ```perl
-   $fb->blit_copy({
+   $FB->blit_copy({
        'x'      => 20,
        'y'      => 20,
        'width'  => 30,
@@ -1383,7 +1383,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    It also returns the data moved like "blit\_read"
 
    ```perl
-   $fb->blit_move({
+   $FB->blit_move({
        'x'      => 20,
        'y'      => 20,
        'width'  => 30,
@@ -1399,14 +1399,14 @@ Many of the parameters you pass to the "new" method are also special variables.
    Plays an animation sequence loaded from "load\_image"
 
    ```perl
-   my $animation = $fb->load_image(
+   my $animation = $FB->load_image(
        {
            'file'            => 'filename.gif',
            'center'          => CENTER_XY,
        }
    );
 
-   $fb->play_animation($animation,$rate_multiplier);
+   $FB->play_animation($animation,$rate_multiplier);
    ```
 
    The animation is played at the speed described by the file's metadata multiplied by "rate\_multiplier".
@@ -1424,15 +1424,15 @@ Many of the parameters you pass to the "new" method are also special variables.
    When called without parameters, it returns the current setting.
 
    ```perl
-   $fb->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
+   $FB->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
 
-   $fb->acceleration(SOFTWARE); # Turn C (software) acceleration ON
+   $FB->acceleration(SOFTWARE); # Turn C (software) acceleration ON
 
-   $fb->acceleration(PERL);     # Turn acceleration OFF, using Perl
+   $FB->acceleration(PERL);     # Turn acceleration OFF, using Perl
 
-   my $accel = $fb->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
+   my $accel = $FB->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
 
-   my $accel = $fb->acceleration('english'); # Get current acceleration state in an english string.
+   my $accel = $FB->acceleration('english'); # Get current acceleration state in an english string.
                                              # "PERL"     = PERL     = 0
                                              # "SOFTWARE" = SOFTWARE = 1
                                              # "HARDWARE" = HARDWARE = 2
@@ -1461,7 +1461,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Passing no parameters automatically grabs the clipping region (the whole screen if clipping is off).
 
    ```perl
-   my $blit_data = $fb->blit_read({
+   my $blit_data = $FB->blit_read({
        'x'      => 30,
        'y'      => 50,
        'width'  => 100,
@@ -1490,7 +1490,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    It takes a hash reference.  It draws in the current drawing mode.
 
    ```perl
-   $fb->blit_write({
+   $FB->blit_write({
        'x'      => 0,
        'y'      => 0,
        'width'  => 100,
@@ -1530,7 +1530,7 @@ Many of the parameters you pass to the "new" method are also special variables.
       Scales the image to "width" x "height".  This is the same as how scale works in "load\_image".  The "type" value tells it how to scale (see the example).
 
    ```perl
-   $fb->blit_transform(
+   $FB->blit_transform(
        {
            # blit_data is mandatory
            'blit_data' => { # Same as what blit_read or load_image returns
@@ -1596,7 +1596,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Turns off clipping, and resets the clipping values to the full size of the screen.
 
    ```perl
-   $fb->clip_reset();
+   $FB->clip_reset();
    ```
 
 ## clip\_off
@@ -1608,7 +1608,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Sets the clipping rectangle starting at the top left point x,y and ending at bottom right point xx,yy.
 
    ```perl
-   $fb->clip_set({
+   $FB->clip_set({
        'x'  => 10,
        'y'  => 10,
        'xx' => 300,
@@ -1621,7 +1621,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Sets the clipping rectangle to point x,y,width,height
 
    ```perl
-   $fb->clip_rset({
+   $FB->clip_rset({
        'x'      => 10,
        'y'      => 10,
        'width'  => 600,
@@ -1640,7 +1640,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Expects two parameters, 'image' and 'bits'.  The parameter 'image' is a string containing the image data.  The parameter 'bits' is how many bits per pixel make up the image.  Valid values are 16, 24, and 32 only.
 
    ```perl
-   $fb->monochrome({
+   $FB->monochrome({
        'image' => "image data",
        'bits'  => 32
    });
@@ -1669,7 +1669,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    If draw mode is "normal", then mask mode is automatically used for best output.
 
    ```perl
-   my $bounding_box = $fb->ttf_print({
+   my $bounding_box = $FB->ttf_print({
        'x'            => 20,
        'y'            => 100, # baseline position
        'height'       => 16,
@@ -1683,14 +1683,14 @@ Many of the parameters you pass to the "new" method are also special variables.
        'antialias'    => TRUE
    });
 
-   $fb->ttf_print($bounding_box);
+   $FB->ttf_print($bounding_box);
    ```
 
    Here's a shortcut:
 
    ```perl
-   $fb->ttf_print(
-       $fb->ttf_print({
+   $FB->ttf_print(
+       $FB->ttf_print({
            'x'            => 20,
            'y'            => 100, # baseline position
            'height'       => 16,
@@ -1722,7 +1722,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    \* *This does _NOT_ scroll text.  It merely truncates what doesn't fit.  It returns where in the text string it last printed before truncation.  It's also quite slow.*
 
    ```perl
-   $fb->ttf_paragraph(
+   $FB->ttf_paragraph(
        {
            'text'         => 'String to print',
 
@@ -1754,7 +1754,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    Returns the TrueType face name based on the parameters passed.
 
    ```perl
-   my $face_name = $fb->get_face_name({
+   my $face_name = $FB->get_face_name({
        'font_path' => '/usr/share/fonts/TrueType/',
        'face'      => 'FontFileName.ttf'
    });
@@ -1769,7 +1769,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    If 'width' and/or 'height' is given, the image is resized.  Note, resizing is CPU intensive.  Nevertheless, this is done by the Imager library (compiled C) so it is relatively fast.
 
    ```perl
-   my $image_data = $fb->load_image(
+   my $image_data = $FB->load_image(
        {
            'x'          => 0,     # Optional (only applies if CENTER_X or
                                   # CENTER_XY is not used)
@@ -1912,7 +1912,7 @@ Formats can be (they are case-insensitive):
     The Tagged Image File Format.  Sort of an older version of PNG (but not the same, just similar in capability).  Sometimes used in FAX formats.
 
    ```perl
-   $fb->screen_dump(
+   $FB->screen_dump(
        {
            'file'   => '/path/filename', # name of file to be written
            'format' => 'jpeg',           # jpeg, gif, png, pnm, tga, or tiff
@@ -1933,7 +1933,7 @@ Formats can be (they are case-insensitive):
    Convert a 16 bit color value to a 24 bit color value.  This requires the color to be a two byte packed string.
 
    ```perl
-   my $color24 = $fb->RGB565_to_RGB888(
+   my $color24 = $FB->RGB565_to_RGB888(
        {
            'color' => $color16
        }
@@ -1945,7 +1945,7 @@ Formats can be (they are case-insensitive):
    Convert a 16 bit color value to a 32 bit color value.  This requires the color to be a two byte packed string.  The alpha value is either a value passed in or the default 255.
 
    ```perl
-   my $color32 = $fb->RGB565_to_RGB8888(
+   my $color32 = $FB->RGB565_to_RGB8888(
        {
            'color' => $color16, # Required
            'alpha' => 128       # Optional
@@ -1958,7 +1958,7 @@ Formats can be (they are case-insensitive):
    Convert 24 bit color value to a 16 bit color value.  This requires a three byte packed string.
 
    ```perl
-   my $color16 = $fb->RGB888_to_RGB565(
+   my $color16 = $FB->RGB888_to_RGB565(
        {
            'color' => $color24
        }
@@ -1972,7 +1972,7 @@ Formats can be (they are case-insensitive):
    Convert 32 bit color value to a 16 bit color value.  This requires a four byte packed string.
 
    ```perl
-   my $color16 = $fb->RGB8888_to_RGB565(
+   my $color16 = $FB->RGB8888_to_RGB565(
        {
            'color' => $color32,
        }
@@ -1986,7 +1986,7 @@ Formats can be (they are case-insensitive):
    Convert 24 bit color value to a 32 bit color value.  This requires a three byte packed string.  The alpha value is either a value passed in or the default 255.
 
    ```perl
-   my $color32 = $fb->RGB888_to_RGBA8888(
+   my $color32 = $FB->RGB888_to_RGBA8888(
        {
            'color' => $color24,
            'alpha' => 64
@@ -2001,7 +2001,7 @@ Formats can be (they are case-insensitive):
    Convert 32 bit color value to a 24 bit color value.  This requires a four byte packed string.
 
    ```perl
-   my $color24 = $fb->RGBA8888_to_RGB888(
+   my $color24 = $FB->RGBA8888_to_RGB888(
        {
            'color' => $color32
        }
@@ -2021,7 +2021,7 @@ Formats can be (they are case-insensitive):
    Returns the active console and the expected console
 
    ```perl
-   my ($active_console, $expected_console) = $fb->which_console();
+   my ($active_console, $expected_console) = $FB->which_console();
    ```
 
 ## active\_console
@@ -2049,13 +2049,13 @@ Formats can be (they are case-insensitive):
    \* *Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
 
    ```perl
-   $fb->initialize\_mouse(1);  # Turn on the mouse handler
+   $FB->initialize\_mouse(1);  # Turn on the mouse handler
    ```
 
    or
 
    ```perl
-   $fb->initialize\_mouse(0);  # Turn off the mouse handler
+   $FB->initialize\_mouse(0);  # Turn off the mouse handler
    ```
 
 ## poll\_mouse
@@ -2073,13 +2073,13 @@ Formats can be (they are case-insensitive):
    Return as an array:
 
    ```perl
-   my ($mouseb, $mousex, $mousey) =  $fb->get_mouse();
+   my ($mouseb, $mousex, $mousey) =  $FB->get_mouse();
    ```
 
    Return as a hash reference:
 
    ```perl
-   my $mouse = $fb->get_mouse();
+   my $mouse = $FB->get_mouse();
    ```
 
    Returns
@@ -2100,7 +2100,7 @@ Formats can be (they are case-insensitive):
    Sets the mouse position
 
    ```perl
-   $fb->set_mouse(
+   $FB->set_mouse(
        {
            'x' => 0,
            'y' => 0,
@@ -2209,7 +2209,7 @@ Formats can be (they are case-insensitive):
    Yeah this can look weird.  This is likely because there's some buffering going on.  The module attempts to turn it off, but if, for some reason, it is buffering anyway, try adding the following to points in your code where displaying a full render is necessary:
 
    ```perl
-   $fb->_flush_screen();
+   $FB->_flush_screen();
    ```
 
    This should force a full screen flush, but only use this if you really need it.
@@ -2232,7 +2232,7 @@ Formats can be (they are case-insensitive):
 
    - **The Text Cursor Is Messing Things Up**
 
-      It is?  Well then turn it off.  Use the $fb->cls('OFF') method to do it.  Use $fb->cls('ON') to turn it back on.
+      It is?  Well then turn it off.  Use the $FB->cls('OFF') method to do it.  Use $FB->cls('ON') to turn it back on.
 
       If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
 
