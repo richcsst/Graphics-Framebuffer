@@ -1820,7 +1820,7 @@ Many of the parameters you pass to the "new" method are also special variables.
                                    # use with "mask_mode" playback.
                                    # This can allow for slightly faster
                                    # playback of animated GIFs on systems
-                                   # using the acceration features of this
+                                   # using the acceleration features of this
                                    # module.  However, not all animated
                                    # GIFs look right when this is done.
                                    # the safest setting is to not use this,
