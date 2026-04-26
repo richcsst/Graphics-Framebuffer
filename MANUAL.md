@@ -6,7 +6,7 @@
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
-## Contents
+# Contents
 
 * [Synopsis](#synopsis)
 * [Description](#description)
@@ -118,7 +118,7 @@ NOTE:
    $fb->{VARIABLE_NAME}
    ```
 
-   *\* NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
+   \* *NOTE:  Do NOT set these variables directly.  They are for internal use and reference only.  Use the approprate method to change settings.*
 
 * **FONTS**
 
@@ -375,9 +375,9 @@ Many of the parameters you pass to the "new" method are also special variables.
    my $fb = Graphics::Framebuffer->new(parameter => value);
    ```
 
-   *\* The parameters are usually optional.*
+   \* *The parameters are usually optional.*
 
-   ### PARAMETERS
+### PARAMETERS
 
    * **FB\_DEVICE**
 
@@ -405,7 +405,7 @@ Many of the parameters you pass to the "new" method are also special variables.
       }
       ```
 
-      *\* Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.*
+      \* *Do not use this to change colors, as "set\_color" is intended for that.  Use this to set the DEFAULT foreground color for when "attribute\_reset" is called.*
 
    * **BACKGROUND**
 
@@ -420,7 +420,7 @@ Many of the parameters you pass to the "new" method are also special variables.
       }
       ```
 
-      *\* Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.*
+      \* *Do not use this to change background colors, as "set\_b\_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute\_reset" is called.*
 
    * **SPLASH**
 
@@ -869,7 +869,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* Antialiased lines are not accelerated.*
+   \* *Antialiased lines are not accelerated.*
 
 ## bezier
 
@@ -899,7 +899,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-   *\* This is not affected by the Acceleration setting.*
+   \* *This is not affected by the Acceleration setting.*
 
 ## cubic\_bezier
 
@@ -947,7 +947,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* Only PIE is affected by the acceleration setting.*
+   \* *Only PIE is affected by the acceleration setting.*
 
 ## arc
 
@@ -982,7 +982,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* This is not affected by the Acceleration setting.*
+   \* *This is not affected by the Acceleration setting.*
 
 ## filled\_pie
 
@@ -1033,7 +1033,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* This is affected by the Acceleration setting.*
+   \* *This is affected by the Acceleration setting.*
 
 ## poly\_arc
 
@@ -1068,7 +1068,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* This is not affected by the Acceleration setting.*
+   \* *This is not affected by the Acceleration setting.*
 
 ## ellipse
 
@@ -1104,9 +1104,9 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* This is not affected by the Acceleration setting.*
+   \* *This is not affected by the Acceleration setting.*
 
-   *\*\* Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
+   *\\* *Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
 
 ## ball
 
@@ -1156,7 +1156,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* This is affected by the Acceleration setting.*
+   \* *This is affected by the Acceleration setting.*
 
 ## polygon
 
@@ -1195,7 +1195,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-   *\* Filled polygons are affected by the acceleration setting.*
+   \* *Filled polygons are affected by the acceleration setting.*
 
 ## box
 
@@ -1325,7 +1325,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $fb->fill({'x' => 334, 'y' => 23});
    ```
 
-   *\* This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
+   \* *This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
 
 ## replace\_color
 
@@ -1359,7 +1359,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    # Encoded color strings are 4 bytes wide for 32 bit, 3 bytes for 24 bit and 2 bytes for 16 bit color.
    ```
 
-   *\* This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
+   \* *This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
 
 ## blit\_copy
 
@@ -1438,7 +1438,7 @@ Many of the parameters you pass to the "new" method are also special variables.
                                              # "HARDWARE" = HARDWARE = 2
    ```
 
-   *\* The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
+   \* *The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
 
 ## perl
 
@@ -1589,7 +1589,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
-   *\* Rotate and Flip are affected by the acceleration setting.*
+   \* *Rotate and Flip are affected by the acceleration setting.*
 
 ## clip\_reset
 
@@ -1654,7 +1654,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
-   *\* You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
+   \* *You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
 
 ## ttf\_print
 
@@ -1707,7 +1707,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-   *\* Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
+   \* *Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
 
 ## ttf\_paragraph
 
@@ -1719,7 +1719,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    Text is started at "x" and wrapped to "x" for each line, no indentation.
 
-   *\* This does _NOT_ scroll text.  It merely truncates what doesn't fit.  It returns where in the text string it last printed before truncation.  It's also quite slow.*
+   \* *This does _NOT_ scroll text.  It merely truncates what doesn't fit.  It returns where in the text string it last printed before truncation.  It's also quite slow.*
 
    ```perl
    $fb->ttf_paragraph(
@@ -2014,7 +2014,7 @@ Formats can be (they are case-insensitive):
 
    Waits for the vertical blank before returning
 
-   *\* Not all framebuffer drivers have this capability and ignore this call.  Results may vary, as this cannot be emulated.  The only way to know is to just test it.*
+   \* *Not all framebuffer drivers have this capability and ignore this call.  Results may vary, as this cannot be emulated.  The only way to know is to just test it.*
 
 ## which\_console
 
@@ -2046,7 +2046,7 @@ Formats can be (they are case-insensitive):
 
    Turns on/off the mouse handler.
 
-   *\* Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
+   \* *Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
 
    ```perl
    $fb->initialize\_mouse(1);  # Turn on the mouse handler
@@ -2108,7 +2108,7 @@ Formats can be (they are case-insensitive):
    );
    ```
 
-   *\* NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
+   \* *NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
@@ -2166,7 +2166,7 @@ Formats can be (they are case-insensitive):
 
    This isn't a design choice, nor preference, nor some anti-Windows ego trip.  It's simply because of the fact MS Windows does not allow file mapping of the display, nor variable memory mapping of the display (that I know of), both are the techniques this module uses to achieve its magic.  DirectX is more like OpenGL in how it works, and thus defeats the purpose of this module.  You're better off with SDL instead, if you want to draw in MS Windows from Perl.
 
-   *\* However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.*
+   \* *However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.*
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
@@ -2174,7 +2174,7 @@ Formats can be (they are case-insensitive):
 
    Ok, you've installed the module, but can't seem to get it to work properly.  Here  are some things you can try:
 
-   *\* make sure you turn on the **SHOW\_ERRORS** parameter when calling **new** to create the object.  This helps with troubleshooting (but turn it back off for normal use).*
+   \* *make sure you turn on the **SHOW\_ERRORS** parameter when calling **new** to create the object.  This helps with troubleshooting (but turn it back off for normal use).*
 
    - **You Have To Run From The Console**
 
@@ -2186,7 +2186,7 @@ Formats can be (they are case-insensitive):
 
        If it does exist, but is not "/dev/fb0", then you can define it in the **new** method with the **FB\_DEVICE** parameter, although the module is pretty good at finding it automatically.
 
-       *\* It may be possible to get a framebuffer device with a proprietary driver by forcing Grub to go into a VESA VGA mode for the console (worked for me with NVidia).*
+       \* *It may be possible to get a framebuffer device with a proprietary driver by forcing Grub to go into a VESA VGA mode for the console (worked for me with NVidia).*
 
    - **It's Crashing**
 
@@ -2236,7 +2236,7 @@ Formats can be (they are case-insensitive):
 
       If your script exits without turning the cursor back on, then it will still be off.  To get your cursor back, just type the command "reset" (and make sure you turn it back on before your code exits, so it doesn't do that).
 
-      *\* UPDATE:  The new default behavior is to do this for you via the **RESET** parameter when creating the object.  See the **new** method documentation above for more information.*
+      \* *UPDATE:  The new default behavior is to do this for you via the **RESET** parameter when creating the object.  See the **new** method documentation above for more information.*
 
    - **TrueType Printing isn't working**
 
@@ -2280,7 +2280,7 @@ Formats can be (they are case-insensitive):
 
    I am not one of those arrogant ogres that spout "RTFM" every time someone asks for help (although it helps if you do read the manual).  I actually will help you.  Please be patient, as I do have other responsibilities that may delay a response, but a response will come.
 
-   *\*\* Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
+   *\\* *Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
