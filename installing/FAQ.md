@@ -12,7 +12,7 @@
 
 ## Does this work on Microsoft Windows?
 
-![Windows Incompatible](../Win-No.png) ![Linux Only](../Linux.png)
+![Windows Incompatible](../pics/Win-No.png) ![Linux Only](../pics/Linux.png)
 
    No, as Windows does not have a memory mappable framebuffer.
 
