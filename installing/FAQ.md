@@ -8,7 +8,7 @@
 
    However, if you install ```mplayer```, then you can play videos with it.  It will use the "fbdev" display driver.  Keep in mind this is not a GPU accelerated driver.  So your results will vary with your CPU.
 
------
+![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## Does this work on Microsoft Windows?
 
@@ -22,19 +22,19 @@
 
    Note:  You can only have this module in emulation mode on MS Windows
 
------
+![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## Does this work on Darwin/FreeBSD etc?
 
    Likely not, as the module depends on Linux kernel sources and IOCTL calls to the kernel.  I am making an attempt to see if I can make it work on FreeBSD, but it's an uphill battle.  FreeBSD is like an OS make by Ikea.  Once it's set up to do what you want, it works quite well.  However, gettung to that point is a royal pain in the neck.
 
------
+![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## Will GFB ever be hardware accelerated to use the DRM video drivers?
 
    Not likely, as DRM is not the framebuffer, and has a far different and more complex way of drawing to the screen.  I MAY... MAY ... be able to activate the Framebuffer mode on DRM drivers, if they support it, but if the DRM drivers have this feature, then it should be active as a framebuffer anyway.  Perhaps you might have to use "modprobe" to activate it?  SOME framebuffer drivers support very rudimentary hardware acceleration like box drawing or blitting.  If you want to take up the challenge to add support, then I would welcome the merge.
 
------
+![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## I cannot get it to work.  Will you help me?
 
