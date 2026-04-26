@@ -282,14 +282,14 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    The following are names you can search to get to the desired method:
 
-   * Instantiation
+   * **Instantiation**
      - [new](#new) - Create the Graphics::Framebuffer object
-   * Clipping
+   * **Clipping**
      - [clip\_off](#clip-off) - Turn off clipping
      - [clip\_reset](#clip-reset) - Turn off clipping
      - [clip\_rset](#clip-rset) - Set clipping rectangle using relative height and width.
      - [clip\_set](#clip-set) - Set clipping using specific coordinates.
-   * Settings & Control
+   * **Settings & Control**
      - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
      - [active\_console](#active-console) - Get the current active console.
      - [attribute\_reset](#attribute-reset) - Reset the attributes to the global defaults.
@@ -311,7 +311,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [vsync](#vsync) - Block drawing until the vertical sync.
      - [wait\_for\_console](#wait-for-console) - Blocking if not the correct console.
      - [which\_console](#which-console) - Returnsd the current console.
-   * Primitives
+   * **Primitives**
      - [ball](#ball) - Draw pseudo 3D ball.
      - [bezier](#bezier) - Draw bezier curved lines.
      - [box](#box) - Draw a box.
@@ -333,7 +333,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [rbox](#rbox) - Draw a box with rounded corners.
      - [setpixel](#setpixel) - Plots a pixel.
      - [set\_pixel](#set-pixel) - Plots a pixel.
-   * Drawing Modes
+   * **Drawing Modes**
      - [add\_mode](#add-mode) - Draw in ADD mode.
      - [and\_mode](#add-mode) - Draw in AND mode.
      - [alpha\_mode](#alpha-mode) - Draw using alpha blending.
@@ -343,22 +343,22 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [or\_mode](#or-mode) - Draw using OR mode.
      - [unmask\_mode](#unmask-mode) - Draw using color masking.  Draws only on the background of the destination.
      - [xor\_mode](#xor-mode) - Draw using XOR mode.
-   * Image Handling
+   * **Image Handling**
      - [load\_image](#load-image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
      - [play\_animation](#play-animation) - Play an animated GIF already loaded.
      - [screen\_dump](#screen-dump) - Dump the framebuffer to disk.
-   * Blitting
+   * **Blitting**
      - [blit\_copy](#blit-copy) - Copy a screen region to a new location leaving the original location untouched.
      - [blit\_move](#blit-move) - Move a screen region from one location to another, removing the original.
      - [blit\_read](#blit-read) - Reads in a screen region to a variable.
      - [blit\_transform](#blit-transform) - Transform a blit variable.
      - [blit\_write](#blit-write) - Writes a blit variable to a screen location.
-   * Text Drawing
+   * **Text Drawing**
      - [get\_face\_name](#get-face-name) - Get the face name of a font file name.
      - [get\_font\_list](#get-font-list) - Get a list of fonts including their attributes.
      - [ttf\_paragraph](#ttf-paragraph) - Print a paragraph.
      - [ttf\_print](#ttf-print) - Print text.
-   * Conversion
+   * **Conversion**
      - [monochrome](#monochrome) - Create a monochrome blit image variable from a color blit image variable.
      - [RGB565\_to\_RGB888](#rgb565-to-rgb888) - Converts 16 bit blit variable to 24 bit blit variable.
      - [RGB565\_to\_RGBA8888](#rgb565-to-rgba8888) - Converts 16 bit blit variable to 32 bit blit variable.
