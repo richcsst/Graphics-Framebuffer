@@ -30,7 +30,9 @@ examples/viewpic.pl
 pics/author.jpg
 pics/GFB.png
 pics/pink.jpg
-ignore.txt
+pics/Win-No.png
+pics/Linux.png
+pics/TinyPrint.jpg
 installing/detect.sh
 installing/FAQ.md
 installing/INSTALL.md
@@ -50,7 +52,5 @@ src/Framebuffer.pm
 src/metadata.txt
 src/README.md
 t/01-splash.t
-pics/Win-No.png
-pics/Linux.png
-pics/TinyPrint.jpg
 LICENSE
+ignore.txt
