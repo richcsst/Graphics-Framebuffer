@@ -1179,10 +1179,10 @@ Many of the parameters you pass to the "new" method are also special variables.
        'gradient'    => {  # optional
            'direction' => 'horizontal', # or vertical
            'colors'    => { # 2 to any number of transitions allowed
-               'red'   => [255,255,0], # Red to yellow to cyan
-               'green' => [0,255,255],
-               'blue'  => [0,0,255],
-               'alpha' => [255,255,255],
+               'red'   => [255, 255, 0], # Red to yellow to cyan
+               'green' => [0,   255, 255],
+               'blue'  => [0,   0,   255],
+               'alpha' => [255, 255, 255],
            }
        },
        'texture'     => { # Same as what blit_read or load_image returns
