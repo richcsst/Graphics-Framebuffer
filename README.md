@@ -80,9 +80,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
       The "ExtraData" section may already have other definitions in it.  Just place the "ExtraDataItem" as the last definition.  You can Set the resolution to anything sane.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
-
-## Continuing...
+### Continuing...
 
    With that out of the way, you can now install this module.
 
