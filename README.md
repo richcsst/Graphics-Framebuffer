@@ -38,7 +38,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    Linux has a special graphics mode it originally used since its early days called the framebuffer.  It allowed software to draw to the screen without special drivers (as originally Linux didn't have graphics drivers).  All operations were CPU driven.
 
-   Graphics::Framebuffer exploits this feature and allows you to draw to the Linux screen without the overhead and complexity of a GPU driver.  It makes things nearly as easy to draw as they were on old 8 bit computers.
+   **Graphics::Framebuffer** exploits this feature and allows you to draw to the Linux screen without the overhead and complexity of a GPU driver.  It makes things nearly as easy to draw as they were on old 8 bit computers.
 
    On Linux, everything is treated as a file path, even hardware.  The framebuffer is just a file that is mapped directly to a Perl string variable.  The way things are "drawn" are by modifying this string.  In the early days of this module, everything was done strictly in Perl and it worked (you can still do that by turning C acceleration off).  However, I have added C code to make things faster.  Since accessing the framebuffer is strictly a CPU operation, you do not have hardware accelerated drawing.  Everything is done by the CPU.  However, today's CPUs are quite fast, even most ARM CPUs and the C code makes it quite fast.
 
