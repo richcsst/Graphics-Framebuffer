@@ -200,7 +200,22 @@ NOTE:
      - 1 = Some functions accelerated by compiled C code (Default)
      - 2 = All of #1 plus additional functions accelerated by hardware (currently not supported, and likely never will)
 
-   Many of the parameters you pass to the "new" method are also special variables.
+* **IS_BVOX**
+
+   A boolean value that indicates if running inside of VirtualBox.  Since VirtualBox version 7.6.6, it has an issue with poor framebuffer implementation and delayed updates a buffer flushing.  This allows your code to detect this environment and add
+manual flushing if affected.
+
+* **LAST_FLUSHED**
+
+   A timestamp of when the screen was last flushed.  This allows you to throttle screen flushing to prevent bottlenecks, if you have screen flushing in your code.  For example:
+   
+   ```perl
+   if ($FB->{'IS_VBOX') {
+       $FB->_flush_screen() if ((time - (1/15)) > $FB->{'LAST_FLUSHED'});
+   }
+   ```
+
+Many of the parameters you pass to the "new" method are also special variables.
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
