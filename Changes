@@ -80,7 +80,7 @@ Change log for Graphics::Framebuffer
 
 6.86   January 26, 2026
 
-       Bugs corrected in the C code by snakpak.
+       Bugs corrected in the C code by Rick Meyers (snakpak).
 	   Also, speed increased.
 
 6.85   January 19, 2026
