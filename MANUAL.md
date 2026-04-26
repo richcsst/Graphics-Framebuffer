@@ -2318,7 +2318,7 @@ Formats can be (they are case-insensitive):
 
 # VERSION
 
-   Version 6.96 (Apr 06, 2026)
+   Version 6.99 (Apr 25, 2026)
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
