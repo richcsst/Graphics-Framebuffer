@@ -125,17 +125,17 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    You can also look for information at:
 
-   * **Manual** - [MANUAL.md](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md) - A separate indexed manual written in GitHub markdown.  The module POD still exists, but this is easier to read and search.
+   * [MANUAL](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md) - A separate indexed manual written in GitHub markdown.  The module POD still exists, but this is easier to read and search.
 
-   * **MetaCPAN** - [MetaCPAN - Graphics::Framebuffer](https://metacpan.org/pod/Graphics::Framebuffer)
+   * [MetaCPAN](https://metacpan.org/pod/Graphics::Framebuffer) - CPAN page for Graphics::Framebuffer
 
-   * **YouTube** - [YouTube](https://www.youtube.com/watch?v=X8RpFBq6F9I)
+   * [YouTube](https://www.youtube.com/watch?v=X8RpFBq6F9I) - YouTube channel with setup and demonstration videos.
 
-   * **GitHub** - [GitHub - Graphics-Framebuffer](https://github.com/richcsst/Graphics-Framebuffer)
+   * [GitHub](https://github.com/richcsst/Graphics-Framebuffer) - GitHub repository for Graphics::Framebuffer.
 
-   * **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git
+   * **GitHub Clone** - https://github.com/richcsst/Graphics-Framebuffer.git - For easy cloning of the repository.
 
-   * **Mario Roy's Multiprocessing Examples** - [MCE Examples](https://github.com/marioroy/mce-examples)
+   * [Mario Roy's Multiprocessing Examples](https://github.com/marioroy/mce-examples) - Mario Roy helped contribute to multiprocessing and examples, bypassing the need for threads.
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
@@ -151,4 +151,4 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
 ## MY GITHUB PROJECTS
 
-   * **GitHub** Repositories - [https://github.com/richcsst](https://github.com/richcsst)
+   * [My GitHub Repositories](https://github.com/richcsst)
