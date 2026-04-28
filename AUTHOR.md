@@ -161,7 +161,8 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
    *January 1989 to November 1990 - Radio and Television Broadcasting Technology and Voice Training*
 
-   Broadcast Engineering and Voice Talent.  Certification.
+   * Broadcast Engineering
+   * Voice Talent.  Certification.
 
 ----
 
@@ -169,7 +170,8 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
    *September 1980 to January 1985*
 
-   General high school education.  Diploma received.
+   * General high school education
+   * Diploma received.
 
 ## ACHIEVEMENTS
 
