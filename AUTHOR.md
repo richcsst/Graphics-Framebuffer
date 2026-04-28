@@ -175,7 +175,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ## ACHIEVEMENTS
 
-   * **Published Programmer** - *ST Format Magazine*.  Issue #65, Page 9.  Featured on the cover disk.
+   * **Published Programmer** - *ST Format Magazine*.  [Issue #65, Page 9](pics/TinyPrint.jpg "ST Format Cover Disk #65 Dec 1994 Page 9").  Featured on the cover disk.
    * **CPAN Module Creator** -
        * **Graphics::Framebuffer** – A Perl graphics module for drawing graphics on Linux framebuffer devices.
        * **Debug::Easy** – A Perl module to include in code that allows for easy and switchable debugging output.  Can be left in production code.
