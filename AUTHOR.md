@@ -165,6 +165,8 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
    Broadcast Engineering and Voice Talent.  Certification.
 
+----
+
 ### Santana High School
 
    *September 1980 to January 1985*
