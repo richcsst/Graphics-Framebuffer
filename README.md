@@ -127,9 +127,9 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    * [MANUAL](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md) - A separate indexed manual written in GitHub markdown.  The module POD still exists, but this is easier to read and search.
 
-   * [MetaCPAN](https://metacpan.org/pod/Graphics::Framebuffer) - CPAN page for Graphics::Framebuffer
+   * [![MetaCPAN](pics/MetaCPAN.jpg)](https://metacpan.org/pod/Graphics::Framebuffer) - CPAN page for Graphics::Framebuffer
 
-   * [YouTube](https://www.youtube.com/watch?v=X8RpFBq6F9I) - YouTube channel with setup and demonstration videos.
+   * [![YouTube](https://www.youtube.com/watch?v=X8RpFBq6F9I)](pics/YouTube.jpg) - YouTube channel with setup and demonstration videos.
 
    * [GitHub](https://github.com/richcsst/Graphics-Framebuffer) - GitHub repository for Graphics::Framebuffer.
 
