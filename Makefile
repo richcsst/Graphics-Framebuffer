@@ -931,13 +931,13 @@ config ::
 
 # --- MakeMaker inline section:
 
+Graphics-Framebuffer-Mouse.inl : pm_to_blib
+	$(PERL) -Mblib -MInline=NOISY,_INSTALL_ -MGraphics::Framebuffer::Mouse -e"my %A = (modinlname => 'Graphics-Framebuffer-Mouse.inl', module => 'Graphics::Framebuffer::Mouse'); my %S = (API => \%A); Inline::satisfy_makefile_dep(\%S);" 6.99 $(INST_ARCHLIB)
 Graphics-Framebuffer-Splash.inl : pm_to_blib
 	$(PERL) -Mblib -MInline=NOISY,_INSTALL_ -MGraphics::Framebuffer::Splash -e"my %A = (modinlname => 'Graphics-Framebuffer-Splash.inl', module => 'Graphics::Framebuffer::Splash'); my %S = (API => \%A); Inline::satisfy_makefile_dep(\%S);" 6.99 $(INST_ARCHLIB)
 Graphics-Framebuffer.inl : pm_to_blib
 	$(PERL) -Mblib -MInline=NOISY,_INSTALL_ -MGraphics::Framebuffer -e"my %A = (modinlname => 'Graphics-Framebuffer.inl', module => 'Graphics::Framebuffer'); my %S = (API => \%A); Inline::satisfy_makefile_dep(\%S);" 6.99 $(INST_ARCHLIB)
-Graphics-Framebuffer-Mouse.inl : pm_to_blib
-	$(PERL) -Mblib -MInline=NOISY,_INSTALL_ -MGraphics::Framebuffer::Mouse -e"my %A = (modinlname => 'Graphics-Framebuffer-Mouse.inl', module => 'Graphics::Framebuffer::Mouse'); my %S = (API => \%A); Inline::satisfy_makefile_dep(\%S);" 6.99 $(INST_ARCHLIB)
 
-dynamic :: Graphics-Framebuffer-Splash.inl Graphics-Framebuffer.inl Graphics-Framebuffer-Mouse.inl
+dynamic :: Graphics-Framebuffer-Mouse.inl Graphics-Framebuffer-Splash.inl Graphics-Framebuffer.inl
 
 # The End is here.
