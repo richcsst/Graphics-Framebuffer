@@ -9,3 +9,5 @@
 
 ## make test
 ![Testing](../pics/GFB-Testing.png)
+![Perl Drawing](../pics/PerlSplash.png)
+![C Drawing](../pics/CSplash.png)
