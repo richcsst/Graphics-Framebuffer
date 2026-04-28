@@ -10,7 +10,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 # RESUME
 
-## Richard Kelsch
+## RICHARD KELSCH
 
 * LinkedIn - https://www.linkedin.com/in/richardkelsch/
 * GitHub   - https://github.com/richcsst
