@@ -2508,7 +2508,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
 # VERSION
 
-   Version 6.99 (Apr 25, 2026)
+   Version 7.00 (Apr 28, 2026)
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
