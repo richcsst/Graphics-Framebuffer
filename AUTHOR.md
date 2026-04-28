@@ -27,7 +27,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ## EXPERIENCE
 
-### Estee Lauder (Contracted Via Cognizant)
+### Estee Lauder (Contracted via Cognizant)
 
    *October 2020 to September 2025 - Linux System Administrator*
 
@@ -48,7 +48,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ----
 
-### Qualcomm (Contracted Via WinMax Systems Inc.)
+### Qualcomm (Contracted via WinMax Systems Inc.)
 
    *July 2013 to September 2013 - Release Engineer*
 
