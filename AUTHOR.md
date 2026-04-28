@@ -12,9 +12,9 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ## RICHARD KELSCH
 
-* LinkedIn - https://www.linkedin.com/in/richardkelsch/
-* GitHub   - https://github.com/richcsst
-* CPAN     - https://metacpan.org/author/RKELSCH
+* **LinkedIn** - https://www.linkedin.com/in/richardkelsch/
+* **GitHub**   - https://github.com/richcsst
+* **CPAN**     - https://metacpan.org/author/RKELSCH
 
 ## QUALIFICATIONS
 
