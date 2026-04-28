@@ -28,10 +28,15 @@ examples/vector.pl
 examples/vector-usa.gfb
 examples/viewpic.pl
 pics/author.jpg
+pics/cpan.jpg
 pics/GFB.png
 pics/pink.jpg
 pics/Win-No.png
+pics/LinkedIn.jpg
 pics/Linux.png
+pics/MetaCPAN.jpg
+pics/Perl.jpg
+pics/YouTube.jpg
 pics/TinyPrint.jpg
 installing/detect.sh
 installing/FAQ.md
