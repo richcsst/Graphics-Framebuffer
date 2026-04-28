@@ -194,7 +194,7 @@ Indicates if C code or hardware acceleration is being used.
 
 This is a boolean variable that is normally FALSE unless running inside of VirtualBox, else it is TRUE.
 
-Later versions of VirtualBox (from 7.6.6 and above) do not properly flush the framebuffer to the physical framebuffer properly.  This causes jittery output and perceived unfinished output.  Using "_flush_screen" seems to force the update.  This variable allows you to code accordingly.
+Later versions of VirtualBox (from 7.2.6 and above) do not properly flush the framebuffer to the physical framebuffer properly.  This causes jittery output and perceived unfinished output.  Using "_flush_screen" seems to force the update.  This variable allows you to code accordingly.
 
 * B<LAST_FLUSHED>
 
