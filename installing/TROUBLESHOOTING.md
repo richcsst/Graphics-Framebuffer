@@ -20,6 +20,8 @@
 
    * It may be possible to get a framebuffer device with a proprietary driver by forcing Grub to go into a VESA VGA mode for the console (worked for me with NVidia's proprietary drivers).
 
+----
+
 ### It's Crashing
 
    Ok, segfaults suck.  Believe me, I had plenty in the early days of writing this module.  There is hope for you.
@@ -36,6 +38,8 @@
 
    If you get this behavior, then it is a bug, and the author needs to be notified, although as of version 6.06 this should no longer be an issue.
 
+----
+
 ### It Only Partially Renders
 
    Yeah this can look weird.  This is likely because there's some buffering going on.  The module attempts to turn it off, but if, for some reason, it is buffering anyway, try adding the following to points in your code where displaying a full render is necessary:
@@ -46,9 +50,13 @@
 
    This should force a full screen flush, but only use this if you really need it.
 
+----
+
 ### Where are the fonts?
   
    The default chosen font is "FreeSans" and this is included in the "fonts-freetype-ttf" package.  If this package is not installed, then either install it (recommended) or pick a different font.  The ```fonts.pl``` example script uses FreeSans.
+
+----
 
 ### It Just Plain Isn't Working
 
@@ -64,6 +72,8 @@
 
    Once that is run (changing "username" to whatever your username is), log out, then log back in, and it should work.
 
+----
+
 ### The Text Cursor Is Messing Things Up
 
    It is?  Well then turn it off.  Use the ```$fb->cls('OFF')``` method to do it.  Use ```$fb->cls('ON')``` to turn it back on.
@@ -72,11 +82,15 @@
 
    * UPDATE:  The new default behavior is to do this for you via the "RESET" parameter when creating the object.  See the "new" method documentation for more information.
 
+----
+
 ### TrueType Printing isn't working
 
    This is likely caused by the *Imager* library either being unable to locate the font file, or when it was compiled, it couldn't find the FreeType development libraries, and was thus compiled without TrueType text support.
 
    See the INSTALLATION instructions on getting *Imager* properly compiled.  If you have a package based Perl installation, then installing the *Imager* (usually "libimager-perl" or "perl-libimager") package will always work.  If you already installed *Imager* via CPAN, then you should uninstall it via CPAN, then go install the package version, in that order.  You may also install ```libfreetype6-dev``` and then re-install *Imager* via CPAN with a forced install.  If you don't want the package version but still want the CPAN version, then still uninstall what is there, then go and make sure the TrueType and FreeType development libraries are installed on your system, along with PNG, JPEG, and GIF development libraries.  Now you can go to CPAN and install *Imager*.
+
+----
 
 ### It's Too Slow
 
@@ -94,6 +108,8 @@
 
    Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heavy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time.
 
+----
+
 ### Ask For Help
 
    If none of these ideas work, then send me an email, and I may be able to get it functioning for you.  Please run the ```dump.pl``` script inside the "examples" directory inside this module's package:
@@ -107,6 +123,8 @@
    Also, please include a copy of your code (or at least the portion of it where you initialize this module and are having issues), AND explain to me your hardware and OS it is running under.
 
    Screen shots and photos are also helpful.
+
+----
 
 ### KNOW THIS:
 
