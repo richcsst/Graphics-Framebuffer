@@ -162,7 +162,8 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
    *January 1989 to November 1990 - Radio and Television Broadcasting Technology and Voice Training*
 
    * Broadcast Engineering
-   * Voice Talent.  Certification.
+   * Voice Talent
+   * Certification
 
 ----
 
@@ -171,7 +172,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
    *September 1980 to January 1985*
 
    * General high school education
-   * Diploma received.
+   * Diploma received
 
 ## ACHIEVEMENTS
 
@@ -179,4 +180,4 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
    * **CPAN Module Creator** -
        * **Graphics::Framebuffer** – A Perl graphics module for drawing graphics on Linux framebuffer devices.
        * **Debug::Easy** – A Perl module to include in code that allows for easy and switchable debugging output.  Can be left in production code.
-       * Term::ANSIEncode – A Perl utility and module that allows simple markup language to generate ANSI color and graphics output with minimal effort.
+       * **Term::ANSIEncode** – A Perl utility and module that allows simple markup language to generate ANSI color and graphics output with minimal effort.
