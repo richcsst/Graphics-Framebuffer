@@ -367,6 +367,8 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [RGBA8888\_to\_RGB565](#rgba8888-to-rgb565) - Converts 32 bit blit variable to 16 bit blit variable.
      - [RGBA8888\_to\_RGB888](#rgba8888-to-rgb888) - Converts 32 bit blit variable to 24 bit blit variable.
 
+----
+
 ## **new**
 
    This instantiates the framebuffer object
@@ -504,14 +506,20 @@ Many of the parameters you pass to the "new" method are also special variables.
       -  'BGR'  for Blue-Green-Red (Many video cards are this)
 
       Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
-   
+
+----
+
 ## text\_mode
 
    Sets the TTY into text mode, where text can interfere with the display
 
+----
+
 ## graphics\_mode
 
    Sets the TTY in exclusive graphics mode, where text and cursor cannot interfere with the display.  Please remember, you must call text\_mode before exiting, else your console will not show any text!
+
+----
 
 ## screen\_dimensions
 
@@ -543,6 +551,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
+----
+
 ## splash
 
    Displays the Splash screen.  It automatically scales and positions to the clipping region.
@@ -552,6 +562,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->splash();
    ```
+
+----
 
 ## get\_font\_list
 
@@ -581,6 +593,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    When passing a name, it will return a hash reference (if only one match), or an array reference of hashes of fonts matching that name.  Passing in "Arial" would return the font information for "Arial Black", "Arial Narrow", and "Arial Rounded" (if they are installed on your system).
+
+----
 
 ## draw\_mode
 
@@ -640,6 +654,8 @@ Many of the parameters you pass to the "new" method are also special variables.
                                      # useful, but here for completeness)
    ```
 
+----
+
 ## normal\_mode
 
    This is an alias to draw\_mode(NORMAL\_MODE)
@@ -647,6 +663,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->normal_mode();
    ```
+
+----
 
 ## xor\_mode
 
@@ -656,6 +674,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->xor_mode();
    ```
 
+----
+
 ## or\_mode
 
    This is an alias to draw\_mode(OR\_MODE)
@@ -663,6 +683,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->or_mode();
    ```
+
+----
 
 ## alpha\_mode
 
@@ -672,6 +694,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->alpha_mode();
    ```
 
+----
+
 ## and\_mode
 
    This is an alias to draw\_mode(AND\_MODE)
@@ -679,6 +703,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->and_mode();
    ```
+
+----
 
 ## mask\_mode
 
@@ -688,6 +714,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->mask_mode();
    ```
 
+----
+
 ## unmask\_mode
 
    This is an alias to draw\_mode(UNMASK\_MODE)
@@ -695,6 +723,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->unmask_mode();
    ```
+
+----
 
 ## add\_mode
 
@@ -704,6 +734,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->add_mode();
    ```
 
+----
+
 ## subtract\_mode
 
    This is an alias to draw\_mode(SUBTRACT\_MODE)
@@ -711,6 +743,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->subtract_mode();
    ```
+
+----
 
 ## multiply\_mode
 
@@ -720,6 +754,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->multiply_mode();
    ```
 
+----
+
 ## divide\_mode
 
    This is an alias to draw\_mode(DIVIDE\_MODE)
@@ -727,6 +763,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->divide_mode();
    ```
+
+----
 
 ## clear\_screen
 
@@ -740,9 +778,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
    ```
 
+----
+
 ## cls
 
    This is an alias to 'clear\_screen'
+
+----
 
 ## attribute\_reset
 
@@ -751,6 +793,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```perl
    $FB->attribute_reset();
    ```
+
+----
 
 ## plot
 
@@ -765,13 +809,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
+----
+
 ## setpixel
 
    An alias to plot.
 
+----
+
 ## set\_pixel
 
    An alias to plot.
+
+----
 
 ## pixel
 
@@ -792,13 +842,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
+----
+
 ## getpixel
 
    Alias for 'pixel'.
 
+----
+
 ## get\_pixel
 
    Alias for 'pixel'.
+
+----
 
 ## last\_plot
 
@@ -829,6 +885,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ( x position, y position )
    ```
 
+----
+
 ## line
 
    Draws a line, in the foreground color, from point x,y to point xx,yy.  Clipping applies.
@@ -842,6 +900,8 @@ Many of the parameters you pass to the "new" method are also special variables.
        'antialiased' => TRUE # Antialiasing is slower
    });
    ```
+
+----
 
 ## angle\_line
 
@@ -857,6 +917,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
+----
+
 ## drawto
 
    Draws a line, in the foreground color, from the last plotted position to the position x,y.  Clipping applies.
@@ -870,6 +932,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    \* *Antialiased lines are not accelerated.*
+
+----
 
 ## bezier
 
@@ -901,9 +965,13 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting.*
 
+----
+
 ## cubic\_bezier
 
    *DISCONTINUED, use 'bezier' instead (now just an alias to 'bezier').*
+
+----
 
 ## draw\_arc
 
@@ -949,6 +1017,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Only PIE is affected by the acceleration setting.*
 
+----
+
 ## arc
 
    Draws an arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
@@ -983,6 +1053,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    \* *This is not affected by the Acceleration setting.*
+
+----
 
 ## filled\_pie
 
@@ -1035,6 +1107,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is affected by the Acceleration setting.*
 
+----
+
 ## poly\_arc
 
    Draws a poly arc of a circle at point x,y.  This is an alias to draw\_arc above, but no mode parameter needed.
@@ -1069,6 +1143,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    \* *This is not affected by the Acceleration setting.*
+
+----
 
 ## ellipse
 
@@ -1108,6 +1184,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    *\\* *Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
 
+----
+
 ## ball
 
    Draws a filled circle resembling a 3D ball, similar to a Christmas tree globe.  It draws it at point x,y with radius 'radius' and the brightest color.  It ignores the current foreground color and uses its own color definition.
@@ -1126,6 +1204,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 	   },
    });
    ```
+
+----
 
 ## circle
 
@@ -1157,6 +1237,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    \* *This is affected by the Acceleration setting.*
+
+----
 
 ## polygon
 
@@ -1197,6 +1279,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Filled polygons are affected by the acceleration setting.*
 
+----
+
 ## box
 
    Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 0, or as a filled block, if 'filled' is 1.  You may also add a gradient or texture.
@@ -1230,6 +1314,8 @@ Many of the parameters you pass to the "new" method are also special variables.
                                          # the names of all the hatches
    });
    ```
+
+----
 
 ## rbox
 
@@ -1265,9 +1351,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
+----
+
 ## rounded\_box
 
    This is an alias to rbox
+
+----
 
 ## set\_color
 
@@ -1284,13 +1374,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
+----
+
 ## setcolor
 
    This is an alias to 'set\_color'
 
+----
+
 ## set\_foreground\_color
 
    This is an alias to 'set\_color'
+
+----
 
 ## set\_b\_color
 
@@ -1307,13 +1403,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
+----
+
 ## setbcolor
 
    This is an alias to 'set\_b\_color'
 
+----
+
 ## set\_background\_color
 
    This is an alias to 'set\_b\_color'
+
+----
 
 ## fill
 
@@ -1326,6 +1428,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    \* *This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
+
+----
 
 ## replace\_color
 
@@ -1361,6 +1465,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
 
+----
+
 ## blit\_copy
 
    Copies a square portion of screen graphic data from x,y,w,h to x\_dest,y\_dest.  It copies in the current drawing mode.
@@ -1375,6 +1481,8 @@ Many of the parameters you pass to the "new" method are also special variables.
        'y_dest' => 200
    });
    ```
+
+----
 
 ## blit\_move
 
@@ -1394,6 +1502,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
+----
+
 ## play\_animation
 
    Plays an animation sequence loaded from "load\_image"
@@ -1412,6 +1522,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    The animation is played at the speed described by the file's metadata multiplied by "rate\_multiplier".
 
    You need to enclose this in a loop if you wish it to play more than once.
+
+----
 
 ## acceleration
 
@@ -1440,19 +1552,27 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
 
+----
+
 ## perl
 
    This is an alias to "acceleration(PERL)"
 
+----
+
 ## software
 
    This is an alias to "acceleration(SOFTWARE)"
+
+----
 
 ## hardware
 
    This is an alias to "acceleration(HARDWARE)"
 
    *Hardware acceleration is not implemented.*
+
+----
 
 ## blit\_read
 
@@ -1483,6 +1603,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    All you have to do is change X and Y, and just pass it to "blit\_write" and it will paste it there.
 
+----
+
 ## blit\_write
 
    Writes a previously read block of screen data at x,y,width,height.
@@ -1498,6 +1620,8 @@ Many of the parameters you pass to the "new" method are also special variables.
        'image'  => $blit_data
    });
    ```
+
+----
 
 ## blit\_transform
 
@@ -1591,6 +1715,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Rotate and Flip are affected by the acceleration setting.*
 
+----
+
 ## clip\_reset
 
    Turns off clipping, and resets the clipping values to the full size of the screen.
@@ -1599,9 +1725,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->clip_reset();
    ```
 
+----
+
 ## clip\_off
 
    This is an alias to 'clip\_reset'
+
+----
 
 ## clip\_set
 
@@ -1616,6 +1746,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
+----
+
 ## clip\_rset
 
    Sets the clipping rectangle to point x,y,width,height
@@ -1628,6 +1760,8 @@ Many of the parameters you pass to the "new" method are also special variables.
        'height' => 400
    });
    ```
+
+----
 
 ## monochrome
 
@@ -1655,6 +1789,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    ```
 
    \* *You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
+
+----
 
 ## ttf\_print
 
@@ -1709,6 +1845,8 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
 
+----
+
 ## ttf\_paragraph
 
    Very similar to an ordinary Perl "print", but uses TTF fonts instead.  It will automatically wrap text like a terminal.
@@ -1749,6 +1887,8 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
+----
+
 ## get\_face\_name
 
    Returns the TrueType face name based on the parameters passed.
@@ -1759,6 +1899,8 @@ Many of the parameters you pass to the "new" method are also special variables.
        'face'      => 'FontFileName.ttf'
    });
    ```
+
+----
 
 ## load\_image
 
@@ -1881,52 +2023,56 @@ Many of the parameters you pass to the "new" method are also special variables.
    ]
    ```
 
+----
+
 ## screen\_dump
 
    Dumps the screen to a file given in 'file' in the format given in 'format'
 
-Formats can be (they are case-insensitive):
+   Formats can be (they are case-insensitive):
 
-- **JPEG**
+   - **JPEG**
 
-    The most widely used format.  This is a "lossy" format.  The default quality setting is 75%, but it can be overriden with the "quality" parameter.
+      The most widely used format.  This is a "lossy" format.  The default quality setting is 75%, but it can be overriden with the "quality" parameter.
 
-- **GIF**
+   - **GIF**
 
-    The CompuServe "Graphics Interchange Format".  A very old and outdated format made specifically for VGA graphics modes, but still widely used.  It only allows up to 256 "indexed" colors, so quality is very lacking.  The "dither" paramter determines how colors are translated from 24 bit truecolor to 8 bit indexed.
+      The CompuServe "Graphics Interchange Format".  A very old and outdated format made specifically for VGA graphics modes, but still widely used.  It only allows up to 256 "indexed" colors, so quality is very lacking.  The "dither" paramter determines how colors are translated from 24 bit truecolor to 8 bit indexed.
 
-- **PNG**
+   - **PNG**
 
-    The Portable Network Graphics format.  Widely used, very high quality.
+      The Portable Network Graphics format.  Widely used, very high quality.
 
-- **PNM**
+   - **PNM**
 
-    The Portable aNy Map format.  These are typically "PPM" files.  Not widely used.
+      The Portable aNy Map format.  These are typically "PPM" files.  Not widely used.
 
-- **TGA**
+   - **TGA**
 
-    The Targa image format.  This is a high-color, lossless format, typically used in photography
+      The Targa image format.  This is a high-color, lossless format, typically used in photography
 
-- **TIFF**
+   - **TIFF**
 
-    The Tagged Image File Format.  Sort of an older version of PNG (but not the same, just similar in capability).  Sometimes used in FAX formats.
+      The Tagged Image File Format.  Sort of an older version of PNG (but not the same, just similar in capability).  Sometimes used in FAX formats.
 
-   ```perl
-   $FB->screen_dump(
-       {
-           'file'   => '/path/filename', # name of file to be written
-           'format' => 'jpeg',           # jpeg, gif, png, pnm, tga, or tiff
+      ```perl
+      $FB->screen_dump(
+          {
+              'file'   => '/path/filename', # name of file to be written
+              'format' => 'jpeg',           # jpeg, gif, png, pnm, tga, or tiff
 
-           # for JPEG formats only
-           'quality' => 75,              # quality of the JPEG file 1-100% (the
-                                         # higher the number, the better the
-                                         # quality, but the larger the file)
+              # for JPEG formats only
+              'quality' => 75,              # quality of the JPEG file 1-100% (the
+                                            # higher the number, the better the
+                                            # quality, but the larger the file)
 
-           # for GIF formats only
-           'dither'  => 'floyd',         # Can be "floyd", "jarvis" or "stucki"
-       }
-   );
-   ```
+              # for GIF formats only
+              'dither'  => 'floyd',         # Can be "floyd", "jarvis" or "stucki"
+          }
+      );
+      ```
+
+----
 
 ## RGB565\_to\_RGB888
 
@@ -1940,6 +2086,8 @@ Formats can be (they are case-insensitive):
    );
    ```
 
+----
+
 ## RGB565\_to\_RGB8888
 
    Convert a 16 bit color value to a 32 bit color value.  This requires the color to be a two byte packed string.  The alpha value is either a value passed in or the default 255.
@@ -1952,6 +2100,8 @@ Formats can be (they are case-insensitive):
        }
    );
    ```
+
+----
 
 ## RGB888\_to\_RGB565
 
@@ -1967,6 +2117,8 @@ Formats can be (they are case-insensitive):
 
    This simply does a bitshift, nothing more.
 
+----
+
 ## RGBA8888\_to\_RGB565
 
    Convert 32 bit color value to a 16 bit color value.  This requires a four byte packed string.
@@ -1980,6 +2132,8 @@ Formats can be (they are case-insensitive):
    ```
 
    This simply does a bitshift, nothing more
+
+----
 
 ## RGB888\_to\_RGBA8888
 
@@ -1996,6 +2150,8 @@ Formats can be (they are case-insensitive):
 
    This just simply adds an alpha value.  No actual color conversion is done.
 
+----
+
 ## RGBA8888\_to\_RGB888
 
    Convert 32 bit color value to a 24 bit color value.  This requires a four byte packed string.
@@ -2010,11 +2166,15 @@ Formats can be (they are case-insensitive):
 
    This just removes the alpha value.  No color conversion is actually done.
 
+----
+
 ## vsync
 
    Waits for the vertical blank before returning
 
    \* *Not all framebuffer drivers have this capability and ignore this call.  Results may vary, as this cannot be emulated.  The only way to know is to just test it.*
+
+----
 
 ## which\_console
 
@@ -2023,6 +2183,8 @@ Formats can be (they are case-insensitive):
    ```perl
    my ($active_console, $expected_console) = $FB->which_console();
    ```
+
+----
 
 ## active\_console
 
@@ -2034,6 +2196,8 @@ Formats can be (they are case-insensitive):
    }
    ```
 
+----
+
 ## wait\_for\_console
 
    Blocks actions until the expected console is active.  The expected console is determined at the time the module is initialized.
@@ -2041,6 +2205,8 @@ Formats can be (they are case-insensitive):
    Due to speed considerations, YOU must do use this to do blocking, if desired.  If you expect to be changing active consoles, then you will need to use this.  However, if you do not plan to do ever change consoles when running this module, then don't use this feature, as your results will be faster.
 
    If a TRUE or FALSE is passed to this, then you can enable or disable blocking for subsequent calls.
+
+----
 
 ## initialize\_mouse
 
@@ -2058,6 +2224,8 @@ Formats can be (they are case-insensitive):
    $FB->initialize\_mouse(0);  # Turn off the mouse handler
    ```
 
+----
+
 ## poll\_mouse
 
    The mouse handler.  The "initialize\_mouse" routine sets this as the "alarm" routine to handle mouse events.
@@ -2065,6 +2233,8 @@ Formats can be (they are case-insensitive):
    An alarm handler just works, but can possibly block if used as ... an alarm handler.
 
    I suggest running it in a thread instead, using your own code.
+
+----
 
 ## get\_mouse
 
@@ -2095,6 +2265,8 @@ Formats can be (they are case-insensitive):
    }
    ```
 
+----
+
 ## set\_mouse
 
    Sets the mouse position
@@ -2120,9 +2292,13 @@ Formats can be (they are case-insensitive):
 
    Make sure the number of color key points matches for each primary color (red, green, and blue);
 
+----
+
 ## PERL OPTIMIZATION
 
    This module is highly CPU dependent.  So the more optimized your Perl installation is, the faster it will run.
+
+----
 
 ## THREADS
 
@@ -2130,17 +2306,25 @@ Formats can be (they are case-insensitive):
 
    See the "examples/multiprocessing" directory for "threads\_primitives.pl" as an example of a threading script that uses this module.
 
+----
+
 ## FORKS
 
    For unthreaded Perl, Install the modules **forks** and **forks::shared** and you will have the same features as **threads** and **threads::shared** (and perhaps better performance for unthreaded perls).
+
+----
 
 ## MCE
 
    Mario Roy has tested **Graphics::Framebuffer** with various methods to use the **MCE** modules for multiprocessing, and creating a single shared library.  See the [examples/multiprocessing/MCE-README.md](examples/multiprocessing/MCE-README.md) file for more.  I highly recommend this for multiprocessing, as it should save on memory.
 
+----
+
 ## BLITTING
 
    Use "blit\_read" and "blit\_write" to save portions of the screen instead of redrawing everything.  It will speed up response tremendously.
+
+----
 
 ## SPRITES
 
@@ -2150,13 +2334,19 @@ Formats can be (they are case-insensitive):
 
    Listen folks, this library does everything in software (as is typical for the framebuffer), so your results will vary depending on CPU speed and screen resolution, as well as blit resolution.
 
+----
+
 ## HORIZONTAL "MAGIC"
 
    Horizontal lines and filled boxes draw very fast, even in Perl mode, seriously.  Learn to exploit them.
 
+----
+
 ## MULTIPLE "HEADS" (monitors)
 
    As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
+
+----
 
 ## RUNNING IN MICROSOFT WINDOWS
 
