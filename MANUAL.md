@@ -2386,25 +2386,25 @@ Many of the parameters you pass to the "new" method are also special variables.
 
        Try running the "primitives.pl" in the "examples" directory in the following way (assuming your screen is larger than 640x480):
 
-   ```bash
-   perl examples/primitives.pl --x=640 --y=480
-   ```
+      ```bash
+      perl examples/primitives.pl --x=640 --y=480
+      ```
 
-   This forces the module to pretend it is rendering for a smaller resolution (by placing this screen in the middle of the actual one).  If it works fine, then try changing the "x" value back to your screen's actual width, but still make the "y" value slightly smaller.  Keep decreasing this "y" value until it works.
+      This forces the module to pretend it is rendering for a smaller resolution (by placing this screen in the middle of the actual one).  If it works fine, then try changing the "x" value back to your screen's actual width, but still make the "y" value slightly smaller.  Keep decreasing this "y" value until it works.
 
-   If you get this behavior, then it is a bug, and the author needs to be notified, although as of version 6.06 this should no longer be an issue.
+      If you get this behavior, then it is a bug, and the author needs to be notified, although as of version 6.06 this should no longer be an issue.
 
-- **It Only Partially Renders**
+   - **It Only Partially Renders**
 
-   Yeah this can look weird.  This is likely because there's some buffering going on.  The module attempts to turn it off, but if, for some reason, it is buffering anyway, try adding the following to points in your code where displaying a full render is necessary:
+      Yeah this can look weird.  This is likely because there's some buffering going on.  The module attempts to turn it off, but if, for some reason, it is buffering anyway, try adding the following to points in your code where displaying a full render is necessary:
 
-   ```perl
-   $FB->_flush_screen();
-   ```
+      ```perl
+      $FB->_flush_screen();
+      ```
 
-   This should force a full screen flush, but only use this if you really need it.
+      This should force a full screen flush, but only use this if you really need it.
 
-   Why?  You see, the framebuffer is actually a file.  Therefore, file operations must be used to access it.  File operations are buffered.  Therefore buffers need to be flushed instead of cached for the framebuffer device.  This module actually maps this file to a variable and even more weirdness results.  Normally turning off buffering in Perl is easy, but on rare occasions it can be stubborn.  Therefore, this command was made to force it to flush, if it isn't already.
+      Why?  You see, the framebuffer is actually a file.  Therefore, file operations must be used to access it.  File operations are buffered.  Therefore buffers need to be flushed instead of cached for the framebuffer device.  This module actually maps this file to a variable and even more weirdness results.  Normally turning off buffering in Perl is easy, but on rare occasions it can be stubborn.  Therefore, this command was made to force it to flush, if it isn't already.
 
    - **It Just Plain Isn't Working**
 
