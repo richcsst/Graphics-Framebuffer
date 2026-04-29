@@ -2414,11 +2414,11 @@ Many of the parameters you pass to the "new" method are also special variables.
 
       Second, you did the above, but still nothing.  You need to check permissions.  The account you are running this under needs to have permission to use the screen.  This typically means being a member of the "**video**" group.  Let's say the account is called "username", and you want to give it permission.  In a Linux (Debian/Ubuntu/Mint/RedHat/Fedora) environment you would use this to add "username" (your account name) to the "video" group:
 
-   ```bash
-   sudo usermod -a -G video username
-   ```
+      ```bash
+      sudo usermod -a -G video username
+      ```
 
-   Once that is run (changing "username" to whatever your username is), log out, then log back in, and it should work.
+      Once that is run (changing "username" to whatever your username is), log out, then log back in, and it should work.
 
    - **The Text Cursor Is Messing Things Up**
 
@@ -2456,21 +2456,21 @@ Many of the parameters you pass to the "new" method are also special variables.
 
       If none of these ideas work, then send me an email, and I may be able to get it functioning for you.  Please run the `dump.pl` script inside the "examples" directory inside this module's package:
 
-   ```bash
-   perl dump.pl
-   ```
+      ```bash
+      perl dump.pl
+      ```
 
-   Please include the dump file it creates (dump.log) **as a file attachment** to your email.  Please do _not_ include it inline as part of the message text.
+      Please include the dump file it creates (dump.log) **as a file attachment** to your email.  Please do _not_ include it inline as part of the message text.
 
-   Also, please include a copy of your code (or at least the portion of it where you initialize this module and are having issues), AND explain to me your hardware and OS it is running under.
+      Also, please include a copy of your code (or at least the portion of it where you initialize this module and are having issues), AND explain to me your hardware and OS it is running under.
 
-   Screen shots and photos are also helpful.
+      Screen shots and photos are also helpful.
 
-   **KNOW THIS:**  I want to get it working on your system, and I will do everything I can to help you get it working, but there may be some conditions where that may not be possible.  It's very rare (and I haven't seen it yet), but possible.
+      **KNOW THIS:**  I want to get it working on your system, and I will do everything I can to help you get it working, but there may be some conditions where that may not be possible.  It's very rare (and I haven't seen it yet), but possible.
 
-   I am not one of those arrogant ogres that spout "RTFM" every time someone asks for help (although it helps if you do read the manual).  I actually will help you.  Please be patient, as I do have other responsibilities that may delay a response, but a response will come.
+      I am not one of those arrogant ogres that spout "RTFM" every time someone asks for help (although it helps if you do read the manual).  I actually will help you.  Please be patient, as I do have other responsibilities that may delay a response, but a response will come.
 
-   \* *Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
+      \* *Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
