@@ -88,7 +88,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ----
 
-### Napster Music
+### Napster Music LLC. (Contracted via Peopleware Technical Resources)
 
    *July 2005 to July 2008 - Perl Internal Applications Engineer*
 
@@ -106,6 +106,15 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
    * Oversaw the complete IT infrastructure, including server build, maintenance and software developement.
    * Designed and implemented a cusdtomized web portal featuring free email accounts and affiliate distribution.
    * Enhanced operational efficiency by streaming server management on RedHat Linux, leading to improved uptime and performance.
+
+----
+
+### eBuilt
+
+   *October 2003 to November 2003 - Perl Software Engineer / System Auditor
+
+   * Participated in the preparation of data and operational functionality and duplicated of 36 servers operating under RedHat Linux, Solaris, FreeBSD and Gentoo Linux.
+   * Move data centers for the FNIS company in the city of Chicago, Illinois approximated 20 miles away from each other without downtime.  Unfortunately, the project was delayed indefinitely.
 
 ----
 
