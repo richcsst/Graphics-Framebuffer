@@ -2336,12 +2336,6 @@ Many of the parameters you pass to the "new" method are also special variables.
 
 ----
 
-## HORIZONTAL "MAGIC"
-
-   Horizontal lines and filled boxes draw very fast, even in Perl mode, seriously.  Learn to exploit them.
-
-----
-
 ## MULTIPLE "HEADS" (monitors)
 
    As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
