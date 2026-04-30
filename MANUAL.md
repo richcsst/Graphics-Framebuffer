@@ -2516,7 +2516,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    My thanks go out to those using this module and submitting helpful patches and suggestions for improvement, as well as those who asked for help.  Your requests for help actually gave me ideas.
 
-   Thank you Mario Roy for showing how to use MCE to multiprocess instead of threads.  Very handy.  Look for the "get\_mce\_demos" in the "examples" directory.  NOTE: I do not support MCE bug issues.
+   Thank you Mario Roy for showing how to use MCE to multiprocess instead of threads.  Very handy.  Look for the "get\_mce\_demos" in the ```examples/multiprocessing``` directory.  NOTE: I do not support MCE bug issues.
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
@@ -2528,7 +2528,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
-# MEDIA
+# MISCELLANEOUS
 
    | Link | Description |
    | :--- | :--- |
