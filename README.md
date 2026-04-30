@@ -125,7 +125,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    You can also look for information at:
 
-| Name / Link (Click To Open) | Description |
+| Click To Open | Description |
 |:---|:---|
 | [MANUAL](https://github.com/richcsst/Graphics-Framebuffer/blob/master/MANUAL.md) | A separate indexed manual written in GitHub markdown.  The module POD still exists, but this is easier to read and search |
 | [![MetaCPAN](pics/MetaCPAN.jpg)](https://metacpan.org/pod/Graphics::Framebuffer) | MetaCPAN page for Graphics::Framebuffer |
