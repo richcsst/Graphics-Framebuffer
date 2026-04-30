@@ -2528,20 +2528,10 @@ Many of the parameters you pass to the "new" method are also special variables.
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
-# YOUTUBE
+# MEDIA
 
-   There is a YouTube channel with demonstrations of the module's capabilities.  Eventually it will have examples of output from a variety of different types of hardware.
-
-   [YouTube Graphics::Framebuffer Channel](https://www.youtube.com/@richardkelsch3640)
-
-![Divider](pics/pink.jpg?raw=true "Divider")
-
-# GITHUB
-
-   [GitHub Graphics::Framebuffer](https://github.com/richcsst/Graphics-Framebuffer)
-
-   Clone
-
-   ```bash
-   git clone https://github.com/richcsst/Graphics-Framebuffer.git
-   ```
+   | Link | Description |
+   | :--- | :--- |
+   | [![YouTube Graphics::Framebuffer Channel](pics/YouTube.jpg)](https://www.youtube.com/@richardkelsch3640) | There is a YouTube channel with demonstrations of the module's capabilities.  Eventually it will have examples of output from a variety of different types of hardware. |
+   | [![GitHub Graphics::Framebuffer](pics/GitHub.jpg)](https://github.com/richcsst/Graphics-Framebuffer) | **Clone Repository** - [https://github.com/richcsst/Graphics-Framebuffer.git](https://github.com/richcsst/Graphics-Framebuffer.git) |
+   
