@@ -2504,7 +2504,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    Version 7.00 (Apr 28, 2026)
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+   ![Divider](pics/pink.jpg?raw=true "Divider")
 
 # THANKS
 

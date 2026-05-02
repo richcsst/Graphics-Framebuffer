@@ -1,9 +1,5 @@
 package Graphics::Framebuffer;
 
-## TEMP COPYRIGHT ##
-#  Copyright 2017 - 2026 Richard Kelsch
-## TEMPCOPYRIGHT ##
-
 # Only POD is utf-8.  The module code CANNOT be UTF-8
 
 =encoding utf8
@@ -403,14 +399,12 @@ use constant {
     pi => (4 * atan2(1, 1)),               # This gets rid of Math::Trig
 };
 
-## THREADS ##
 use threads ('yield', 'stringify', 'stack_size' => 131076, 'exit' => 'threads_only');
 use threads::shared;
-##THREADS##
 
-use POSIX       qw(modf);
+use POSIX          qw(modf);
 use IO::Handle;
-use Time::HiRes qw(sleep time);                                     # The time accuracy has to be milliseconds on many routines
+use Time::HiRes    qw(sleep time);                                  # The time accuracy has to be milliseconds on many routines
 use Math::Bezier;                                                   # Bezier curve calculations done here.
 use Math::Gradient qw( gradient array_gradient multi_gradient );    # Awesome gradient calculation module
 use List::Util     qw(min max);                                     # min and max are very handy!
@@ -7707,7 +7701,7 @@ I am not one of those arrogant ogres that spout "RTFM" every time someone asks f
 
 =head1 COPYRIGHT
 
-Copyright © 2003-## YEAR ## Richard Kelsch, All Rights Reserved.
+Copyright 2003 - 2026 Richard Kelsch
 
 This program is free software; you can redistribute it and/or modify it under the GNU software license.
 
