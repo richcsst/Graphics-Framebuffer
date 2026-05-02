@@ -7701,7 +7701,7 @@ I am not one of those arrogant ogres that spout "RTFM" every time someone asks f
 
 =head1 COPYRIGHT
 
-Copyright 2003 - 2026 Richard Kelsch
+Copyright © 2003 - 2026 Richard Kelsch
 
 This program is free software; you can redistribute it and/or modify it under the GNU software license.
 

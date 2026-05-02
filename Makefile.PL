@@ -110,6 +110,10 @@ print colored(['bright_yellow'],'             Loading Manual'), ' ... ';
 my $manual   = slurp_file('MANUAL.md');
 print colored(['bright_green'],"Loaded\n");
 
+print colored(['bright_yellow'],'             Loading Readme'), ' ... ';
+my $readme   = slurp_file('README.md');
+print colored(['bright_green'],"Loaded\n");
+
 print colored(['bright_yellow'],'           Loading MetaDate'), ' ... ';
 my $meta     = slurp_file('src/metadata.txt');
 print colored(['bright_green'],"Loaded\n");
@@ -143,8 +147,9 @@ if ($meta =~ /^(.*?)\n/s) {
     $email    =~ s/-at-/\@/gi;
     print colored(['bright_green'],"Version: $version, $date"),"\n";
     print colored(['bright_yellow'],'  Finalizing Copyright Year'), ' ... ';
-    $template =~ s/Copyright 2003 \- 2026 Richard Kelsch/Copyright 2003 - $year Richard Kelsch/g;
-    print colored(['bright_green'],"Copyright 2003 - $year Richard Kelsch"),"\n";
+    $template =~ s/Copyright \© 2003 \- \d\d\d\d Richard Kelsch/Copyright © 2003 - $year Richard Kelsch/g;
+    $readme   =~ s/Copyright \© 2003 \- \d\d\d\d Richard Kelsch/Copyright © 2003 - $year Richard Kelsch/g;
+    print colored(['bright_green'],"Copyright © 2003 - $year Richard Kelsch"),"\n";
     $template =~ s/\#\# EMAIL \#\#/$email/sg;
     $Eml = $email;
     print colored(['bright_yellow'],'                     Author') . ' ... ', colored(['bright_green'],"$email") . "\n";
@@ -162,6 +167,12 @@ print colored(['bright_yellow'],'     MANUAL.md Modification'), ' ... ';
 open(my $MAN,'>','MANUAL.md') || die "Cannot open 'MANUAL.md' for writing" ;
 print $MAN $manual;
 close($MAN);
+print colored(['bright_green'],'Complete'),"\n";
+
+print colored(['bright_yellow'],'     README.md Modification'), ' ... ';
+open(my $RM,'>','README.md') || die "Cannot open 'README.md' for writing" ;
+print $RM $readme;
+close($RM);
 print colored(['bright_green'],'Complete'),"\n\n";
 
 print colored(['black on_cyan'],$line),"\n";
