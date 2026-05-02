@@ -9,6 +9,8 @@ Change log for Graphics::Framebuffer
        Author,md modified.  t/README.md modified.  Images added.
 
        Splash screen slightly changed.
+	   
+	   Simplified the make process.
 
 6.99   April 25, 2026
 
