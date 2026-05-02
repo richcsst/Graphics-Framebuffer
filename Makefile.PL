@@ -3,7 +3,7 @@
 # Copyright (C) 2013-2026 Richard Kelsch
 # All Rights Reserved
 
-use 5.020;
+use 5.20.0;
 use strict;
 use warnings FATAL => 'all';
 use POSIX qw(getuid);
@@ -259,7 +259,7 @@ my $mm = WriteMakefile(
     VERSION_FROM       => 'lib/Graphics/Framebuffer.pm',
     ABSTRACT_FROM      => 'lib/Graphics/Framebuffer.pm',
     PL_FILES           => {},
-    MIN_PERL_VERSION   => 5.020, # 5.6 (5.006) is considered slow and unstable.  Upgrade
+    MIN_PERL_VERSION   => '5.20.0', # 5.6 (5.006) is considered slow and unstable.  Upgrade
     CONFIGURE_REQUIRES => {
         'Inline::MakeMaker'   => '0.45',
         'ExtUtils::MakeMaker' => '6.52',
