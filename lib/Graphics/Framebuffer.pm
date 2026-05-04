@@ -429,7 +429,7 @@ BEGIN {
     require Exporter;
 
     # set the version for version checking
-    our $VERSION   = '7.00';
+    our $VERSION   = '7.02';
     our @ISA       = qw(Exporter);
     our @EXPORT_OK = qw(
       FBIOGET_VSCREENINFO
@@ -518,7 +518,7 @@ use Inline C => <<'C_CODE', 'name' => 'Graphics::Framebuffer', 'VERSION' => $VER
 /* Copyright 2018 - 2026 Richard Kelsch, All Rights Reserved
    See the Perl documentation for Graphics::Framebuffer for licensing information.
 
-   Version:  7.00
+   Version:  7.02
 
    You may wonder why the stack is so heavily used when the global structures
    have the needed values.  Well, the module can emulate another graphics mode
@@ -9819,7 +9819,7 @@ Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONT
 
 =head1 VERSION
 
-Version 7.00 (Apr 28, 2026)
+Version 7.02 (May 04, 2026)
 
 =head1 THANKS
 
