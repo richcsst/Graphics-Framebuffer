@@ -360,12 +360,12 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [ttf\_print](#ttf-print) - Print text.
    * **Conversion**
      - [monochrome](#monochrome) - Create a monochrome blit image variable from a color blit image variable.
-     - [RGB565\_to\_RGB888](#rgb565-to-rgb888) - Converts 16 bit blit variable to 24 bit blit variable.
-     - [RGB565\_to\_RGBA8888](#rgb565-to-rgba8888) - Converts 16 bit blit variable to 32 bit blit variable.
-     - [RGB888\_to\_RGB565](#rgb888-to-rgb565) - Converts 24 bit blit variable to 16 bit blit variable.
-     - [RGB888\_to\_RGBA8888](#rgb888-to-rgba8888) - Converts 24 bit blit variable to 32 bit blit variable.
-     - [RGBA8888\_to\_RGB565](#rgba8888-to-rgb565) - Converts 32 bit blit variable to 16 bit blit variable.
-     - [RGBA8888\_to\_RGB888](#rgba8888-to-rgb888) - Converts 32 bit blit variable to 24 bit blit variable.
+     - [RGB565\_to\_RGB888](#rgb565-to-rgb888) - Converts 16 bit blit image variable to 24 bit blit image variable.
+     - [RGB565\_to\_RGBA8888](#rgb565-to-rgba8888) - Converts 16 bit blit image variable to 32 bit blit image variable.
+     - [RGB888\_to\_RGB565](#rgb888-to-rgb565) - Converts 24 bit blit image variable to 16 bit blit image variable.
+     - [RGB888\_to\_RGBA8888](#rgb888-to-rgba8888) - Converts 24 bit blit image variable to 32 bit blit image variable.
+     - [RGBA8888\_to\_RGB565](#rgba8888-to-rgb565) - Converts 32 bit blit image variable to 16 bit blit image variable.
+     - [RGBA8888\_to\_RGB888](#rgba8888-to-rgb888) - Converts 32 bit blit image variable to 24 bit blit image variable.
 
 ----
 
