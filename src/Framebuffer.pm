@@ -1637,8 +1637,7 @@ Sets or returns the drawing mode, depending on how it is called.
                                    # When you draw it...
 
  $fb->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
-                                   # pixel. Imager assisted drawing
-                                   # (acceleration) only works in this mode.
+                                   # pixel.
 
  $fb->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
                                    # screen pixel.
