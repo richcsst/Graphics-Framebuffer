@@ -300,9 +300,9 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [perl](#perl) - Set to Perl only acceleration mode. (alias)
      - [replace\_color](#replace-color) - Replace a specific color in the clipping region.
      - [screen\_dimension](#screen-dimensions) - Return the screen dimensions.
-     - [setbcolor](#setbcolor) - Set the background color.
+     - [setbcolor](#setbcolor) - Set the background color. (alias)
      - [set\_b\_color](#set-b-color) - Set the background color.
-     - [set\_background\_color](#set-background-color) - Set the background color.
+     - [set\_background\_color](#set-background-color) - Set the background color. (alias)
      - [setcolor](#setcolor) - Set the foreground color.
      - [set\_color](#set-color) - Set the foreground color.
      - [set\_foreground\_color](#set-foreground-color) - Set the foreground color.
