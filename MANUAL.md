@@ -293,20 +293,20 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
      - [active\_console](#active-console) - Get the current active console.
      - [attribute\_reset](#attribute-reset) - Reset the attributes to the global defaults.
-     - [clear\_screen](#clear-screen) - Clear the screen. (alias)
+     - [clear\_screen](#clear-screen) - Clear the screen. (*alias*)
      - [cls](#cls) - Clear the screen.
      - [graphics\_mode](#graphics-mode) - Turn on console graphics mode.
-     - [hardware](#hardware) - Set to hardware acceleration mode. (alias)
-     - [perl](#perl) - Set to Perl only acceleration mode. (alias)
+     - [hardware](#hardware) - Set to hardware acceleration mode. (*alias*)
+     - [perl](#perl) - Set to Perl only acceleration mode. (*alias*)
      - [replace\_color](#replace-color) - Replace a specific color in the clipping region.
      - [screen\_dimension](#screen-dimensions) - Return the screen dimensions.
-     - [setbcolor](#setbcolor) - Set the background color. (alias)
+     - [setbcolor](#setbcolor) - Set the background color. (*alias*)
      - [set\_b\_color](#set-b-color) - Set the background color.
-     - [set\_background\_color](#set-background-color) - Set the background color. (alias)
-     - [setcolor](#setcolor) - Set the foreground color.
+     - [set\_background\_color](#set-background-color) - Set the background color. (*alias*)
+     - [setcolor](#setcolor) - Set the foreground color. (*alias*)
      - [set\_color](#set-color) - Set the foreground color.
-     - [set\_foreground\_color](#set-foreground-color) - Set the foreground color.
-     - [software](#software) - Set to Software (C accelerated) drawing.
+     - [set\_foreground\_color](#set-foreground-color) - Set the foreground color. (*alias*)
+     - [software](#software) - Set to Software (C accelerated) drawing. (*alias*)
      - [text\_mode](#text-mode) - Set the console to text mode.
      - [vsync](#vsync) - Block drawing until the vertical sync.
      - [wait\_for\_console](#wait-for-console) - Blocking if not the correct console.
