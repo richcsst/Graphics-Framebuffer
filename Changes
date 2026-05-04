@@ -4,6 +4,8 @@ Change log for Graphics::Framebuffer
 
        Corrected bad index links in MANUAL.md.
        Changed information in README.md
+	   Added up to 30 threads for the threaded_slideshow.pl script.
+	   Some minor POD changes.
 
 7.01   May 03, 2026
 
