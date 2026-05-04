@@ -296,7 +296,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [clear\_screen](#clear_screen) - Clear the screen.
      - [cls](#cls) - Clear the screen.  (*alias*)
      - [graphics\_mode](#graphics_mode) - Turn on console graphics mode.
-     - [hardware](#hardware) - Set to hardware acceleration mode.  (*alias*)
+     - [hardware](#hardware) - Set to hardware acceleration mode.  Not implemented.  (*alias*)
      - [perl](#perl) - Set to Perl only acceleration mode.  (*alias*)
      - [replace\_color](#replace_color) - Replace a specific color in the clipping region.
      - [screen\_dimension](#screen_dimensions) - Return the screen dimensions.
