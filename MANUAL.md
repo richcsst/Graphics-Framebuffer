@@ -293,8 +293,8 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
      - [active\_console](#active-console) - Get the current active console.
      - [attribute\_reset](#attribute-reset) - Reset the attributes to the global defaults.
-     - [clear\_screen](#clear-screen) - Clear the screen. (*alias*)
-     - [cls](#cls) - Clear the screen.
+     - [clear\_screen](#clear-screen) - Clear the screen.
+     - [cls](#cls) - Clear the screen. (*alias*)
      - [graphics\_mode](#graphics-mode) - Turn on console graphics mode.
      - [hardware](#hardware) - Set to hardware acceleration mode. (*alias*)
      - [perl](#perl) - Set to Perl only acceleration mode. (*alias*)
