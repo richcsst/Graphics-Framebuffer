@@ -609,8 +609,7 @@ Many of the parameters you pass to the "new" method are also special variables.
                                      # When you draw it...
 
    $FB->draw_mode(NORMAL_MODE);      # Replaces the screen pixel with the new
-                                     # pixel. Imager assisted drawing
-                                     # (acceleration) only works in this mode.
+                                     # pixel.
 
    $FB->draw_mode(XOR_MODE);         # Does a bitwise XOR with the new pixel and
                                      # screen pixel.
