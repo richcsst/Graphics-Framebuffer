@@ -285,10 +285,10 @@ Many of the parameters you pass to the "new" method are also special variables.
    * **Instantiation**
      - [new](#new) - Create the Graphics::Framebuffer object
    * **Clipping**
-     - [clip\_off](#clip-off) - Turn off clipping
-     - [clip\_reset](#clip-reset) - Turn off clipping
-     - [clip\_rset](#clip-rset) - Set clipping rectangle using relative height and width.
-     - [clip\_set](#clip-set) - Set clipping using specific coordinates.
+     - [clip\_off](#clip_off) - Turn off clipping
+     - [clip\_reset](#clip_reset) - Turn off clipping
+     - [clip\_rset](#clip_rset) - Set clipping rectangle using relative height and width.
+     - [clip\_set](#clip_set) - Set clipping using specific coordinates.
    * **Settings & Control**
      - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
      - [active\_console](#active-console) - Get the current active console.
