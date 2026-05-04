@@ -294,19 +294,19 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [active\_console](#active_console) - Get the current active console.
      - [attribute\_reset](#attribute_reset) - Reset the attributes to the global defaults.
      - [clear\_screen](#clear_screen) - Clear the screen.
-     - [cls](#cls) - Clear the screen. (*alias*)
+     - [cls](#cls) - Clear the screen.  (*alias*)
      - [graphics\_mode](#graphics_mode) - Turn on console graphics mode.
-     - [hardware](#hardware) - Set to hardware acceleration mode. (*alias*)
-     - [perl](#perl) - Set to Perl only acceleration mode. (*alias*)
+     - [hardware](#hardware) - Set to hardware acceleration mode.  (*alias*)
+     - [perl](#perl) - Set to Perl only acceleration mode.  (*alias*)
      - [replace\_color](#replace_color) - Replace a specific color in the clipping region.
      - [screen\_dimension](#screen_dimensions) - Return the screen dimensions.
-     - [setbcolor](#setbcolor) - Set the background color. (*alias*)
+     - [setbcolor](#setbcolor) - Set the background color.  (*alias*)
      - [set\_b\_color](#set_b_color) - Set the background color.
-     - [set\_background\_color](#set_background_color) - Set the background color. (*alias*)
-     - [setcolor](#setcolor) - Set the foreground color. (*alias*)
+     - [set\_background\_color](#set_background_color) - Set the background color.  (*alias*)
+     - [setcolor](#setcolor) - Set the foreground color.  (*alias*)
      - [set\_color](#set_color) - Set the foreground color.
-     - [set\_foreground\_color](#set_foreground_color) - Set the foreground color. (*alias*)
-     - [software](#software) - Set to Software (C accelerated) drawing. (*alias*)
+     - [set\_foreground\_color](#set_foreground_color) - Set the foreground color.  (*alias*)
+     - [software](#software) - Set to Software (C accelerated) drawing.  (*alias*)
      - [text\_mode](#text_mode) - Set the console to text mode.
      - [vsync](#vsync) - Block drawing until the vertical sync.
      - [wait\_for\_console](#wait_for_console) - Blocking if not the correct console.
@@ -321,29 +321,29 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [ellipse](#ellipse) - Draw an ellipse.
      - [fill](#fill) - Flood fill.
      - [filled\_pie](#filled_pie) - Draw a filled pie.
-     - [getpixel](#getpixel) - Return the last plotted pixel coordinate. (*alias*)
-     - [get\_pixel](#get_pixel) - Return the last plotted pixel coordinate. (*alias*)
+     - [getpixel](#getpixel) - Return the last plotted pixel coordinate.  (*alias*)
+     - [get\_pixel](#get_pixel) - Return the last plotted pixel coordinate.  (*alias*)
      - [last\_plot](#last_plot) - Return the last plotted pixel coordinate.
      - [line](#line) - Draw a line at the specific coordinates.
      - [pixel](#pixel) - Return the last plotted pixel coordinate.
      - [plot](#plot) - Plots a pixel.
      - [poly\_arc](#poly_arc) - Draw a polygon with an arc.
      - [polygon](#polygon) - Draw a polygon.
-     - [rounded\_box](#rounded_box) - Draw a box with rounded corners. (*alias*)
+     - [rounded\_box](#rounded_box) - Draw a box with rounded corners.  (*alias*)
      - [rbox](#rbox) - Draw a box with rounded corners.
-     - [setpixel](#setpixel) - Plots a pixel. (*alias*)
-     - [set\_pixel](#set_pixel) - Plots a pixel. (*alias*)
+     - [setpixel](#setpixel) - Plots a pixel.  (*alias*)
+     - [set\_pixel](#set_pixel) - Plots a pixel.  (*alias*)
    * **Drawing Modes**
-     - [add\_mode](#add_mode) - Draw in ADD mode. (*alias*)
-     - [and\_mode](#and_mode) - Draw in AND mode. (*alias*)
-     - [alpha\_mode](#alpha_mode) - Draw using alpha blending. (*alias*)
+     - [add\_mode](#add_mode) - Draw in ADD mode.  (*alias*)
+     - [and\_mode](#and_mode) - Draw in AND mode.  (*alias*)
+     - [alpha\_mode](#alpha_mode) - Draw using alpha blending.  (*alias*)
      - [draw_mode](#draw_mode) - Draw mode.
-     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image. (*alias*)
-     - [multiply\_mode](#multiply_mode) - Draw using multiply mode. (*alias*)
-     - [normal\_mode](#normal_mode) - Draw using normal mode. (*alias*)
-     - [or\_mode](#or_mode) - Draw using OR mode. (*alias*)
-     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination. (*alias*)
-     - [xor\_mode](#xor_mode) - Draw using XOR mode.  Handy for simulating a sprite. (*alias*)
+     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image.  (*alias*)
+     - [multiply\_mode](#multiply_mode) - Draw using multiply mode.  (*alias*)
+     - [normal\_mode](#normal_mode) - Draw using normal mode.  (*alias*)
+     - [or\_mode](#or_mode) - Draw using OR mode.  (*alias*)
+     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination.  (*alias*)
+     - [xor\_mode](#xor_mode) - Draw using XOR mode.  Handy for simulating a sprite.  (*alias*)
    * **Image Handling**
      - [load\_image](#load_image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA, TIFF and small video files)
      - [play\_animation](#play_animation) - Play an animated GIF already loaded.
