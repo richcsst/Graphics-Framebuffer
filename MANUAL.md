@@ -334,15 +334,16 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [setpixel](#setpixel) - Plots a pixel. (*alias*)
      - [set\_pixel](#set_pixel) - Plots a pixel. (*alias*)
    * **Drawing Modes**
-     - [add\_mode](#add_mode) - Draw in ADD mode.
-     - [and\_mode](#and_mode) - Draw in AND mode.
-     - [alpha\_mode](#alpha_mode) - Draw using alpha blending.
-     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image.
-     - [multiply\_mode](#multiply_mode) - Draw using multiply mode.
-     - [normal\_mode](#normal_mode) - Draw using normal mode.
-     - [or\_mode](#or_mode) - Draw using OR mode.
-     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination.
-     - [xor\_mode](#xor_mode) - Draw using XOR mode.  Handy for simulating a sprite.
+     - [draw_mode](#draw_mode) - Draw mode.
+     - [add\_mode](#add_mode) - Draw in ADD mode. (*alias*)
+     - [and\_mode](#and_mode) - Draw in AND mode. (*alias*)
+     - [alpha\_mode](#alpha_mode) - Draw using alpha blending. (*alias*)
+     - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image. (*alias*)
+     - [multiply\_mode](#multiply_mode) - Draw using multiply mode. (*alias*)
+     - [normal\_mode](#normal_mode) - Draw using normal mode. (*alias*)
+     - [or\_mode](#or_mode) - Draw using OR mode. (*alias*)
+     - [unmask\_mode](#unmask_mode) - Draw using color masking.  Draws only on the background of the destination. (*alias*)
+     - [xor\_mode](#xor_mode) - Draw using XOR mode.  Handy for simulating a sprite. (*alias*)
    * **Image Handling**
      - [load\_image](#load_image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA, TIFF and small video files)
      - [play\_animation](#play_animation) - Play an animated GIF already loaded.
