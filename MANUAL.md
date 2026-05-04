@@ -335,16 +335,16 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [set\_pixel](#set-pixel) - Plots a pixel. (*alias*)
    * **Drawing Modes**
      - [add\_mode](#add-mode) - Draw in ADD mode.
-     - [and\_mode](#add-mode) - Draw in AND mode.
+     - [and\_mode](#and-mode) - Draw in AND mode.
      - [alpha\_mode](#alpha-mode) - Draw using alpha blending.
      - [mask\_mode](#mask-mode) - Draw using color masking.  Draws only the non-background color of the source image.
      - [multiply\_mode](#multiply-mode) - Draw using multiply mode.
      - [normal\_mode](#normal-mode) - Draw using normal mode.
      - [or\_mode](#or-mode) - Draw using OR mode.
      - [unmask\_mode](#unmask-mode) - Draw using color masking.  Draws only on the background of the destination.
-     - [xor\_mode](#xor-mode) - Draw using XOR mode.
+     - [xor\_mode](#xor-mode) - Draw using XOR mode.  Handy for simulating a sprite.
    * **Image Handling**
-     - [load\_image](#load-image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA and TIFF)
+     - [load\_image](#load-image) - Load an image or animation (JPEG, GIF, PNG, PNM, TGA, TIFF and small video files)
      - [play\_animation](#play-animation) - Play an animated GIF already loaded.
      - [screen\_dump](#screen-dump) - Dump the framebuffer to disk.
    * **Blitting**
