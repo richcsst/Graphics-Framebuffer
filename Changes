@@ -8,6 +8,7 @@ Change log for Graphics::Framebuffer
 7.01   May 03, 2026
 
        Minor optimizations.
+       Better vsync handling, whether supported or unsupported.
 
 7.00   April 28, 2026
 
