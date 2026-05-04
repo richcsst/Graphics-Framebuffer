@@ -334,10 +334,10 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [setpixel](#setpixel) - Plots a pixel. (*alias*)
      - [set\_pixel](#set_pixel) - Plots a pixel. (*alias*)
    * **Drawing Modes**
-     - [draw_mode](#draw_mode) - Draw mode.
      - [add\_mode](#add_mode) - Draw in ADD mode. (*alias*)
      - [and\_mode](#and_mode) - Draw in AND mode. (*alias*)
      - [alpha\_mode](#alpha_mode) - Draw using alpha blending. (*alias*)
+     - [draw_mode](#draw_mode) - Draw mode.
      - [mask\_mode](#mask_mode) - Draw using color masking.  Draws only the non-background color of the source image. (*alias*)
      - [multiply\_mode](#multiply_mode) - Draw using multiply mode. (*alias*)
      - [normal\_mode](#normal_mode) - Draw using normal mode. (*alias*)
