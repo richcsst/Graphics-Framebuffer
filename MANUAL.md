@@ -325,7 +325,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [get\_pixel](#get-pixel) - Return the last plotted pixel coordinate. (*alias*)
      - [last\_plot](#last-plot) - Return the last plotted pixel coordinate.
      - [line](#line) - Draw a line at the specific coordinates.
-     - [pixel](#pixel) - Plots a pixel.
+     - [pixel](#pixel) - Return the last plotted pixel coordinate.
      - [plot](#plot) - Plots a pixel.
      - [poly\_arc](#poly-arc) - Draw a polygon with an arc.
      - [polygon](#polygon) - Draw a polygon.
