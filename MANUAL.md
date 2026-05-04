@@ -278,7 +278,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
 # METHODS
 
-   With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.
+   With the exception of "new" and some other methods that only expect one parameter, the methods expect a single hash reference to be passed.  This may seem unusual, but it was chosen for speed, and speed is important in a Perl graphics module.  Some methods are aliases of other methods.  The choice of which to use is up to you and your preferences.
 
    The following are names you can search to get to the desired method:
 
