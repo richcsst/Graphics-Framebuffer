@@ -131,6 +131,8 @@
       [sudo] make install
       ```
 
+   *Build.PL is not supported by Inline::C, and thus not by this module as well*.
+
 ![Divider](../pics/pink.jpg?raw=true "Divider")
 
 ## INSTALLING WITH PERLBREW (and installing Perlbrew)
