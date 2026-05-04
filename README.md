@@ -48,21 +48,6 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    [Installing](installing/INSTALL.md)
 
-### Continuing...
-
-   With that out of the way, you can now install this module.
-
-   To install this module, run the following commands:
-
-   ```bash
-          perl Makefile.PL
-          make
-          make test
-   [sudo] make install
-   ```
-
-   *Build.PL is not supported by Inline::C, and thus not by this module as well.*
-
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
 ## FURTHER TEST SCRIPTS
