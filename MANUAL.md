@@ -321,8 +321,8 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [ellipse](#ellipse) - Draw an ellipse.
      - [fill](#fill) - Flood fill.
      - [filled\_pie](#filled-pie) - Draw a filled pie.
-     - [getpixel](#getpixel) - Return the last plotted pixel coordinate.
-     - [get\_pixel](#get-pixel) - Return the last plotted pixel coordinate.
+     - [getpixel](#getpixel) - Return the last plotted pixel coordinate. (*alias*)
+     - [get\_pixel](#get-pixel) - Return the last plotted pixel coordinate. (*alias*)
      - [last\_plot](#last-plot) - Return the last plotted pixel coordinate.
      - [line](#line) - Draw a line at the specific coordinates.
      - [pixel](#pixel) - Plots a pixel.
@@ -331,8 +331,8 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [polygon](#polygon) - Draw a polygon.
      - [rounded\_box](#rounded-box) - Draw a box with rounded corners.
      - [rbox](#rbox) - Draw a box with rounded corners.
-     - [setpixel](#setpixel) - Plots a pixel.
-     - [set\_pixel](#set-pixel) - Plots a pixel.
+     - [setpixel](#setpixel) - Plots a pixel. (*alias*)
+     - [set\_pixel](#set-pixel) - Plots a pixel. (*alias*)
    * **Drawing Modes**
      - [add\_mode](#add-mode) - Draw in ADD mode.
      - [and\_mode](#add-mode) - Draw in AND mode.
