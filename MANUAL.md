@@ -329,7 +329,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [plot](#plot) - Plots a pixel.
      - [poly\_arc](#poly_arc) - Draw a polygon with an arc.
      - [polygon](#polygon) - Draw a polygon.
-     - [rounded\_box](#rounded_box) - Draw a box with rounded corners.
+     - [rounded\_box](#rounded_box) - Draw a box with rounded corners. (*alias*)
      - [rbox](#rbox) - Draw a box with rounded corners.
      - [setpixel](#setpixel) - Plots a pixel. (*alias*)
      - [set\_pixel](#set_pixel) - Plots a pixel. (*alias*)
