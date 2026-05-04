@@ -466,7 +466,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
       You can disable this behavior by setting this to 0.
 
-   ### Eulation Mode Operations
+   ### Emulation Mode Operations
 
    The options here only apply to emulation mode.
 
