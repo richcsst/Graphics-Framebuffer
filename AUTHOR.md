@@ -22,7 +22,7 @@ In November of 2020, during the Covid-19 pandemic, I decided to get the Covid-19
 
    My heart was deemed healthy, but something else was obviously wrong.  I still had no energy and what little energy I had took days to rebuild if I spent it.
 
-## **Getting Worse **
+## **Getting Worse**
 
    As the weeks went on, I found my energy reserves kept getting smaller and smaller and my ability to do even simple things more and more difficult.  Within just a few months, I was mostly house-bound.  I saw all sorts of specialists and doctors with shrugging shoulders.  I had every test they could think of, but nothing they tried hurt.
 
