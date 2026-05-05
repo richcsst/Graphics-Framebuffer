@@ -8,6 +8,36 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
+# ME/CFS
+
+In November of 2020, during the Covid-19 pandemic, I decided to get the Covid-19 vaccine, because I was in the danger category (age, weight and lung health).  I had the first dose and then a week later, the second dose, then all hell broke loose.
+
+## **Initial Signs**
+
+   I was helping to move a gigantic beanbag chair for a friend to sleep on while crashing at my house.  They had changed their mind, but something was wrong with me.  I was losing balance and my eyes dialated.  I thought it was low sugar, so I drank some fruit juice, it didn't help.  I remained light-headed for about 30 minutes and was not getting better.  I was also getting sleepy.  So I used furniture and the walls to walk to bed.  I slept for 20 hours.
+
+   I also noticed I was weak afterward and never got energy back.  About a week later, I noticed I had something wrong with my eyesight, so I went to the eye doctor.  He said "you need to go to the ER NOW".  He called ahead to the hospital and gave details.  I drove there and they already had a room ready for me (I live in a small town where this is possible).  It was obvious something was wrong with me.  They found out my blood pressure was so high, the doctor said "you should be dead now".  It took them 8 hours to lower my blood pressure and during those 8 hours, they gave me an MRI, angiogram and pumped me full of meds.  Eventually my blood pressure normalized and they finally released me.  I had to return the next day as the prescribed medication wasn't working.  It took another 8 hours to lower my blood pressure and be released, but this time the meds were working.
+
+   Meanwhile, the MRI showed I had two mini-strokes, likely caused by the skyrocketing blood pressure, whick is likely what happened when I slept 20 hours.
+
+   My heart was deemed healthy, but something else was obviously wrong.  I still had no energy and what little energy I had took days to rebuild if I spent it.
+
+## **Getting Worse **
+
+   As the weeks went on, I found my energy reserves kept getting smaller and smaller and my ability to do even simple things more and more difficult.  Within just a few months, I was mostly house-bound.  I saw all sorts of specialists and doctors with shrugging shoulders.  I had every test they could think of, but nothing they tried hurt.
+
+   The last doctor, an endocrinologist, suggested I received damage by the Covid-19 vaccine and I was one of the "lucky" few that didn't die of cardiac arrest or stroke.  He tried a few meds, but they didn't work either.
+
+   After getting discouraged, I did my own research and found many others like me.  I saw the YouTube channel "Physics Girl" and learned she had the same symptoms and debilitating disability.  Here was a beautiful young woman bed-ridden and no hope in sight.  She was lucky enough to actually get the diagnosis of "ME/CFS" and that's what I determined was likely the cause of my condition.
+
+   I had worked remotely for ten years without issue and I thought I could continue, until Estee Lauder cancelled my contract and left me unemployed.  Don't get me wrong, Cognizant treats its contractors well and I essentially had two months of severance and help to find a new position.  Unfortunately, now they I am unable to go to an office, it has become very difficult to find work.  Many employers want hybrid or onsite workers and they are unwilling to make accommodations for disabilities (even though it's technically illegal in the USA) and allow me to be completely remote.  The answer is always no.
+
+## The Present
+
+   I am still unemployed and living off of my 401K and unemployment.  I'll likely make to the end of my lease, but afterward I am on the street, and in my current condition it is a death sentence.
+
+   So, I am trying to keep myself busy and working on all of my GitHub projects.  I don't know how long I will be around.
+
 # RESUME
 
 ## RICHARD KELSCH
