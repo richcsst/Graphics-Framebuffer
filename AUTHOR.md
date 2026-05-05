@@ -38,6 +38,16 @@ In November of 2020, during the Covid-19 pandemic, I decided to get the Covid-19
 
    So, I am trying to keep myself busy and working on all of my GitHub projects.  I don't know how long I will be around.
 
+## ME/CFS is NOT Long Covid
+
+   Long Covid has fatigue and constant illness symptoms.  ME/CFS has literal damage to the system that extracts energy from food and fat.  It is nearly non-existant and can take days to rebuild what little energy there is.  So far, there is no treatment.  Doing thinks like even showering or getting dressed can take some of that important energy.  So you ration it and try to find ways to spend as little energy as possible.
+
+   There are very bad days and bad days.  There are no good days.  You can have slightly better days if you spend a week being very careful with your energy, but once you hit that brick wall, you're down for a few days.
+
+   Since ME/CFS is relatively new, it's hard to get a diagnosis and even harder to get support for it.  The pharmaceutical companies will never admit that their vaccine is causing it, nor will they admit their vaccine kills people.
+
+   Those with ME/CFS are, unfortunately, alone, and for me, feeling helpless.
+
 # RESUME
 
 ## RICHARD KELSCH
