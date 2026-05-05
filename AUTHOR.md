@@ -30,7 +30,7 @@ In November of 2020, during the Covid-19 pandemic, I decided to get the Covid-19
 
    After getting discouraged, I did my own research and found many others like me.  I saw the YouTube channel [Physics Girl](https://www.youtube.com/watch?v=vqeIeIcDHD0) and learned she had the same symptoms and debilitating disability.  Here was a beautiful young woman bed-ridden and no hope in sight.  She was lucky enough to actually get the diagnosis of "ME/CFS" and that's what I determined was likely the cause of my condition.
 
-   I had worked remotely for ten years without issue and I thought I could continue, until Estee Lauder cancelled my contract and left me unemployed.  Don't get me wrong, Cognizant treats its contractors well and I essentially had two months of severance and help to find a new position.  Unfortunately, now they I am unable to go to an office, it has become very difficult to find work.  Many employers want hybrid or onsite workers and they are unwilling to make accommodations for disabilities (even though it's technically illegal in the USA) and allow me to be completely remote.  The answer is always no.
+   I had worked remotely for ten years without issue and I thought I could continue, until Estee Lauder cancelled my contract and left me unemployed.  Don't get me wrong, Cognizant treats its contractors well and I essentially had two months of severance and help to find a new position.  Unfortunately, now that I am unable to go to an office, it has become very difficult to find work.  Many employers want hybrid or onsite workers and they are unwilling to make accommodations for disabilities (even though it's technically illegal in the USA) and allow me to be completely remote.  The answer is always no.
 
 ## The Present
 
