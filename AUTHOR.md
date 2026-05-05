@@ -40,7 +40,7 @@ In November of 2020, during the Covid-19 pandemic, I decided to get the Covid-19
 
 ## ME/CFS is NOT Long Covid
 
-   Long Covid has fatigue and constant illness symptoms.  ME/CFS has literal damage to the system that extracts energy from food and fat.  It is nearly non-existant and can take days to rebuild what little energy there is.  So far, there is no treatment.  Doing thinks like even showering or getting dressed can take some of that important energy.  So you ration it and try to find ways to spend as little energy as possible.
+   Long Covid has fatigue and constant illness symptoms.  ME/CFS has literal damage to the system that extracts energy from food and fat and is caused by the vaccine, not Covid itself.  It is nearly non-existant and can take days to rebuild what little energy there is.  So far, there is no treatment.  Doing things like even showering or getting dressed can take some of that important energy.  So you ration it and try to find ways to spend as little energy as possible.
 
    There are very bad days and bad days.  There are no good days.  You can have slightly better days if you spend a week being very careful with your energy, but once you hit that brick wall, you're down for a few days.
 

@@ -818,7 +818,7 @@ sub show {
         'SHOW_ERRORS'      => $errors,
         'RESET'            => 0,
         'FB_DEVICE'        => $dev,
-        'SPLASH'           => 0,
+        'SPLASH'           => $display,
         'IGNORE_X_WINDOWS' => $ignore_x,
       );
     local $SIG{'ALRM'} = local $SIG{'INT'} = local $SIG{'QUIT'} = local $SIG{'KILL'} = local $SIG{'TERM'} = local $SIG{'HUP'} = undef;
