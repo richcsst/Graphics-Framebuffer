@@ -6,6 +6,7 @@ Change log for Graphics::Framebuffer
        Changed information in README.md
 	   Added up to 30 threads for the threaded_slideshow.pl script.
 	   Some minor POD changes.
+	   Changed the alpha value of the default background color.
 
 7.01   May 03, 2026
 
