@@ -419,7 +419,7 @@ Many of the parameters you pass to the "new" method are also special variables.
           'red'   => 0,
           'green' => 0,
           'blue'  => 0,
-          'alpha' => 0
+          'alpha' => 255
       }
       ```
 

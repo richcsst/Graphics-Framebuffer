@@ -621,7 +621,7 @@ Sets the default (global) background color for when 'attribute_reset' is called.
    'red'   => 0,
    'green' => 0,
    'blue'  => 0,
-   'alpha' => 0
+   'alpha' => 255
  }
 
 * Do not use this to change background colors, as "set_b_color" is intended for that.  Use this to set the DEFAULT background color for when "attribute_reset" is called.
@@ -784,7 +784,7 @@ sub new {
             'red'   => 0,
             'green' => 0,
             'blue'  => 0,
-            'alpha' => 0
+            'alpha' => 255
         },
 
         'FONT_PATH' => '/usr/share/fonts/truetype/freefont',       # Default fonts path
