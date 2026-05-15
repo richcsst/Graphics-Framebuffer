@@ -2,6 +2,8 @@
 
 [![Graphics::Framebuffer Theme Music](pics/GFB.png?raw=true "Graphics::Framebuffer Click For Music Video")](https://www.youtube.com/watch?v=kNKmUpUTlC4)
 
+<sup>Click the image for something fun.</sup>
+
 ### Windows Incompatibility, Linux Only
 
 ![Windows Incompatible](pics/Win-No.png?raw=true "Windows Incompatible") ![Linux Logo](pics/Linux.png?raw=true "Linux Only")
