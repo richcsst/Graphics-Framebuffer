@@ -2685,7 +2685,7 @@ sub _flush_screen {
 		select($self->{'FB'});
 		$| = 1;
 		$self->{'FB'}->flush();
-		sync $self->{'SCREEN'}, TRUE;
+		eval {sync $self->{'SCREEN'}, TRUE;};
 		$self->vsync();
 	}
 	$self->{'LAST_FLUSHED'} = time;

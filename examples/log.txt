@@ -1,0 +1,2 @@
+Could not sync: Invalid argument at /usr/local/lib/x86_64-linux-gnu/perl/5.40.1/Graphics/Framebuffer.pm line 4780, <DATA> line 821.
+c]R
