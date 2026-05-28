@@ -291,6 +291,6 @@ rm -f *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old
    perlbrew switch perl-5.40
    cpanm -n Inline Inline::C Math::Bezier Math::Gradient
    cpanm -n File::Map Imager Term::ReadKey Test::Most File::Map
-   cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder Sys::CPU
+   cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder MCE::Hobo Sys::CPU
    cpanm -n Graphics::Framebuffer
    ```
