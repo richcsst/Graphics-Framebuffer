@@ -36,5 +36,3 @@ I don't really plan on developing mouse capability any further.  It was a test t
 
 As of Virtualbox 7.2.6 the framebuffer driver in the extensions sucks all of a sudden.  It's like it queues updates now.  So output is jerky instead of smooth like it used to be.  Buffer flushes don't work any longer.  What the heck did they do to it?  I
 have not been able to figure out how to get around this behavior.
-
-Note:  I do not know if this is related to recent Linux kernel changes or Virtualbox itself.  I'm betting it's the latter.
