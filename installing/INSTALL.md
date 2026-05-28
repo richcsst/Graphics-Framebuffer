@@ -205,6 +205,10 @@ Manifying 3 pod documents
 
 ### make test (expected output)
 
+```
+PERL_DL_NONLAZY=1 "/usr/bin/perl" "-MExtUtils::Command::MM" "-MTest::Harness" "-e" "undef *Test::Harness::Switches; test_harness(0, 'blib/lib', 'blib/arch')" t/*.t
+```
+
 ![GFB Testing](../pics/GFB-Testing.png?raw=true "GFB Testing")
 
 ![GFB Perl Splash](../pics/PerlSplash.png?raw=true "GFB Perl Splash")
