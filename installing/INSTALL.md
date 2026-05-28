@@ -294,3 +294,5 @@ rm -f *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old
    cpanm -n MCE::Shared Sereal::Encoder Sereal::Decoder MCE::Hobo Sys::CPU
    cpanm -n Graphics::Framebuffer
    ```
+
+   * **ALSO NOTE**  Systems with x86-64 CPUs (Intel and AMD) are unlikely to benefit much from Perlbrew, as most package installs for these are usually sufficiently optimized.
