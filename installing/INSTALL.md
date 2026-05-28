@@ -136,7 +136,7 @@
 
 ### perl Makefile.PL (expected output)
 
-![MAkefile.PL](../pics/Makefile.jpg?raw=true "Makefile.PL")
+![MAkefile.PL](../pics/Makefile.png?raw=true "Makefile.PL")
 
 ### make (expected output)
 
