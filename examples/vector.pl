@@ -5,6 +5,9 @@
 # it will be converted to the actual resolution when drawn
 # The commands are a subset of the actual GFB capabilites
 
+# This may actually develop into a ridumentary language in
+#  the future.
+
 use strict;
 
 use Time::HiRes 'sleep';
@@ -23,7 +26,7 @@ BEGIN {
 my $delay = 1;
 
 GetOptions(
-    'wait=i' => \$delay,
+    'wait=f' => \$delay,
 );
 
 my $F = Graphics::Framebuffer->new('SPLASH' => 0); # Open without fanfare
