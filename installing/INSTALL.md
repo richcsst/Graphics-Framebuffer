@@ -4,7 +4,7 @@
 
 ## OPERATING SYSTEM REQUIREMENT
 
-   Graphics::Framebuffer only works (for the moment) on Linux.  FreeBSD is planned for the future, but is not yet implemented.
+   **Graphics::Framebuffer** only works (for the moment) on Linux.  FreeBSD is planned for the future, but is not yet implemented.
 
 ![Divider](../pics/pink.jpg?raw=true "Divider")
 
