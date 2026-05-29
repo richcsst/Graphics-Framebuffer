@@ -4,7 +4,6 @@
 # Virtual resolution is ALWAYS 3840 x 2160
 # it will be converted to the actual resolution when drawn
 # The commands are a subset of the actual GFB capabilites
-# Pixel sizes are depreciated
 
 use strict;
 
@@ -401,7 +400,7 @@ foreach my $name (sort(keys %{$cmd})) {
     print STDERR "$name\n";
 }
 parse(@text);
-sleep $delay;
+sleep $delay if ($delay);
 $F->cls('ON');
 $F->text_mode();
 
@@ -429,7 +428,7 @@ sub parse {
             warn "$c not found!";
         }
     } ## end foreach my $line (@cmds)
-    sleep $delay;
+    sleep $delay if ($delay);
 } ## end sub parse
 
 __END__
