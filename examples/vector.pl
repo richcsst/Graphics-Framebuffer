@@ -20,7 +20,7 @@ use constant {
 # use Data::Dumper::Simple;
 
 BEGIN {
-    our $VERSION = '0.04';
+    our $VERSION = '0.05';
 }
 
 my $delay = 1;
