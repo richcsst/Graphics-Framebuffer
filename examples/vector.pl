@@ -26,7 +26,7 @@ GetOptions(
     'wait=i' => \$delay,
 );
 
-my $F = Graphics::Framebuffer->new('SPLASH' => 0);
+my $F = Graphics::Framebuffer->new('SPLASH' => 0); # Open without fanfare
 
 $F->cls('OFF');
 $F->graphics_mode();
