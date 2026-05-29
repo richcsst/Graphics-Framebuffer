@@ -274,7 +274,7 @@ rm -f *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old
    wget -O - https://install.perlbrew.pl | bash
    ```
 
-   Append the following line to your " ~/.bash_profile " then log out and log in again:
+   Append the following line to your ```~/.bash_profile``` then log out and log in again:
 
    ```bash
    source ~/perl5/perlbrew/etc/bashrc
