@@ -88,7 +88,7 @@
 
    Next it will ask you if you are using the packaged version of Perl, the one included in your distribution.  If you are, then you need to answer "yes" to the question and allow it to install the Perl prerequisites.
 
-### INSTALLING LINUX ON VIRTUAL BOX WITH EFI
+### INSTALLING LINUX ON VIRTUALBOX WITH EFI
 
    If your distribution of Linux has EFI install capability, then I encourage you install that version and set up the virtual machine accordingly.
 
