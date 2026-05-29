@@ -2215,13 +2215,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    \* *Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
 
    ```perl
-   $FB->initialize\_mouse(1);  # Turn on the mouse handler
+   $FB->initialize_mouse(1);  # Turn on the mouse handler
    ```
 
    or
 
    ```perl
-   $FB->initialize\_mouse(0);  # Turn off the mouse handler
+   $FB->initialize_mouse(0);  # Turn off the mouse handler
    ```
 
 ----
