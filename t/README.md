@@ -6,9 +6,6 @@
 
 ![Divider](../pics/pink.jpg?raw=true "Divider")
 
-## Makefile.PL
-![Makefile.PL](../pics/Makefile.png?raw=true)
-
 ## make test
 ![Testing](../pics/GFB-Testing.png?raw=true)
 ![Perl Drawing](../pics/PerlSplash.png?raw=true)
