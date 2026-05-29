@@ -187,6 +187,7 @@ primitives.pl          - This script will pretty much demonstrate all of
 slideshow.pl           - This script shows all of the images in a specific
                          path (full screen, if asked).
 viewpic.pl             - This script shows one specific image (or animation).
+vector.pl              - A simple language to draw and display images.
 dump.pl                - This script does a diagnostic variable dump to the
                          file 'dump.log', for the author to help you with
                          troubleshooting.
@@ -215,6 +216,7 @@ get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate
 primitives.pl          - This script will pretty much demonstrate all of the capabilities of this module.
 slideshow.pl           - This script shows all of the images in a specific path (full screen, if asked).
 viewpic.pl             - This script shows one specific image (or animation).
+vector.pl              - A simple language to draw and display images.
 dump.pl                - This script does a diagnostic variable dump to the file 'dump.log', for the author to help you with troubleshooting.
 fonts.pl               - This script prints installed font names.
 text_mode.pl           - A rescue script to force the tty into text mode.
@@ -239,17 +241,11 @@ foreach my $l (split(/\n/,$message)) {
 }
 print colored(['black on_blue'],'-' x $COLS),"\n";
 
-unless (defined($ENV{'DISPLAY'})) {
-    print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'      make'),"\n";
-    print colored(['bright_white on_magenta'],' Testing     -> '),colored(['bright_green'],'      make')," test\n";
-    print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],' sudo '),colored(['bright_green'],'make')," install\n";
-    print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'      make')," veryclean\n";
-} else {
-    print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'               make'),"\n";
-    print colored(['bright_white on_magenta'],' Testing     -> '),colored(['red'],'GFB_IGNORE_X=1 '),colored(['bright_green'],'make')," test\n";
-    print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],'          sudo '),colored(['bright_green'],'make')," install\n";
-    print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'               make')," veryclean\n";
-}
+print colored(['bright_white on_magenta'],' Building    -> '),colored(['bright_green'],'      make'),"\n";
+print colored(['bright_white on_magenta'],' Testing     -> '),colored(['bright_green'],'      make')," test\n";
+print colored(['bright_white on_magenta'],' Installing  -> '),colored(['red'],' sudo '),colored(['bright_green'],'make')," install\n";
+print colored(['bright_white on_magenta'],' Cleaning Up -> '),colored(['bright_green'],'      make')," veryclean\n";
+
 print colored(['black on_blue'],'-' x $COLS),"\n";
 print $blink, colored(['yellow on_blue'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE BELOW FOR ANY MISSING MODULES BEFORE CONTINUING ')), "\n";
 
