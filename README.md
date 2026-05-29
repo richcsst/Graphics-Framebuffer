@@ -24,7 +24,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
    Sometimes you can force a VESA framebuffer console driver to be loaded by adding a video mode to the grub command line.  You can do this with some proprietary video drivers that don't have their own framebuffer drivers.
 
-   ### ATTENTION CPAN TESTERS!  Please make sure the above is noted before testing (and marking a fail)
+   _ATTENTION CPAN TESTERS!  Please make sure the above is noted before testing (and marking a fail)_
 
    If you want a more detailed instruction than this document, then read ```INSTALL.md```.
 
