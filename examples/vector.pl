@@ -644,7 +644,7 @@ Note:  Not many framebuffer drivers support this.
 
 =item B<WAIT> seconds
 
-Waits for the given number of seconds before showing the remaining scripted primitives.  Seconds is an integer.
+Waits for the given number of seconds before showing the remaining scripted primitives.
 
 =item B<XOR_MODE>
 
