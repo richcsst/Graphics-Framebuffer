@@ -48,7 +48,7 @@ Use a Virtual Machine like VirtualBox or Docker to use on Windows, with a Linux 
 
 ## INSTALLATION
 
-   [Read installing/INSTALL.md to learn how to install Graphics::Framebuffer](installing/INSTALL.md)
+   Read to learn how to install Graphics::Framebuffer\: [installing/INSTALL.md](installing/INSTALL.md)
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
