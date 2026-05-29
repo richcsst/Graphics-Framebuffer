@@ -26,7 +26,7 @@ BEGIN {
 my $delay = 1;
 
 GetOptions(
-    'wait=f' => \$delay,
+    'delay|wait=f' => \$delay,
 );
 
 my $F = Graphics::Framebuffer->new('SPLASH' => 0); # Open without fanfare
