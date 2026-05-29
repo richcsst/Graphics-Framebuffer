@@ -18,8 +18,8 @@
 
    * [**TODO.md**](TODO.md) - Ideas for future features
 
-   * **detect.sh** - Helps detect the type of Linux distribution is running.  This URL contains a full list of Linux distributions:  https://en.wikipedia.org/wiki/List_of_Linux_distributions
+   * ```detect.sh``` - Helps detect the type of Linux distribution is running.  This URL contains a full list of Linux distributions:  [Click here for a list of Linux Distributions](https://en.wikipedia.org/wiki/List_of_Linux_distributions)
 
-   * **install-prerequisites-debian.sh** - Run this for Debian based distributions.
+   * ```install-prerequisites-debian.sh``` - Run this for Debian based distributions.
 
-   * **install-prerequisites-redhat.sh** - Run this for RedHat based distributions.
+   * ```install-prerequisites-redhat.sh``` - Run this for RedHat based distributions.
