@@ -10,7 +10,7 @@
 
    Graphics::Framebuffer needs other Perl modules and OS libraries to function.  These scripts will help satisfy the requirements.
 
-   * [**INSTALL.md**](INSTALL.md) - How-to for using these scripts.
+   * [**INSTALL.md**](INSTALL.md) - How-to for installing Graphics::Framebuffere and for using these scripts.
 
    * [**FAQ.md**](FAQ.md) - Frequently asked questions about installing.
 
