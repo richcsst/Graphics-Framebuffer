@@ -29,7 +29,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Estee Lauder (Contracted via Cognizant)
 
-   *October 2020 to October 2025 - Linux System Administrator*
+   *October 2020 to October 2025 - Linux System Administrator
 
    * Managed large-scale Linux clusters across four global data-centers for a major makeup conglomerate.
    * Provided technical support to client employees for code deployment on staging and production systems.
@@ -39,7 +39,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### CargoTel
 
-   *November 2014 to April 2020 - Perl Software Engineer / Linux System Administrator*
+   *November 2014 to April 2020* - Perl Software Engineer / Linux System Administrator
 
    * Update, improve, and fix as requested, their web application written in mod_perl.
    * Code custom interface to GIT, Zoho, and ProWorkFlow and integrate them together.
@@ -50,7 +50,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Qualcomm (Contracted via WinMax Systems Inc.)
 
-   *July 2013 to September 2013 - Release Engineer*
+   *July 2013 to September 2013* - Release Engineer
 
    * Manage servers for instances of ExtraView, Apache Web Server, and Apache Tomcat.
    * Create customized Perl scripts for intercommunication between applications, databases, and server maintenance.
@@ -60,7 +60,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Cricket Communications (Contracted via Insight Global)
 
-   *June 2012 to August 2012 - Perl Internal Applications Engineer*
+   *June 2012 to August 2012* - Perl Internal Applications Engineer
 
    * Developed and managed internal Perl secure file transfer automation scripts for data exchange between Cricket clients and SOX auditing firms.
    * Object oriented Perl and Oracle technologies leveraged.
@@ -69,7 +69,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Broadcom Inc. (Contracted via Apex Systems)
 
-   *December 2009 to March 2012 - Perl Internal Applications Engineer*
+   *December 2009 to March 2012* - Perl Internal Applications Engineer
 
    * Developed internal Perl/HTML/Javascript web client and server applications for server automation and process control.
    * Perforce, ReviewBoard, GIT, Electric Commander, Linux Bash shell, and others I wrote automation code for interactivity.
@@ -80,7 +80,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### E.F. Johnson Technologies (Contracted via Digital Systems)
 
-   *October 2008 to September 2009 - Perl Embedded Software Engineer*
+   *October 2008 to September 2009* - Perl Embedded Software Engineer
 
    * Design and write (as part of a team) Network Management software to control IP25 digital radio systems geared to fire, police, and other government agencies.
    * Write remote Firmware management software for embedded systems.
@@ -90,7 +90,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Napster Music LLC. (Contracted via Peopleware Technical Resources)
 
-   *July 2005 to July 2008 - Perl Internal Applications Engineer*
+   *July 2005 to July 2008* - Perl Internal Applications Engineer
 
    * Developed and maintained internal applications for server automations, the internal ticket system and employee client management.
    * Leveraged technologies such as Perl, MySQL, Apache mod_perl, Template Toolkit and Bash Shell to enhance operational efficiency.
@@ -101,7 +101,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### 4Retired.com
 
-   *July 2003 to June 2004 - Chief Information Officer*
+   *July 2003 to June 2004* - Chief Information Officer
 
    * Oversaw the complete IT infrastructure, including server build, maintenance and software developement.
    * Designed and implemented a cusdtomized web portal featuring free email accounts and affiliate distribution.
@@ -111,7 +111,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### eBuilt
 
-   *October 2003 to November 2003 - Perl Software Engineer / System Auditor
+   *October 2003 to November 2003* - Perl Software Engineer / System Auditor
 
    * Participated in the preparation of data and operational functionality and duplicated of 36 servers operating under RedHat Linux, Solaris, FreeBSD and Gentoo Linux.
    * Move data centers for the FNIS company in the city of Chicago, Illinois approximated 20 miles away from each other without downtime.  Unfortunately, the project was delayed indefinitely.
@@ -120,7 +120,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### My Home Technology
 
-   *April 2003 to June 2003 - Chief Information Officer*
+   *April 2003 to June 2003* - Chief Information Officer
 
    * Responsible for IT infrastructure and employee management.
    * Acquiring new programmers for major software project for proprietary high-end home entertainment and automation products.
@@ -129,7 +129,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Retired.com
 
-   *January 2002 to March 2003 - Web Designer and Perl Software Engineer*
+   *January 2002 to March 2003* - Web Designer and Perl Software Engineer
 
    * Transformed a complex Java-based webite running on expensive Sun Solaris servers into a user-friendly, dynamically generated site utilizing Perl on RedHat Linux servers.
    * Streamlined maintenance processes, reducing operational costs and improving site performance (saved them $50,000 monthly).
@@ -139,7 +139,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### United States Navy (METOC Services, North Island Naval Air Station)
 
-   *April 2001 to September 2001 - Web Portal Specialist*
+   *April 2001 to September 2001* - Web Portal Specialist
 
    * Consolidated global meteorological weather websites into a centralized portal for ship captains and base personnel.
    * Utilized Perl and XML technologies on Sun Solaris systems enhancing data accessibility and user experience.
@@ -149,7 +149,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### LPL Financial Services
 
-   *January 2000 to August 2001 - Perl Internal Applications Engineer / Nameserver Administrator*
+   *January 2000 to August 2001* - Perl Internal Applications Engineer / Nameserver Administrator
 
    * Designed and implemented solutions for Perl, Perl-ASP and VB-ASP applications on True-64 Unix, Windows NT 4.0 and Windows 2000 Enterprise servers.
    * Enhanced system reliability and performance through effective troubleshooting and optimization strategies.
@@ -160,7 +160,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### CTS Network Services
 
-   *1996 to 1999 - Customer Support Supervisor*
+   *1996 to 1999* - Customer Support Supervisor
 
    * Supervised approximately 10 employees in a customer support department assisting users and clients with Internet connection and configuration issues.  I was top-tier support if necessary.
 
