@@ -29,7 +29,7 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 ### Estee Lauder (Contracted via Cognizant)
 
-   *October 2020 to October 2025 - Linux System Administrator
+   *October 2020 to October 2025* - Linux System Administrator
 
    * Managed large-scale Linux clusters across four global data-centers for a major makeup conglomerate.
    * Provided technical support to client employees for code deployment on staging and production systems.
