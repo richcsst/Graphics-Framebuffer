@@ -62,4 +62,5 @@ src/metadata.txt
 src/README.md
 t/01-splash.t
 LICENSE
+LICENSE.md
 ignore.txt
