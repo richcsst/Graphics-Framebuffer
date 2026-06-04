@@ -47,7 +47,11 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 
 ### Estee Lauder (Contracted via Cognizant)
 
+<<<<<<< HEAD
 **Linux System Administrator** | *October 2020 – October 2025*
+=======
+   *October 2020 to October 2025* - Linux System Administrator
+>>>>>>> a7469f23ffa506c3abb488450731bc561518d4f9
 
 * Managed large-scale, high-availability Linux clusters across four global data centers for a major multinational consumer brand.
 * Provided expert technical tier support to client engineering teams for seamless code deployment across staging and production systems.
