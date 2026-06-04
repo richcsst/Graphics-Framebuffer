@@ -10,15 +10,9 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 # RESUME
 
-Here is the completely revised, polished, and modernized version of your resume.
-
-I have corrected all the typos, standardized all past roles into the proper past tense, cleaned up the formatting, and restructured the layout to place your high-impact CPAN achievements right at the top. I also condensed your older history into a clean "Prior Professional Experience" section to keep the resume modern, scannable, and focused on your highest-level expertise.
-
----
-
 # RICHARD KELSCH
 
-**San Diego, CA** | [LinkedIn](https://www.linkedin.com/in/richardkelsch/) | [GitHub](https://github.com/richcsst) | [MetaCPAN](https://metacpan.org/author/RKELSCH)
+**Sandy, UT** | [LinkedIn](https://www.linkedin.com/in/richardkelsch/) | [GitHub](https://github.com/richcsst) | [MetaCPAN](https://metacpan.org/author/RKELSCH)
 
 ## PROFESSIONAL SUMMARY
 
@@ -47,11 +41,7 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 
 ### Estee Lauder (Contracted via Cognizant)
 
-<<<<<<< HEAD
 **Linux System Administrator** | *October 2020 – October 2025*
-=======
-   *October 2020 to October 2025* - Linux System Administrator
->>>>>>> a7469f23ffa506c3abb488450731bc561518d4f9
 
 * Managed large-scale, high-availability Linux clusters across four global data centers for a major multinational consumer brand.
 * Provided expert technical tier support to client engineering teams for seamless code deployment across staging and production systems.
@@ -129,8 +119,6 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 * **CTS Network Services** | *Customer Support Supervisor* (1996 – 1999)
 * Supervised top-tier technical support team assisting enterprise clients with complex internetworking and configuration issues.
 
-
-
 ---
 
 ## EDUCATION & TRAINING
@@ -141,4 +129,3 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 
 * Curriculum focus on Broadcast Engineering, Voice Talent, and Technical Communications.
 * Certification attained.
-
