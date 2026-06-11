@@ -12,19 +12,20 @@ I am a Perl Programmer and Linux System Administrator by profession.  I speciali
 
 # RICHARD KELSCH
 
-**Sandy, UT**
-* **LinkedIn** - https://www.linkedin.com/in/richardkelsch/
-* **GitHub** - https://github.com/richcsst
-* **MetaCPAN** - https://metacpan.org/author/RKELSCH
+**Sandy, UT** (Open to 100% Remote / Distributed Roles)
+
+* **LinkedIn:** [https://www.linkedin.com/in/richardkelsch/](https://www.linkedin.com/in/richardkelsch/)
+* **GitHub:** [https://github.com/richcsst](https://github.com/richcsst)
+* **MetaCPAN:** [https://metacpan.org/author/RKELSCH](https://metacpan.org/author/RKELSCH)
 
 ## PROFESSIONAL SUMMARY
 
-Highly accomplished Infrastructure Engineer and Software Developer with over two decades of experience specializing in high-performance Perl development, Linux Systems Administration, and large-scale system optimization. Proven track record of developing open-source tools, managing global data center clusters, and architecting automated solutions that significantly reduce operational costs and maximize system uptime.
+Highly accomplished Infrastructure Engineer and Software Developer with over two decades of experience specializing in high-performance Perl development, Linux Systems Administration, and large-scale system optimization. Proven track record of architecting automated solutions that eliminate manual overhead, managing global data center clusters completely via remote orchestration, and developing open-source utilities. Expert in diagnosing complex system anomalies and keeping mission-critical systems running with maximum uptime.
 
 ## CORE ACHIEVEMENTS & OPEN SOURCE CONTRIBUTIONS
 
-* **CPAN Module Creator:**
-* `Graphics::Framebuffer` – A Perl graphics module for drawing graphics on Linux framebuffer devices.
+* **CPAN Module Creator & Maintainer:**
+* `Graphics::Framebuffer` – A Perl graphics module for drawing directly on Linux framebuffer devices.
 * `Debug::Easy` – A modular, switchable debugging utility designed to remain safely in production code.
 * `Term::ANSIEncode` – A utility utilizing a simple markup language to generate ANSI color and graphics output.
 
@@ -34,21 +35,22 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 
 ## TECHNICAL SKILLS
 
-* **Programming Languages:** Perl (mod_perl, Template Toolkit, emb_perl), JavaScript (Ajax, jQuery, Prototype), HTML5, CSS, Bash, C-Shell, eZ80/Z80 Assembler, PHP, C / C# (debugging and modification).
-* **Specialties:** Code & process optimization, parallel processing, automation scripting, infrastructure design.
-* **Linux & Systems Admin:** Apache, Nginx, IIS, SOAP, REST, TCP/IP, MySQL, Oracle, Security, Solutions Implementation.
-* **Operating Systems:** Linux (RedHat, Fedora, Ubuntu, Debian, SUSE), Windows Server, True-64 Unix, Apple OS-X, FreeBSD, Solaris.
+* **Linux & Systems Admin:** Apache, Nginx, IIS, SOAP, REST, TCP/IP, MySQL, Oracle, Security Auditing, Remote Cluster Orchestration, Solutions Implementation.
+* **Programming Languages:** Perl (mod_perl, Template Toolkit, emb_perl, OOP), JavaScript (Ajax, jQuery), HTML5, CSS, Bash, C-Shell, eZ80/Z80 Assembler, PHP, C / C# (debugging and modification).
+* **Operating Systems:** Linux (RedHat/RHEL, Fedora, Ubuntu, Debian, SUSE), Windows Server, True-64 Unix, Apple OS-X, FreeBSD, Solaris.
+* **Specialties:** Infrastructure design, parallel processing, code & process optimization, automated workflows, asynchronous systems engineering.
 * **Tools & DevOps:** Git, Perforce, Nagios, ClearCase, Reviewboard, Electric Commander, Configuration Management, AI Developer Tools.
 
 ## PROFESSIONAL EXPERIENCE
 
 ### Estee Lauder (Contracted via Cognizant)
 
-**Linux System Administrator** | *October 2020 – October 2025*
+**Senior Linux System Administrator (100% Remote)** | *October 2020 – October 2025*
 
-* Managed large-scale, high-availability Linux clusters across four global data centers for a major multinational consumer brand.
-* Provided expert technical tier support to client engineering teams for seamless code deployment across staging and production systems.
-* Diagnosed and resolved complex Linux server anomalies, significantly enhancing global system reliability, security, and performance.
+* Remotely managed and orchestrated large-scale, high-availability Linux clusters across four global data centers for a major multinational consumer brand.
+* Provided expert high-tier technical support to distributed client engineering teams for seamless asynchronous code deployment across staging and production systems.
+* Diagnosed and resolved complex Linux server anomalies remotely, significantly enhancing global system reliability, security, and performance.
+* Maintained flawless system availability through proactive remote monitoring, configuration automation, and log analysis.
 
 ### CargoTel
 
@@ -57,7 +59,7 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 * Updated, optimized, and maintained a core enterprise web application written in mod_perl, improving stability and transaction speed.
 * Engineered custom API interfaces to integrate Git, Zoho, and ProWorkFlow into a unified, automated ecosystem.
 * Managed, updated, and configured critical Linux infrastructure services including Apache, Nagios, and Nginx.
-* Authored comprehensive technical and architectural documentation for department staff to streamline onboarding and cross-training.
+* Authored comprehensive technical and architectural documentation for department staff to streamline onboarding and asynchronous cross-training.
 
 ### Qualcomm (Contracted via WinMax Systems Inc.)
 
@@ -88,31 +90,39 @@ Highly accomplished Infrastructure Engineer and Software Developer with over two
 ### PRIOR PROFESSIONAL EXPERIENCE
 
 * **E.F. Johnson Technologies** | *Perl Embedded Software Engineer* (2008 – 2009)
-   * Co-designed Network Management Software (NMS) for IP25 digital radio systems used by government and emergency services.
+* Co-designed Network Management Software (NMS) for IP25 digital radio systems used by government and emergency services.
+
 
 * **Napster Music LLC** | *Perl Internal Applications Engineer* (2005 – 2008)
-   * Developed internal server automation, ticketing, and client management tools using mod_perl, Template Toolkit, and MySQL.
+* Developed internal server automation, ticketing, and client management tools using mod_perl, Template Toolkit, and MySQL.
+
 
 * **4Retired.com** | *Chief Information Officer (CIO)* (2003 – 2004)
-   * Oversaw complete IT infrastructure and streamlined server management on RedHat Linux to maximize uptime.
+* Oversaw complete IT infrastructure and streamlined server management on RedHat Linux to maximize uptime.
+
 
 * **eBuilt** | *Perl Software Engineer / System Auditor* (2003)
-   * Audited and mapped data replication for 36 multi-OS servers during a complex data center migration.
+* Audited and mapped data replication for 36 multi-OS servers during a complex data center migration.
+
 
 * **My Home Technology** | *Chief Information Officer (CIO)* (2003)
-   * Managed IT infrastructure and led recruitment of engineering talent for a proprietary home automation software project.
+* Managed IT infrastructure and led recruitment of engineering talent for a proprietary home automation software project.
+
 
 * **Retired.com** | *Web Designer & Perl Software Engineer* (2002 – 2003)
-   * Migrated a legacy Java/Solaris application onto a lean Perl/Linux architecture, slashing operational costs by $50k/month.
+* Migrated a legacy Java/Solaris application onto a lean Perl/Linux architecture, slashing operational costs by $50k/month.
+
 
 * **United States Navy (METOC Services, NAS North Island)** | *Web Portal Specialist* (2001)
-   * Consolidated global meteorological data into a secure, centralized web portal for naval captains using Perl and XML on Solaris.
+* Consolidated global meteorological data into a secure, centralized web portal for naval captains using Perl and XML on Solaris.
+
 
 * **LPL Financial Services** | *Perl Internal Applications Engineer / Nameserver Admin* (2000 – 2001)
-   * Designed Perl-ASP/VB-ASP applications and completely overhauled the corporate DNS infrastructure for improved speed and security.
+* Designed Perl-ASP/VB-ASP applications and completely overhauled the corporate DNS infrastructure for improved speed and security.
+
 
 * **CTS Network Services** | *Customer Support Supervisor* (1996 – 1999)
-   * Supervised top-tier technical support team assisting enterprise clients with complex internetworking and configuration issues.
+* Supervised top-tier technical support team assisting enterprise clients with complex internetworking and configuration issues.
 
 ---
 
