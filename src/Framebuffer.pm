@@ -174,7 +174,7 @@ The current background color encoded as a string.
 
 * B<ACCELERATED>
 
-Indicates if C code or hardware acceleration is being used.
+Indicates if Perl or C code is being used.
 
 =back
 
@@ -184,7 +184,6 @@ Indicates if C code or hardware acceleration is being used.
 
  0 = Perl code only
  1 = Some functions accelerated by compiled C code (Default)
- 2 = All of #1 plus additional functions accelerated by hardware (currently not supported, and likely never will)
 
 =back
 
@@ -314,8 +313,6 @@ Acceleration method constants
 
 * B<SOFTWARE> ( 1 )
 
-* B<HARDWARE> ( 2 )
-
 =back
 
 =cut
@@ -360,7 +357,6 @@ use constant {
 
     PERL     => 0,
     SOFTWARE => 1,
-    HARDWARE => 2,         # I seriously doubt hardware will ever be implemented since most framebuffers have no hardware acceleration capability
 
     ## Set up the Framebuffer driver "constants" defaults
     # Commands
@@ -493,7 +489,6 @@ BEGIN {
       CENTRE_XY
       PERL
       SOFTWARE
-      HARDWARE
       @HATCHES
       @COLORORDER
     );
@@ -540,8 +535,6 @@ The following are names you can search to get to the desired method (sorted alph
 =item * B<fill>, B<filled_pie>
 
 =item * B<get_face_name>, B<get_font_list>, B<getpixel>, B<get_pixel>, B<graphics_mode>
-
-=item * B<hardware>
 
 =item * B<last_plot>, B<line>, B<load_image>
 
@@ -902,7 +895,6 @@ sub new {
         'ACCELERATED'         => SOFTWARE,    # Use accelerated graphics
                                               #   0 = PERL     = Pure Perl
                                               #   1 = SOFTWARE = C Accelerated (but still software)
-                                              #   2 = HARDWARE = C & Hardware accelerated.
         'FBIO_WAITFORVSYNC'   => 0x4620,
         'VT_GETSTATE'         => 0x5603,
         'KDSETMODE'           => 0x4B3A,
@@ -4929,18 +4921,15 @@ When called without parameters, it returns the current setting.
 
 =over 4
 
- $fb->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
-
  $fb->acceleration(SOFTWARE); # Turn C (software) acceleration ON
 
  $fb->acceleration(PERL);     # Turn acceleration OFF, using Perl
 
- my $accel = $fb->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
+ my $accel = $fb->acceleration(); # Get current acceleration state.  0 = PERL or 1 = SOFTWARE
 
  my $accel = $fb->acceleration('english'); # Get current acceleration state in an english string.
                                            # "PERL"     = PERL     = 0
                                            # "SOFTWARE" = SOFTWARE = 1
-                                           # "HARDWARE" = HARDWARE = 2
 
 =back
 
@@ -4952,16 +4941,17 @@ sub acceleration {
     my $self = shift;
     if (scalar(@_)) {
         my $set = shift;
-        if ($set =~ /^\d+$/ && $set >= PERL && $set <= HARDWARE) {
-            $set = SOFTWARE if ($set > SOFTWARE);                      # HARDWARE is not implemented and setting defaults to SOFTWARE
+        if ($set =~ /^\d+$/ && $set >= PERL && $set <= SOFTWARE) {
             $self->{'ACCELERATED'} = $set;
         } elsif ($set =~ /english|string/i) {
-            foreach my $name (qw( PERL SOFTWARE HARDWARE )) {
+            foreach my $name (qw( PERL SOFTWARE )) {
                 if ($self->{'ACCELERATED'} == $self->{$name}) {
                     return ($name);
                 }
             }
-        } ## end elsif ($set =~ /english|string/i)
+        } else {
+		    $set = PERL;
+		}
     } ## end if (scalar(@_))
     return ($self->{'ACCELERATED'});
 } ## end sub acceleration
@@ -4986,17 +4976,6 @@ This is an alias to "acceleration(SOFTWARE)"
 sub software {
     my $self = shift;
     $self->acceleration(SOFTWARE);
-}
-
-=head2 hardware
-
-This is an alias to "acceleration(HARDWARE)"
-
-=cut
-
-sub hardware {
-    my $self = shift;
-    $self->acceleration(HARDWARE);
 }
 
 =head2 blit_read
