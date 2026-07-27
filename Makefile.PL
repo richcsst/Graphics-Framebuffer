@@ -20,7 +20,7 @@ use Term::ANSIColor;
 
 # use Data::Dumper::Simple;$Data::Dumper::Terse=TRUE;$Data::Dumper::Indent=TRUE;$Data::Dumper::Useqq=TRUE;$Data::Dumper::Deparse=TRUE;$Data::Dumper::Quotekeys=TRUE;$Data::Dumper::Trailingcomma=TRUE;$Data::Dumper::Sortkeys=TRUE;$Data::Dumper::Purity=TRUE;$Data::Dumper::Deparse=TRUE;
 
-my $VERSION = '2.02';
+my $VERSION = '2.03';
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 $COLS = 80 if ($COLS < 80);
 $ROWS = 25 if ($ROWS < 25);
@@ -256,7 +256,9 @@ my $mm = WriteMakefile(
     ABSTRACT_FROM      => 'lib/Graphics/Framebuffer.pm',
     PL_FILES           => {},
     MIN_PERL_VERSION   => '5.20.0', # 5.6 (5.006) is considered slow and unstable.  Upgrade
-    CONFIGURE_REQUIRES => {
+    CONFIGURE_REQUIRES => { # Added all Inline variants to this stage
+        'Inline'              => '0.53',
+        'Inline::C'           => '0.53',
         'Inline::MakeMaker'   => '0.45',
         'ExtUtils::MakeMaker' => '6.52',
         'Term::ANSIColor'     => '4.00',
