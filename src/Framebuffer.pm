@@ -3918,9 +3918,11 @@ sub _fill_polygon {
     my $top    = 0;
     my $bottom = 0;
     my $fill;
+	my $x_clip = $self->{'X_CLIP'};
+	my $y_clip = $self->{'Y_CLIP'};
     while (scalar(@{ $params->{'coordinates'} })) {
-        my $x = int(shift(@{ $params->{'coordinates'} })) - $self->{'X_CLIP'};    # Compensate for the smaller area in Imager
-        my $y = int(shift(@{ $params->{'coordinates'} })) - $self->{'Y_CLIP'};
+        my $x = int(shift(@{ $params->{'coordinates'} })) - $x_clip;    # Compensate for the smaller area in Imager
+        my $y = int(shift(@{ $params->{'coordinates'} })) - $y_clip;
         $left   = min($left, $x);
         $right  = max($right, $x);
         $top    = min($top, $y);
@@ -5702,10 +5704,12 @@ sub clip_set {
     $self->{'XX_CLIP'} = abs(int($params->{'xx'}));
     $self->{'YY_CLIP'} = abs(int($params->{'yy'}));
 
+	# Sanity checks
     $self->{'X_CLIP'}  = ($self->{'XRES'} - 2) if ($self->{'X_CLIP'} > ($self->{'XRES'} - 1));
     $self->{'Y_CLIP'}  = ($self->{'YRES'} - 2) if ($self->{'Y_CLIP'} > ($self->{'YRES'} - 1));
     $self->{'XX_CLIP'} = ($self->{'XRES'} - 1) if ($self->{'XX_CLIP'} >= $self->{'XRES'});
     $self->{'YY_CLIP'} = ($self->{'YRES'} - 1) if ($self->{'YY_CLIP'} >= $self->{'YRES'});
+
     $self->{'W_CLIP'}  = $self->{'XX_CLIP'} - $self->{'X_CLIP'};
     $self->{'H_CLIP'}  = $self->{'YY_CLIP'} - $self->{'Y_CLIP'};
     $self->{'CLIPPED'} = TRUE;
@@ -6411,6 +6415,9 @@ sub load_image {
     my $bytes          = $self->{'BYTES'};
     my $min_bytes      = $self->{'MIN_BYTES'};
     my $hold;
+	# Make hash values temporary scalars for speed
+	my ($x_clip, $y_clip, $xx_clip, $yy_clip, $w_clip, $h_clip) = ($self->{'X_CLIP'}, $self->{'Y_CLIP'}, $self->{'XX_CLIP'}, $self->{'YY_CLIP'}, $self->{'W_CLIP'}, $self->{'H_CLIP'});
+	my $diagnostics = $self->{'DIAGNOSTICS'};
 
     if (defined($self->{'FFMPEG'}) && $params->{'file'} =~ /\.(mkv|mp4|avi|mpeg4|webp)$/i) {    # This uses ffmpeg to convert a movie to a temporary GIF and then plays it
         my $quiet  = ($self->{'SHOW_ERRORS'})       ? 'verbose'           : 'quiet';
@@ -6578,23 +6585,23 @@ sub load_image {
 
             if (exists($params->{'center'})) {    # Only accepted values are processed
                 if ($params->{'center'} == CENTER_X) {
-                    $x = ($w < $self->{'W_CLIP'}) ? int(($self->{'W_CLIP'} - $w) / 2) + $self->{'X_CLIP'} : $self->{'X_CLIP'};
+                    $x = ($w < $w_clip) ? int(($w_clip - $w) / 2) + $x_clip : $x_clip;
                 } elsif ($params->{'center'} == CENTER_Y) {
-                    $y = ($h < $self->{'H_CLIP'}) ? int(($self->{'H_CLIP'} - $h) / 2) + $self->{'Y_CLIP'} : $self->{'Y_CLIP'};
+                    $y = ($h < $h_clip) ? int(($h_clip - $h) / 2) + $y_clip : $y_clip;
                 } elsif ($params->{'center'} == CENTER_XY) {
-                    $x = ($w < $self->{'W_CLIP'}) ? int(($self->{'W_CLIP'} - $w) / 2) + $self->{'X_CLIP'} : $self->{'X_CLIP'};
-                    $y = ($h < $self->{'H_CLIP'}) ? int(($self->{'H_CLIP'} - $h) / 2) + $self->{'Y_CLIP'} : $self->{'Y_CLIP'};
+                    $x = ($w < $w_clip) ? int(($w_clip - $w) / 2) + $x_clip : $x_clip;
+                    $y = ($h < $h_clip) ? int(($h_clip - $h) / 2) + $y_clip : $y_clip;
                 }
             } elsif (defined($params->{'x'}) && defined($params->{'y'})) {
                 $x = int($params->{'x'});
                 $y = int($params->{'y'});
             } else {
-                if ($w < $self->{'W_CLIP'}) {
-                    $x = int(($self->{'W_CLIP'} - $w) / 2) + $self->{'X_CLIP'};
+                if ($w < $w_clip) {
+                    $x = int(($w_clip - $w) / 2) + $x_clip;
                     $y = 0;
-                } elsif ($h < $self->{'H_CLIP'}) {
+                } elsif ($h < $h_clip) {
                     $x = 0;
-                    $y = int(($self->{'H_CLIP'} - $h) / 2) + $self->{'Y_CLIP'};
+                    $y = int(($h_clip - $h) / 2) + $y_clip;
                 } else {
                     $x = 0;
                     $y = 0;
@@ -6621,7 +6628,7 @@ sub load_image {
                 }
             };
             push(@odata, $temp_image);
-            if ($self->{'DIAGNOSTICS'}) {
+            if ($diagnostics) {
                 my $saved = $self->{'DRAW_MODE'};
                 $self->mask_mode() if ($self->{'ACCELERATED'});
                 $self->blit_write($odata[-1]);

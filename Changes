@@ -1,5 +1,9 @@
 Change log for Graphics::Framebuffer
 
+7.06   Jul 27, 2026
+
+       Minor clipping optimizations
+
 7.05   Jul 27, 2026
 
        Removed the HARDWARE acceleration placeholder.  Hardware acceleration is not possible for the
