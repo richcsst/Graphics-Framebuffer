@@ -192,13 +192,12 @@ NOTE:
 
 * **ACCELERATED**
 
-   Indicates if C code or hardware acceleration is being used.
+   Indicates if Perl or C code is being used.
 
    - **Possible Values**
   
      - 0 = Perl code only
      - 1 = Some functions accelerated by compiled C code (Default)
-     - 2 = All of #1 plus additional functions accelerated by hardware (currently not supported, and likely never will)
 
 * **IS_VBOX**
 
@@ -272,7 +271,6 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    * **PERL**     ( *0* )
    * **SOFTWARE** ( *1* )
-   * **HARDWARE** ( *2* )
 
 ![Divider](pics/pink.jpg?raw=true "Divider")
 
@@ -290,13 +288,12 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [clip\_rset](#clip_rset) - Set clipping rectangle using relative height and width.
      - [clip\_set](#clip_set) - Set clipping using specific coordinates.
    * **Settings & Control**
-     - [acceleration](#acceleration) - Toggle acceleration (perl only, C accelerated or hardware accelerated)
+     - [acceleration](#acceleration) - Toggle acceleration (perl only or C accelerated)
      - [active\_console](#active_console) - Get the current active console.
      - [attribute\_reset](#attribute_reset) - Reset the attributes to the global defaults.
      - [clear\_screen](#clear_screen) - Clear the screen.
      - [cls](#cls) - Clear the screen.  (*alias*)
      - [graphics\_mode](#graphics_mode) - Turn on console graphics mode.
-     - [hardware](#hardware) - Set to hardware acceleration mode.  Not implemented.  (*alias*)
      - [perl](#perl) - Set to Perl only acceleration mode.  (*alias*)
      - [replace\_color](#replace_color) - Replace a specific color in the clipping region.
      - [screen\_dimension](#screen_dimensions) - Return the screen dimensions.
@@ -1536,18 +1533,15 @@ Many of the parameters you pass to the "new" method are also special variables.
    When called without parameters, it returns the current setting.
 
    ```perl
-   $FB->acceleration(HARDWARE); # Turn hardware acceleration ON, along with some C acceleration (HARDWARE IS NOT YET IMPLEMENTED!)
-
    $FB->acceleration(SOFTWARE); # Turn C (software) acceleration ON
 
    $FB->acceleration(PERL);     # Turn acceleration OFF, using Perl
 
-   my $accel = $FB->acceleration(); # Get current acceleration state.  0 = PERL, 1 = SOFTWARE, 2 = HARDWARE (not yet implemented)
+   my $accel = $FB->acceleration(); # Get current acceleration state.  0 = PERL or 1 = SOFTWARE
 
    my $accel = $FB->acceleration('english'); # Get current acceleration state in an english string.
                                              # "PERL"     = PERL     = 0
                                              # "SOFTWARE" = SOFTWARE = 1
-                                             # "HARDWARE" = HARDWARE = 2
    ```
 
    \* *The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
@@ -1563,14 +1557,6 @@ Many of the parameters you pass to the "new" method are also special variables.
 ## software
 
    This is an alias to "acceleration(SOFTWARE)"
-
-----
-
-## hardware
-
-   This is an alias to "acceleration(HARDWARE)"
-
-   *Hardware acceleration is not implemented.*
 
 ----
 
