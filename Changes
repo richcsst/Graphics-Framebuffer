@@ -3,6 +3,7 @@ Change log for Graphics::Framebuffer
 7.06   Jul 27, 2026
 
        Minor clipping optimizations
+	   Optimized the C code for byte alignment
 
 7.05   Jul 27, 2026
 
