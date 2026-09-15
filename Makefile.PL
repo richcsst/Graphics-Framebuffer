@@ -56,7 +56,7 @@ if ($^O ne 'linux') { # Some people will still try
       colored(['white on_red'],' Graphics::Framebuffer should not be installed from within Wayland/X-Windows!  '),"\n",
       colored(['white on_red'],' you should install it from the console itself, and not a console window.      '),"\n",
       colored(['white on_red'],' ' x 79),"\n",
-      colored(['black on_yellow'],' ' x 79),"\n",
+#      colored(['black on_yellow'],' ' x 79),"\n",
       colored(['black on_yellow'],' If you insist on installing from within X-Windows, the tests will attempt to  '),"\n",
       colored(['black on_yellow'],' install a viewer with mpplay or mplayer using a simulated framebuffer of      '),"\n",
       colored(['black on_yellow'],' 1024x720x32                                                                   '),"\n\n",

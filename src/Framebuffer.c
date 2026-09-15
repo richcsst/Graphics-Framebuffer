@@ -294,6 +294,8 @@ void c_get_screen_info(char *fb_file) {
         vinfo.yres           = height;
         vinfo.xres_virtual   = width;
         vinfo.yres_virtual   = height;
+        vinfo.width          = width;
+        vinfo.height         = height;
         vinfo.bits_per_pixel = bpp;
         vinfo.activate       = FB_ACTIVATE_NOW;
 
