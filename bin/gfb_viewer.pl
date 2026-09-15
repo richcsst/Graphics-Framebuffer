@@ -44,7 +44,7 @@ if ($bpp == 32) {
     die "Error: Unsupported bits-per-pixel: $bpp (Supported: 16, 24, 32).\n";
 }
 
-my $buffer_size = $width * ($height + 1) * int($bpp / 8); # Little bit extra to avoid segmentation issues
+my $buffer_size = $width * $height * int($bpp / 8); # Little bit extra to avoid segmentation issues
 
 # Set up signal traps to guarantee cleanup if interrupted
 $SIG{INT}  = sub { exit 0; };
