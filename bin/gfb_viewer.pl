@@ -80,9 +80,9 @@ my @cmd = (
     '-i', $FB_FILE
 );
 print "[gfb_viewer] Executing: @cmd\n";
-system('ls','/dev/shm');
+system('ls /dev/shm/gfb*');
 sleep 5;exit;
-# system(@cmd);
+# system(@cmd,'2&1>/dev/null');
 
 # END block ensures cleanup executes regardless of how the script terminates
 END {
