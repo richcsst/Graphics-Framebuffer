@@ -6,11 +6,11 @@ use File::Spec;
 
 # File locations in shared memory
 my $SHM_DIR    = '/dev/shm';
-my $FB_FILE    = "$SHM_DIR/gfb_viewer";
-my $INFO_FILE  = "$SHM_DIR/gfb_viewer.info";
+my $FB_FILE    = "$SHM_DIR/gfb_screen";
+my $INFO_FILE  = "$SHM_DIR/gfb_screen.info";
 
 # Configuration defaults
-my $res_param  = '1024x720x32';
+my $res_param  = '1280x720x32';
 my $framerate  = 30;
 
 GetOptions(

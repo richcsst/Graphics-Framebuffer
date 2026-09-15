@@ -264,7 +264,7 @@ void c_get_screen_info(char *fb_file) {
         unsigned int height = 720;
         unsigned int bpp    = 32;
 
-        FILE *info_fp = fopen("/dev/shm/gfb_viewer.info", "r");
+        FILE *info_fp = fopen("/dev/shm/gfb_screen.info", "r");
         if (info_fp != NULL) {
             /* Check that fscanf matched all 3 fields */
             if (fscanf(info_fp, "%u %u %u", &width, &height, &bpp) != 3) {
