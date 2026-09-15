@@ -1180,7 +1180,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting.*
 
-   *\\* *Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
+   \* *Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
 
 ----
 
