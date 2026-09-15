@@ -77,10 +77,10 @@ my @cmd = (
     '-framerate', $framerate,
     '-loop', '0',
     '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
-    '-i', $FB_FILE
+    '-i', $FB_FILE,
 );
 print "[gfb_viewer] Executing: @cmd\n";
-system(@cmd,'2&1>/dev/null');
+system(@cmd);
 
 # END block ensures cleanup executes regardless of how the script terminates
 END {
