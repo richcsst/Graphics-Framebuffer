@@ -4,7 +4,7 @@
 
 [![Graphics::Framebuffer Logo](pics/GFB.png?raw=true "Graphics::Framebuffer Click For Demo Video")](https://www.youtube.com/watch?v=X8RpFBq6F9I)
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # Contents
 
@@ -24,7 +24,7 @@
 * [YouTube](#youtube)
 * [GitHub](#github)
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # SYNOPSIS
 
@@ -58,7 +58,7 @@ Drawing is this simple
 
    While reading this man page will describe how each method works, looking at the source code of "examples/primitives.pl" will demonstrate how each works.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # DESCRIPTION
 
@@ -85,7 +85,7 @@ NOTE:
 
    Make sure you have read/write access to the framebuffer device.  Usually this just means adding your account to the "video" group (make sure you log out and log in again after doing that).  Alternately, you can just run your script as root.  Although I don't recommend it.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # INSTALLATION
 
@@ -95,7 +95,7 @@ NOTE:
 
    If you are in X-Windows, and don't know how to get to a console, then just hit CTRL-ALT-F1 (actually CTRL-ALT-F1 through CTRL-ALT-F6 works) and it should show you a console.  ALT-F7 or ALT-F8 will get you back to X-Windows, ALT-F1 works in the latest Ubuntu and Zorin-OS.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # OPERATIONAL THEORY
 
@@ -109,7 +109,7 @@ NOTE:
 
    Originally everything was done in Perl, and the module's speed was mostly acceptable, unless you had a really slow system.  It still can run in pure Perl, if you turn off the acceleration feature, although I do not recommend it, if you want speed.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # SPECIAL VARIABLES
 
@@ -217,7 +217,7 @@ manual flushing if affected.
 
 Many of the parameters you pass to the "new" method are also special variables.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # CONSTANTS
 
@@ -273,7 +273,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    * **PERL**     ( *0* )
    * **SOFTWARE** ( *1* )
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # METHODS
 
@@ -366,7 +366,7 @@ Many of the parameters you pass to the "new" method are also special variables.
      - [RGBA8888\_to\_RGB565](#rgba8888_to_rgb565) - Converts 32 bit blit image variable to 16 bit blit image variable.
      - [RGBA8888\_to\_RGB888](#rgba8888_to_rgb888) - Converts 32 bit blit image variable to 24 bit blit image variable.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## **new**
 
@@ -506,19 +506,19 @@ Many of the parameters you pass to the "new" method are also special variables.
 
       Why do many video cards use the BGR color order?  Simple, their GPUs operate with the high to low byte order for long words.  To the video card, it is RGB, but to a CPU that stores bytes in low to high byte order.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## text\_mode
 
    Sets the TTY into text mode, where text can interfere with the display
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## graphics\_mode
 
    Sets the TTY in exclusive graphics mode, where text and cursor cannot interfere with the display.  Please remember, you must call text\_mode before exiting, else your console will not show any text!
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## screen\_dimensions
 
@@ -550,7 +550,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## splash
 
@@ -562,7 +562,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->splash();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## get\_font\_list
 
@@ -593,7 +593,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    When passing a name, it will return a hash reference (if only one match), or an array reference of hashes of fonts matching that name.  Passing in "Arial" would return the font information for "Arial Black", "Arial Narrow", and "Arial Rounded" (if they are installed on your system).
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## draw\_mode
 
@@ -652,7 +652,7 @@ Many of the parameters you pass to the "new" method are also special variables.
                                      # useful, but here for completeness)
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## normal\_mode
 
@@ -662,7 +662,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->normal_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## xor\_mode
 
@@ -672,7 +672,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->xor_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## or\_mode
 
@@ -682,7 +682,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->or_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## alpha\_mode
 
@@ -692,7 +692,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->alpha_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## and\_mode
 
@@ -702,7 +702,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->and_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## mask\_mode
 
@@ -712,7 +712,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->mask_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## unmask\_mode
 
@@ -722,7 +722,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->unmask_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## add\_mode
 
@@ -732,7 +732,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->add_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## subtract\_mode
 
@@ -742,7 +742,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->subtract_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## multiply\_mode
 
@@ -752,7 +752,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->multiply_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## divide\_mode
 
@@ -762,7 +762,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->divide_mode();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## clear\_screen
 
@@ -776,13 +776,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->clear_screen('ON');  # Turn cursor ON (Does nothing with emulated framebuffer mode).
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## cls
 
    This is an alias to 'clear\_screen'
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## attribute\_reset
 
@@ -792,7 +792,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->attribute_reset();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## plot
 
@@ -807,19 +807,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## setpixel
 
    An alias to plot.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## set\_pixel
 
    An alias to plot.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## pixel
 
@@ -840,19 +840,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## getpixel
 
    Alias for 'pixel'.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## get\_pixel
 
    Alias for 'pixel'.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## last\_plot
 
@@ -883,7 +883,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    ( x position, y position )
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## line
 
@@ -899,7 +899,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## angle\_line
 
@@ -915,7 +915,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## drawto
 
@@ -931,7 +931,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Antialiased lines are not accelerated.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## bezier
 
@@ -963,13 +963,13 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## cubic\_bezier
 
    *DISCONTINUED, use 'bezier' instead (now just an alias to 'bezier').*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## draw\_arc
 
@@ -1015,7 +1015,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Only PIE is affected by the acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## arc
 
@@ -1052,7 +1052,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## filled\_pie
 
@@ -1105,7 +1105,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is affected by the Acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## poly\_arc
 
@@ -1142,7 +1142,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## ellipse
 
@@ -1182,7 +1182,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Also note, ellipses are only drawn with 90 degree angles.  You can rotate it to get other angles.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## ball
 
@@ -1203,7 +1203,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## circle
 
@@ -1236,7 +1236,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is affected by the Acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## polygon
 
@@ -1277,7 +1277,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Filled polygons are affected by the acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## box
 
@@ -1313,7 +1313,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## rbox
 
@@ -1349,13 +1349,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## rounded\_box
 
    This is an alias to rbox
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## set\_color
 
@@ -1372,19 +1372,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## setcolor
 
    This is an alias to 'set\_color'
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## set\_foreground\_color
 
    This is an alias to 'set\_color'
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## set\_b\_color
 
@@ -1401,19 +1401,19 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## setbcolor
 
    This is an alias to 'set\_b\_color'
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## set\_background\_color
 
    This is an alias to 'set\_b\_color'
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## fill
 
@@ -1427,7 +1427,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This one is greatly affected by the acceleration setting, and likely the one that may give the most trouble.  I have found on some systems Imager just doesn't do what it is asked to, but on others it works fine.  Go figure.  Some of you are getting your entire screen filled and know you are placing the X,Y coordinate correctly, then disabling acceleration before calling this should fix it.  Don't forget to re-enable acceleration when done.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## replace\_color
 
@@ -1463,7 +1463,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *This is not affected by the Acceleration setting, and is just as fast in 16 bit as it is in 24 and 32 bit modes.  Which means, very fast.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## blit\_copy
 
@@ -1480,7 +1480,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## blit\_move
 
@@ -1500,7 +1500,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## play\_animation
 
@@ -1521,7 +1521,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    You need to enclose this in a loop if you wish it to play more than once.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## acceleration
 
@@ -1547,19 +1547,19 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *The "Mask" and "Unmask" drawing modes are greatly affected by acceleration, as well as 16 bit conversions in image loading and ttf\_print(ing).*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## perl
 
    This is an alias to "acceleration(PERL)"
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## software
 
    This is an alias to "acceleration(SOFTWARE)"
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## blit\_read
 
@@ -1590,7 +1590,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    All you have to do is change X and Y, and just pass it to "blit\_write" and it will paste it there.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## blit\_write
 
@@ -1608,7 +1608,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## blit\_transform
 
@@ -1702,7 +1702,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Rotate and Flip are affected by the acceleration setting.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## clip\_reset
 
@@ -1712,13 +1712,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->clip_reset();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## clip\_off
 
    This is an alias to 'clip\_reset'
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## clip\_set
 
@@ -1733,7 +1733,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## clip\_rset
 
@@ -1748,7 +1748,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## monochrome
 
@@ -1777,7 +1777,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *You should normally use "blit\_transform", but this is a more raw way of affecting the data.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## ttf\_print
 
@@ -1832,7 +1832,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Failures of this method are usually due to it not being able to find the font.  Make sure you have the right path and name.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## ttf\_paragraph
 
@@ -1874,7 +1874,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## get\_face\_name
 
@@ -1887,7 +1887,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    });
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## load\_image
 
@@ -2010,7 +2010,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    ]
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## screen\_dump
 
@@ -2059,7 +2059,7 @@ Many of the parameters you pass to the "new" method are also special variables.
       );
       ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RGB565\_to\_RGB888
 
@@ -2073,7 +2073,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RGB565\_to\_RGB8888
 
@@ -2088,7 +2088,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RGB888\_to\_RGB565
 
@@ -2104,7 +2104,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    This simply does a bitshift, nothing more.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RGBA8888\_to\_RGB565
 
@@ -2120,7 +2120,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    This simply does a bitshift, nothing more
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RGB888\_to\_RGBA8888
 
@@ -2137,7 +2137,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    This just simply adds an alpha value.  No actual color conversion is done.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RGBA8888\_to\_RGB888
 
@@ -2153,7 +2153,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    This just removes the alpha value.  No color conversion is actually done.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## vsync
 
@@ -2161,7 +2161,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *Not all framebuffer drivers have this capability and ignore this call.  Results may vary, as this cannot be emulated.  The only way to know is to just test it.*
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## which\_console
 
@@ -2171,7 +2171,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    my ($active_console, $expected_console) = $FB->which_console();
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## active\_console
 
@@ -2183,7 +2183,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## wait\_for\_console
 
@@ -2193,7 +2193,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    If a TRUE or FALSE is passed to this, then you can enable or disable blocking for subsequent calls.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## initialize\_mouse
 
@@ -2211,7 +2211,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    $FB->initialize_mouse(0);  # Turn off the mouse handler
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## poll\_mouse
 
@@ -2221,7 +2221,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    I suggest running it in a thread instead, using your own code.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## get\_mouse
 
@@ -2252,7 +2252,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    }
    ```
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## set\_mouse
 
@@ -2269,7 +2269,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *NOTE:  Mouse support is very primitive and will not be further developed, as the framebuffer is not exactly mouse-friendly.*
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # USAGE HINTS
 
@@ -2279,13 +2279,13 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    Make sure the number of color key points matches for each primary color (red, green, and blue);
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## PERL OPTIMIZATION
 
    This module is highly CPU dependent.  So the more optimized your Perl installation is, the faster it will run.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## THREADS
 
@@ -2293,25 +2293,25 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    See the "examples/multiprocessing" directory for "threads\_primitives.pl" as an example of a threading script that uses this module.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## FORKS
 
    For unthreaded Perl, Install the modules **forks** and **forks::shared** and you will have the same features as **threads** and **threads::shared** (and perhaps better performance for unthreaded perls).
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## MCE
 
    Mario Roy has tested **Graphics::Framebuffer** with various methods to use the **MCE** modules for multiprocessing, and creating a single shared library.  See the [examples/multiprocessing/MCE-README.md](examples/multiprocessing/MCE-README.md) file for more.  I highly recommend this for multiprocessing, as it should save on memory.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## BLITTING
 
    Use "blit\_read" and "blit\_write" to save portions of the screen instead of redrawing everything.  It will speed up response tremendously.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## SPRITES
 
@@ -2321,13 +2321,13 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    Listen folks, this library does everything in software (as is typical for the framebuffer), so your results will vary depending on CPU speed and screen resolution, as well as blit resolution.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## MULTIPLE "HEADS" (monitors)
 
    As long as each framebuffer for each display is accessible, you can open an instance of the module for each framebuffer and access each screen.
 
-----
+![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
 ## RUNNING IN MICROSOFT WINDOWS
 
@@ -2339,7 +2339,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    \* *However, if someone knows how to access the framebuffer (or simulate one) in MS Windows, and be able to do it reasonably from within Perl, then send me instructions on how to do it, and I'll do my best to get it to work.*
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # TROUBLESHOOTING
 
@@ -2453,13 +2453,13 @@ Many of the parameters you pass to the "new" method are also special variables.
 
       \* *Making the subject of your [email](mailto:rich@rk-internet.com) "**PERL GFB HELP**" is most helpful for me, and likely will get your email seen sooner.*
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # AUTHOR
 
    Richard Kelsch <rich@rk-internet.com>
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # COPYRIGHT
 
@@ -2467,7 +2467,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    This program is free software; you can redistribute it and/or modify it under the GNU software license.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # LICENSE
 
@@ -2485,13 +2485,13 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES. THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # VERSION
 
    Version 7.07 (Sept 10, 2026)
 
-   ![Divider](pics/pink.jpg?raw=true "Divider")
+   ![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # THANKS
 
@@ -2499,7 +2499,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    Thank you Mario Roy for showing how to use MCE to multiprocess instead of threads.  Very handy.  Look for the "get\_mce\_demos" in the ```examples/multiprocessing``` directory.  NOTE: I do not support MCE bug issues.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # TELL ME ABOUT YOUR PROJECT
 
@@ -2507,7 +2507,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    If project has a specific need that the module does not support (or support easy), then suggest a feature to me.
 
-![Divider](pics/pink.jpg?raw=true "Divider")
+![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
 # MISCELLANEOUS
 
