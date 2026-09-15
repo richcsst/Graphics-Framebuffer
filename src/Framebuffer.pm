@@ -884,7 +884,7 @@ sub new {
 
         # Default values
         'GARBAGE'             => FALSE,       # Load extra unneeded FB info if true
-        'VXRES'               => 1024,        # Virtual X resolution
+        'VXRES'               => 1280,        # Virtual X resolution
         'VYRES'               => 720,         # Virtual Y resolution
         'BITS'                => 32,          # Bits per pixel
         'BYTES'               => 4,           # Bytes per pixel

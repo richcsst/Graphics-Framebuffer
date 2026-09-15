@@ -106,7 +106,7 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
         diag("${r}Warning: No viewer binary found (checked mpplay, mplayer, ffplay). Test will proceed headless on /dev/shm.$rs");
     }
 
-    my ($w, $h, $bpp) = (1024, 720, 32);
+    my ($w, $h, $bpp) = (1280, 720, 32);
     my $buffer_size   = $w * $h * int($bpp / 8);
 
     # Create & truncate the virtual fb memory

@@ -260,7 +260,7 @@ void c_get_screen_info(char *fb_file) {
     /* Check if the path points to our shared memory emulation file */
     if (strncmp(fb_file, "/dev/shm", 8) == 0) {
         /* Default fallback dimensions if reading the .info file fails */
-        unsigned int width  = 1024;
+        unsigned int width  = 1280;
         unsigned int height = 720;
         unsigned int bpp    = 32;
 
@@ -269,7 +269,7 @@ void c_get_screen_info(char *fb_file) {
             /* Check that fscanf matched all 3 fields */
             if (fscanf(info_fp, "%u %u %u", &width, &height, &bpp) != 3) {
                 /* If corrupted or partial read, reset to safe defaults */
-                width  = 1024;
+                width  = 1280;
                 height = 720;
                 bpp    = 32;
             }
