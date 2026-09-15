@@ -398,6 +398,7 @@ void c_flush_fb(int fbfd, int xoffset, int yoffset) {
             ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo_local);
         }
     }
+    ioctl(fbfd, FBIOBLANK, FB_BLANK_UNBLANK);
 }
 
 /* Sets the framebuffer to text mode, which enables the cursor. */
