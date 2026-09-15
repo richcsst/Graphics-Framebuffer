@@ -414,6 +414,7 @@ use Imager::Fountain;                                               #
 use Imager::Font::Wrap;
 use Graphics::Framebuffer::Mouse;                                   # The mouse handler (useless)
 use Graphics::Framebuffer::Splash;                                  # The splash code is here
+use Carp qw(croak);                                                      # For error handling
 
 Imager->preload;                                                    # The Imager documentation says to do this, but doesn't give much of an explanation why.
                                                                     # However, I assume it is to initialize global variables ahead of time so threads behave.
@@ -4260,7 +4261,7 @@ Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 
 sub box {
     my ($self, $params) = @_;
     if (ref($params) ne 'HASH') {
-        die "box() requires a hash reference";
+        croak("box() requires a hash reference");
     }
 
     my $x      = int($params->{'x'});
