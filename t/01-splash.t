@@ -12,7 +12,7 @@ $ENV{'PATH'} = '/bin:/usr/bin:/usr/local/bin';
 delete @ENV{qw(IFS CDPATH ENV BASH_ENV)};
 
 BEGIN {
-    our $VERSION = '2.05';
+    our $VERSION = '2.06';
 }
 
 my $b  = "\e[34m";
