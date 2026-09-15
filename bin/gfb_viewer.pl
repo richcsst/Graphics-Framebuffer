@@ -6,11 +6,11 @@ use File::Spec;
 
 # File locations in shared memory
 my $SHM_DIR    = '/dev/shm';
-my $FB_FILE    = "$SHM_DIR/gfb_viewer";
-my $INFO_FILE  = "$SHM_DIR/gfb_viewer.info";
+my $FB_FILE    = "$SHM_DIR/gfb_screen";
+my $INFO_FILE  = "$SHM_DIR/gfb_screen.info";
 
 # Configuration defaults
-my $res_param  = '1024x720x32';
+my $res_param  = '1280x720x32';
 my $framerate  = 30;
 
 GetOptions(
@@ -98,7 +98,7 @@ sub show_help {
 Usage: $0 [options] [WIDTHxHEIGHTxBPP]
 
 Options:
-  -r, --res <WxHxB>    Set display resolution (default: 1024x720x32)
+  -r, --res <WxHxB>    Set display resolution (default: 1280x720x32)
   -f, --fps <num>      Set frame rate polling (default: 30)
   -h, --help           Display this help screen
 
