@@ -282,6 +282,10 @@ my $mm = WriteMakefile(
         'Inline'         => '0.53',
         'Inline::C'      => '0.53',
     },
+    EXE_FILES     => ['bin/gfb_viewer.pl'],
+    INSTALLSCRIPT => '/usr/local/bin',
+    INSTALLBIN    => '/usr/local/bin',
+
     dist  => {COMPRESS => 'gzip -9f', SUFFIX => 'gz',},
     clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *.inl *log *bak *old'},
 );
