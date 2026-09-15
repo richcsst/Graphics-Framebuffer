@@ -104,7 +104,7 @@
 
    You can change "3840x2160" to any sane resolution you wish.
 
-   Using the EFI install means no need to fiddle with Grub.  VirtualBox already has a framebuffer for EFI.  Just make sure that you install the extensions (and re-install everytime the Kernel is updated)
+   Using the EFI install means no need to fiddle with Grub.  VirtualBox already has a framebuffer for EFI.  Just make sure that you install the extensions (and re-install the extensions every time the Kernel is updated)
 
 ![Divider](../pics/pink.jpg?raw=true "Divider")
 
