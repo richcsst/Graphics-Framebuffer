@@ -59,8 +59,8 @@ if ($^O ne 'linux') { # Some people will still try
       colored(['black on_yellow'],' ' x 79),"\n",
       colored(['black on_yellow'],' If you insist on installing from within X-Windows, the tests will attempt to  '),"\n",
       colored(['black on_yellow'],' install a viewer with mpplay or mplayer using a simulated framebuffer of      '),"\n",
-      colored(['black on_yellow'],' 1024x720x32                                                                   '),"\n",
-      colored(['black on_yellow'],' ' x 79), "\n\n";
+      colored(['black on_yellow'],' 1024x720x32                                                                   '),"\n\n",
+#      colored(['black on_yellow'],' ' x 79), "\n\n";
     $pmt = 'Y'; # ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
 } elsif (no_framebuffer()) {
     print 
