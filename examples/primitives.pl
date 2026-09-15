@@ -36,7 +36,7 @@ my $small    = FALSE; # Force a small screen for debugging core dumps
 my $help     = FALSE; # Shows a brief help screen
 my $man      = FALSE; # Shows the full POD manual
 my $errors   = FALSE; # Show errors
-my $interval = (1/15);
+my $interval = (1/30); # 30 FPS for VirtualBox flushing
 my $show_func;
 
 # Forced flushing has been removed and an automatic flush is triggered if VirtualVox is detected in the module itself.
