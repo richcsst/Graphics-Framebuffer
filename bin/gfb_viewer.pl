@@ -69,22 +69,16 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 
 # Construct media player command
 # Using ffplay (or mplayer fallback) configured for continuous raw video stream
-my @cmd = (
-    'ffplay',
-    '-loglevel',     'quiet',
-#    '-stats',        '0',
-    '-f',            'rawvideo',
-    '-pixel_format', $pix_fmt,
-    '-video_size',   "${width}x${height}",
-    '-framerate',    $framerate,
-    '-vf',           "fps=$framerate",     # Forces the video filter graph to pump frames continuously
-    '-loop',         '0',
-    '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
-    '-i',            $FB_FILE,
+my $cmd_str = sprintf(
+    'while [ -e %s ]; do cat %s; done | ffplay -loglevel quiet -f rawvideo -pixel_format %s -video_size %dx%d -framerate %d -window_title "Graphics::Framebuffer Viewer [%dx%d]" -i -',
+    $FB_FILE, $FB_FILE,
+    $pix_fmt,
+    $width, $height,
+    $framerate,
+    $width, $height
 );
 
-print "[gfb_viewer] Executing: @cmd\n";
-system(@cmd);
+system('bash', '-c', $cmd_str);
 
 # END block ensures cleanup executes regardless of how the script terminates
 END {
