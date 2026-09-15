@@ -253,11 +253,77 @@ static void plot_aa_pixel(char *framebuffer,
 
 /* Get framebuffer info and populate global structures, then send them to Perl. */
 void c_get_screen_info(char *fb_file) {
-    int fbfd = open(fb_file, O_RDWR);
-    ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo);
-    ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo);
-    close(fbfd);
+    /* Clear out the finfo and vinfo structures with zeroes first */
+    memset(&finfo, 0, sizeof(finfo));
+    memset(&vinfo, 0, sizeof(vinfo));
 
+    /* Check if the path points to our shared memory emulation file */
+    if (strncmp(fb_file, "/dev/shm", 8) == 0) {
+        /* Default fallback dimensions if reading the .info file fails */
+        unsigned int width  = 1024;
+        unsigned int height = 768;
+        unsigned int bpp    = 32;
+
+        /* Try to read user-defined geometry from /dev/shm/gfb_viewer.info */
+        FILE *info_fp = fopen("/dev/shm/gfb_viewer.info", "r");
+        if (info_fp != NULL) {
+            /* Expecting: WIDTH HEIGHT BPP (e.g., "1920 1080 32") */
+            fscanf(info_fp, "%u %u %u", &width, &height, &bpp);
+            fclose(info_fp);
+        }
+
+        /* -------------------------------------------------------------
+         * Populate finfo (struct fb_fix_screeninfo)
+         * ------------------------------------------------------------- */
+        strncpy(finfo.id, "GFB_SHM_EMU", 16);
+        finfo.type        = FB_TYPE_PACKED_PIXELS; /* Standard packed pixel format (0) */
+        finfo.visual      = FB_VISUAL_TRUECOLOR;   /* Truecolor display (2) */
+        finfo.line_length = width * (bpp / 8);     /* Bytes per scanline row */
+        finfo.smem_len    = finfo.line_length * height; /* Total buffer size in bytes */
+        finfo.smem_start  = 0;
+        finfo.accel       = 0;                     /* No hardware acceleration */
+
+        /* -------------------------------------------------------------
+         * Populate vinfo (struct fb_var_screeninfo)
+         * ------------------------------------------------------------- */
+        vinfo.xres           = width;
+        vinfo.yres           = height;
+        vinfo.xres_virtual   = width;
+        vinfo.yres_virtual   = height;
+        vinfo.bits_per_pixel = bpp;
+        vinfo.activate       = FB_ACTIVATE_NOW;
+
+        /* Standard channel bitfield layouts */
+        if (bpp == 32) {
+            /* Standard 32-bit ARGB/BGRA layout */
+            vinfo.red.offset     = 16; vinfo.red.length     = 8; vinfo.red.msb_right   = 0;
+            vinfo.green.offset   = 8;  vinfo.green.length   = 8; vinfo.green.msb_right = 0;
+            vinfo.blue.offset    = 0;  vinfo.blue.length    = 8; vinfo.blue.msb_right  = 0;
+            vinfo.transp.offset  = 24; vinfo.transp.length  = 8; vinfo.transp.msb_right = 0;
+        } else if (bpp == 16) {
+            /* Standard RGB565 layout */
+            vinfo.red.offset     = 11; vinfo.red.length     = 5; vinfo.red.msb_right   = 0;
+            vinfo.green.offset   = 5;  vinfo.green.length   = 6; vinfo.green.msb_right = 0;
+            vinfo.blue.offset    = 0;  vinfo.blue.length    = 5; vinfo.blue.msb_right  = 0;
+            vinfo.transp.offset  = 0;  vinfo.transp.length  = 0; vinfo.transp.msb_right = 0;
+        } else {
+            /* Standard 24-bit RGB layout */
+            vinfo.red.offset     = 16; vinfo.red.length     = 8; vinfo.red.msb_right   = 0;
+            vinfo.green.offset   = 8;  vinfo.green.length   = 8; vinfo.green.msb_right = 0;
+            vinfo.blue.offset    = 0;  vinfo.blue.length    = 8; vinfo.blue.msb_right  = 0;
+            vinfo.transp.offset  = 0;  vinfo.transp.length  = 0; vinfo.transp.msb_right = 0;
+        }
+    } else {
+        /* Real hardware node: Query kernel drivers via ioctl */
+        int fbfd = open(fb_file, O_RDWR);
+        if (fbfd >= 0) {
+            ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo);
+            ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo);
+            close(fbfd);
+        }
+    }
+
+    /* Return all values to Perl via the Inline stack */
     Inline_Stack_Vars;
     Inline_Stack_Reset;
 
@@ -298,6 +364,7 @@ void c_get_screen_info(char *fb_file) {
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.nonstd)));
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.activate)));
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.height)));
+    Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.width)));
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.accel_flags)));
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.pixclock)));
     Inline_Stack_Push(sv_2mortal(newSVnv(vinfo.left_margin)));

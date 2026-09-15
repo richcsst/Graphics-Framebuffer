@@ -1053,9 +1053,7 @@ sub new {
         $self->{'CONSOLE'} += 0;
         $self->{'THIS_CONSOLE'} = $self->{'CONSOLE'};
     };
-    my $has_X = FALSE;
-    $has_X = TRUE if (defined($ENV{'DISPLAY'}) && $self->{'IGNORE_X_WINDOWS'} == FALSE);
-    if ((!$has_X) && defined($self->{'FB_DEVICE'}) && (-e $self->{'FB_DEVICE'}) && open($self->{'FB'}, '+<', $self->{'FB_DEVICE'})) {    # Can we open the framebuffer device??
+    if (defined($self->{'FB_DEVICE'}) and (-e $self->{'FB_DEVICE'}) and open($self->{'FB'}, '+<', $self->{'FB_DEVICE'})) {    # Can we open the framebuffer device??
         binmode($self->{'FB'});                                                                                                          # We have to be in binary mode first
         select($self->{'FB'});
 		$self->{'FB'}->autoflush;
@@ -1112,6 +1110,69 @@ sub new {
                 $self->{'vscreeninfo'}->{'vmode'},
                 $self->{'vscreeninfo'}->{'rotate'},
             ) = (c_get_screen_info($self->{'FB_DEVICE'}));
+        } elsif ($self->{'GFB_VIEWER'}) {    # If we are running inside the GFB viewer, we can get the screen info from the GFB viewer
+            open(my $GVIEW,',', '/dev/shm/gfb_screen_info');
+            my $parameters = <$GVIEW>;
+            close($GVIEW);
+            chomp($parameters);
+            $parameters =~ s/^\s+//;
+            ($self->{'VXRES'}, $self->{'VYRES'}, $self->{'BITS'}) = split(/\s+/, $parameters);
+            $self->{'COLOR_ORDER'} = $self->{ uc($self->{'COLOR_ORDER'}) };                             # Translate the color order
+
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'length'}      = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'msb_right'}   = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'length'}    = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'msb_right'} = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'length'}     = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'msb_right'}  = 0;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'length'}    = 8;
+            $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'msb_right'} = 0;
+
+            if ($self->{'COLOR_ORDER'} == BGR) {
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 16;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 8;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 0;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+            } elsif ($self->{'COLOR_ORDER'} == RGB) {
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 0;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 8;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 16;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+            } elsif ($self->{'COLOR_ORDER'} == BRG) {
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 8;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 16;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 0;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+            } elsif ($self->{'COLOR_ORDER'} == RBG) {
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 0;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 16;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 8;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+            } elsif ($self->{'COLOR_ORDER'} == GRB) {
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 8;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 0;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 16;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+            } elsif ($self->{'COLOR_ORDER'} == GBR) {
+                $self->{'vscreeninfo'}->{'bitfields'}->{'red'}->{'offset'}   = 16;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'green'}->{'offset'} = 0;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'blue'}->{'offset'}  = 8;
+                $self->{'vscreeninfo'}->{'bitfields'}->{'alpha'}->{'offset'} = 24;
+            } ## end elsif ($self->{'COLOR_ORDER'...})
+
+            # Set the resolution.  Either the defaults, or whatever the user passed in.
+
+            $self->{'SCREEN'}                    = chr(0) x ($self->{'VXRES'} * $self->{'VYRES'} * $self->{'BYTES'});                                                                                           # This is the fake framebuffer
+            $self->{'XRES'}                      = $self->{'VXRES'};                                                                                                                                            # Virtual and physical are the same
+            $self->{'YRES'}                      = $self->{'VYRES'};
+            $self->{'XOFFSET'}                   = 0;
+            $self->{'YOFFSET'}                   = 0;
+            $self->{'PIXELS'}                    = (($self->{'XOFFSET'} + $self->{'VXRES'}) * ($self->{'YOFFSET'} + $self->{'VYRES'}));
+            $self->{'SIZE'}                      = $self->{'PIXELS'} * $self->{'BYTES'};
+            $self->{'fscreeninfo'}->{'id'}       = 'Virtual Framebuffer';
+            $self->{'GPU'}                       = $self->{'fscreeninfo'}->{'id'};
+            $self->{'fscreeninfo'}->{'smem_len'} = $self->{'BYTES'} * ($self->{'VXRES'} * $self->{'VYRES'}) if (!defined($self->{'fscreeninfo'}->{'smem_len'}) || $self->{'fscreeninfo'}->{'smem_len'} <= 0);
+            $self->{'BYTES_PER_LINE'}            = int($self->{'fscreeninfo'}->{'smem_len'} / $self->{'VYRES'});
         } else {    # Fallback if not accelerated.  Do it the old way
                     # Make the IOCTL call to get info on the virtual (viewable) screen (Sometimes different than physical)
             (       # This method has the potential for errors
