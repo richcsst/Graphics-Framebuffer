@@ -780,6 +780,7 @@ sub new {
             'blue'  => 0,
             'alpha' => 255
         },
+        'COLOR_ALPHA' => 255,                                              # Default alpha for colors
 
         'FONT_PATH' => '/usr/share/fonts/truetype/freefont',       # Default fonts path
         'FONT_FACE' => 'FreeSans.ttf',                             # Default font face
