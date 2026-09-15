@@ -386,6 +386,20 @@ void c_get_screen_info(char *fb_file) {
     Inline_Stack_Done;
 }
 
+void c_flush_fb(int fbfd, int xoffset, int yoffset) {
+    struct fb_var_screeninfo vinfo_local;
+    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo_local) == 0) {
+        vinfo_local.xoffset = xoffset;
+        vinfo_local.yoffset = yoffset;
+        /* Trigger pan to kick deferred blitter */
+        if (ioctl(fbfd, FBIOPAN_DISPLAY, &vinfo_local) < 0) {
+            /* If offsets didn't move, bump by 0 with FB_ACTIVATE_NOW */
+            vinfo_local.activate = FB_ACTIVATE_NOW;
+            ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo_local);
+        }
+    }
+}
+
 /* Sets the framebuffer to text mode, which enables the cursor. */
 void c_text_mode(char *tty_file) {
     int tty_fd = open(tty_file, O_RDWR);

@@ -2734,21 +2734,21 @@ sub drawto {
 } ## end sub drawto
 
 sub _flush_screen {
-    # Since the framebuffer is mappeed as a string device, Perl buffers the output, and this must be flushed.
     my $self = shift;
 
-	if ($self->{'DEVICE'} eq 'EMULATED') {
-		select(STDERR);
-		$| = 1;
-	} elsif (defined($self->{'FB'})) {
-		select($self->{'FB'});
-		$| = 1;
-		$self->{'FB'}->flush();
-		eval {sync $self->{'SCREEN'}, TRUE;};
-		$self->vsync();
-	}
-	$self->{'LAST_FLUSHED'} = time;
-} ## end sub _flush_screen
+    if ($self->{'DEVICE'} eq 'EMULATED') {
+        eval { sync $self->{'SCREEN'}, TRUE; };
+    } else {
+        my $fh = $self->{'FB'};
+        my $fd = defined($self->{'FD'}) ? $self->{'FD'} : (defined($fh) ? fileno($fh) : undef);
+
+        if (defined $fd && $fd >= 0) {
+            c_flush_fb($fd, $self->{'XOFFSET'} || 0, $self->{'YOFFSET'} || 0);
+        }
+        eval { sync $self->{'SCREEN'}, TRUE; };
+    }
+    $self->{'LAST_FLUSHED'} = time;
+}
 
 sub _adj_plot {
     # Part of antialiased drawing
