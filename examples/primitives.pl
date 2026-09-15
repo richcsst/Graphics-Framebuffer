@@ -377,7 +377,7 @@ undef($F);             # Destroy the framebuffer object
 exit(0);
 
 sub vbox_flush {
-    if ($F->{'VBOX'} and ($F->{'LAST_FLUSHED'} + $interval) <= time and ! $F->{'GFB_VIEWER'})) { # Only flush if in a real console, not the GUI
+    if ($F->{'VBOX'} and ($F->{'LAST_FLUSHED'} + $interval) <= time and $F->{'GFB_VIEWER'} == FALSE) { # Only flush if in a real console, not the GUI
         $F->_flush_screen();
     }
 }
