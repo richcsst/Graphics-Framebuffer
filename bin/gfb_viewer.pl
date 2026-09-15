@@ -11,7 +11,7 @@ my $INFO_FILE  = "$SHM_DIR/gfb_screen.info";
 
 # Configuration defaults
 my $res_param  = '1280x720x32';
-my $framerate  = 30;
+my $framerate  = 15;
 
 GetOptions(
     'r|res=s' => \$res_param,
@@ -97,7 +97,7 @@ Usage: $0 [options] [WIDTHxHEIGHTxBPP]
 
 Options:
   -r, --res <WxHxB>    Set display resolution (default: 1280x720x32)
-  -f, --fps <num>      Set frame rate polling (default: 30)
+  -f, --fps <num>      Set frame rate polling (default: 15)
   -h, --help           Display this help screen
 
 Examples:
