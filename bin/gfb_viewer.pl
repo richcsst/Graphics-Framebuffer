@@ -31,7 +31,8 @@ if ($res_param =~ /^(\d+)x(\d+)(?:x(\d+))?$/i) {
     die "Error: Invalid resolution format '$res_param'.\n";
 }
 
-my $buffer_size = $width * $height * int($bpp / 8);
+my $pitch = $width * int($bpp / 8);
+my $buffer_size = $pitch * $height;
 
 # Clean termination handlers
 my $running = 1;
@@ -51,70 +52,79 @@ close($fh_info);
 
 print "[gfb_viewer] Initialized: $FB_FILE ($width x $height @ ${bpp}bpp)\n";
 
-# END block cleans up SHM nodes on exit
 END {
     unlink($FB_FILE)   if -e $FB_FILE;
     unlink($INFO_FILE) if -e $INFO_FILE;
     print "[gfb_viewer] Cleaned up /dev/shm files.\n";
 }
 
-# Map the shared memory directly into this process
+# Map the shared memory directly
 map_file(my $shm_buffer, $FB_FILE, '+<');
 
-# Prefer native SDL loop if installed, otherwise fallback to a pipe streamer
-eval {
-    require SDL;
-    require SDLx::App;
-    require SDL::Surface;
-};
+# Load SDL
+require SDL;
+require SDL::Video;
+require SDL::Surface;
+require SDL::Event;
+require SDL::Events;
 
-if (!$@) {
-    print "[gfb_viewer] Running native SDL display loop...\n";
-    my $app = SDLx::App->new(
-        title  => "Graphics::Framebuffer Viewer [$width x $height]",
-        width  => $width,
-        height => $height,
-        depth  => $bpp,
-    );
+SDL::init(SDL::INIT_VIDEO());
 
-    my $delay = 1.0 / $framerate;
+my $screen = SDL::Video::set_video_mode(
+    $width, $height, $bpp,
+    SDL::SWSURFACE() | SDL::RESIZABLE()
+);
+die "Error: Failed to create SDL window: " . SDL::get_error() . "\n" unless $screen;
 
-    while ($running) {
-        my $t0 = time;
+SDL::Video::wm_set_caption("Graphics::Framebuffer Viewer [$width x $height]", "GFB Viewer");
 
-        # Pump events so window stays responsive and moveable
-        while (my $event = SDL::Events::poll_event()) {
-            if ($event->type == SDL::Events::SDL_QUIT()) {
-                $running = 0;
-                last;
-            }
+# Define color channel masks according to bpp
+my ($rmask, $gmask, $bmask, $amask) = (0, 0, 0, 0);
+if ($bpp == 32) {
+    $rmask = 0x00FF0000;
+    $gmask = 0x0000FF00;
+    $bmask = 0x000000FF;
+    $amask = 0xFF000000;
+} elsif ($bpp == 16) {
+    $rmask = 0xF800;
+    $gmask = 0x07E0;
+    $bmask = 0x001F;
+}
+
+my $event = SDL::Event->new();
+my $delay = 1.0 / $framerate;
+
+print "[gfb_viewer] Window active. Polling at ${framerate} FPS...\n";
+
+while ($running) {
+    my $t0 = time;
+
+    # Properly pass the pre-allocated $event object
+    while (SDL::Events::poll_event($event)) {
+        my $type = $event->type();
+        if ($type == SDL::QUIT() || ($type == SDL::KEYDOWN() && $event->key_sym() == SDL::SDLK_ESCAPE())) {
+            $running = 0;
+            last;
         }
-
-        # Create a surface directly from the shared memory buffer and blit
-        my $source_surface = SDL::Surface->new_from(
-            $shm_buffer,
-            $width, $height, $bpp,
-            $width * int($bpp / 8)
-        );
-
-        $source_surface->blit($app);
-        $app->update();
-
-        my $spent = time - $t0;
-        my $sleep_time = $delay - $spent;
-        sleep($sleep_time) if $sleep_time > 0;
     }
-} else {
-    # Fallback: Zero-overhead raw stream via ffmpeg pipe if SDL-perl is not installed
-    print "[gfb_viewer] SDL-perl not detected, using continuous pipe reader...\n";
-    my $pix_fmt = ($bpp == 32) ? 'bgr0' : ($bpp == 24 ? 'bgr24' : 'rgb565le');
 
-    my $pipe_cmd = sprintf(
-        'tail -f -c +1 %s 2>/dev/null | ffplay -loglevel quiet -stats 0 -f rawvideo -pixel_format %s -video_size %dx%d -framerate %d -window_title "Graphics::Framebuffer Viewer [%dx%d]" -i -',
-        $FB_FILE, $pix_fmt, $width, $height, $framerate, $width, $height
+    # Blit shared memory buffer to the SDL screen
+    my $source = SDL::Surface->new_from(
+        $shm_buffer,
+        $width, $height, $bpp,
+        $pitch,
+        $rmask, $gmask, $bmask, $amask
     );
 
-    system('bash', '-c', $pipe_cmd);
+    if ($source) {
+        SDL::Video::blit_surface($source, SDL::Rect->new(0, 0, $width, $height),
+                                 $screen, SDL::Rect->new(0, 0, $width, $height));
+        SDL::Video::update_rect($screen, 0, 0, $width, $height);
+    }
+
+    my $elapsed = time - $t0;
+    my $sleep_time = $delay - $elapsed;
+    sleep($sleep_time) if ($sleep_time > 0);
 }
 
 sub show_help {
