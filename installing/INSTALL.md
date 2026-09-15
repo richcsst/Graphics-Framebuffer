@@ -217,7 +217,7 @@ PERL_DL_NONLAZY=1 "/usr/bin/perl" "-MExtUtils::Command::MM" "-MTest::Harness" "-
 
 ```
 
-### _\[sudo\]_ make install (expected output)
+### sudo make install (expected output)
 
 ```
 Manifying 3 pod documents
