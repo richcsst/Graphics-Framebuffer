@@ -88,7 +88,6 @@ my $viewer_pid;
 
 # If in a GUI desktop, spawn emulation and viewer
 if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
-    diag("\n\r${y}GOT HERE 3!$rs\n";
     diag("${y}Detected GUI environment. Initializing shared memory emulator...$rs");
 
     # Discover available viewer binary in priority order
