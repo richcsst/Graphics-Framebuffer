@@ -69,19 +69,31 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 
 # Construct media player command
 # Using ffplay (or mplayer fallback) configured for continuous raw video stream
+if (0) {
 my @cmd = (
     'ffplay',
-    '-loglevel',     'quiet',
-    '-stats',        '0',
-    '-f',            'rawvideo',
+    '-loglevel', 'quiet',
+    '-f', 'rawvideo',
     '-pixel_format', $pix_fmt,
-    '-video_size',   "${width}x${height}",
-    '-framerate',    $framerate,
-    '-vf',           "fps=$framerate",     # Forces the video filter graph to pump frames continuously
-    '-loop',         '0',
+    '-video_size', "${width}x${height}",
+    '-framerate', $framerate,
+    '-loop', '0',
     '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
-    '-i',            $FB_FILE,
+    '-i', $FB_FILE,
 );
+} else {
+    my $cmd_str = sprintf(
+    'while [ -e %s ]; do cat %s; done | ffplay -loglevel quiet -stats 0 -f rawvideo -pixel_format %s -video_size %dx%d -framerate %d -window_title "Graphics::Framebuffer Viewer [%dx%d]" -i -',
+    $FB_FILE, $FB_FILE,
+    $pix_fmt,
+    $width, $height,
+    $framerate,
+    $width, $height
+    );
+
+    system('bash', '-c', $cmd_str);
+}
+
 print "[gfb_viewer] Executing: @cmd\n";
 system(@cmd);
 
