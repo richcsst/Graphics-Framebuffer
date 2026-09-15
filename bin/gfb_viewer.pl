@@ -1,4 +1,5 @@
-# Load SDL and import constant tags
+#!/usr/bin/env perl
+use strict;
 use SDL qw(:init);
 use SDL::Video qw(:video);
 use SDL::Surface;
