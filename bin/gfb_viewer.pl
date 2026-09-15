@@ -35,7 +35,7 @@ if ($res_param =~ /^(\d+)x(\d+)(?:x(\d+))?$/i) {
 # Determine matching raw video pixel format for ffplay / mplayer
 my $pix_fmt;
 if ($bpp == 32) {
-    $pix_fmt = 'bgra';
+    $pix_fmt = 'bgr0';
 } elsif ($bpp == 24) {
     $pix_fmt = 'bgr24';
 } elsif ($bpp == 16) {
@@ -70,15 +70,19 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 # Construct media player command
 # Using mplayer configured for continuous raw video stream
 my @cmd = (
-    'mplayer',
-    '-demuxer',   'rawvideo',
-    '-rawvideo',  "w=$width:h=$height:format=bgra:fps=$framerate:size=$buffer_size",
-    '-loop',      '0',
-    '-nosound',
-    '-vo',        'x11',        # Avoids the VDPAU / XV failure probing
-    '-really-quiet',
-    '-title',     "Graphics::Framebuffer Viewer [$width x $height]",
-    $FB_FILE,
+    'ffplay',
+    '-loglevel',     'quiet',
+    '-stats',        '0',
+    '-f',            'rawvideo',
+    '-pixel_format', $pix_fmt,      # 'bgr0'
+    '-video_size',   "${width}x${height}",
+    '-framerate',    $framerate,
+    '-fflags',       '+nobuffer',
+    '-flags',        'low_delay',
+    '-vf',           'realtime',    # Forces SDL to tick by wall-clock time, not demuxer timestamps
+    '-stream_loop',  '-1',          # Loop at demuxer level rather than window level
+    '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
+    '-i',            $FB_FILE,
 );
 
 print "[gfb_viewer] Launching viewer: @cmd\n";
