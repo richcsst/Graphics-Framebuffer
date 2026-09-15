@@ -35,7 +35,7 @@ if ($res_param =~ /^(\d+)x(\d+)(?:x(\d+))?$/i) {
 # Determine matching raw video pixel format for ffplay / mplayer
 my $pix_fmt;
 if ($bpp == 32) {
-    $pix_fmt = 'bgra';
+    $pix_fmt = 'bgr0';
 } elsif ($bpp == 24) {
     $pix_fmt = 'bgr24';
 } elsif ($bpp == 16) {
@@ -71,6 +71,7 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 # Using ffplay (or mplayer fallback) configured for continuous raw video stream
 my @cmd = (
     'ffplay',
+    '-loglevel', 'quiet',
     '-f', 'rawvideo',
     '-pixel_format', $pix_fmt,
     '-video_size', "${width}x${height}",
