@@ -25,7 +25,6 @@ my $rs = "\e[0m";
 my $c  = "\e[36m";
 my $bk = "\e[40m";
 my $y  = "\e[33m";
-diag("\n\r${y}GOT HERE!$rs\n";
 
 diag("\n\r$b$bk" . ' ' x 66 . $rs);
 diag("\r$b$bk" . ' ' x 11 . q{   ,ad8888ba,   } . ' ' x 40 . $rs );
@@ -83,10 +82,9 @@ if ( $^O ne 'linux' ) {
 # Plan our two assertions
 plan tests => 2;
 
-my $shm_fb   = '/dev/shm/gfb_viewer';
-my $shm_info = '/dev/shm/gfb_viewer.info';
+my $shm_fb   = '/dev/shm/gfb_screen';
+my $shm_info = '/dev/shm/gfb_screen.info';
 my $viewer_pid;
-diag("\n\r${y}GOT HERE 2!$rs\n";
 
 # If in a GUI desktop, spawn emulation and viewer
 if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
