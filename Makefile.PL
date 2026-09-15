@@ -57,11 +57,11 @@ if ($^O ne 'linux') { # Some people will still try
       colored(['white on_red'],' you should install it from the console itself, and not a console window.      '),"\n",
       colored(['white on_red'],' ' x 79),"\n",
       colored(['black on_yellow'],' ' x 79),"\n",
-      colored(['black on_yellow'],' If you insist on installing from within X-Windows, please keep in mind that   '),"\n",
-      colored(['black on_yellow'],' the tests will fail, as they will be unable to draw to the screen, since      '),"\n",
-      colored(['black on_yellow'],' Waylan/X-Windows is using it.  Thus the tests will run in emulation mode only.'),"\n",
+      colored(['black on_yellow'],' If you insist on installing from within X-Windows, the tests will attempt to  '),"\n",
+      colored(['black on_yellow'],' install a viewer with mpplay or mplayer using a simulated framebuffer of      '),"\n",
+      colored(['black on_yellow'],' 1024x720x32                                                                   '),"\n",
       colored(['black on_yellow'],' ' x 79), "\n\n";
-    $pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
+    $pmt = 'Y'; # ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
 } elsif (no_framebuffer()) {
     print 
       colored(['white on_red'],' Your system does not appear to have a framebuffer device!  This is required '),"\n",
@@ -303,14 +303,18 @@ sub no_framebuffer {
     my $os = `uname`;
     chomp($os);
     if ($os eq 'Linux') {
-    foreach my $device (0 .. 31) {
-        foreach my $prefix (qw( /dev/fb /dev/fb/ /dev/graphics/fb/ )) {
-            if (-e "$prefix$device") {
-                $fb_absent = FALSE;
-                print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"$prefix$device"),"\n";
+       if (exists($ENV{'DISPLAY'}) or exists($ENV{'WAYLAND_DISPLAY'})) {
+            print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"Running in X11 or Wayland, will use/dev/shm/gfb_viewer"),"\n";
+            $fb_absent = FALSE;
+            foreach my $device (0 .. 31) {
+                foreach my $prefix (qw( /dev/fb /dev/fb/ /dev/graphics/fb/ )) {
+                    if (-e "$prefix$device") {
+                        $fb_absent = FALSE;
+                        print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"$prefix$device"),"\n";
+                    }
+                }
             }
         }
-    }
     }
     if ($fb_absent) {
         print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_red'],'NOT FOUND'),"\n";

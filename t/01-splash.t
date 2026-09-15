@@ -36,7 +36,7 @@ diag("\r$b$bk" . ' ' x 11 . q{ Y8,        88 } . ' ' x 40 . $rs );
 diag("\r$b$bk" . ' ' x 11 . q{  Y8a.    .a88 } . ' ' x 40 . $rs );
 diag("\r$b$bk" . ' ' x 11 . q{   `"Y88888P"  } . ' ' x 40 . $rs );
 
-sleep 0.3;
+sleep 0.2;
 
 diag("\r$bk  \r\e[8A\e[26C$g$bk" , q{ 88888888888 } . $rs );
 diag("\r$bk  \r\e[26C$g$bk"      . q{ 88          } . $rs );
@@ -47,7 +47,7 @@ diag("\r$bk  \r\e[26C$g$bk"      . q{ 88          } . $rs );
 diag("\r$bk  \r\e[26C$g$bk"      . q{ 88          } . $rs );
 diag("\r$bk  \r\e[26C$g$bk"      . q{ 88          } . $rs );
 
-sleep 0.3;
+sleep 0.2;
 
 diag("\r$bk  \r\e[8A\e[38C$r$bk" . q{ 88888888ba  } . ' ' x 15 . $rs );
 diag("\r$bk  \r\e[38C$r$bk"      . q{ 88      "8b } . ' ' x 15 . $rs );
@@ -59,7 +59,7 @@ diag("\r$bk  \r\e[38C$r$bk"      . q{ 88      a8P } . ' ' x 15 . $rs );
 diag("\r$bk  \r\e[38C$r$bk"      . q{ 88888888P"  } . ' ' x 15 . $rs );
 diag("\r$c$bk" . ' ' x 66 . $rs);
 
-sleep 0.3;
+sleep 0.2;
 
 diag("\r$c$bk" .             q{ 888888888888                         88                          } . $rs);
 diag("\r$c$bk" .             q{      88                        ,d    ""                          } . $rs);
