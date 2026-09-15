@@ -69,7 +69,7 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 
 # Construct media player command
 # Calculate the sleep delay in seconds based on target framerate
-my $sleep_delay = sprintf("%.3f", 1.0 / $framerate);
+my $sleep_delay = sprintf("%.3f", (1.0 / $framerate) * 0.85);
 
 my $cmd_str = sprintf(
     'while [ -e %s ]; do cat %s; sleep %s; done | ffplay -loglevel quiet -nostats -f rawvideo -pixel_format %s -video_size %dx%d -framerate %d -window_title "Graphics::Framebuffer Viewer [%dx%d]" -i -',
