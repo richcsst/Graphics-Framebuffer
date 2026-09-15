@@ -306,6 +306,8 @@ sub no_framebuffer {
        if (exists($ENV{'DISPLAY'}) or exists($ENV{'WAYLAND_DISPLAY'})) {
             print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"Running in X11 or Wayland, will use/dev/shm/gfb_viewer"),"\n";
             $fb_absent = FALSE;
+        } else {
+            print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_yellow'],'Searching for /dev/fb*'),"\n";
             foreach my $device (0 .. 31) {
                 foreach my $prefix (qw( /dev/fb /dev/fb/ /dev/graphics/fb/ )) {
                     if (-e "$prefix$device") {

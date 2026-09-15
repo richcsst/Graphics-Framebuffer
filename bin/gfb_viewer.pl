@@ -35,7 +35,7 @@ if ($res_param =~ /^(\d+)x(\d+)(?:x(\d+))?$/i) {
 # Determine matching raw video pixel format for ffplay / mplayer
 my $pix_fmt;
 if ($bpp == 32) {
-    $pix_fmt = 'bgra';
+    $pix_fmt = 'bgr0';
 } elsif ($bpp == 24) {
     $pix_fmt = 'bgr24';
 } elsif ($bpp == 16) {
@@ -75,10 +75,10 @@ my @cmd = (
     '-pixel_format', $pix_fmt,
     '-video_size', "${width}x${height}",
     '-framerate', $framerate,
+    '-loop', '0',
     '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
     '-i', $FB_FILE
 );
-
 print "[gfb_viewer] Executing: @cmd\n";
 system(@cmd);
 
