@@ -377,6 +377,7 @@ undef($F);             # Destroy the framebuffer object
 exit(0);
 
 sub vbox_flush {
+    return;
     if ($F->{'VBOX'} && ($F->{'LAST_FLUSHED'} + $interval) <= time) {
         $F->_flush_screen();
     }
