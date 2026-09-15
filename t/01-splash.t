@@ -25,7 +25,7 @@ my $rs = "\e[0m";
 my $c  = "\e[36m";
 my $bk = "\e[40m";
 my $y  = "\e[33m";
-diag("\n\r$yGOT HERE!$rs\n";
+diag("\n\r${y}GOT HERE!$rs\n";
 
 diag("\n\r$b$bk" . ' ' x 66 . $rs);
 diag("\r$b$bk" . ' ' x 11 . q{   ,ad8888ba,   } . ' ' x 40 . $rs );
@@ -86,11 +86,11 @@ plan tests => 2;
 my $shm_fb   = '/dev/shm/gfb_viewer';
 my $shm_info = '/dev/shm/gfb_viewer.info';
 my $viewer_pid;
-diag("\n\r$yGOT HERE 2!$rs\n";
+diag("\n\r${y}GOT HERE 2!$rs\n";
 
 # If in a GUI desktop, spawn emulation and viewer
 if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
-    diag("\n\r$yGOT HERE 3!$rs\n";
+    diag("\n\r${y}GOT HERE 3!$rs\n";
     diag("${y}Detected GUI environment. Initializing shared memory emulator...$rs");
 
     # Discover available viewer binary in priority order
