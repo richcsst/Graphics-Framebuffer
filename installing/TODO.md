@@ -30,4 +30,6 @@ Imager uses a proprietary surface model, similar to X-Windows graphics libraries
 
 ![Divider](../pics/pink.jpg?raw=true "Divider")
 
-Make it runnable it an X-Windows window with a special viewer.  This is actually possible and I am working on it.
+### Make it runnable it an X-Windows window with a special viewer.
+
+This is actually possible and I am working on it.
