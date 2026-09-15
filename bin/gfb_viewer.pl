@@ -75,7 +75,7 @@ my @cmd = (
     '-rawvideo', "w=$width:h=$height:format=$pix_fmt:fps=$framerate",
     '-loop', '0',
     '-nosound',
-    '-really-quiet',
+#    '-really-quiet',
     '-title', "Graphics::Framebuffer Viewer [$width x $height]",
     $FB_FILE,
 );
