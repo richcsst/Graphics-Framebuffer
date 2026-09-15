@@ -71,8 +71,8 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 # Using ffplay (or mplayer fallback) configured for continuous raw video stream
 my @cmd = (
     'ffplay',
-    '-loglevel', 'quiet',
-    '-stats', '0',
+#    '-loglevel', 'quiet',
+#    '-stats', '0',
     '-f', 'rawvideo',
     '-pixel_format', $pix_fmt,
     '-video_size', "${width}x${height}",
