@@ -216,10 +216,6 @@ PERL_DL_NONLAZY=1 "/usr/bin/perl" "-MExtUtils::Command::MM" "-MTest::Harness" "-
 ![GFB C Splash](../pics/CSplash.png?raw=true "GFB C Splash")
 
 ```
-t/01-splash.t .. skipped: Tests cannot run within X-Windows/Wayland
-Files=1, Tests=0,  1 wallclock secs ( 0.00 usr +  0.01 sys =  0.01 CPU)
-Result: NOTESTS
-```
 
 ### _\[sudo\]_ make install (expected output)
 
