@@ -70,14 +70,19 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 # Construct media player command
 # Using mplayer configured for continuous raw video stream
 my @cmd = (
-    'mplayer',
-    '-demuxer', 'rawvideo',
-    '-rawvideo', "w=$width:h=$height:format=$pix_fmt:fps=$framerate",
-    '-loop', '0',
-    '-nosound',
-#    '-really-quiet',
-    '-title', "Graphics::Framebuffer Viewer [$width x $height]",
-    $FB_FILE,
+    'ffplay',
+    '-loglevel',     'quiet',
+    '-stats',        '0',
+    '-f',            'rawvideo',
+    '-pixel_format', $pix_fmt,      # 'bgr0'
+    '-video_size',   "${width}x${height}",
+    '-framerate',    $framerate,
+    '-fflags',       '+nobuffer',
+    '-flags',        'low_delay',
+    '-vf',           'realtime',    # Forces SDL to tick by wall-clock time, not demuxer timestamps
+    '-stream_loop',  '-1',          # Loop at demuxer level rather than window level
+    '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
+    '-i',            $FB_FILE,
 );
 
 system(@cmd);
