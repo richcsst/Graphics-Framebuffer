@@ -46,7 +46,7 @@ GetOptions(
     'man'              => \$man,
     'x=i'              => \$new_x,
     'y=i'              => \$new_y,
-    'dev=i'            => \$dev,
+ #   'dev=i'            => \$dev,
     'noaccel'          => \$noaccel,
     'nosplash'         => \$nosplash,
     'delay=i'          => \$delay,
@@ -80,7 +80,7 @@ our $STAMP = sprintf('%.1', time);
 
 if (defined($new_x)) { # Ignore kernel structure and force a specific resolution
     $F = Graphics::Framebuffer->new(
-        'FB_DEVICE'        => "/dev/fb$dev",
+#        'FB_DEVICE'        => "/dev/fb$dev",
         'SHOW_ERRORS'      => $errors,
         'SIMULATED_X'      => $new_x,
         'SIMULATED_Y'      => $new_y,
@@ -91,7 +91,7 @@ if (defined($new_x)) { # Ignore kernel structure and force a specific resolution
     );
 } else { # Adhere to the kernel structuter for the screen layout (normal usage)
     $F = Graphics::Framebuffer->new(
-        'FB_DEVICE'        => "/dev/fb$dev",
+#        'FB_DEVICE'        => "/dev/fb$dev",
         'SHOW_ERRORS'      => $errors,
         'ACCELERATED'      => !$noaccel,
         'SPLASH'           => 0,
