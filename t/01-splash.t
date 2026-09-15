@@ -137,7 +137,7 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
                 exec(
                     $player_bin,
                     '-demuxer', 'rawvideo',
-                    '-rawvideo', "w=$w:h=$h:format=bgra:fps=30",
+                    '-rawvideo', "w=$w:h=$h:format=bgr0:fps=30",
                     '-title', 'Graphics::Framebuffer Test Window',
                     $shm_fb
                 );
@@ -146,7 +146,7 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
                 exec(
                     $player_bin,
                     '-f', 'rawvideo',
-                    '-pixel_format', 'bgra',
+                    '-pixel_format', 'bgr0',
                     '-video_size', "${w}x${h}",
                     '-framerate', '30',
                     '-loop', '0',
