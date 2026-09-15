@@ -25,6 +25,7 @@ my $rs = "\e[0m";
 my $c  = "\e[36m";
 my $bk = "\e[40m";
 my $y  = "\e[33m";
+diag("\n\r$yGOT HERE!$rs\n";
 
 diag("\n\r$b$bk" . ' ' x 66 . $rs);
 diag("\r$b$bk" . ' ' x 11 . q{   ,ad8888ba,   } . ' ' x 40 . $rs );
@@ -85,30 +86,11 @@ plan tests => 2;
 my $shm_fb   = '/dev/shm/gfb_viewer';
 my $shm_info = '/dev/shm/gfb_viewer.info';
 my $viewer_pid;
-
-# Helper to find a binary in safe PATH without external modules
-sub find_bin {
-    my ($bin) = @_;
-    for my $dir (split(/:/, $ENV{'PATH'})) {
-        my $target = "$dir/$bin";
-        return $target if (-x $target && !-d $target);
-    }
-    return undef;
-}
-
-# Guaranteed cleanup wrapper
-sub cleanup_viewer {
-    if ($viewer_pid) {
-        kill('TERM', $viewer_pid);
-        waitpid($viewer_pid, 0);
-        undef $viewer_pid;
-    }
-    unlink($shm_fb)   if -e $shm_fb;
-    unlink($shm_info) if -e $shm_info;
-}
+diag("\n\r$yGOT HERE 2!$rs\n";
 
 # If in a GUI desktop, spawn emulation and viewer
 if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
+    diag("\n\r$yGOT HERE 3!$rs\n";
     diag("${y}Detected GUI environment. Initializing shared memory emulator...$rs");
 
     # Discover available viewer binary in priority order
@@ -212,6 +194,26 @@ if ($viewer_pid) {
 }
 
 exit(0);
+# Helper to find a binary in safe PATH without external modules
+sub find_bin {
+    my ($bin) = @_;
+    for my $dir (split(/:/, $ENV{'PATH'})) {
+        my $target = "$dir/$bin";
+        return $target if (-x $target && !-d $target);
+    }
+    return undef;
+}
+
+# Guaranteed cleanup wrapper
+sub cleanup_viewer {
+    if ($viewer_pid) {
+        kill('TERM', $viewer_pid);
+        waitpid($viewer_pid, 0);
+        undef $viewer_pid;
+    }
+    unlink($shm_fb)   if -e $shm_fb;
+    unlink($shm_info) if -e $shm_info;
+}
 
 END {
     cleanup_viewer();
