@@ -85,6 +85,7 @@ my @cmd = (
     '-i',            $FB_FILE,
 );
 
+print "[gfb_viewer] Launching viewer: @cmd\n";
 system(@cmd);
 
 # END block ensures cleanup executes regardless of how the script terminates
