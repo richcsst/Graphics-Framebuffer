@@ -261,14 +261,18 @@ void c_get_screen_info(char *fb_file) {
     if (strncmp(fb_file, "/dev/shm", 8) == 0) {
         /* Default fallback dimensions if reading the .info file fails */
         unsigned int width  = 1024;
-        unsigned int height = 768;
+        unsigned int height = 720;
         unsigned int bpp    = 32;
 
-        /* Try to read user-defined geometry from /dev/shm/gfb_viewer.info */
         FILE *info_fp = fopen("/dev/shm/gfb_viewer.info", "r");
         if (info_fp != NULL) {
-            /* Expecting: WIDTH HEIGHT BPP (e.g., "1920 1080 32") */
-            fscanf(info_fp, "%u %u %u", &width, &height, &bpp);
+            /* Check that fscanf matched all 3 fields */
+            if (fscanf(info_fp, "%u %u %u", &width, &height, &bpp) != 3) {
+                /* If corrupted or partial read, reset to safe defaults */
+                width  = 1024;
+                height = 720;
+                bpp    = 32;
+            }
             fclose(info_fp);
         }
 
