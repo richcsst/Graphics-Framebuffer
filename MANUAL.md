@@ -2102,7 +2102,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-   This simply does a bitshift, nothing more.
+   This simply does a bitshift per color, nothing more.
 
 ![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
@@ -2118,7 +2118,7 @@ Many of the parameters you pass to the "new" method are also special variables.
    );
    ```
 
-   This simply does a bitshift, nothing more
+   This simply does a bitshift per color, nothing more
 
 ![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
@@ -2202,13 +2202,13 @@ Many of the parameters you pass to the "new" method are also special variables.
    \* *Note:  This uses Perl's "alarm" feature.  If you want to use threads, then don't use this to turn on the mouse.*
 
    ```perl
-   $FB->initialize_mouse(1);  # Turn on the mouse handler
+   $FB->initialize_mouse(TRUE);  # Turn on the mouse handler
    ```
 
    or
 
    ```perl
-   $FB->initialize_mouse(0);  # Turn off the mouse handler
+   $FB->initialize_mouse(FALSE);  # Turn off the mouse handler
    ```
 
 ![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
@@ -2291,7 +2291,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    The module (using the 'threads' module) canNOT have separate threads calling the same object.  You WILL crash. However, you can instantiate an object for each thread to use on the same framebuffer, and it will work just fine.
 
-   See the "examples/multiprocessing" directory for "threads\_primitives.pl" as an example of a threading script that uses this module.
+   See the "```examples/multiprocessing```" directory for "```threads\_primitives.pl```" as an example of a threading script that uses this module.
 
 ![Blue Divider](pics/blue.jpg?raw=true "Blue Divider")
 
@@ -2349,7 +2349,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
    - **You Have To Run From The Console**
 
-       A console window doesn't count as "the console".  You cannot use this module from within X-Windows/Wayland.  It won't work, and likely will only go into emulation mode if you do, or maybe crash, or even corrupt your X-Windows/Wayland screen.
+       A console window doesn't count as "the console".  You cannot use this module from within X-Windows/Wayland (yet).  It won't work, and likely will only go into emulation mode if you do, or maybe crash, or even corrupt your X-Windows/Wayland screen.
 
        If you want to run your program within X-Windows/Wayland, then you have the wrong module.  Use SDL, QT, or GTK or something similar.
 
@@ -2363,7 +2363,7 @@ Many of the parameters you pass to the "new" method are also special variables.
 
        Ok, segfaults suck.  Believe me, I had plenty in the early days of writing this module.  There is hope for you.
 
-       This is almost always caused by the module incorrectly calculating the framebuffer memory size, and it's guessing too large or small a memory footprint, and the system doesn't like it.
+       This is almost always caused by the module incorrectly calculating the framebuffer memory size, and it's guessing too large a memory footprint, and the system doesn't like it.
 
        Try running the "primitives.pl" in the "examples" directory in the following way (assuming your screen is larger than 640x480):
 
@@ -2425,13 +2425,11 @@ Many of the parameters you pass to the "new" method are also special variables.
 
       You can also try simplifying your drawing to exploit the speed of horizontal lines.  Horizonal line drawing is incredibly fast, even for very slow systems.
 
-      Only use pixel sizes of 1.  Anything larger requires a box to be drawn at the pixel size you asked for.  Pixel sizes of 1 only use plot to draw, (so no boxes) so it is much faster.
-
       Try using 'polygon' to draw complex shapes instead of a series of plot or line commands.
 
       Does your device have more than one core?  Well, how about using threads (or MCE)?  Just make sure you do it according to the examples in the "examples" directory.  Yes, I know this can be too advanced for the average coder, but the option is there.
 
-      Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heavy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time (and memory).
+      Plain and simple, your device just may be too slow for some CPU intensive operations, specifically anything involving animated images and heavy blitting.  If you must use images, then make sure they are already the right size for your needs.  Don't force the module to resize them when loading, as this takes CPU time (and memory).  If you have the memory, pre-load the images.
 
    - **Ask For Help**
 
@@ -2464,8 +2462,6 @@ Many of the parameters you pass to the "new" method are also special variables.
 # COPYRIGHT
 
    Copyright © 2003-2026 Richard Kelsch, All Rights Reserved.
-
-   This program is free software; you can redistribute it and/or modify it under the GNU software license.
 
 ![Pink Divider](pics/pink.jpg?raw=true "Pink Divider")
 
