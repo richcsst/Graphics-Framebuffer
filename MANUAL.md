@@ -1647,9 +1647,9 @@ Many of the parameters you pass to the "new" method are also special variables.
            'blit_data' => { # Same as what blit_read or load_image returns
                'x'      => 0, # This is relative to the dimensions of "dest_blit_data" for "merge"
                'y'      => 0, # ^^
-                   'width'  => 300,
-                   'height' => 200,
-                   'image'  => $image_data
+               'width'  => 300,
+               'height' => 200,
+               'image'  => $image_data
            },
 
            'merge'  => {
