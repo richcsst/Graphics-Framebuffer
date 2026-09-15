@@ -4260,7 +4260,7 @@ Draws a box from point x,y to point xx,yy, either as an outline, if 'filled' is 
 sub box {
     my ($self, $params) = @_;
     if (type($params) ne 'HASH') {
-        croak("box() requires a hash reference");
+        die "box() requires a hash reference";
     }
 
     my $x      = int($params->{'x'});
