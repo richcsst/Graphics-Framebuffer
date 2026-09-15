@@ -72,7 +72,7 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 my @cmd = (
     'ffplay',
     '-loglevel', 'quiet',       # Suppresses banner, warnings, and informational output
-    '-stats',    '0',           # Suppresses the real-time playback position/audio/video line
+#    '-stats',    '0',           # Suppresses the real-time playback position/audio/video line
     '-f',        'rawvideo',
     '-pixel_format', $pix_fmt,
     '-video_size',   "${width}x${height}",
