@@ -51,14 +51,14 @@ $SIG{INT}  = sub { exit 0; };
 $SIG{TERM} = sub { exit 0; };
 $SIG{HUP}  = sub { exit 0; };
 
-# Create/truncate /dev/shm/gfb_viewer
+# Create/truncate /dev/shm/gfb_screen
 open(my $fh_fb, '>', $FB_FILE)
     or die "Error: Cannot open $FB_FILE: $!\n";
 truncate($fh_fb, $buffer_size)
     or die "Error: Cannot truncate $FB_FILE to $buffer_size bytes: $!\n";
 close($fh_fb);
 
-# Create /dev/shm/gfb_viewer.info (expects space-delimited: "WIDTH HEIGHT BPP")
+# Create /dev/shm/gfb_screen.info (expects space-delimited: "WIDTH HEIGHT BPP")
 open(my $fh_info, '>', $INFO_FILE)
     or die "Error: Cannot write $INFO_FILE: $!\n";
 print $fh_info "$width $height $bpp\n";
@@ -72,6 +72,7 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 my @cmd = (
     'ffplay',
     '-loglevel', 'quiet',
+    '-stats', '0',
     '-f', 'rawvideo',
     '-pixel_format', $pix_fmt,
     '-video_size', "${width}x${height}",
