@@ -2743,16 +2743,19 @@ sub _flush_screen {
     my $self = shift;
 
     if ($self->{'DEVICE'} eq 'EMULATED') {
-        eval { sync $self->{'SCREEN'}, TRUE; };
+        # Under SHM emulation, MS_ASYNC signals the backing file without blocking execution
+        eval { sync $self->{'SCREEN'}, FALSE; };
     } else {
-        my $fh = $self->{'FB'};
-        my $fd = defined($self->{'FD'}) ? $self->{'FD'} : (defined($fh) ? fileno($fh) : undef);
-
-        if (defined $fd && $fd >= 0) {
-            c_flush_fb($fd, $self->{'XOFFSET'} || 0, $self->{'YOFFSET'} || 0);
+        # Extract the underlying POSIX file descriptor from the open FB handle
+        if (defined $self->{'FB'}) {
+            my $fd = fileno($self->{'FB'});
+            if (defined $fd && $fd >= 0) {
+                c_flush_fb($fd, $self->{'XOFFSET'} || 0, $self->{'YOFFSET'} || 0);
+            }
         }
-        eval { sync $self->{'SCREEN'}, TRUE; };
+        # Explicitly omit sync() here: calling msync on device mmap memory causes kernel D-state stalls
     }
+
     $self->{'LAST_FLUSHED'} = time;
 }
 
