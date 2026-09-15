@@ -170,6 +170,7 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
                     '-pixel_format', 'bgra',
                     '-video_size', "${w}x${h}",
                     '-framerate', '30',
+                    '-loop',
                     '-window_title', 'Graphics::Framebuffer Test Window',
                     '-i', $shm_fb
                 );

@@ -884,14 +884,14 @@ sub new {
 
         # Default values
         'GARBAGE'             => FALSE,       # Load extra unneeded FB info if true
-        'VXRES'               => 640,         # Virtual X resolution
-        'VYRES'               => 480,         # Virtual Y resolution
+        'VXRES'               => 1024,        # Virtual X resolution
+        'VYRES'               => 720,         # Virtual Y resolution
         'BITS'                => 32,          # Bits per pixel
         'BYTES'               => 4,           # Bytes per pixel
         'XOFFSET'             => 0,           # Visible screen X offset
         'YOFFSET'             => 0,           # Visible screen Y offset
         'FB_DEVICE'           => undef,       # Framebuffer device name (defined later)
-        'COLOR_ORDER'         => 'RGB',       # Default color Order.  Redefined later to be an integer
+        'COLOR_ORDER'         => 'BGR',       # Default color Order.  Redefined later to be an integer
         'ACCELERATED'         => SOFTWARE,    # Use accelerated graphics
                                               #   0 = PERL     = Pure Perl
                                               #   1 = SOFTWARE = C Accelerated (but still software)
