@@ -70,17 +70,19 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 # Construct media player command
 # Using ffplay (or mplayer fallback) configured for continuous raw video stream
 if (0) {
-my @cmd = (
-    'ffplay',
-    '-loglevel', 'quiet',
-    '-f', 'rawvideo',
-    '-pixel_format', $pix_fmt,
-    '-video_size', "${width}x${height}",
-    '-framerate', $framerate,
-    '-loop', '0',
-    '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
-    '-i', $FB_FILE,
-);
+    my @cmd = (
+        'ffplay',
+        '-loglevel', 'quiet',
+        '-f', 'rawvideo',
+        '-pixel_format', $pix_fmt,
+        '-video_size', "${width}x${height}",
+        '-framerate', $framerate,
+        '-loop', '0',
+        '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
+        '-i', $FB_FILE,
+    );
+    print "[gfb_viewer] Executing: @cmd\n";
+    system(@cmd);
 } else {
     my $cmd_str = sprintf(
     'while [ -e %s ]; do cat %s; done | ffplay -loglevel quiet -stats 0 -f rawvideo -pixel_format %s -video_size %dx%d -framerate %d -window_title "Graphics::Framebuffer Viewer [%dx%d]" -i -',
@@ -91,11 +93,9 @@ my @cmd = (
     $width, $height
     );
 
+    print "[gfb_viewer] Executing: $cmd_str\n";
     system('bash', '-c', $cmd_str);
 }
-
-print "[gfb_viewer] Executing: @cmd\n";
-system(@cmd);
 
 # END block ensures cleanup executes regardless of how the script terminates
 END {
