@@ -72,7 +72,7 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 my @cmd = (
     'mplayer',
     '-demuxer',   'rawvideo',
-    '-rawvideo',  "w=$width:h=$height:format=bgra:fps=$framerate:size=$frame_size",
+    '-rawvideo',  "w=$width:h=$height:format=bgra:fps=$framerate:size=$buffer_size",
     '-loop',      '0',
     '-nosound',
     '-vo',        'x11',        # Avoids the VDPAU / XV failure probing
