@@ -341,6 +341,7 @@ if (grep(/Texture|Blit|Rotate|Flipping|Monochrome|Mode Drawing|Animated|Replace/
                 }
             }
         }
+        vbox_flush();
     }
 }
 
