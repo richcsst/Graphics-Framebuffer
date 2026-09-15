@@ -2277,4 +2277,3 @@ void c_monochrome(char *pixels,
 }
 
 /* END C Section */
-
