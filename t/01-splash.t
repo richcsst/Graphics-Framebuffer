@@ -115,7 +115,7 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
     my $player_bin;
     my $player_type; # 'mplayer' or 'mpplay_ffplay'
 
-    for my $candidate (qw(mpplay mplayer ffplay)) {
+    for my $candidate (qw(mpplay ffplay mplayer)) {
         if (my $path = find_bin($candidate)) {
             $player_bin  = $path;
             $player_type = ($candidate eq 'mplayer') ? 'mplayer' : 'mpplay_ffplay';
@@ -170,7 +170,7 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
                     '-pixel_format', 'bgra',
                     '-video_size', "${w}x${h}",
                     '-framerate', '30',
-                    '-loop',
+                    '-loop', '0',
                     '-window_title', 'Graphics::Framebuffer Test Window',
                     '-i', $shm_fb
                 );
