@@ -130,15 +130,15 @@ print colored(['bright_green'],"Added\n");
 if ($meta =~ /^(.*?)\n/s) {
     print colored(['bright_yellow'],'   Is this a threaded Perl?'), ' ... ';
     if ($Config{'useithreads'}) {
-        print colored(['bright_green'],'YES')," Leaving thread support\n";
+        print colored(['bright_green'],'YES')," Leaving thread support as-is\n";
     } else {
-		$template =~ s/use threads/# use threads/gs;
+		$template =~ s/use threads/# use threads/gs; # Removes both threads and threads::shared
         print colored(['red'],'NO')," Removing thread support\n";
     }
     print colored(['bright_yellow'],'         Inserting versions'), ' ... ';
     my ($version, $date, $email) = split(/\:/, $1 );
     my ($month, $day, $year) = split(/ |, /,$date);
-	my $manver = qq{# VERSION\n\n   Version $version ($date)\n\n   \!\[Divider\]\(pics/pink.jpg?raw=true "Divider"\)\n\n# THANKS};
+	my $manver = qq{# VERSION\n\n   Version $version ($date)\n\n   \!\[Pink Divider\]\(pics/pink.jpg?raw=true "Pink Divider"\)\n\n# THANKS};
 
 	$manual   =~ s/\# VERSION.*?\# THANKS/$manver/gs;
     $template =~ s/\#\# VERSION \#\#/$version/sg;

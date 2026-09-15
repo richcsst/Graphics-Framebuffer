@@ -1,5 +1,10 @@
 Change log for Graphics::Framebuffer
 
+7.07   Sep 8, 2026
+
+       Documentation fixes
+       Small blitting issue fixed.
+
 7.06   Jul 27, 2026
 
        Minor clipping optimizations
