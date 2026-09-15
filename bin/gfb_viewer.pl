@@ -71,12 +71,13 @@ print "[gfb_viewer] Config:      $INFO_FILE ($width $height $bpp)\n";
 # Using ffplay (or mplayer fallback) configured for continuous raw video stream
 my @cmd = (
     'ffplay',
-    '-loglevel', 'quiet',       # Suppresses banner, warnings, and informational output
-#    '-stats',    '0',           # Suppresses the real-time playback position/audio/video line
-    '-f',        'rawvideo',
+    '-loglevel',     'quiet',
+#    '-stats',        '0',
+    '-f',            'rawvideo',
     '-pixel_format', $pix_fmt,
     '-video_size',   "${width}x${height}",
     '-framerate',    $framerate,
+    '-vf',           "fps=$framerate",     # Forces the video filter graph to pump frames continuously
     '-loop',         '0',
     '-window_title', "Graphics::Framebuffer Viewer [$width x $height]",
     '-i',            $FB_FILE,
