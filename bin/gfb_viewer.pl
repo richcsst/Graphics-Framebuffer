@@ -35,7 +35,7 @@ if ($res_param =~ /^(\d+)x(\d+)(?:x(\d+))?$/i) {
 # Determine matching raw video pixel format for ffplay / mplayer
 my $pix_fmt;
 if ($bpp == 32) {
-    $pix_fmt = 'bgr0';
+    $pix_fmt = 'bgra';
 } elsif ($bpp == 24) {
     $pix_fmt = 'bgr24';
 } elsif ($bpp == 16) {
