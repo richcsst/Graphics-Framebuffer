@@ -1,5 +1,9 @@
 Change log for Graphics::Framebuffer
 
+7.08   Sep 15, 2026
+
+       Added X-Windows-viewer support.
+
 7.07   Sep 8, 2026
 
        Documentation fixes

@@ -1032,15 +1032,19 @@ sub new {
         $self = { %{$self}, %{$garbage} };
     } ## end if ($self->{'GARBAGE'})
     unless (defined($self->{'FB_DEVICE'})) {                 # We scan for all 32 possible devices at both possible locations
-        foreach my $dev (0 .. 31) {
-            foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb)) {
-                if (-e "$prefix$dev") {
-                    $self->{'FB_DEVICE'} = "$prefix$dev";
-                    last;
-                }
-            } ## end foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb))
-            last if (defined($self->{'FB_DEVICE'}));
-        } ## end foreach my $dev (0 .. 31)
+        if (-e '/dev/shm/gfb_screen') { # Is GFB running in X-Windows with the gfb_viewer?  If so, we can use that framebuffer device instead of the real one.  This is a hack, but it works.
+            $self->{'FB_DEVICE'} = '/dev/shm/gfb_screen'; # Detected the GFB viewer
+        } else {
+            foreach my $dev (0 .. 31) {
+                foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb)) {
+                    if (-e "$prefix$dev") {
+                        $self->{'FB_DEVICE'} = "$prefix$dev";
+                        last;
+                    }
+                } ## end foreach my $prefix (qw(/dev/fb /dev/fb/ /dev/graphics/fb))
+                last if (defined($self->{'FB_DEVICE'}));
+            } ## end foreach my $dev (0 .. 31)
+        }
     } ## end unless (defined($self->{'FB_DEVICE'...}))
     $self->{'CONSOLE'} = 1;
     eval {
