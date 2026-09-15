@@ -12,7 +12,7 @@ $ENV{'PATH'} = '/bin:/usr/bin:/usr/local/bin';
 delete @ENV{qw(IFS CDPATH ENV BASH_ENV)};
 
 BEGIN {
-    our $VERSION = '2.06';
+    our $VERSION = '2.05';
 }
 
 my $b  = "\e[34m";
@@ -86,9 +86,46 @@ my $shm_fb   = '/dev/shm/gfb_viewer';
 my $shm_info = '/dev/shm/gfb_viewer.info';
 my $viewer_pid;
 
+# Helper to find a binary in safe PATH without external modules
+sub find_bin {
+    my ($bin) = @_;
+    for my $dir (split(/:/, $ENV{'PATH'})) {
+        my $target = "$dir/$bin";
+        return $target if (-x $target && !-d $target);
+    }
+    return undef;
+}
+
+# Guaranteed cleanup wrapper
+sub cleanup_viewer {
+    if ($viewer_pid) {
+        kill('TERM', $viewer_pid);
+        waitpid($viewer_pid, 0);
+        undef $viewer_pid;
+    }
+    unlink($shm_fb)   if -e $shm_fb;
+    unlink($shm_info) if -e $shm_info;
+}
+
 # If in a GUI desktop, spawn emulation and viewer
 if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
     diag("${y}Detected GUI environment. Initializing shared memory emulator...$rs");
+
+    # Discover available viewer binary in priority order
+    my $player_bin;
+    my $player_type; # 'mplayer' or 'mpplay_ffplay'
+
+    for my $candidate (qw(mpplay mplayer ffplay)) {
+        if (my $path = find_bin($candidate)) {
+            $player_bin  = $path;
+            $player_type = ($candidate eq 'mplayer') ? 'mplayer' : 'mpplay_ffplay';
+            last;
+        }
+    }
+
+    if (!$player_bin) {
+        diag("${r}Warning: No viewer binary found (checked mpplay, mplayer, ffplay). Test will proceed headless on /dev/shm.$rs");
+    }
 
     my ($w, $h, $bpp) = (1024, 720, 32);
     my $buffer_size   = $w * $h * int($bpp / 8);
@@ -103,38 +140,46 @@ if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
     print $fh_info "$w $h $bpp\n";
     close($fh_info);
 
-    # Fork to launch mpplay asynchronously
-    $viewer_pid = fork();
-    if (!defined $viewer_pid) {
-        die "Fork failed: $!\n";
-    } elsif ($viewer_pid == 0) {
-        # Child: Silence stdout/stderr and exec the player
-        open(STDOUT, '>', '/dev/null');
-        open(STDERR, '>', '/dev/null');
+    if ($player_bin) {
+        diag("${g}Launching viewer using: $player_bin$rs");
 
-        exec('mpplay',
-            '-f', 'rawvideo',
-            '-pixel_format', 'bgra',
-            '-video_size', "${w}x${h}",
-            '-framerate', '30',
-            '-window_title', "Graphics::Framebuffer Test Window",
-            '-i', $shm_fb
-        );
-        exit(1); # Exec failed
+        # Fork to launch the detected player asynchronously
+        $viewer_pid = fork();
+        if (!defined $viewer_pid) {
+            die "Fork failed: $!\n";
+        } elsif ($viewer_pid == 0) {
+            # Child: Silence stdout/stderr
+            open(STDOUT, '>', '/dev/null');
+            open(STDERR, '>', '/dev/null');
+
+            if ($player_type eq 'mplayer') {
+                # MPlayer syntax for raw byte streams
+                # Note: mplayer uses bgra / bgr32 for 32-bit framebuffer pixel formats
+                exec(
+                    $player_bin,
+                    '-demuxer', 'rawvideo',
+                    '-rawvideo', "w=$w:h=$h:format=bgra:fps=30",
+                    '-title', 'Graphics::Framebuffer Test Window',
+                    $shm_fb
+                );
+            } else {
+                # mpplay / ffplay syntax
+                exec(
+                    $player_bin,
+                    '-f', 'rawvideo',
+                    '-pixel_format', 'bgra',
+                    '-video_size', "${w}x${h}",
+                    '-framerate', '30',
+                    '-window_title', 'Graphics::Framebuffer Test Window',
+                    '-i', $shm_fb
+                );
+            }
+            exit(1); # Exec failed
+        }
+
+        # Give player a moment to claim the window surface and map the buffer
+        sleep 0.5;
     }
-
-    # Give mpplay a moment to claim the window surface and map the buffer
-    sleep 0.5;
-}
-
-# Guaranteed cleanup wrapper
-sub cleanup_viewer {
-    if ($viewer_pid) {
-        kill('TERM', $viewer_pid);
-        waitpid($viewer_pid, 0);
-    }
-    unlink($shm_fb)   if -e $shm_fb;
-    unlink($shm_info) if -e $shm_info;
 }
 
 # Load module and verify class instance
