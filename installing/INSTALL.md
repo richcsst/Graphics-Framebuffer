@@ -18,7 +18,7 @@
 
    * Mario Roy has an excellent tutorial on enabling the Framebuffer on a CentOS system (which is a RedHat style Linux distribution).  This may be helpful on other distributions as well:
 
-      [Mario Roy's Explation of enabling the Framebuffer on CentOS](https://github.com/marioroy/mce-examples/tree/master/framebuffer)
+      [Mario Roy's Explanation of enabling the Framebuffer on CentOS](https://github.com/marioroy/mce-examples/tree/master/framebuffer)
 
    * Raspberry PI Users!  Change the settings to use a 24/32 bit framebuffer.  The PI defaults to 16 bit color and this module is much faster using 24/32 bit color mode.  This module's 16 bit mode is a hack layered on top of the 24/32 bit routines, so more CPU time is involved in conversion, and will thus be slower in 16 bit mode.
 
