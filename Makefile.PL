@@ -18,15 +18,13 @@ use Inline::MakeMaker; # Layers on top of ExtUtils::MakeMaker
 use Term::ReadKey;
 use Term::ANSIColor;
 
-# use Data::Dumper::Simple;$Data::Dumper::Terse=TRUE;$Data::Dumper::Indent=TRUE;$Data::Dumper::Useqq=TRUE;$Data::Dumper::Deparse=TRUE;$Data::Dumper::Quotekeys=TRUE;$Data::Dumper::Trailingcomma=TRUE;$Data::Dumper::Sortkeys=TRUE;$Data::Dumper::Purity=TRUE;$Data::Dumper::Deparse=TRUE;
-
 my $VERSION = '2.03';
 my ($COLS,$ROWS,$w,$h) = GetTerminalSize(*STDOUT);
 $COLS = 80 if ($COLS < 80);
 $ROWS = 25 if ($ROWS < 25);
 my $pmt = 'Y';
 my $pad = int(($COLS - 23)/2);
-my $line = '-' x $pad . ' Graphics::Framebuffer ' . '-' x $pad;
+my $line = '-' x $pad . ' Graphics::Framebuffer ' . '-' x$pad;
 
 if (-e 'Makefile') { # We need a clean slate;
     my $cmd = (scalar(@ARGV)) ? "make veryclean; reset; perl Makefile.PL $ARGV[0]" : 'make veryclean; reset; perl Makefile.PL';
@@ -34,15 +32,14 @@ if (-e 'Makefile') { # We need a clean slate;
 }
 
 my $FORCE_VIDEO_FAIL = FALSE; # Makes permissions testing easier
-
-$FORCE_VIDEO_FAIL = TRUE if (scalar(@ARGV) && $ARGV[0] eq 'force');
+$FORCE_VIDEO_FAIL = TRUE if (scalar(@ARGV) &&$ARGV[0] eq 'force');
 
 my $blink = "\e[5m";
 
 # Graphics::Framebuffer banner
 my $banner = '';
 while (my $l = <DATA>) {
-    $banner .= $l;
+    $banner .=$l;
 }
 print $banner;
 
@@ -56,16 +53,13 @@ if ($^O ne 'linux') { # Some people will still try
       colored(['white on_red'],' Graphics::Framebuffer should not be installed from within Wayland/X-Windows!  '),"\n",
       colored(['white on_red'],' you should install it from the console itself, and not a console window.      '),"\n",
       colored(['white on_red'],' ' x 79),"\n",
-#      colored(['black on_yellow'],' ' x 79),"\n",
-      colored(['black on_yellow'],' If you insist on installing from within X-Windows, the tests will attempt to  '),"\n",
-      colored(['black on_yellow'],' install a viewer with mpplay or mplayer using a simulated framebuffer of      '),"\n",
-      colored(['black on_yellow'],' 1024x720x32                                                                   '),"\n\n",
-#      colored(['black on_yellow'],' ' x 79), "\n\n";
-    $pmt = 'Y'; # ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
+      colored(['black on_yellow'],' If installing from within X-Windows/Wayland, the build will compile a native  '),"\n",
+      colored(['black on_yellow'],' C shared-memory viewer (bin/gfb_viewer) to display /dev/shm/gfb_screen.      '),"\n\n";
+    $pmt = 'Y';
 } elsif (no_framebuffer()) {
     print 
       colored(['white on_red'],' Your system does not appear to have a framebuffer device!  This is required '),"\n",
-      colored(['white on_red'],' for this library to function.                                               '),"\n\n";
+      colored(['white on_red'],' for this library to function.                                                '),"\n\n";
     $pmt = ExtUtils::MakeMaker::prompt('Do you wish to install anyway?  ','Y');
 }
 
@@ -92,29 +86,20 @@ unless($pmt =~ /^Y/i) {
     exit(1);
 }
 
-# This portion of the code actually merges the C and Perl portions in the "src"
-# directory and writes the "lib/Graphics/Framebuffer.pm" file.  The one that is
-# there before this operation is merely a placeholder for CPAN, and was created
-# when I did a "make dist" for CPAN upload.  Please use the one this file
-# creates.
-
-# Why did I do this?  Simple, managing the version and the C code is a lot
-# easier this way, and eliminates the Inline::C quirks.
-
 # Process the src files
-print colored(['bright_yellow'],'             Loading C code'), ' ... ';
+print colored(['bright_yellow'],'              Loading C code'), ' ... ';
 my $ccode    = slurp_file('src/Framebuffer.c');
 print colored(['bright_green'],"Loaded\n");
 
-print colored(['bright_yellow'],'             Loading Manual'), ' ... ';
+print colored(['bright_yellow'],'              Loading Manual'), ' ... ';
 my $manual   = slurp_file('MANUAL.md');
 print colored(['bright_green'],"Loaded\n");
 
-print colored(['bright_yellow'],'             Loading Readme'), ' ... ';
+print colored(['bright_yellow'],'              Loading Readme'), ' ... ';
 my $readme   = slurp_file('README.md');
 print colored(['bright_green'],"Loaded\n");
 
-print colored(['bright_yellow'],'           Loading MetaDate'), ' ... ';
+print colored(['bright_yellow'],'            Loading MetaDate'), ' ... ';
 my $meta     = slurp_file('src/metadata.txt');
 print colored(['bright_green'],"Loaded\n");
 
@@ -132,46 +117,46 @@ if ($meta =~ /^(.*?)\n/s) {
     if ($Config{'useithreads'}) {
         print colored(['bright_green'],'YES')," Leaving thread support as-is\n";
     } else {
-		$template =~ s/use threads/# use threads/gs; # Removes both threads and threads::shared
+        $template =~ s/use threads/# use threads/gs; # Removes both threads and threads::shared
         print colored(['red'],'NO')," Removing thread support\n";
     }
     print colored(['bright_yellow'],'         Inserting versions'), ' ... ';
-    my ($version, $date, $email) = split(/\:/, $1 );
-    my ($month, $day, $year) = split(/ |, /,$date);
-	my $manver = qq{# VERSION\n\n   Version $version ($date)\n\n   \!\[Pink Divider\]\(pics/pink.jpg?raw=true "Pink Divider"\)\n\n# THANKS};
+    my ($version, $date,$email) = split(/\:/, $1 );
+    my ($month,$day, $year) = split(/ \vert{}, /,$date);
+    my $manver = qq{# VERSION\n\n   Version $version ($date)\n\n   \!\[Pink Divider\]\(pics/pink.jpg?raw=true "Pink Divider"\)\n\n# THANKS};
 
-	$manual   =~ s/\# VERSION.*?\# THANKS/$manver/gs;
+    $manual   =~ s/\# VERSION.*?\# THANKS/$manver/gs;
     $template =~ s/\#\# VERSION \#\#/$version/sg;
     $template =~ s/\#\# VERSION DATE \#\#/$date/sg;
     $template =~ s/\#\# YEAR \#\#/$year/sg;
     $email    =~ s/-at-/\@/gi;
-    print colored(['bright_green'],"Version: $version, $date"),"\n";
+    print colored(['bright_green'],"Version: $version,$date"),"\n";
     print colored(['bright_yellow'],'  Finalizing Copyright Year'), ' ... ';
     $template =~ s/Copyright \© 2003 \- \d\d\d\d Richard Kelsch/Copyright © 2003 - $year Richard Kelsch/g;
     $readme   =~ s/Copyright \© 2003 \- \d\d\d\d Richard Kelsch/Copyright © 2003 - $year Richard Kelsch/g;
     print colored(['bright_green'],"Copyright © 2003 - $year Richard Kelsch"),"\n";
     $template =~ s/\#\# EMAIL \#\#/$email/sg;
-    $Eml = $email;
-    print colored(['bright_yellow'],'                     Author') . ' ... ', colored(['bright_green'],"$email") . "\n";
+    $Eml =$email;
+    print colored(['bright_yellow'],'                      Author') . ' ... ', colored(['bright_green'],"$email") . "\n";
 } else {
     die "\nMalformed src/metadata.txt file.  Aborting\n";
 }
 
 print colored(['bright_yellow'],'Framebuffer.pm Modification'), ' ... ';
 open(my $FILE,'>','lib/Graphics/Framebuffer.pm') || die "Cannot open 'lib/Graphics/Framebuffer.pm' for writing" ;
-print $FILE $template;
+print $FILE$template;
 close($FILE);
 print colored(['bright_green'],'Complete'),"\n";
 
 print colored(['bright_yellow'],'     MANUAL.md Modification'), ' ... ';
 open(my $MAN,'>','MANUAL.md') || die "Cannot open 'MANUAL.md' for writing" ;
-print $MAN $manual;
+print $MAN$manual;
 close($MAN);
 print colored(['bright_green'],'Complete'),"\n";
 
 print colored(['bright_yellow'],'     README.md Modification'), ' ... ';
 open(my $RM,'>','README.md') || die "Cannot open 'README.md' for writing" ;
-print $RM $readme;
+print $RM$readme;
 close($RM);
 print colored(['bright_green'],'Complete'),"\n\n";
 
@@ -210,9 +195,9 @@ get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate
 };
 } else {
     $pad = int(($COLS - 21)/2);
-    my $mult = '-' x $pad . '-- MULTIPROCESSING --' . '-' x $pad;
+    my $mult = '-' x $pad . '-- MULTIPROCESSING --' . '-' x$pad;
     print "The ",'"', colored(['bold green'],'examples'), qq{" directory has some handy scripts to help get you started, and show you how to use the module.  Just "} . colored(['bold green'],'perldoc') . qq{" on each to see how to use them:\n};
-    $message = '-' x $COLS . qq{
+    $message = '-' x$COLS . qq{
 primitives.pl          - This script will pretty much demonstrate all of the capabilities of this module.
 slideshow.pl           - This script shows all of the images in a specific path (full screen, if asked).
 viewpic.pl             - This script shows one specific image (or animation).
@@ -232,8 +217,7 @@ get-mce-demos          - Go and grab MCE multiprocessing demos (an alternate thr
 foreach my $l (split(/\n/,$message)) {
     if ($l =~ /^(\S+pl|get-mce-demos)/) {
         my $old = $1;
-        my $new = ($old =~ /template\.pl/) ? colored(['bright_cyan'],$old) : colored(['bold green'],$old);
-        $l =~ s/$old/$new/;
+        my $new = ($old =~ /template\.pl/) ? colored(['bright_cyan'],$old) : colored(['bold green'],$old);$l =~ s/$old/$new/;
     } elsif ($l =~ /^-------/) {
         $l = colored(['bold cyan'],$l);
     }
@@ -256,7 +240,7 @@ my $mm = WriteMakefile(
     ABSTRACT_FROM      => 'lib/Graphics/Framebuffer.pm',
     PL_FILES           => {},
     MIN_PERL_VERSION   => '5.20.0',
-    CONFIGURE_REQUIRES => { # Added all Inline variants to this stage
+    CONFIGURE_REQUIRES => {
         'Inline'              => '0.53',
         'Inline::C'           => '0.53',
         'Inline::MakeMaker'   => '0.45',
@@ -282,20 +266,25 @@ my $mm = WriteMakefile(
         'Inline'         => '0.53',
         'Inline::C'      => '0.53',
     },
-    EXE_FILES     => ['bin/gfb_viewer.pl'],
+    EXE_FILES     => 'bin/gfb_viewer',
     INSTALLSCRIPT => '/usr/local/bin',
     INSTALLBIN    => '/usr/local/bin',
 
-    dist  => {COMPRESS => 'gzip -9f', SUFFIX => 'gz',},
-    clean => {FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *.inl *log *bak *old'},
+    dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz' },
+    clean => { FILES    => 'Graphics-Framebuffer* _Inline* examples/_Inline* *.inl *log *bak *old bin/gfb_viewer bin/*.o' },
 );
-print $blink, colored(['yellow on_blue'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE ABOVE FOR ANY MISSING MODULES BEFORE CONTINUING ')), "\n";
+
+print $blink, colored(['yellow on_blue'],sprintf('%-67s',' PLEASE PAY ATTENTION TO THE MESSAGE BELOW FOR ANY MISSING MODULES BEFORE CONTINUING ')), "\n";
 
 exit(0);
 
+# ----------------------------------------------------------------------------
+# Subroutines
+# ----------------------------------------------------------------------------
+
 sub slurp_file {
     my $file = shift;
-    return( do { local (@ARGV, $/) = $file; <> } );
+    return( do { local (@ARGV, $/) =$file; <> } );
 }
 
 sub no_framebuffer {
@@ -304,7 +293,7 @@ sub no_framebuffer {
     chomp($os);
     if ($os eq 'Linux') {
        if (exists($ENV{'DISPLAY'}) or exists($ENV{'WAYLAND_DISPLAY'})) {
-            print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"Running in X11 or Wayland, will use/dev/shm/gfb_viewer"),"\n";
+            print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_green'],'FOUND'), ' - ', colored(['cyan'],"Running in X11 or Wayland, will use /dev/shm/gfb_screen"),"\n";
             $fb_absent = FALSE;
         } else {
             print colored(['bright_yellow'],'                FRAMEBUFFER'), ' ... ', colored(['bright_yellow'],'Searching for /dev/fb*'),"\n";
@@ -325,23 +314,36 @@ sub no_framebuffer {
 }
 
 sub _username_for_tests {
-    # Prefer SUDO_USER when running under sudo so we check the human account
-    # that will be logging in/out and being added to groups.
-    return $ENV{SUDO_USER} if defined $ENV{SUDO_USER} && length $ENV{SUDO_USER};
-    return $ENV{USER}      if defined $ENV{USER}      && length $ENV{USER};
+    return $ENV{SUDO_USER} if defined $ENV{SUDO_USER} && length$ENV{SUDO_USER};
+    return $ENV{USER}      if defined $ENV{USER}      && length$ENV{USER};
     chomp(my $u = `id -un 2>/dev/null`);
     return $u || 'YOUR_USERNAME';
 }
 
 sub _user_in_group {
-    my ($user, $group) = @_;
+    my ($user,$group) = @_;
     my $cmd = qq{/usr/bin/id -nG "$user" 2>/dev/null};
     my $groups = `$cmd` || '';
-    if ($groups =~ /video/) {
-        return(1);
-    } else {
-        return(0);
-    }
+    return ($groups =~ /\b\Q$group\E\b/) ? 1 : 0;
+}
+
+# ----------------------------------------------------------------------------
+# MakeMaker hook: compile src/gfb_viewer.c into bin/gfb_viewer during "make"
+# ----------------------------------------------------------------------------
+package MY;
+
+sub postamble {
+    my $self = shift;
+    return '' unless -e 'src/gfb_viewer.c';
+
+    return <<'MAKE_FRAG';
+# Compile the native X11 shared memory viewer from src/ into bin/
+all :: bin/gfb_viewer
+
+bin/gfb_viewer: src/gfb_viewer.c
+	$(MKPATH) bin$(CC) $(CCFLAGS)$(OPTIMIZE) -Wall src/gfb_viewer.c -o bin/gfb_viewer -lX11 -lXdamage -lXfixes -lXtst
+
+MAKE_FRAG
 }
 
 __DATA__

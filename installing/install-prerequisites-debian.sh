@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install all of the prerequsites for Graphics::Framebuffer
+# Install all of the prerequisites for Graphics::Framebuffer
 
 sudo apt update # Bring the Debian module database up to date
 
@@ -12,16 +12,20 @@ sudo apt install -y build-essential \
                     libjpeg-dev \
                     libpng-dev \
                     libtiff-dev \
-		    libperl-dev \
+                    libperl-dev \
+                    libx11-dev \
+                    libxdamage-dev \
+                    libxfixes-dev \
+                    libxtst-dev \
                     ffmpeg \
                     fonts-freefont-ttf \
                     fonts-wine
 
 # Only needed if you are using the OS installed (packaged) Perl
-echo "OS prerequisites installed.  Now for the Perl prerequisites."
+echo "OS prerequisites installed. Now for the Perl prerequisites."
 echo "It is recommended you answer YES to the next question:"
 
-read -p "Do you wish to install the packaged/system Perl module prerequisites?" yn
+read -p "Do you wish to install the packaged/system Perl module prerequisites? " yn
 case $yn in
     [Yy]* ) 
         sudo apt install -y libimager-perl \
@@ -33,3 +37,4 @@ case $yn in
                             libterm-readkey-perl \
                             libsys-cpu-perl;;
 esac
+

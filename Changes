@@ -1,5 +1,23 @@
 Change log for Graphics::Framebuffer
 
+8.01   Sep 17, 2026
+
+       The Perl gfb_viewer.pl had stalling issues, a X11 issue.  It's now a
+	   compiled C utility called "gfb_viewer" and is automatically installed
+	   in your bin path.
+
+       To run a GFB script in X-Windows/Wayland, you have to run "gfb_viewer"
+	   FIRST to create a shared memory file the module can draw to.   GFB
+	   will recognize "/dev/shm/gfb_screen" and "/dev/shm/gfb_screen.info",
+	   which is created by the "gfb_viewer" script.  Now you see why it needs
+	   to run first.
+
+       Now you can test your scripts in the GUI without having to go to the
+	   Linux console.  You're welcome.
+
+       NOTE:  You may need to run the prerequisite installation script again
+	   in the "installing" directory!
+
 8.00   Sep 15, 2026
 
        Drum-roll... You can now run it within X-Windows!  You are required to
