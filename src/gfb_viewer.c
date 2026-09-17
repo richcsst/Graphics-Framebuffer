@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <signal.h>
+#include <stdbool.h>
 #include <time.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -21,7 +22,7 @@
 #define SHM_FILE "/dev/shm/gfb_screen"
 #define INFO_FILE "/dev/shm/gfb_screen.info"
 
-static volatile int keep_running = 1;
+static volatile sig_atomic_t keep_running = 1;
 
 void handle_signal(int sig) {
     keep_running = 0;
@@ -114,7 +115,15 @@ int main(int argc, char **argv) {
 
     if (!ximg) {
         fprintf(stderr, "Failed to create XImage\n");
-        return 1;
+        XFixesDestroyRegion(dpy, damage_region);
+		XFreeGC(dpy, gc);
+		XDestroyWindow(dpy, win);
+		XCloseDisplay(dpy);
+		munmap(fb_mem, buffer_size);
+		close(fd);
+	    unlink(SHM_FILE);
+	    unlink(INFO_FILE);
+		return 1;
     }
 
     printf("[gfb_viewer] Window active (%dx%d @ %dbpp, %d FPS target)\n", width, height, bpp, fps);

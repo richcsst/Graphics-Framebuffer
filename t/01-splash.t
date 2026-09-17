@@ -12,7 +12,7 @@ $ENV{'PATH'} = '/bin:/usr/bin:/usr/local/bin';
 delete @ENV{qw(IFS CDPATH ENV BASH_ENV)};
 
 BEGIN {
-    our $VERSION = '2.05';
+    our $VERSION = '2.06';
 }
 
 my $b  = "\e[34m";
@@ -86,80 +86,25 @@ my $shm_fb   = '/dev/shm/gfb_screen';
 my $shm_info = '/dev/shm/gfb_screen.info';
 my $viewer_pid;
 
-# If in a GUI desktop, spawn emulation and viewer
-if ( defined($ENV{'DISPLAY'}) || defined($ENV{'WAYLAND_DISPLAY'}) ) {
-    diag("${y}Detected GUI environment. Initializing shared memory emulator...$rs");
+# Locate the compiled binary (checks blib first if running under "make test")
+my $viewer_bin = -x 'blib/script/gfb_viewer' ? 'blib/script/gfb_viewer'
+  : -x 'bin/gfb_viewer'         ? 'bin/gfb_viewer'
+  : undef;
 
-    # Discover available viewer binary in priority order
-    my $player_bin;
-    my $player_type; # 'mplayer' or 'mpplay_ffplay'
+if ($viewer_bin && $ENV{DISPLAY}) {
+	$viewer_pid = fork();
 
-    for my $candidate (qw(mpplay ffplay mplayer)) {
-        if (my $path = find_bin($candidate)) {
-            $player_bin  = $path;
-            $player_type = ($candidate eq 'mplayer') ? 'mplayer' : 'mpplay_ffplay';
-            last;
-        }
-    }
+	if (!defined $viewer_pid) {
+		warn "Could not fork gfb_viewer: $!\n";
+	} elsif ($viewer_pid == 0) {
+		# Child process: suppress viewer stderr/stdout if desired, then exec
+		open STDOUT, '>', '/dev/null';
+		open STDERR, '>', '/dev/null';
+		exec($viewer_bin) or exit(1);
+	}
 
-    if (!$player_bin) {
-        diag("${r}Warning: No viewer binary found (checked mpplay, mplayer, ffplay). Test will proceed headless on /dev/shm.$rs");
-    }
-
-    my ($w, $h, $bpp) = (1280, 720, 32);
-    my $buffer_size   = $w * $h * int($bpp / 8);
-
-    # Create & truncate the virtual fb memory
-    open(my $fh_fb, '>', $shm_fb) or die "Cannot create $shm_fb: $!\n";
-    truncate($fh_fb, $buffer_size) or die "Cannot truncate $shm_fb: $!\n";
-    close($fh_fb);
-
-    # Create the config file
-    open(my $fh_info, '>', $shm_info) or die "Cannot create $shm_info: $!\n";
-    print $fh_info "$w $h $bpp\n";
-    close($fh_info);
-
-    if ($player_bin) {
-        diag("${g}Launching viewer using: $player_bin$rs");
-
-        # Fork to launch the detected player asynchronously
-        $viewer_pid = fork();
-        if (!defined $viewer_pid) {
-            die "Fork failed: $!\n";
-        } elsif ($viewer_pid == 0) {
-            # Child: Silence stdout/stderr
-            open(STDOUT, '>', '/dev/null');
-            open(STDERR, '>', '/dev/null');
-
-            if ($player_type eq 'mplayer') {
-                # MPlayer syntax for raw byte streams
-                # Note: mplayer uses bgra / bgr32 for 32-bit framebuffer pixel formats
-                exec(
-                    $player_bin,
-                    '-demuxer', 'rawvideo',
-                    '-rawvideo', "w=$w:h=$h:format=bgr0:fps=30",
-                    '-title', 'Graphics::Framebuffer Test Window',
-                    $shm_fb
-                );
-            } else {
-                # mpplay / ffplay syntax
-                exec(
-                    $player_bin,
-                    '-f', 'rawvideo',
-                    '-pixel_format', 'bgr0',
-                    '-video_size', "${w}x${h}",
-                    '-framerate', '30',
-                    '-loop', '0',
-                    '-window_title', 'Graphics::Framebuffer Test Window',
-                    '-i', $shm_fb
-                );
-            }
-            exit(1); # Exec failed
-        }
-
-        # Give player a moment to claim the window surface and map the buffer
-        sleep 0.5;
-    }
+	# Give the X11 window a brief moment to map and bind /dev/shm
+	sleep 0.25;
 }
 
 # Load module and verify class instance
@@ -212,8 +157,29 @@ sub cleanup_viewer {
     unlink($shm_info) if -e $shm_info;
 }
 
+# Ensure the viewer process is terminated even if tests die early
 END {
-    cleanup_viewer();
+	if ($viewer_pid) {
+		# 1. Send SIGTERM so it can clean up X resources gracefully
+		kill 'TERM', $viewer_pid;
+
+		# 2. Wait up to 1 second for exit, force kill if stubborn
+		my $waited = 0;
+		while ($waited < 10) {
+			my $kid = waitpid($viewer_pid, WNOHANG);
+			last if $kid > 0;
+			sleep 0.1;
+			$waited++;
+		}
+
+		# 3. Fallback to SIGKILL if still lingering
+		if (kill(0, $viewer_pid)) {
+			kill 'KILL', $viewer_pid;
+			waitpid($viewer_pid, 0);
+		}
+	}
 }
 
+
 __END__
+
